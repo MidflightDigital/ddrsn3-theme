@@ -1,2 +1,2 @@
-# ddr-supernova3
-Holds all SN3 game files.
+# ddrsn3-theme
+Contains SN3 theme files
