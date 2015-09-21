@@ -1,0 +1,55 @@
+DDR SuperNOVA 2 (Designed for StepMania 3.9)
+--------------------------------------------------------
+- Original autor: Takuya20
+- Modified by: Zero
+- Bug Fixes: Dj-Javixxxxx
+
+DDR SuperNOVA Beta Tester 2 (Designed for StepMania 3.9)
+--------------------------------------------------------
+Jan 02, 2007: Beta Tester 2
+- Cleared sound added.
+- Colour cicle fixed, now all colours are shown.
+- Now the BG change colour is faster.
+- Added support for battery.
+- 11, 12, 13 number names fixed.
+- Results screen's AA graphic arranged.
+- Added summary screen (beta).
+- Results transitions (out screen) fixed.
+
+credits:
+--------
+New Novae Wheel Font.
+SSGotenksUFO: Shows the way to get all game Graphics.
+???: Shows the way to get all game sounds and Announcer.
+Wan: Shows the way to get all game music.
+VGF: Makes the 3D Background display.
+Thanks to all Bemanistyle, DDR.cl, DDRUK, DDR Spain, DDRLA forum people for info and support.
+Takuya20: PS2 Image extraction (via snapshots and from disk), Sound extraction (from disk), Fonts, animation, art and metrics work.
+Developed by Takuya20.
+
+
+
+DDR SuperNOVA Beta Tester 1 (Designed for StepMania 3.9)
+--------------------------------------------------------
+Dic 09, 2006: Beta Tester 1
+- Only Normal Gameplay Mode will be supported (no courses, no battery)
+- NO mode selection (default difficulty: Beginner).
+- NO summary screen.
+- For best play experience, you should use EVENT MODE.
+- NO Couple or Solo Styles supported.
+- Tweaking metrics to enable stuff will cause StepMania to crash or display wrong things on screen.
+- NO Battle or Rave Mode available.
+- How To Play won't be displayed.
+- Matching announcer, but not 100% complete.
+- Removed all the WIP stuff.
+
+credits:
+--------
+New Novae Wheel Font.
+SSGotenksUFO: Shows the way to get all game Graphics.
+???: Shows the way to get all game sounds and Announcer.
+Wan: Shows the way to get all game music.
+VGF: Makes the 3D Background display.
+Thanks to all Bemanistyle, DDR.cl, DDRUK, DDR Spain, DDRLA forum people for info and support.
+Takuya20: PS2 Image extraction (via snapshots and from disk), Sound extraction (from disk), Fonts, animation, art and metrics work.
+Developed by Takuya20.
