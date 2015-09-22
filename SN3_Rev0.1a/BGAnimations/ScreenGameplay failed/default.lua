@@ -1,31 +1,23 @@
-local longFail = ThemePrefs.Get("LongFail");
-
 local t = Def.ActorFrame{};
 
-if longFail then
-	t[#t+1] = Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,color("1,0,0,0");blend,Blend.Multiply);
-		OnCommand=cmd(decelerate,1.25;diffuse,color("0.75,0,0,0.75");linear,7;diffuse,color("0,0,0,1");sleep,1.25;linear,1;diffuse,color("1,0,0,1");decelerate,2;diffuse,color("0,0,0,1"));
-	};
-	t[#t+1] = Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,color("1,1,1,1");diffusealpha,0);
-		OnCommand=cmd(finishtweening;diffusealpha,1;decelerate,1.25;diffuse,color("1,0,0,0"));
-	};
-	t[#t+1] = LoadActor(THEME:GetPathS( "ScreenGameplayAlternate", "failed" ) ) .. {
+t[#t+1] = Def.ActorFrame {
+
+    LoadActor("../failed.mp3") .. {
 		StartTransitioningCommand=cmd(play);
 	};
-else
-	t[#t+1] = Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,color("1,0,0,0");blend,Blend.Multiply);
-		OnCommand=cmd(smooth,1;diffuse,color("0.75,0,0,0.75");decelerate,2;diffuse,color("0,0,0,1"));
+
+	LoadActor( "../door1" )..{
+		OnCommand=cmd(zoomx,1.34;x,SCREEN_CENTER_X-214;y,SCREEN_CENTER_Y;addx,-288;sleep,0.000;sleep,0.316;linear,0.2;addx,320;sleep,1.167;sleep,3.383;linear,0.2;addx,-999);
 	};
-	t[#t+1] = Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,color("1,1,1,1");diffusealpha,0);
-		OnCommand=cmd(finishtweening;diffusealpha,1;decelerate,1.25;diffuse,color("1,0,0,0"));
+
+	LoadActor( "../door2" )..{
+		OnCommand=cmd(zoomx,1.34;x,SCREEN_CENTER_X+214;y,SCREEN_CENTER_Y;addx,288;sleep,0.000;sleep,0.316;linear,0.2;addx,-320;sleep,1.167;sleep,3.383;linear,0.2;addx,999);
 	};
-	t[#t+1] = LoadActor(THEME:GetPathS( Var "LoadingScreen", "failed" ) ) .. {
-		StartTransitioningCommand=cmd(play);
+
+	LoadActor("Failed") .. {
+		OnCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0;zoomy,0;zoomx,4;sleep,0.066;linear,0.132;diffusealpha,1;zoomy,1;zoomx,1;sleep,2.604;linear,0.132;zoomy,0;zoomx,4;diffusealpha,0);
 	};
-end;
+
+};
 
 return t;
