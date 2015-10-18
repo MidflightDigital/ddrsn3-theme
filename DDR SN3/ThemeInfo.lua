@@ -1,3 +1,3 @@
 [ThemeInfo]
-DisplayName=Dance Dance Revolution SN3
-Author=Takuya20(SM3.9)/Inori(ported SM5)
+DisplayName=Dance Dance Revolution Supernova 3
+Author=MidflightDigital
