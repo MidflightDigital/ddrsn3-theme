@@ -7,7 +7,7 @@ function TextBannerAfterSet(self,param)
 		--strip off whitespace at the beginning of the subtitle text
 		--and the end of the title text
 		local SubtitleText = Subtitle:GetText():gsub("^%s*","")
-		local TitleText = Title:GetText():gsub("^%s*","")
+		local TitleText = Title:GetText():gsub("%s*$","")
 		Title:settext(TitleText.." "..SubtitleText)
 	end
 
