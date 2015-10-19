@@ -24,13 +24,13 @@ local function TwiddleBPMGauge(self)
 				local crop = CalculateBaseForBPM(displayBpm)
 				crop = clamp(crop + (math.random() * maximumTwiddleDistance), 0, 1)
 				gauge:croptop(crop)
+				return
 			end
 		end
 	end
+	--that is, the gauge should show zero which I think is correct behavior
+	gauge:croptop(0)
 end
-
-
-
 
 local t = Def.ActorFrame{
 

@@ -3,31 +3,23 @@ function TextBannerAfterSet(self,param)
 	local Subtitle=self:GetChild("Subtitle")
 	local Artist=self:GetChild("Artist")
 
-	if Subtitle:GetText() == "" then
-		Title:maxwidth(240)
-		Title:y(-7)
-		Title:zoom(0.9)
-
-		Subtitle:visible(false)
-
-		Artist:maxwidth(240)
-		Artist:y(9)
-		Artist:zoom(0.5)
-	else
-		Title:maxwidth(274)
-		Title:zoom(0.8)
-		Title:y(-8)
-
-		-- subtitle below title
-		Subtitle:visible(true)
-		Subtitle:zoom(0.5)
-		Subtitle:maxwidth(240)
-		Subtitle:y(2)
-
-		Artist:maxwidth(240)
-		Artist:y(10)
-		Artist:zoom(0.5)
+	if Subtitle:GetText() ~= "" then
+		--strip off whitespace at the beginning of the subtitle text
+		--and the end of the title text
+		local SubtitleText = Subtitle:GetText():gsub("^%s*","")
+		local TitleText = Title:GetText():gsub("^%s*","")
+		Title:settext(TitleText.." "..SubtitleText)
 	end
+
+	Title:maxwidth(240)
+	Title:y(-7)
+	Title:zoom(0.9)
+
+	Subtitle:visible(false)
+
+	Artist:maxwidth(240)
+	Artist:y(9)
+	Artist:zoom(0.5)
 
 end
 
