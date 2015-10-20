@@ -4,7 +4,7 @@
 --This is not necessarily true at 100 BPM, so a negative value is generated.
 --185 is simply 300-115, the spread between 0 and 1. - tertu
 local function CalculateBaseForBPM(bpm)
-	return (clamp(bpm, 100, 300) - 115) / 185
+	return 1 - (clamp(bpm, 100, 300) - 115) / 185
 end
 
 local function TwiddleBPMGauge(self)
@@ -22,28 +22,22 @@ local function TwiddleBPMGauge(self)
 				local displayBpms = song:GetDisplayBpms()
 				local displayBpm = displayBpms[1]
 				local crop = CalculateBaseForBPM(displayBpm)
-				crop = clamp(crop + (math.random() * maximumTwiddleDistance), 0, 1)
+				crop = clamp(crop - (math.random() * maximumTwiddleDistance), 0, 1)
 				gauge:croptop(crop)
+				return
+			elseif not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
+				local bpmDisplay = SCREENMAN:GetTopScreen():GetChild("BPMDisplay"):GetChild("BPMDisplay")
+				gauge:croptop(clamp(CalculateBaseForBPM(tonumber(bpmDisplay:GetText()) or 0), 0, 1))
 				return
 			end
 		end
 	end
 	--that is, the gauge should show zero which I think is correct behavior
-	gauge:croptop(0)
+	gauge:croptop(1)
 end
 
 local t = Def.ActorFrame{
-
-	Def.Sprite {
-	Texture="bpm gauge",
-		InitCommand=function(self)
-			self:draworder(100):x(SCREEN_CENTER_X-244):y(SCREEN_CENTER_Y-5)
-			self:diffuse(0.5,0.5,0.5,1)
-		end,
-		OnCommand=function(self)
-			self:diffusealpha(0):sleep(0.6):draworder(50):diffusealpha(1)
-		end
-	};
+	InitCommand=function(self) self:SetUpdateFunction(TwiddleBPMGauge) end,
 	Def.Sprite {
 	Name="bpm gauge bright",
 	Texture="bpm gauge",
