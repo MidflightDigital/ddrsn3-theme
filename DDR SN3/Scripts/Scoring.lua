@@ -27,7 +27,6 @@ function SN2Scoring.PrepareScoringInfo()
         local maker = inCourse and SN2Scoring.MakeCourseScoringFunctions or SN2Scoring.MakeNormalScoringFunctions
         local dataFetcher = inCourse and GameState.GetCurrentTrail or GameState.GetCurrentSteps
         for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-            SCREENMAN:SystemMessage("ZZZZZZ"..pn)
             local data = dataFetcher(GAMESTATE,pn)
             if data then
                     ScoringInfo[pn] = maker(data,pn)
