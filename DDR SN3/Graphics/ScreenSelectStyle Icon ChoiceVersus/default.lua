@@ -2,10 +2,10 @@
 return Def.ActorFrame{
 	LoadActor("_item")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X+84;y,SCREEN_CENTER_Y+52;draworder,99);
-		OnCommand=cmd(addx,379;sleep,0.264;decelerate,0.264;addx,-390;decelerate,0.1;addx,11);
+		OnCommand=cmd(addx,758;sleep,0.264;decelerate,0.264;addx,-780;decelerate,0.1;addx,22);
 		EnabledCommand=cmd(diffuse,color("1,1,1,1"));
 		DisabledCommand=cmd(diffuse,color("0.5,0.5,0.5,1"));
-		OffCommand=cmd(decelerate,0.05;addx,-11;decelerate,0.264;addx,390);
+		OffCommand=cmd(decelerate,0.05;addx,-22;decelerate,0.264;addx,780);
 	};
 	LoadActor("../_Style highlight")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X+84;y,SCREEN_CENTER_Y+52;draworder,99);

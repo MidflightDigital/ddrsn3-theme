@@ -5,10 +5,10 @@ local t = Def.ActorFrame{
 	-- Information panel
 	LoadActor("_info")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X+110;y,SCREEN_CENTER_Y-75;);
-		OnCommand=cmd(addx,379;sleep,0.264;decelerate,0.264;addx,-390;decelerate,0.1;addx,11);
+		OnCommand=cmd(addx,758;sleep,0.264;decelerate,0.264;addx,-780;decelerate,0.1;addx,22);
 		GainFocusCommand=cmd(visible,true;addx,-11;decelerate,0.1;addx,11);
 		LoseFocusCommand=cmd(visible,false);
-		OffCommand=cmd(decelerate,0.264;addx,440);
+		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
 	
 	-- Panel

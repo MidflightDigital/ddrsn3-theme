@@ -7,12 +7,12 @@ local t = Def.ActorFrame{
 		InitCommand=cmd(x,SCREEN_CENTER_X+110;y,SCREEN_CENTER_Y-75;);
 		GainFocusCommand=cmd(visible,true;addx,-11;decelerate,0.1;addx,11);
 		LoseFocusCommand=cmd(visible,false);
-		OffCommand=cmd(decelerate,0.264;addx,440);
+		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
 	
 	-- Panel
 	LoadActor("_panel")..{
-		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-132;y,SCREEN_CENTER_Y+109;);
+		InitCommand=cmd(x,SCREEN_CENTER_X-132;y,SCREEN_CENTER_Y+109;);
 		OnCommand=function(self)
 			if GAMESTATE:GetNumSidesJoined() == 2 then
 				self:playcommand("GainFocus")
