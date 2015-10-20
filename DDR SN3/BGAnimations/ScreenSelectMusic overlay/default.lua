@@ -7,11 +7,11 @@ local function CalculateBaseForBPM(bpm)
 	return 1 - (clamp(bpm, 100, 300) - 115) / 185
 end
 
-local function TwiddleBPMGauge(self)
+local function UpdateBPMGauge(self)
 	local maximumTwiddleDistance = 13/86
 	--13/86 was chosen because it's roughly the height of two bar pieces -tertu
 	local gauge = self:GetChild("bpm gauge bright")
-	assert(gauge, "TwiddleBPMGauge: Can't find the bright part of the BPM gauge.")
+	assert(gauge, "UpdateBPMGauge: Can't find the bright part of the BPM gauge.")
 	if GAMESTATE then
 		local song = GAMESTATE:GetCurrentSong()
 		if song then
@@ -26,7 +26,7 @@ local function TwiddleBPMGauge(self)
 				gauge:croptop(crop)
 			elseif not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
 				gauge:finishtweening()
-				local bpmDisplay = SCREENMAN:GetTopScreen():GetChild("BPMDisplay"):GetChild("BPMDisplay")
+				local bpmDisplay = SCREENMAN:GetTopScreen():GetChild("BPMDisplay")
 				gauge:croptop(clamp(CalculateBaseForBPM(tonumber(bpmDisplay:GetText()) or 0), 0, 1))
 			else
 				if gauge:GetTweenTimeLeft()==0 then
@@ -41,7 +41,7 @@ local function TwiddleBPMGauge(self)
 end
 
 local t = Def.ActorFrame{
-	InitCommand=function(self) self:SetUpdateFunction(TwiddleBPMGauge) end,
+	InitCommand=function(self) self:SetUpdateFunction(UpdateBPMGauge) end,
 	Def.Sprite {
 	Name="bpm gauge bright",
 	Texture="bpm gauge",
