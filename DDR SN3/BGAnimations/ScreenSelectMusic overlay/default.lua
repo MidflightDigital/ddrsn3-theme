@@ -17,6 +17,7 @@ local function UpdateBPMGauge(self)
 		if song then
 			--This function only handles the case where display BPM is constant.
 			if song:IsDisplayBpmConstant() and not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
+				--This song has only one display BPM: show that value and randomly vibrate the tip around it
 				--We have to finish tweening in case the last song was random
 				gauge:finishtweening()
 				local displayBpms = song:GetDisplayBpms()
@@ -25,11 +26,14 @@ local function UpdateBPMGauge(self)
 				crop = clamp(crop - (math.random() * maximumTwiddleDistance), 0, 1)
 				gauge:croptop(crop)
 			elseif not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
+				--This song has two display BPMs: read the current BPM off the BPMDisplay
 				gauge:finishtweening()
 				local bpmDisplay = SCREENMAN:GetTopScreen():GetChild("BPMDisplay")
 				gauge:croptop(clamp(CalculateBaseForBPM(tonumber(bpmDisplay:GetText()) or 0), 0, 1))
 			else
 				if gauge:GetTweenTimeLeft()==0 then
+					--This song has a random display BPM: shoot the indicator all the way up and down rapidly
+					--I use a command because it's really difficult to do timed things in UpdateFunctions
 					gauge:queuecommand("Random")
 				end
 			end

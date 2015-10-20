@@ -11,17 +11,11 @@ if GAMESTATE:IsExtraStage() or GAMESTATE:IsExtraStage2() then lifeFrame = "extra
 
 return Def.ActorFrame{ 
 	LoadActor(lifeFrame)..{
-		BeginCommand=cmd(playcommand,"CheckNumPlayers");
+		BeginCommand=cmd(queuecommand,"CheckNumPlayers");
 		CheckNumPlayersCommand=function(self,param)
-			if GAMESTATE:IsPlayerEnabled(0) == false then
+			if not GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
 				self:cropleft(0.5)
-			end
-		end;
-	};
-	LoadActor(lifeFrame)..{
-		BeginCommand=cmd(playcommand,"CheckNumPlayers");
-		CheckNumPlayersCommand=function(self,param)
-			if GAMESTATE:IsPlayerEnabled(1) == false then
+			elseif not GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then
 				self:cropright(0.5)
 			end
 		end;
