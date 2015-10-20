@@ -16,20 +16,24 @@ local function TwiddleBPMGauge(self)
 		local song = GAMESTATE:GetCurrentSong()
 		if song then
 			--This function only handles the case where display BPM is constant.
-			if song:IsDisplayBpmConstant() then
-				--Just in case.
+			if song:IsDisplayBpmConstant() and not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
+				--We have to finish tweening in case the last song was random
 				gauge:finishtweening()
 				local displayBpms = song:GetDisplayBpms()
 				local displayBpm = displayBpms[1]
 				local crop = CalculateBaseForBPM(displayBpm)
 				crop = clamp(crop - (math.random() * maximumTwiddleDistance), 0, 1)
 				gauge:croptop(crop)
-				return
 			elseif not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
+				gauge:finishtweening()
 				local bpmDisplay = SCREENMAN:GetTopScreen():GetChild("BPMDisplay"):GetChild("BPMDisplay")
 				gauge:croptop(clamp(CalculateBaseForBPM(tonumber(bpmDisplay:GetText()) or 0), 0, 1))
-				return
+			else
+				if gauge:GetTweenTimeLeft()==0 then
+					gauge:queuecommand("Random")
+				end
 			end
+			return
 		end
 	end
 	--that is, the gauge should show zero which I think is correct behavior
@@ -46,6 +50,9 @@ local t = Def.ActorFrame{
 		end,
 		OnCommand=function(self)
 			self:diffusealpha(0):sleep(0.6):draworder(50):diffusealpha(1)
+		end,
+		RandomCommand=function(self)
+			self:croptop(1):linear(0.25):croptop(0):linear(0.25):croptop(1)
 		end
 	};
 };
