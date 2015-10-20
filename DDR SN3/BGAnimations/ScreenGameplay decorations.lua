@@ -17,11 +17,12 @@ end
 
 t[#t+1] = Def.Actor{
     JudgmentMessageCommand = function(_,params)
+        local stage = GAMESTATE:IsCourseMode() and GAMESTATE:GetCourseSongIndex() + 1 or nil
         local info = ScoringInfo[params.Player]
         if params.HoldNoteScore then
-            info.AddHoldScore(params.HoldNoteScore)
+            info.AddHoldScore(params.HoldNoteScore, stage)
         else
-            info.AddTapScore(params.TapNoteScore)
+            info.AddTapScore(params.TapNoteScore, stage)
         end
         local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(params.Player)
         pss:SetScore(info.GetCurrentScore())
