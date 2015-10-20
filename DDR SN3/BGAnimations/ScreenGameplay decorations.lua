@@ -15,4 +15,18 @@ if ShowStandardDecoration("StageNumber") then
 	end
 end
 
+t[#t+1] = Def.Actor{
+    JudgmentMessageCommand = function(_,params)
+        local info = ScoringInfo[params.Player]
+        if params.HoldNoteScore then
+            info.AddHoldScore(params.HoldNoteScore)
+        else
+            info.AddTapScore(params.TapNoteScore)
+        end
+        local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(params.Player)
+        pss:SetScore(info.GetCurrentScore())
+        pss:SetCurMaxScore(info.GetCurrentMaxScore())
+    end
+}
+
 return t
