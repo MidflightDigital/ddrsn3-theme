@@ -1,10 +1,10 @@
 --Explanation of these values:
---The game seems to treat every BPM below about 100 and above about 300 exactly the same.
+--The game seems to treat every BPM below about 100 and above about 270 exactly the same.
 --115 is about the lowest BPM where there will always be showing bar pieces.
 --This is not necessarily true at 100 BPM, so a negative value is generated.
---185 is simply 300-115, the spread between 0 and 1. - tertu
+--155 is simply 270-115, the spread between 0 and 1. - tertu
 local function CalculateBaseForBPM(bpm)
-	return 1 - (clamp(bpm, 100, 300) - 115) / 185
+	return 1 - (clamp(bpm, 100, 300) - 115) / 155
 end
 
 local function UpdateBPMGauge(self)
