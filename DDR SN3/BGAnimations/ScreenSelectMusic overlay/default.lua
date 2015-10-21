@@ -59,6 +59,7 @@ local t = Def.ActorFrame{
 			self:croptop(1):linear(0.25):croptop(0):linear(0.25):croptop(1)
 		end
 	};
+	LoadActor("SNDifficultyList.lua");
 };
 
 return t;
