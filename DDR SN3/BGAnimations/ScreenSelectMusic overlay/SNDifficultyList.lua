@@ -45,6 +45,8 @@ local itemSpacingY = LoadMetric "ItemSpacingY"
 local labelPos = LoadMetric "LabelPositionX"
 local tickPos = LoadMetric "TickPositionX"
 local glowFeet = LoadMetric("GlowIfMeterAbove10", true)
+local indWidth = LoadMetric "IndicatorWidth"
+local indX = LoadMetric "IndicatorX"
 
 local lastSong = nil
 local lastSteps = {PlayerNumber_P1=nil, PlayerNumber_P2=nil}
@@ -76,6 +78,13 @@ for idx, diff in pairs(difficultiesToDraw) do
     local element = Def.ActorFrame{
         Name = "Row"..diff,
         InitCommand = function(self) self:y( startPos + ( itemSpacingY*( idx-1 ) ) ) end,
+        Def.Quad{
+            Name = "Indicator",
+            InitCommand = function(self) self:diffuse(color "#000000"):zoomy(20):zoomx(indWidth):x(indX):visible(false) end,
+            UpdateCommand = function(self)
+                self:visible(AnyPlayerThisDiff(diff))
+            end,
+        },
         Def.Sprite{
             Name = "Label",
             Texture = "SNDifficultyList labels 1x6.png",
@@ -104,13 +113,9 @@ for idx, diff in pairs(difficultiesToDraw) do
                     self:ClearAttributes()
                     local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
                     if steps then
-                        local meter = steps:GetMeter()
-                        local bigMeter = meter > 10
-                        meter = math.min(meter, 10)
+                        local meter = math.min(steps:GetMeter(),10)
                         local attr = {Length=meter,Diffuse=DiffToColor(diff)}
-                        if bigMeter then attr.Glow = color "#FFFFFF" end
                         self:AddAttribute(0,attr)
-                        self:glowshift()
                     end
                 end
             end
