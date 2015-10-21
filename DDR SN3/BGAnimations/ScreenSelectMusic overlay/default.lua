@@ -34,7 +34,7 @@ local function UpdateBPMGauge(self)
 				if gauge:GetTweenTimeLeft()==0 then
 					--This song has a random display BPM: shoot the indicator all the way up and down rapidly
 					--I use a command because it's really difficult to do timed things in UpdateFunctions
-					gauge:queuecommand("Random")
+					gauge:playcommand("Random")
 				end
 			end
 			return
@@ -50,10 +50,10 @@ local t = Def.ActorFrame{
 	Name="bpm gauge bright",
 	Texture="bpm gauge",
 		InitCommand=function(self)
-			self:draworder(101):x(SCREEN_LEFT+76):y(SCREEN_CENTER_Y-5)
+			self:draworder(101):x(SCREEN_LEFT+76):y(SCREEN_CENTER_Y-5):visible(false)
 		end,
 		OnCommand=function(self)
-			self:diffusealpha(0):sleep(0.6):draworder(50):diffusealpha(1)
+			self:visible(true)
 		end,
 		RandomCommand=function(self)
 			self:croptop(1):linear(0.25):croptop(0):linear(0.25):croptop(1)

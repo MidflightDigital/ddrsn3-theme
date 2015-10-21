@@ -102,7 +102,6 @@ for idx, diff in pairs(difficultiesToDraw) do
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
                     self:ClearAttributes()
-                    self:stopeffect()
                     local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
                     if steps then
                         local meter = steps:GetMeter()
