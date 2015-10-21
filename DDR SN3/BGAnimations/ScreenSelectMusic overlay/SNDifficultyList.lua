@@ -87,7 +87,7 @@ for idx, diff in pairs(difficultiesToDraw) do
         },
         Def.Sprite{
             Name = "Label",
-            Texture = "SNDifficultyList labels 1x6.png",
+            Texture = "SNDifficultyList labels 1x5.png",
             InitCommand = function(self) self:setstate(idx-1):SetAllStateDelays(math.huge):x(labelPos):diffuse{0.5,0.5,0.5,1} end,
             UpdateCommand=function(self)
                 local song = GAMESTATE:GetCurrentSong()
@@ -99,6 +99,8 @@ for idx, diff in pairs(difficultiesToDraw) do
                     else
                         self:diffuse{0.5,0.5,0.5,1}
                     end
+                else
+                    self:diffuse{0.5,0.5,0.5,1}
                 end
             end
         },
@@ -106,17 +108,18 @@ for idx, diff in pairs(difficultiesToDraw) do
         Def.BitmapText{
             Name = "Ticks",
             Font = "_SNDifficultyList ticks",
-            InitCommand = function(self) self:settext(string.rep("x", 10)):x(tickPos):diffuse(DiffToColor(diff, true)):valign(0.6) end,
+            InitCommand = function(self) self:settext(string.rep("x", 10)):x(tickPos):diffuse(DiffToColor(diff, true)) end,
             UpdateCommand=function(self)
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
                     self:ClearAttributes()
                     local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
                     if steps then
-                        local meter = math.min(steps:GetMeter(),10)
-                        local attr = {Length=meter,Diffuse=DiffToColor(diff)}
-                        self:AddAttribute(0,attr)
+                        local meter = steps:GetMeter()
+                        self:AddAttribute( 0,{Length=math.min(meter,10),Diffuse=DiffToColor(diff)} )
                     end
+                else
+                    self:ClearAttributes()
                 end
             end
         }
