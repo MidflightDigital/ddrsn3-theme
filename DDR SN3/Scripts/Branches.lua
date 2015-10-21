@@ -152,5 +152,5 @@ end
 
 function InitialScreen()
 	if GAMESTATE:Dopefish() then return "foon" end
-	return "ScreenWarning"
+	return "ScreenAlbums"
 end

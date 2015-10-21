@@ -1,9 +1,15 @@
 --This is an implementation of DDR SuperNOVA 2 and beyond scoring as described
 --by Aaron Chmielowiec at http://aaronin.jp/ddrssystem.html#ss9.
 
+--To use it, you can call PrepareScoringInfo at the start of each stage or course.
+
 --Shared functions/data
 
 SN2Scoring = {}
+--ScoringInfo is used and maintained solely by PrepareScoringInfo.
+ScoringInfo = {
+    object = ""
+}
 
 local tapNoteScoresToIgnore = {
     TapNoteScore_None = true,
@@ -15,9 +21,24 @@ local tapNoteScoresToIgnore = {
 
 --Normal scoring
 
-function SN2Scoring.MakeNormalScoringFunctions(stepsObject)
+function SN2Scoring.PrepareScoringInfo()
+    if GAMESTATE then
+        local inCourse = GAMESTATE:IsCourseMode()
+        local maker = inCourse and SN2Scoring.MakeCourseScoringFunctions or SN2Scoring.MakeNormalScoringFunctions
+        local dataFetcher = inCourse and GameState.GetCurrentTrail or GameState.GetCurrentSteps
+        for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+            local data = dataFetcher(GAMESTATE,pn)
+            if data then
+                    ScoringInfo[pn] = maker(data,pn)
+            end
+        end
+    end
+end
+
+function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn)
     local package = {}
-    local baseScore = 1000000/stepsObject:GetRadarValues():GetValue('RadarCategory_TapsAndHolds')
+    local radar = stepsObject:GetRadarValues(pn)
+    local baseScore = 1000000/(radar:GetValue('RadarCategory_TapsAndHolds')+radar:GetValue('RadarCategory_Holds')+radar:GetValue('RadarCategory_Rolls'))
     local currentScore = 0
     local currentMaxScore = 0
 
@@ -75,16 +96,19 @@ local function CourseNoteMultiplier(stage, score)
     return 0
 end
 
-function SN2Scoring.MakeCourseScoringFunctions(trailObject)
+function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
     local package = {}
     local trailEntries = trailObject:GetTrailEntries()
     local totalSDP = 0
 
     for stage, entry in ipairs( trailEntries ) do
         local multiplier = CourseNoteMultiplier(stage)
-        totalSDP = entry:GetSteps():GetRadarValues():GetValue('RadarCategory_TapsAndHolds')
-           * multiplier
-           + totalSDP
+        local radar = entry:GetSteps():GetRadarValues(pn)
+        totalSDP = (radar:GetValue('RadarCategory_TapsAndHolds')
+            +radar:GetValue('RadarCategory_Holds')
+            +radar:GetValue('RadarCategory_Rolls'))
+            * multiplier
+            + totalSDP
     end
     
     local baseScore = 1000000 / totalSDP

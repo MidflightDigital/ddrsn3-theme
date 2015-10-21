@@ -9,26 +9,12 @@ local t = Def.ActorFrame{
 		LoseFocusCommand=cmd(visible,false);
 		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
-	
-	-- Panel
-	LoadActor("_panel")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-132;y,SCREEN_CENTER_Y+109;);
-		OnCommand=function(self)
-			if GAMESTATE:GetNumSidesJoined() == 2 then
-				self:playcommand("GainFocus")
-			end
-		end;
-		GainFocusCommand=cmd(visible,true);
-		LoseFocusCommand=cmd(visible,false);
-		OffCommand=cmd(sleep,0.264;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
-	};
-
 	-- Picture
 	LoadActor("dancer"..masterPlayer)..{
 		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-147;y,SCREEN_CENTER_Y+108;);
 		BeginCommand=cmd(playcommand,"CheckNumPlayers");
-		GainFocusCommand=cmd(stoptweening;diffusealpha,1);
-		LoseFocusCommand=cmd(stoptweening;diffusealpha,0);
+		GainFocusCommand=cmd(visible,true;bounceend,0.2;zoom,1);
+		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0;visible,false);
 		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 		CheckNumPlayersCommand=function(self,param)
 			if GAMESTATE:GetNumPlayersEnabled() > 1 then

@@ -6,8 +6,8 @@ end
 
 return Def.ActorFrame{
 	LoadActor(THEME:GetPathG("_instructions",instructionPage))..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+600;y,SCREEN_CENTER_Y);
-		OnCommand=cmd(linear,1;addx,-600);
-		OffCommand=cmd(linear,1;addx,-600);
+        InitCommand=function(self) self:x(SCREEN_RIGHT+self:GetWidth()/2) self:y(SCREEN_CENTER_Y) end;
+		OnCommand=function(self) self:linear(0.1):x(SCREEN_CENTER_X) end;
+        OffCommand=function(self) self:linear(0.1):x(SCREEN_LEFT-self:GetWidth()/2) end;
 	};
 };

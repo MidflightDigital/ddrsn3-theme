@@ -38,7 +38,7 @@ t[#t+1] = Def.ActorFrame {
 			OnCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+134);
 		};
 	};
-	LoadActor(("../eval_in"))..{
+	LoadActor(("../failed"))..{
 		StartTransitioningCommand=cmd(play);
 	};
 	--- Flash SONG BANNER  sound------
@@ -96,5 +96,7 @@ t[#t+1] = LoadActor("../ScreenStageInformation out/top_stage")..{
 	InitCommand=cmd(CenterX;y,SCREEN_TOP+52);
 	OnCommand=cmd(addy,-104;sleep,0.396;linear,0.198;addy,104);
 };
+
+SN2Scoring.PrepareScoringInfo()
 
 return t
