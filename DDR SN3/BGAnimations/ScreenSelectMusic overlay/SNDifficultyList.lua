@@ -61,10 +61,8 @@ local function Update(self, _)
             if steps[pn] ~= lastSteps[pn] then anyStepsChanged = true break end
         end
         if (song~=lastSong) or anyStepsChanged then
-            for _, row in pairs(self:GetChildren()) do
-                for _, item in pairs(self:GetChildren()) do
-                    item:queuecommand("Update")
-                end
+            for _, item in pairs(self:GetChildren()) do
+                item:playcommand("Update")
             end
         end
         lastSong = song
@@ -72,19 +70,26 @@ local function Update(self, _)
     end
 end
 
-local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SCREEN_CENTER_Y+90):SetUpdateFunction(Update) end}
+local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SCREEN_CENTER_Y+90):hibernate(0.25):SetUpdateFunction(Update) end,
+    OffCommand=function(self) self:sleep(0.5):visible(false) end}
+
+--[[for _, pn in pairs(PlayerNumber) do
+    local indicator = Def.ActorFrame{
+        Def.Sprite{
+            Name='PlayerLabel',
+
+        }
+    }
+    table.insert()
+end
+]]
+
 
 for idx, diff in pairs(difficultiesToDraw) do
     local element = Def.ActorFrame{
         Name = "Row"..diff,
+        UpdateCommand = function(self) for _, item in pairs(self:GetChildren()) do item:playcommand("Update") end end,
         InitCommand = function(self) self:y( startPos + ( itemSpacingY*( idx-1 ) ) ) end,
-        Def.Quad{
-            Name = "Indicator",
-            InitCommand = function(self) self:diffuse(color "#000000"):zoomy(20):zoomx(indWidth):x(indX):visible(false) end,
-            UpdateCommand = function(self)
-                self:visible(AnyPlayerThisDiff(diff))
-            end,
-        },
         Def.Sprite{
             Name = "Label",
             Texture = "SNDifficultyList labels 1x5.png",
@@ -104,7 +109,6 @@ for idx, diff in pairs(difficultiesToDraw) do
                 end
             end
         },
-        --Please note that the following valign is a hack and should be fixed
         Def.BitmapText{
             Name = "Ticks",
             Font = "_SNDifficultyList ticks",
@@ -113,10 +117,12 @@ for idx, diff in pairs(difficultiesToDraw) do
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
                     self:ClearAttributes()
+                    self:stopeffect()
                     local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
                     if steps then
                         local meter = steps:GetMeter()
-                        self:AddAttribute( 0,{Length=math.min(meter,10),Diffuse=DiffToColor(diff)} )
+                        local attr = {Length=math.min(meter,10),Diffuse=DiffToColor(diff)}
+                        self:AddAttribute( 0, attr )
                     end
                 else
                     self:ClearAttributes()

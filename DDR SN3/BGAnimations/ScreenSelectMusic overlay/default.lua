@@ -45,7 +45,8 @@ local function UpdateBPMGauge(self)
 end
 
 local t = Def.ActorFrame{
-	InitCommand=function(self) self:SetUpdateFunction(UpdateBPMGauge) end,
+	InitCommand=function(self) self:hibernate(1):SetUpdateFunction(UpdateBPMGauge) end,
+	OffCommand=function(self) self:sleep(0.5):visible(false) end,
 	Def.Sprite {
 	Name="bpm gauge bright",
 	Texture="bpm gauge",
