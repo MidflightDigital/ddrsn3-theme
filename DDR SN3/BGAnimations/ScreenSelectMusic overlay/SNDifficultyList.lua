@@ -77,12 +77,13 @@ local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SC
     local indicator = Def.ActorFrame{
         Def.Sprite{
             Name='PlayerLabel',
+            Texture='SNDifficultyList player label 2x1.png',
+
 
         }
     }
     table.insert()
-end
-]]
+end]]
 
 
 for idx, diff in pairs(difficultiesToDraw) do
