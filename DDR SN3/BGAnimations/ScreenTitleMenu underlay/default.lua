@@ -67,7 +67,7 @@ t[#t+1] = Def.ActorFrame {
 		Def.BitmapText{
 			Font="_russell_square";
 			Text="";
-			InitCommand=function(self) self:hibernate(0.4):Center(X):y(SCREEN_BOTTOM-91):zoom(0.9):maxwidth(513) end;
+			InitCommand=function(self) self:hibernate(0.4):Center(X):y(SCREEN_BOTTOM-100):zoom(0.9):maxwidth(513):wrapwidthpixels(513):valign(0) end;
 			TitleSelectionMessageCommand=function(self, params) self:settext(THEME:GetString("ScreenTitleMenu","Description"..params.Choice)) end
 		};
 	};
