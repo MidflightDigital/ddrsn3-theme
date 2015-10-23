@@ -50,8 +50,8 @@ t[#t+1] = Def.ActorFrame {
 			InitCommand=cmd(x,SCREEN_LEFT+182;y,SCREEN_CENTER_Y-40);
 			OnCommand=cmd(zoom,0.2;linear,0.4;zoom,1.3;linear,0.2;zoom,1);
 			TitleSelectionMessageCommand=function(self, params)
-				local path = "/Themes/"..self:GetCurThemeName().."/Graphics/_ScreenTitleMenu image "..string.lower(params.Choice)
-				if RageFileManager.DoesFileExist(path) then
+				local path = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_ScreenTitleMenu image "..string.lower(params.Choice)..".png"
+				if FILEMAN:DoesFileExist(path) then
 					self:Load(path)
 				end
 			end;
@@ -67,7 +67,7 @@ t[#t+1] = Def.ActorFrame {
 		Def.BitmapText{
 			Font="_russell_square";
 			Text="";
-			InitCommand=function(self) self:hibernate(0.4):Center(X):y(SCREEN_BOTTOM-100):zoom(0.9):maxwidth(513):wrapwidthpixels(513):valign(0) end;
+			InitCommand=function(self) self:hibernate(0.4):Center(X):y(SCREEN_BOTTOM-100):zoom(0.9):maxwidth(513):wrapwidthpixels(513):valign(0):vertspacing(8) end;
 			TitleSelectionMessageCommand=function(self, params) self:settext(THEME:GetString("ScreenTitleMenu","Description"..params.Choice)) end
 		};
 	};

@@ -75,11 +75,15 @@ local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SC
 
 --[[for _, pn in pairs(PlayerNumber) do
     local indicator = Def.ActorFrame{
+        Name='Indicator',
         Def.Sprite{
             Name='PlayerLabel',
             Texture='SNDifficultyList player label 2x1.png',
 
 
+        }
+        Def.Quad{
+            Name='Background'
         }
     }
     table.insert()
