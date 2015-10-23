@@ -70,12 +70,14 @@ local function Update(self, _)
     end
 end
 
-local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SCREEN_CENTER_Y+90):hibernate(0.25):SetUpdateFunction(Update) end,
+local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SCREEN_CENTER_Y+90):hibernate(1.25):SetUpdateFunction(Update) end,
     OffCommand=function(self) self:sleep(0.5):visible(false) end}
 
 --[[for _, pn in pairs(PlayerNumber) do
+    local doneUpdateBefore = false
     local indicator = Def.ActorFrame{
         Name='Indicator',
+        InitCommand=function(self)
         Def.Sprite{
             Name='PlayerLabel',
             Texture='SNDifficultyList player label 2x1.png',
@@ -83,7 +85,8 @@ local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SC
 
         }
         Def.Quad{
-            Name='Background'
+            Name='Background',
+            InitCommand=self:diffuse{0.5,0.5,0.5,1}:zoomx(indWidth):zoomy(itemSpacingY)
         }
     }
     table.insert()

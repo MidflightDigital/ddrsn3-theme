@@ -16,6 +16,12 @@ local t = Def.ActorFrame{
 			end
 		end;
 	};
+	Def.TextBanner{
+		InitCommand = function(self) self:Load("TextBanner")
+        	:SetFromSong(GAMESTATE:GetCurrentSong())
+        	:x(-95):y(-8)
+        end;
+	};
 };
 
 return t;
