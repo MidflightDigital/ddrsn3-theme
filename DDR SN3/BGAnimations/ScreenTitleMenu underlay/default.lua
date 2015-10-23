@@ -49,14 +49,26 @@ t[#t+1] = Def.ActorFrame {
 		LoadActor("image")..{
 			InitCommand=cmd(x,SCREEN_LEFT+182;y,SCREEN_CENTER_Y-40);
 			OnCommand=cmd(zoom,0.2;linear,0.4;zoom,1.3;linear,0.2;zoom,1);
+			TitleSelectionMessageCommand=function(self, params)
+				local path = "/Themes/"..self:GetCurThemeName().."/Graphics/_ScreenTitleMenu image "..string.lower(params.Choice)
+				if RageFileManager.DoesFileExist(path) then
+					self:Load(path)
+				end
+			end;
 		};
 		Def.Quad{
 			InitCommand=cmd(blend,Blend.Add;;x,SCREEN_LEFT+182;y,SCREEN_CENTER_Y-40;scaletoclipped,296,216);
 			OnCommand=cmd(zoom,0.2;diffusealpha,0;linear,0.4;zoom,1.3;diffusealpha,1;linear,0.2;zoom,1;diffusealpha,0);
 		};
 		LoadActor("home_dialog")..{
-			InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-85);
+			InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-80);
 			OnCommand=cmd(zoomy,0;sleep,0.1;accelerate,0.3;zoomy,1);
+		};
+		Def.BitmapText{
+			Font="_russell_square";
+			Text="";
+			InitCommand=function(self) self:hibernate(0.4):Center(X):y(SCREEN_BOTTOM-100):zoom(0.9):maxwidth(513):wrapwidthpixels(513):valign(0) end;
+			TitleSelectionMessageCommand=function(self, params) self:settext(THEME:GetString("ScreenTitleMenu","Description"..params.Choice)) end
 		};
 	};
 };
