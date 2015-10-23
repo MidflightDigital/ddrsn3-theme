@@ -45,8 +45,7 @@ local function UpdateBPMGauge(self)
 end
 
 local t = Def.ActorFrame{
-	InitCommand=function(self) self:hibernate(1):SetUpdateFunction(UpdateBPMGauge) end,
-	OffCommand=function(self) self:sleep(0.5):visible(false) end,
+	InitCommand=function(self) self:SetUpdateFunction(UpdateBPMGauge) end,
 	Def.Sprite {
 	Name="bpm gauge bright",
 	Texture="bpm gauge",
@@ -54,13 +53,29 @@ local t = Def.ActorFrame{
 			self:draworder(101):x(SCREEN_LEFT+76):y(SCREEN_CENTER_Y-5):visible(false)
 		end,
 		OnCommand=function(self)
-			self:visible(true)
+			self:sleep(0.264):visible(true)
+		end,
+		OffCommand=function(self)
+			self:sleep(0.033):accelerate(0.33):addx(-400)
 		end,
 		RandomCommand=function(self)
 			self:croptop(1):linear(0.25):croptop(0):linear(0.25):croptop(1)
 		end
 	};
 	LoadActor("SNDifficultyList.lua");
+	Def.Sprite {
+	Texture="help 1x3.png",
+		InitCommand=function(self)
+			self:draworder(100):x(SCREEN_RIGHT-200):y(SCREEN_BOTTOM-15)
+			self:SetAllStateDelays(4.224)
+		end,
+		OnCommand=function(self)
+			self:shadowlength(0):addy(999):sleep(0.6):addy(-999):diffuseblink():effectperiod(1.056)
+		end,
+		OffCommand=function(self)
+			self:addy(999)
+		end
+	};
 };
 
 return t;
