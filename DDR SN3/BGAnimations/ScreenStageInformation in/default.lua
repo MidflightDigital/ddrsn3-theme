@@ -28,14 +28,14 @@ t[#t+1] = Def.ActorFrame {
 	---- DOOR OPEN > CLOSE  CLOSE > OPEN
 	Def.ActorFrame{
 		LoadActor("../Door1")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;zoom,1.01;halign,1);
-			OnCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+50);
+		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;zoom,1.01);
+			OnCommand=cmd(linear,0.198;x,SCREEN_CENTER_X-135);
 		};
 	};
 	Def.ActorFrame{
 		LoadActor("../Door2")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;zoom,1.01;halign,0);
-			OnCommand=cmd(linear,0.198;x,SCREEN_CENTER_X-50);
+		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;zoom,1.01);
+			OnCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+134);
 		};
 	};
 	LoadActor(("../failed"))..{

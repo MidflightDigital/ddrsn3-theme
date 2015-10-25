@@ -19,24 +19,24 @@ else
 end;
 
 local t = Def.ActorFrame {};
---t[#t+1] = Def.ActorFrame {
---	InitCommand=function(self)
---		self:y(SCREEN_CENTER_Y);
---		self:sleep(0.198);
---	end;
+t[#t+1] = Def.ActorFrame {
+	InitCommand=function(self)
+		self:y(SCREEN_CENTER_Y);
+		self:sleep(0.198);
+	end;
 	
 	---- DOOR OPEN > CLOSE  CLOSE > OPEN
---	Def.ActorFrame{
---		LoadActor("../Door1")..{
---		InitCommand=cmd(x,SCREEN_CENTER_X-135;zoom,1.01);
---		};
---	};
---	Def.ActorFrame{
---		LoadActor("../Door2")..{
---		InitCommand=cmd(x,SCREEN_CENTER_X+134;zoom,1.01);
---		};
---	};
---};
+	Def.ActorFrame{
+		LoadActor("../Door1")..{
+		InitCommand=cmd(x,SCREEN_CENTER_X-135;zoom,1.01);
+		};
+	};
+	Def.ActorFrame{
+		LoadActor("../Door2")..{
+		InitCommand=cmd(x,SCREEN_CENTER_X+134;zoom,1.01);
+		};
+	};
+};
 
 t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)
