@@ -51,6 +51,11 @@ local indX = LoadMetric "IndicatorX"
 local lastSong = nil
 local lastSteps = {PlayerNumber_P1=nil, PlayerNumber_P2=nil}
 
+local function DiffToYPos(diff)
+    if invDifficultiesToDraw[diff] == nil then return nil end
+    return startPos + ( itemSpacingY*( invDifficultiesToDraw[diff]-1 ) )
+end
+
 local function Update(self, _)
     if GAMESTATE then
         local song = GAMESTATE:GetCurrentSong()
@@ -73,31 +78,47 @@ end
 local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SCREEN_CENTER_Y+90):hibernate(1.25):SetUpdateFunction(Update) end,
     OffCommand=function(self) self:sleep(0.5):visible(false) end}
 
---[[for _, pn in pairs(PlayerNumber) do
-    local doneUpdateBefore = false
+for _, pn in pairs(PlayerNumber) do
     local indicator = Def.ActorFrame{
-        Name='Indicator',
-        InitCommand=function(self)
+        Name='Indicator'..pn,
+        InitCommand=function(self) self:visible(false) end,
+        UpdateCommand=function(self)
+            self:finishtweening()
+            local currentlyVisible = self:GetVisible()
+            local steps = GAMESTATE:GetCurrentSteps(pn)
+            if steps then
+                if currentlyVisible then
+                    self:linear(0.1)
+                end
+                local yPos = DiffToYPos(steps:GetDifficulty())
+                if yPos then
+                    self:visible(true)
+                    self:y(yPos)
+                    return
+                end
+            end
+            self:visible(false)
+        end,
+        --[[        
         Def.Sprite{
             Name='PlayerLabel',
             Texture='SNDifficultyList player label 2x1.png',
-
-
         }
+        ]]
         Def.Quad{
             Name='Background',
-            InitCommand=self:diffuse{0.5,0.5,0.5,1}:zoomx(indWidth):zoomy(itemSpacingY)
+            InitCommand=function(self) self:diffuse{0,0,0,0.5}:zoomx(indWidth):zoomy(itemSpacingY):x(indX) end,
         }
     }
-    table.insert()
-end]]
+    table.insert(ret, indicator)
+end
 
 
 for idx, diff in pairs(difficultiesToDraw) do
     local element = Def.ActorFrame{
         Name = "Row"..diff,
         UpdateCommand = function(self) for _, item in pairs(self:GetChildren()) do item:playcommand("Update") end end,
-        InitCommand = function(self) self:y( startPos + ( itemSpacingY*( idx-1 ) ) ) end,
+        InitCommand = function(self) self:y( DiffToYPos(diff) ) end,
         Def.Sprite{
             Name = "Label",
             Texture = "SNDifficultyList labels 1x5.png",
