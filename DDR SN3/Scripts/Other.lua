@@ -11,13 +11,13 @@ function TextBannerAfterSet(self,param)
 		Title:settext(JoinStringsWithSpace(TitleText, SubtitleText))
 	end
 
-	Title:maxwidth(240)
+	Title:maxwidth(350)
 	Title:y(-7)
-	Title:zoom(0.9)
+	Title:zoom(0.8)
 
 	Subtitle:visible(false)
 
-	Artist:maxwidth(240)
+	Artist:maxwidth(350)
 	Artist:y(9)
 	Artist:zoom(0.5)
 
