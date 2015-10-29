@@ -63,19 +63,6 @@ local t = Def.ActorFrame{
 		end
 	};
 	LoadActor("SNDifficultyList.lua");
-	Def.Sprite {
-	Texture="help 1x3.png",
-		InitCommand=function(self)
-			self:draworder(100):x(SCREEN_RIGHT-200):y(SCREEN_BOTTOM-15)
-			self:SetAllStateDelays(4.224)
-		end,
-		OnCommand=function(self)
-			self:shadowlength(0):addy(999):sleep(0.6):addy(-999):diffuseblink():effectperiod(1.056)
-		end,
-		OffCommand=function(self)
-			self:addy(999)
-		end
-	};
 };
 
 return t;

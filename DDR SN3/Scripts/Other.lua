@@ -11,27 +11,19 @@ function TextBannerAfterSet(self,param)
 		Title:settext(JoinStringsWithSpace(TitleText, SubtitleText))
 	end
 
-	Title:maxwidth(350)
+	Title:maxwidth(350/0.7)
 	Title:y(-7)
-	Title:zoom(0.8)
+	Title:zoom(0.7)
 
 	Subtitle:visible(false)
 
-	Artist:maxwidth(350)
+	Artist:maxwidth(350/0.7)
 	Artist:y(9)
-	Artist:zoom(0.5)
+	Artist:zoom(0.7)
 
 end
 
-local difficultyToIconIndex = {
-	Difficulty_Beginner		= 0,
-	Difficulty_Easy			= 1,
-	Difficulty_Medium		= 2,
-	Difficulty_Hard			= 3,
-	Difficulty_Challenge 	= 4,
-	Difficulty_Edit			= 5
-}
-function GetDifficultyIconFrame(diff) return difficultyToIconIndex[diff] or difficultyToIconIndex['Difficulty_Edit'] end
+function GetDifficultyIconFrame(diff) return (Enum.Reverse 'Difficulty')[diff] or 5 end
 
 function LoadStepsDisplayGameplayFrame(self,player)
 	local difficultyStates = {

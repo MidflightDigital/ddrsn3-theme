@@ -86,7 +86,7 @@ for _, pn in pairs(PlayerNumber) do
             self:finishtweening()
             local currentlyVisible = self:GetVisible()
             local steps = GAMESTATE:GetCurrentSteps(pn)
-            if steps then
+            if steps and GAMESTATE:GetCurrentSong() then
                 if currentlyVisible then
                     self:linear(0.1)
                 end
