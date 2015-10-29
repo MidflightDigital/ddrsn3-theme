@@ -47,6 +47,7 @@ local tickPos = LoadMetric "TickPositionX"
 local glowFeet = LoadMetric("GlowIfMeterAbove10", true)
 local indWidth = LoadMetric "IndicatorWidth"
 local indX = LoadMetric "IndicatorX"
+local plabelX = LoadMetric "PlayerLabelXOffset"
 
 local lastSong = nil
 local lastSteps = {PlayerNumber_P1=nil, PlayerNumber_P2=nil}
@@ -54,6 +55,14 @@ local lastSteps = {PlayerNumber_P1=nil, PlayerNumber_P2=nil}
 local function DiffToYPos(diff)
     if invDifficultiesToDraw[diff] == nil then return nil end
     return startPos + ( itemSpacingY*( invDifficultiesToDraw[diff]-1 ) )
+end
+
+local function SetXFromPlayerNumber(that, pn)
+    if pn == 'PlayerNumber_P1' then
+        that:x(indX-(indWidth/2)-plabelX)
+    elseif pn == 'PlayerNumber_P2' then
+        that:x(indX+(indWidth/2)+plabelX)
+    end
 end
 
 local function Update(self, _)
@@ -99,15 +108,14 @@ for _, pn in pairs(PlayerNumber) do
             end
             self:visible(false)
         end,
-        --[[        
-        Def.Sprite{
-            Name='PlayerLabel',
-            Texture='SNDifficultyList player label 2x1.png',
-        }
-        ]]
         Def.Quad{
             Name='Background',
             InitCommand=function(self) self:diffuse{0,0,0,0.5}:zoomx(indWidth):zoomy(itemSpacingY):x(indX) end,
+        },
+        Def.Sprite{
+            Name='PlayerLabel',
+            Texture='SNDifficultyList player label '..string.lower(ToEnumShortString(pn))..'.png',
+            InitCommand=function(self) SetXFromPlayerNumber(self:draworder(1000), pn) end
         }
     }
     table.insert(ret, indicator)
