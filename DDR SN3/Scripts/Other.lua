@@ -11,22 +11,22 @@ function TextBannerAfterSet(self,param)
 		Title:settext(JoinStringsWithSpace(TitleText, SubtitleText))
 	end
 
-	Title:maxwidth(350/0.75)
+	Title:maxwidth(300/0.8)
 	Title:y(-7)
-	Title:zoom(0.75)
+	Title:zoom(0.8)
 
 	Subtitle:visible(false)
 
-	Artist:maxwidth(350/0.65)
+	Artist:maxwidth(300/0.6)
 	Artist:y(9)
-	Artist:zoom(0.65)
+	Artist:zoom(0.6)
 
 end
 
 function TextBannerGameplayAfterSet(self, param)
 	TextBannerAfterSet(self)
-	self:GetChild("Title"):maxwidth(200/0.75)
-	self:GetChild("Artist"):maxwidth(200/0.65)
+	self:GetChild("Title"):maxwidth(200/0.8)
+	self:GetChild("Artist"):maxwidth(200/0.6)
 end
 
 function GetDifficultyIconFrame(diff) return (Enum.Reverse 'Difficulty')[diff] or 5 end
