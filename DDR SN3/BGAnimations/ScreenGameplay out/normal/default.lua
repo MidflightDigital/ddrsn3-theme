@@ -1,4 +1,7 @@
 local t = Def.ActorFrame {
+	LoadActor(("../../cleared"))..{
+		StartTransitioningCommand=cmd(play);
+	};
 	---- DOOR OPEN > CLOSE  CLOSE > OPEN
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("","Door1"))..{
