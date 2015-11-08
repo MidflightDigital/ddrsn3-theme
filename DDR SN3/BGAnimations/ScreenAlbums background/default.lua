@@ -1,4 +1,7 @@
 return Def.ActorFrame{
+	LoadActor(THEME:GetPathS("","ScreenAlbums music"))..{
+		StartTransitioningCommand=cmd(play);
+	};
 	Def.Quad{
 		InitCommand=cmd(FullScreen;diffuse,color("0,0,0,1"));
 	};
