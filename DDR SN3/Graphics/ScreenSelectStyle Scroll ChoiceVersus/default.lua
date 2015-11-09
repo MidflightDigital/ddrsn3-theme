@@ -1,7 +1,7 @@
 local t = Def.ActorFrame{
 	-- Information panel
 	LoadActor("_info")..{
-		InitCommand=cmd(x,SCREEN_RIGHT-240;y,SCREEN_CENTER_Y-75;);
+		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+11;y,SCREEN_CENTER_Y-75;);
 		GainFocusCommand=cmd(visible,true;addx,-11;decelerate,0.1;addx,11);
 		LoseFocusCommand=cmd(visible,false);
 		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
@@ -22,7 +22,7 @@ local t = Def.ActorFrame{
 	};
 		--style
 	LoadActor("style")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-253;y,SCREEN_CENTER_Y+183);
+		InitCommand=cmd(x,SCREEN_LEFT+120;y,SCREEN_CENTER_Y+183);
 		OffCommand=cmd(bouncebegin,0.264;zoom,0);
 		GainFocusCommand=cmd(bounceend,0.2;zoom,1);
 		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0);

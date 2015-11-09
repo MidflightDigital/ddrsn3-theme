@@ -4,21 +4,21 @@ local unjoinedPlayer = GAMESTATE:GetMasterPlayerNumber() == PLAYER_1 and "P2" or
 local t = Def.ActorFrame{
 	-- Information panel
 	LoadActor("_info")..{
-		InitCommand=cmd(x,SCREEN_RIGHT-240;y,SCREEN_CENTER_Y-75;);
-		OnCommand=cmd(addx,379;sleep,0.264;decelerate,0.264;addx,-379;decelerate,0.1;addx,22);
+		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+11;y,SCREEN_CENTER_Y-75;);
+		OnCommand=cmd(addx,379;sleep,0.264;decelerate,0.264;addx,-379;decelerate,0.1;addx,11);
 		GainFocusCommand=cmd(visible,true;addx,-11;decelerate,0.1;addx,11);
 		LoseFocusCommand=cmd(visible,false);
 		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
 	
 	-- Panel
-	LoadActor("_panel")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-400;y,SCREEN_CENTER_Y+38;zoomy,0.8);
+	LoadActor("_panel2")..{
+		InitCommand=cmd(x,SCREEN_CENTER_X-402;y,SCREEN_CENTER_Y+32);
 		GainFocusCommand=cmd(linear,0.1;addx,-225;addy,-49);
 		LoseFocusCommand=cmd(linear,0.1;addx,225;addy,49);
 		OffCommand=cmd(sleep,0.264;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
-	LoadActor("_panel")..{
+	LoadActor("_panel.png")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-112;y,SCREEN_CENTER_Y+119;);
 		OnCommand=cmd(zoom,0;diffusealpha,0;sleep,0.264;sleep,0.792;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1);
 		GainFocusCommand=cmd(linear,0.1;addx,-30;addy,-10);
@@ -42,7 +42,7 @@ local t = Def.ActorFrame{
 	};
 	--style
 	LoadActor("style")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-253;y,SCREEN_CENTER_Y+183);
+		InitCommand=cmd(x,SCREEN_LEFT+120;y,SCREEN_CENTER_Y+183);
 		OnCommand=cmd(zoom,0;sleep,0.264;bounceend,0.264;zoom,1);
 		OffCommand=cmd(bouncebegin,0.264;zoom,0);
 		GainFocusCommand=cmd(bounceend,0.2;zoom,1);
