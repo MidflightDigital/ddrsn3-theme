@@ -50,7 +50,7 @@ local t = Def.ActorFrame{
 	Name="bpm gauge bright",
 	Texture="bpm gauge",
 		InitCommand=function(self)
-			self:hibernate(1.25):draworder(101):x(SCREEN_LEFT+76):y(SCREEN_CENTER_Y-5):visible(false)
+			self:hibernate(1.25):draworder(101):x(SCREEN_LEFT+67):y(SCREEN_CENTER_Y-1):visible(false)
 		end,
 		OnCommand=function(self)
 			self:sleep(0.264):visible(true)
@@ -93,6 +93,13 @@ local t = Def.ActorFrame{
 		OffCommand=function(self)
 			self:decelerate(0.2);addy(54)
 		end
+	};
+	Def.BitmapText{
+			Font="_russell_square";
+			Text="Select a tune!";
+			InitCommand=function(self) self:hibernate(0.4):x(SCREEN_CENTER_X):y(SCREEN_TOP+25):zoom(0.8):maxwidth(513):wrapwidthpixels(513):halign(0):vertspacing(8) end;
+			OnCommand=cmd(diffuse,color("#00e513")cropright,1;sleep,0.1;accelerate,0.3;cropright,0);
+			OffCommand=cmd(cropbottom,0;sleep,0.1;accelerate,0.3;cropbottom,1);
 	};
 };
 
