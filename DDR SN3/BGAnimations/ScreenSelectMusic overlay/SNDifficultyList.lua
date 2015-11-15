@@ -113,7 +113,7 @@ for _, pn in pairs(PlayerNumber) do
         },
         Def.Sprite{
             Name='PlayerLabel',
-            Texture='SNDifficultyList player label '..string.lower(ToEnumShortString(pn))..'.png',
+            Texture='SNDifficultyList player label '..string.lower(ToEnumShortString(pn))..' (doubleres)',
             InitCommand=function(self) SetXFromPlayerNumber(self:draworder(1000), pn) end
         }
     }
@@ -128,7 +128,7 @@ for idx, diff in pairs(difficultiesToDraw) do
         InitCommand = function(self) self:y( DiffToYPos(diff) ) end,
         Def.Sprite{
             Name = "Label",
-            Texture = "SNDifficultyList labels 1x5.png",
+            Texture = "SNDifficultyList labels 1x5 (doubleres).png",
             InitCommand = function(self) self:setstate(idx-1):SetAllStateDelays(math.huge):x(labelPos):diffuse{0.5,0.5,0.5,1} end,
             SNDLUpdateMessageCommand=function(self)
                 local song = GAMESTATE:GetCurrentSong()

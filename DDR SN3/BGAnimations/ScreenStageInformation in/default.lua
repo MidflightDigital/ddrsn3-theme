@@ -46,16 +46,6 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
-t[#t+1] = Def.ActorFrame {
-	InitCommand=function(self)
-		self:y(SCREEN_CENTER_Y-124);
-	end;
-	LoadActor("../ScreenStageInformation out/banner_stage")..{
-		InitCommand=cmd(CenterX);
-		OnCommand=cmd(zoomy,0;sleep,0.099;sleep,0.396;linear,0.099;zoomy,1);
-	};
-};
-
 if not GAMESTATE:IsCourseMode() then
 --song jacket--
 t[#t+1] = Def.ActorFrame {
@@ -77,8 +67,18 @@ else
 t[#t+1] = LoadActor("CourseDisplay");
 end;
 
+t[#t+1] = Def.ActorFrame {
+	InitCommand=function(self)
+		self:y(SCREEN_CENTER_Y-124);
+	end;
+	LoadActor("banner_stage")..{
+		InitCommand=cmd(CenterX);
+		OnCommand=cmd(zoomy,0;sleep,0.099;sleep,0.396;linear,0.099;zoomy,1;sleep,2);
+	};
+};
+
 t[#t+1] = Def.Sprite {
-	Texture="../ScreenStageInformation out/rayo 1x2.png",
+	Texture="rayo 1x2.png",
 		InitCommand=function(self)
 			self:Center()
 			self:SetAllStateDelays(0.082)
@@ -87,12 +87,12 @@ t[#t+1] = Def.Sprite {
 
 t[#t+1] = LoadActor("StageDisplay");
 
-t[#t+1] = LoadActor("../ScreenStageInformation out/bottom_stage")..{
+t[#t+1] = LoadActor("bottom_stage")..{
 	InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-27);
 	OnCommand=cmd(addy,54;sleep,0.396;linear,0.198;addy,-54);
 };
 
-t[#t+1] = LoadActor("../ScreenStageInformation out/top_stage")..{
+t[#t+1] = LoadActor("top_stage")..{
 	InitCommand=cmd(CenterX;y,SCREEN_TOP+52);
 	OnCommand=cmd(addy,-104;sleep,0.396;linear,0.198;addy,104);
 };
