@@ -154,21 +154,23 @@ for idx, diff in pairs(difficultiesToDraw) do
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
                     self:ClearAttributes()
-                    self:stopeffect()
                     local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
                     if steps then
                         local meter = steps:GetMeter()
                         if meter > 10 then
-                            self:glowshift():effectcolor1(DiffToColor(diff,true)):effectcolor2(color "#FFFFFF")
+                            self:glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
                             return
                         else
-                            self:stopeffect()
+                            self:stopeffect():diffuse(DiffToColor(diff, true))
                         end
                         local attr = {Length=meter,Diffuse=DiffToColor(diff)}
                         self:AddAttribute( 0, attr )
+                    else
+                        self:stopeffect()
                     end
                 else
                     self:ClearAttributes()
+                    self:stopeffect()
                 end
             end,
         }
