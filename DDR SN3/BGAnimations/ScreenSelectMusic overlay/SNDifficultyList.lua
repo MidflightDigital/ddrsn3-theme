@@ -149,7 +149,7 @@ for idx, diff in pairs(difficultiesToDraw) do
         Def.BitmapText{
             Name = "Ticks",
             Font = "_SNDifficultyList ticks",
-            InitCommand = function(self) self:settext(string.rep("x", 10)):x(tickPos):diffuse(DiffToColor(diff, true)) end,
+            InitCommand = function(self) self:settext(string.rep("x", 10)):x(tickPos):diffuse(DiffToColor(diff, true)):textglowmode('TextGlowMode_Inner') end,
             UpdateCommand=function(self)
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
@@ -158,13 +158,19 @@ for idx, diff in pairs(difficultiesToDraw) do
                     local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
                     if steps then
                         local meter = steps:GetMeter()
-                        local attr = {Length=math.min(meter,10),Diffuse=DiffToColor(diff)}
+                        if meter > 10 then
+                            self:glowshift():effectcolor1(DiffToColor(diff,true)):effectcolor2(color "#FFFFFF")
+                            return
+                        else
+                            self:stopeffect()
+                        end
+                        local attr = {Length=meter,Diffuse=DiffToColor(diff)}
                         self:AddAttribute( 0, attr )
                     end
                 else
                     self:ClearAttributes()
                 end
-            end
+            end,
         }
     }
     table.insert(ret, element)
