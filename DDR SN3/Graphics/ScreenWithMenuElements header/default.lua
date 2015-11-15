@@ -27,11 +27,9 @@ local out = Def.ActorFrame{
 }
 
 if headerTextImage then
-	SCREENMAN:SystemMessage("Adding")
 	table.insert(out,LoadActor(headerTextImage)..{
 		InitCommand=function(self) self:x(SCREEN_LEFT+95):y(5):halign(0):valign(1) end,
 	})
-	SCREENMAN:SystemMessage("Alive")
 end
 
 return out
