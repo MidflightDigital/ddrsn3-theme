@@ -74,10 +74,9 @@ local function Update(self, _)
             steps[pn] = GAMESTATE:GetCurrentSteps(pn)
             if steps[pn] ~= lastSteps[pn] then anyStepsChanged = true break end
         end
-        if (song~=lastSong) or anyStepsChanged then
-            for _, item in pairs(self:GetChildren()) do
-                item:playcommand("Update")
-            end
+        local songChanged = song~=lastSong
+        if songChanged or anyStepsChanged then
+            MESSAGEMAN:Broadcast("SNDLUpdate", {SongChanged=songChanged, StepsChanged=anyStepsChanged})
         end
         lastSong = song
         lastSteps = steps
@@ -91,7 +90,7 @@ for _, pn in pairs(PlayerNumber) do
     local indicator = Def.ActorFrame{
         Name='Indicator'..pn,
         InitCommand=function(self) self:visible(false) end,
-        UpdateCommand=function(self)
+        SNDLUpdateMessageCommand=function(self)
             self:finishtweening()
             local currentlyVisible = self:GetVisible()
             local steps = GAMESTATE:GetCurrentSteps(pn)
@@ -125,13 +124,13 @@ end
 for idx, diff in pairs(difficultiesToDraw) do
     local element = Def.ActorFrame{
         Name = "Row"..diff,
-        UpdateCommand = function(self) for _, item in pairs(self:GetChildren()) do item:playcommand("Update") end end,
+        SNDLUpdateMessageCommand = function(self) for _, item in pairs(self:GetChildren()) do item:playcommand("Update") end end,
         InitCommand = function(self) self:y( DiffToYPos(diff) ) end,
         Def.Sprite{
             Name = "Label",
             Texture = "SNDifficultyList labels 1x5.png",
             InitCommand = function(self) self:setstate(idx-1):SetAllStateDelays(math.huge):x(labelPos):diffuse{0.5,0.5,0.5,1} end,
-            UpdateCommand=function(self)
+            SNDLUpdateMessageCommand=function(self)
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
                     if AnyPlayerThisDiff(diff) then
@@ -150,10 +149,11 @@ for idx, diff in pairs(difficultiesToDraw) do
             Name = "Ticks",
             Font = "_SNDifficultyList ticks",
             InitCommand = function(self) self:settext(string.rep("x", 10)):x(tickPos):diffuse(DiffToColor(diff, true)):textglowmode('TextGlowMode_Inner') end,
-            UpdateCommand=function(self)
+            SNDLUpdateMessageCommand=function(self, params)
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
                     self:ClearAttributes()
+                    if params.SongChanged then self:stopeffect() end
                     local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
                     if steps then
                         local meter = steps:GetMeter()
