@@ -1,12 +1,8 @@
 return Def.ActorFrame{
 	LoadActor("ddrsn_logobg")..{
-		InitCommand=cmd(Center);
+		InitCommand=cmd(Center;FullScreen);
 	};
-	LoadActor("1")..{
-		InitCommand=cmd(Center);
-		OnCommand=cmd(diffusealpha,0;blend,add;linear,2;diffusealpha,0.55;addy,-300;effectperiod,4);
+	LoadActor("ddrsn_konami")..{
+		InitCommand=cmd(x,SCREEN_CENTER_X-2;y,SCREEN_BOTTOM-40);
 	};
-	LoadActor("1")..{
-		InitCommand=cmd(Center);
-		OnCommand=cmd(diffusealpha,0;blend,add;linear,2;diffusealpha,0.55;addy,300;effectperiod,4);
-	};
+}
