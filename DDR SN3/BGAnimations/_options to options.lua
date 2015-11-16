@@ -1,1 +1,5 @@
-return LoadActor(THEME:GetPathS("","_swoosh"))
+return Def.ActorFrame{
+	LoadActor(THEME:GetPathS("","_swoosh"))..{
+		StartTransitioningCommand=cmd(play);
+	};
+};
