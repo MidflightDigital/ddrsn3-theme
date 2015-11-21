@@ -11,10 +11,18 @@ local t = Def.ActorFrame{
 		end;
 	};
 	Def.TextBanner{
-		InitCommand = function(self) self:Load("TextBannerGameplay")
-        	:SetFromSong(GAMESTATE:GetCurrentSong())
-        	:x(-100):y(-8)
-        end;
+		BeginCommand=cmd(queuecommand,"CheckGameMode");
+		CheckGameModeCommand=function(self,param)
+			if GAMESTATE:IsCourseMode() == true then
+				self:Load("TextBannerGameplay")
+					:SetFromCourse(GAMESTATE:GetCurrentCourse())
+					:x(-100):y(-8)
+			elseif GAMESTATE:IsCourseMode() == false then
+				self:Load("TextBannerGameplay")
+					:SetFromSong(GAMESTATE:GetCurrentSong())
+					:x(-100):y(-8)
+			end
+		end;
 	};
 };
 
