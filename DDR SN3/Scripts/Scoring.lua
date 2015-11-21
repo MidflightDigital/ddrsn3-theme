@@ -8,7 +8,6 @@
 SN2Scoring = {}
 --ScoringInfo is used and maintained solely by PrepareScoringInfo.
 ScoringInfo = {
-    object = ""
 }
 
 local tapNoteScoresToIgnore = {
@@ -24,13 +23,11 @@ local tapNoteScoresToIgnore = {
 function SN2Scoring.PrepareScoringInfo()
     if GAMESTATE then
         local inCourse = GAMESTATE:IsCourseMode()
-        SCREENMAN:SystemMessage("Course!")
         local maker = inCourse and SN2Scoring.MakeCourseScoringFunctions or SN2Scoring.MakeNormalScoringFunctions
         local dataFetcher = inCourse and GameState.GetCurrentTrail or GameState.GetCurrentSteps
         for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
             local data = dataFetcher(GAMESTATE,pn)
             if data then
-                    SCREENMAN:SystemMessage("Found data! "..pn)
                     ScoringInfo[pn] = maker(data,pn)
             end
         end

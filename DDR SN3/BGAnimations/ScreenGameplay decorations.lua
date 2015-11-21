@@ -16,9 +16,14 @@ if ShowStandardDecoration("StageNumber") then
 end
 
 t[#t+1] = Def.Actor{
+    Name="ScoringController",
     JudgmentMessageCommand = function(_,params)
+        if not (( ScoringInfo[params.Player]) or 
+            (ScoringInfo.seed == GAMESTATE:GetStageSeed())) then 
+            SN2Scoring.PrepareScoringInfo()
+            ScoringInfo.seed = GAMESTATE:GetStageSeed() 
+        end
         local stage = GAMESTATE:IsCourseMode() and GAMESTATE:GetCourseSongIndex() + 1 or nil
-        if not ScoringInfo or not ScoringInfo[params.Player] then SN2Scoring.PrepareScoringInfo() end
         local info = ScoringInfo[params.Player]
         if params.HoldNoteScore then
             info.AddHoldScore(params.HoldNoteScore, stage)
@@ -28,7 +33,7 @@ t[#t+1] = Def.Actor{
         local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(params.Player)
         pss:SetScore(info.GetCurrentScore())
         pss:SetCurMaxScore(info.GetCurrentMaxScore())
-    end
+    end,
 }
 
 return t
