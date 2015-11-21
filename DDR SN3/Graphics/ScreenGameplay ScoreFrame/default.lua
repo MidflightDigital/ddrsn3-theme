@@ -16,7 +16,7 @@ local t = Def.ActorFrame{
         	:x(-100):y(-8)
         end;
         CurrentSongChangedMessageCommand = function(self)
-        	self:SetFromSong(GAMESTATE:SetCurrentSong())
+        	self:SetFromSong(GAMESTATE:GetCurrentSong())
         end;
 	};
 };

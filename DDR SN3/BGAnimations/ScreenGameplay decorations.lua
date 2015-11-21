@@ -17,9 +17,11 @@ end
 
 t[#t+1] = Def.Actor{
     JudgmentMessageCommand = function(_,params)
+        SCREENMAN:SystemMessage("firing")
         local stage = GAMESTATE:IsCourseMode() and GAMESTATE:GetCourseSongIndex() + 1 or nil
-		if not info then return end
+        if not ScoringInfo then return end
         local info = ScoringInfo[params.Player]
+        if not info then return end
         if params.HoldNoteScore then
             info.AddHoldScore(params.HoldNoteScore, stage)
         else
