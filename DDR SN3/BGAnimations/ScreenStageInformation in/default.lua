@@ -85,6 +85,5 @@ t[#t+1] = LoadActor("top_stage")..{
 	OnCommand=cmd(addy,-104;sleep,0.396;linear,0.198;addy,104);
 };
 
-SN2Scoring.PrepareScoringInfo()
 
 return t

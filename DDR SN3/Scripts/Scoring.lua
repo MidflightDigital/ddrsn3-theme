@@ -24,11 +24,13 @@ local tapNoteScoresToIgnore = {
 function SN2Scoring.PrepareScoringInfo()
     if GAMESTATE then
         local inCourse = GAMESTATE:IsCourseMode()
+        SCREENMAN:SystemMessage("Course!")
         local maker = inCourse and SN2Scoring.MakeCourseScoringFunctions or SN2Scoring.MakeNormalScoringFunctions
         local dataFetcher = inCourse and GameState.GetCurrentTrail or GameState.GetCurrentSteps
         for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
             local data = dataFetcher(GAMESTATE,pn)
             if data then
+                    SCREENMAN:SystemMessage("Found data! "..pn)
                     ScoringInfo[pn] = maker(data,pn)
             end
         end
@@ -127,7 +129,7 @@ function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
     package.AddHoldScore = function(holdNoteScore, stage)
         assert(stage and stage > 0, "You NEED to pass a stage number for course scoring!")
         currentMaxScore = currentMaxScore + baseScore*CourseNoteMultiplier(stage)
-        currentScore = baseScore*CourseNoteMultiplier(stage, holdNoteScore)
+        currentScore = currentScore + baseScore*CourseNoteMultiplier(stage, holdNoteScore)
     end
 
     package.GetCurrentScore = function(exact)
