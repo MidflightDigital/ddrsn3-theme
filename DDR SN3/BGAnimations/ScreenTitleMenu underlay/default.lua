@@ -10,19 +10,23 @@ t[#t+1] = Def.ActorFrame {
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("ScreenLogo","background/back.png"))..{
 			InitCommand=cmd(Center;diffusealpha,0.8);
+			OffCommand=cmd(linear,0.5;diffusealpha,0);
 		};
 		LoadActor(THEME:GetPathB("ScreenLogo","background/fog.png"))..{
 			InitCommand=cmd(diffusealpha,0.5;Center;blend,Blend.Add;;fadetop,0.3;fadebottom,0.3);
+			OffCommand=cmd(linear,0.5;diffusealpha,0);
 		};
 	};
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("ScreenLogo","background/grid"))..{
-			InitCommand=cmd(valign,1;Center;FullScreen;rotationx,120;zoom,0.6);
+			InitCommand=cmd(valign,1;Center;rotationx,120;zoom,0.6);
+			OffCommand=cmd(accelerate,0.4;addy,SCREEN_HEIGHT);
 		};
 	};
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("ScreenLogo","background/grid"))..{
-			InitCommand=cmd(valign,0;Center;FullScreen;rotationx,240;zoom,0.6);
+			InitCommand=cmd(valign,0;Center;rotationx,240;zoom,0.6);
+			OffCommand=cmd(accelerate,0.4;addy,-SCREEN_HEIGHT);
 		};
 	};
 };
@@ -34,9 +38,11 @@ t[#t+1] = Def.ActorFrame {
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("ScreenLogo","background/ddrsn_logo.png"))..{
 			InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9;);
+			OffCommand=cmd(bounceend,0.5;zoom,0);
 		};
 		Def.Quad{
 			InitCommand=cmd(FullScreen;diffuse,color("0,0,0,0.6"));
+			OffCommand=cmd(linear,0.5;diffusealpha,0);
 		};
 		LoadActor("image")..{
 			InitCommand=cmd(x,SCREEN_LEFT+182;y,SCREEN_CENTER_Y-50);
@@ -47,11 +53,12 @@ t[#t+1] = Def.ActorFrame {
 					self:Load(path)
 				end
 			end;
-			OffCommand=cmd(accelerate,0.4;addx,-274);
+			OffCommand=cmd(accelerate,0.4;addx,-SCREEN_WIDTH);
 		};
 		LoadActor("left_panel")..{
 			InitCommand=cmd(x,SCREEN_LEFT+47;y,SCREEN_CENTER_Y);
 			OnCommand=cmd(addx,-94;decelerate,0.2;addx,94);
+			OffCommand=cmd(accelerate,0.2;addx,-94);
 		};
 		LoadActor("home_dialog")..{
 			InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-80);

@@ -21,23 +21,11 @@ end;
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)
-		self:y(SCREEN_CENTER_Y);
 		self:sleep(3.01);
 	end;
 	
 	---- DOOR OPEN > CLOSE  CLOSE > OPEN
-	Def.ActorFrame{
-		LoadActor("../Door1")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;zoom,1.01;halign,1);
-			OnCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+50);
-		};
-	};
-	Def.ActorFrame{
-		LoadActor("../Door2")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;zoom,1.01;halign,0);
-			OnCommand=cmd(linear,0.198;x,SCREEN_CENTER_X-50);
-		};
-	};
+	LoadActor(THEME:GetPathB("","doors close"));
 	LoadActor(("../failed"))..{
 		StartTransitioningCommand=cmd(play);
 	};

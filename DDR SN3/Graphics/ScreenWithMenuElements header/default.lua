@@ -3,13 +3,15 @@ local headerTextImage
 
 --this should probably be a metric
 if screenName == "ScreenSelectMusic" then
-    headerTextImage = "Music.png"
+    headerTextImage = "Music (doubleres).png"
 elseif string.find(screenName, "Options") then
-    headerTextImage = "Options.png"
+    headerTextImage = "Options (doubleres).png"
 elseif screenName == "ScreenSelectStyle" then
-    headerTextImage = "Style.png"
+    headerTextImage = "Style (doubleres).png"
+	elseif screenName == "ScreenSelectPlayMode" then
+    headerTextImage = "Mode (doubleres).png"
 elseif string.find(screenName, "Evaluation") then
-    headerTextImage = "Results.png"
+    headerTextImage = "Results (doubleres).png"
 end
 
 local function UpdateAni(self)
