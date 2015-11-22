@@ -6,7 +6,7 @@ function StyleChoices()
 end
 
 function ModeChoices()
-	local choices = "1,2,3,4"
+	local choices = "1,2,3,4,5"
 	local coinMode = GAMESTATE:GetCoinMode()
 	if coinMode == 'CoinMode_Home' then choices = choices .. "" end
 	return choices

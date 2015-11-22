@@ -33,4 +33,26 @@ t[#t+1] = StandardDecorationFromFileOptional("SongOptions","SongOptions")
 t[#t+1] = StandardDecorationFromFile( "Balloon", "Balloon" );
 t[#t+1] = StandardDecorationFromFile("Explanation","Explanation")
 
+if not GAMESTATE:IsCourseMode() then
+	t[#t+1] = StandardDecorationFromFileOptional("NewSong","NewSong") .. {
+		InitCommand=cmd(playcommand,"Set");
+		BeginCommand=cmd(playcommand,"Set");
+		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+		SetCommand=function(self)
+	-- 		local pTargetProfile;
+			local sSong;
+			-- Start!
+			if GAMESTATE:GetCurrentSong() then
+				if PROFILEMAN:IsSongNew(GAMESTATE:GetCurrentSong()) then
+					self:playcommand("Show");
+				else
+					self:playcommand("Hide");
+				end
+			else
+				self:playcommand("Hide");
+			end
+		end;
+	};
+end;
+
 return t

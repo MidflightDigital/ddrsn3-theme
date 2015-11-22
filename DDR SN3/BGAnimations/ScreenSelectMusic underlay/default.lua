@@ -11,4 +11,13 @@ for i=1,15 do
 		};
 	}
 end
+
+t[#t+1] = Def.ActorFrame {
+	LoadActor("WheelHighlight.png")..{
+		InitCommand=cmd(x,SCREEN_RIGHT-166;y,SCREEN_CENTER_Y-16);
+		OnCommand=cmd(addx,330;sleep,0.6;decelerate,0.34;addx,-330);
+		OffCommand=cmd(sleep,0.016;accelerate,0.25;addx,380);
+	};
+};
+
 return t

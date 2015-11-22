@@ -1,4 +1,4 @@
-local maxVisibleContents = 5 -- equivalent of MAX_VISIBLE_CONTENTS
+local maxVisibleContents = 8 -- equivalent of MAX_VISIBLE_CONTENTS
 local maxTotalContents = 56 -- equivalent of MAX_TOTAL_CONTENTS
 local entryHeight = 44
 local itemSecondsPause = 0.75
