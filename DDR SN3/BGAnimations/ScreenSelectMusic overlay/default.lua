@@ -39,6 +39,18 @@ local t = Def.ActorFrame{
 		OnCommand=cmd(diffuseblink;effectcolor1,1,1,1,1;effectcolor2,0,0,0,0;effectperiod,2;addx,271;sleep,0.033;decelerate,0.283;addx,-271;linear,0.033;zoomx,1.086;linear,0.033;zoomx,1);
 		OffCommand=cmd(linear,0.4;addx,236;linear,0;addy,999);
 	};
+	LoadActor( THEME:GetPathB("","optionicon_P1") ) .. {
+		InitCommand=cmd(player,PLAYER_1;x,SCREEN_LEFT+109;y,SCREEN_CENTER_Y;draworder,1);
+		OnCommand=function(self)
+			self:y(SCREEN_CENTER_Y+201);
+		end;
+	};
+	LoadActor( THEME:GetPathB("","optionicon_P2") ) .. {
+		InitCommand=cmd(player,PLAYER_2;x,SCREEN_LEFT+218;y,SCREEN_CENTER_Y;draworder,1);
+		OnCommand=function(self)
+			self:y(SCREEN_CENTER_Y+201);
+		end;
+	};
 };
 
 return t;

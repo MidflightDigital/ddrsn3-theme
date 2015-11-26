@@ -145,11 +145,6 @@ Branch.AfterSaveSummary = function()
 	--return GAMESTATE:AnyPlayerHasRankingFeats() and "ScreenNameEntry" or "ScreenGameOver"
 end
 
-Branch.InformationPage = function()
-	local nextScreen = getenv("NextInfoScreen");
-	return nextScreen or "ScreenInformation"
-end
-
 function InitialScreen()
 	if GAMESTATE:Dopefish() then return "foon" end
 	return "ScreenCompany"

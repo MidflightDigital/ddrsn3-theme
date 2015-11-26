@@ -15,8 +15,6 @@ else
 	else
 		-- normal and extra stages
 		t[#t+1] = LoadActor("normal")
-		t[#t+1] = LoadActor("extra1")
-		t[#t+1] = LoadActor("extra2")
 	end
 end
 

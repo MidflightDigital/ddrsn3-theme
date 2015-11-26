@@ -1,12 +1,22 @@
 local t = Def.ActorFrame{
-	LoadActor("mid");
-	LoadActor("frame")..{
-		BeginCommand=cmd(queuecommand,"CheckNumPlayers");
-		CheckNumPlayersCommand=function(self,param)
+	LoadActor("mid")..{
+		InitCommand=cmd(CenterX);
+	};
+	LoadActor("frame1p")..{
+		BeginCommand=cmd(queuecommand,"CheckNumPlayers1");
+		InitCommand=cmd(halign,0;x,SCREEN_LEFT);
+		CheckNumPlayers2Command=function(self,param)
 			if not GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
-				self:cropleft(0.5)
-			elseif not GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then
-				self:cropright(0.5)
+				self:visible(false)
+			end
+		end;
+	};
+	LoadActor("frame1p")..{
+		BeginCommand=cmd(queuecommand,"CheckNumPlayers2");
+		InitCommand=cmd(halign,0;x,SCREEN_RIGHT;zoomx,-1);
+		CheckNumPlayers2Command=function(self,param)
+			if not GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then
+				self:visible(false)
 			end
 		end;
 	};
@@ -14,7 +24,7 @@ local t = Def.ActorFrame{
 		InitCommand = function(self) self:Load("TextBannerGameplay")
         	:SetFromSong(GAMESTATE:GetCurrentSong())
         	if not GAMESTATE:IsCourseMode() then
-        		self:x(-100):y(-8)
+        		self:x(SCREEN_CENTER_X-100):y(-8)
         	end
         end;
         CurrentSongChangedMessageCommand = function(self)

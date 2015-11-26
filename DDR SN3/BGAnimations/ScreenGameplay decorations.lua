@@ -36,4 +36,25 @@ t[#t+1] = Def.Actor{
     end,
 }
 
+t[#t+1] = LoadActor( THEME:GetPathB("","optionicon_P1") ) .. {
+	InitCommand=cmd(player,PLAYER_1;zoom,1.4;x,WideScale(SCREEN_LEFT+140,SCREEN_LEFT+320);draworder,1);
+	OnCommand=function(self)
+		if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'reverse') then
+			self:y(SCREEN_TOP+70);
+		else
+			self:y(SCREEN_BOTTOM-70);
+		end;
+	end;
+};
+t[#t+1] = LoadActor( THEME:GetPathB("","optionicon_P2") ) .. {
+	InitCommand=cmd(player,PLAYER_2;zoom,1.4;x,WideScale(SCREEN_RIGHT-140,SCREEN_LEFT-320);draworder,1);
+	OnCommand=function(self)
+		if GAMESTATE:PlayerIsUsingModifier(PLAYER_2,'reverse') then
+			self:y(SCREEN_TOP+70);
+		else
+			self:y(SCREEN_BOTTOM-70);
+		end;
+	end;
+};
+
 return t

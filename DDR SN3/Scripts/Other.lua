@@ -180,10 +180,6 @@ function GetSummaryBannerY(num)
 	end
 end
 
--- GetCharAnimPath(sPath)
--- Easier access to Characters folder (taken from ScreenHowToPlay.cpp)
-function GetCharAnimPath(sPath) return "/Characters/"..sPath end
-
 -- JoinStringsWithSpace(a, b)
 -- Joins a pair of strings by a space, removing other whitespace around it.
 function JoinStringsWithSpace(a, b)

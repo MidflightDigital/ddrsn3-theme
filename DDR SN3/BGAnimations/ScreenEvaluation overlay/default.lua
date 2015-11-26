@@ -1,7 +1,7 @@
 
 local t = Def.ActorFrame{
 	LoadActor("1")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-197;y,SCREEN_CENTER_Y+70);
+		InitCommand=cmd(x,SCREEN_LEFT+123;y,SCREEN_CENTER_Y+70);
 		BeginCommand=cmd(playcommand,"Check1");
 		OnCommand=cmd(draworder,9;addx,-250;sleep,0.2;linear,0.2;addx,250);
 		OffCommand=cmd(linear,0.2;addx,-250);
@@ -12,7 +12,7 @@ local t = Def.ActorFrame{
 		end;
 	};
 	LoadActor("2")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+197;y,SCREEN_CENTER_Y+70);
+		InitCommand=cmd(x,SCREEN_RIGHT-123;y,SCREEN_CENTER_Y+70);
 		BeginCommand=cmd(playcommand,"Check2");
 		OnCommand=cmd(draworder,9;addx,250;sleep,0.2;linear,0.2;addx,-250);
 		OffCommand=cmd(linear,0.2;addx,250);

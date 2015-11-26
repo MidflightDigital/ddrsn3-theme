@@ -5,8 +5,8 @@ t[#t+1] = Def.ActorFrame {
 		self:fov(120);
 	end;
 	Def.ActorFrame{
-		LoadActor("ring5")..{
-			InitCommand=cmd(FullScreen;diffuse,color("#14fc00"));
+		LoadActor("honeyleft")..{
+			InitCommand=cmd(halign,0;x,SCREEN_LEFT-50;rotationx,100;CenterY;diffusealpha,0.2;blend,Blend.Add;;);
 		};
 		LoadActor(THEME:GetPathB("","ScreenLogo background/back"))..{
 			InitCommand=cmd(FullScreen;blend,Blend.Add;;);

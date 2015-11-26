@@ -17,7 +17,7 @@ return Def.ActorFrame {
 	};
 	--p2
 	LoadActor( "Explanation" )..{
-		InitCommand=cmd(visible,GAMESTATE:IsHumanPlayer(PLAYER_2);x,SCREEN_CENTER_X+300;y,SCREEN_CENTER_Y+150;halign,0);
+		InitCommand=cmd(visible,GAMESTATE:IsHumanPlayer(PLAYER_2);x,SCREEN_CENTER_X-10;y,SCREEN_CENTER_Y+150;halign,0;zoomx,-1);
 		OnCommand=cmd(addx,-SCREEN_WIDTH;sleep,0.5;accelerate,0.5;addx,SCREEN_WIDTH);
 		OffCommand=cmd(sleep,1;accelerate,0.5;addx,SCREEN_WIDTH);
 	};
