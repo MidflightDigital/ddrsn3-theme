@@ -50,13 +50,6 @@ local t = Def.ActorFrame{
 		LoseFocusCommand=cmd(sleep,0.05;linear,0.066;zoomy,0;diffusealpha,0);
 		OffCommand=cmd(sleep,0.116;linear,0.066;zoomy,0;diffusealpha,0);
 	};
-	LoadActor("namefocus.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-194;y,SCREEN_CENTER_Y-26);
-		OnCommand=cmd(queuecommand,"GainFocus");
-		LoseFocusCommand=cmd(stopeffect;linear,0.016;zoomx,1.292;zoomy,1.285;linear,0;zoom,0;diffusealpha,0);
-		GainFocusCommand=cmd(sleep,0.114;diffusealpha,1;sleep,0.083;zoomx,1.274;zoomy,0.833;linear,0.016;zoomx,1;zoomy,1;diffuseshift;effectcolor1,1,1,1,1;effectcolor2,0.75,0.75,0.75,1;effectperiod,0.333);
-		OffCommand=cmd(bouncebegin,0.264;zoom,0);
-	};
 	LoadActor("info")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X+4;y,SCREEN_CENTER_Y+89);
 		OnCommand=cmd(queuecommand,"GainFocus");

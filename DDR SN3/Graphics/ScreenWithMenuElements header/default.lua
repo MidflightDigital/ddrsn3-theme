@@ -8,8 +8,10 @@ elseif string.find(screenName, "Options") then
     headerTextImage = "Options (doubleres).png"
 elseif screenName == "ScreenSelectStyle" then
     headerTextImage = "Style (doubleres).png"
-	elseif screenName == "ScreenSelectPlayMode" then
+elseif screenName == "ScreenSelectPlayMode" then
     headerTextImage = "Mode (doubleres).png"
+elseif screenName == "ScreenSelectCourse" then
+    headerTextImage = "Course (doubleres).png"
 elseif string.find(screenName, "Evaluation") then
     headerTextImage = "Results (doubleres).png"
 end

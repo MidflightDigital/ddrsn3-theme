@@ -6,7 +6,7 @@ if GAMESTATE:GetPlayMode() == 'PlayMode_Oni' then
 	lifeFrame = "oni"
 end
 
-if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then lifeFrame = "rave" end
+if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then lifeFrame = "extra" end
 if GAMESTATE:IsExtraStage() or GAMESTATE:IsExtraStage2() then lifeFrame = "extra" end
 
 return Def.ActorFrame{ 
