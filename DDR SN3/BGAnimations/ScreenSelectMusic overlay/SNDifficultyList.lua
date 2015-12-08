@@ -20,11 +20,25 @@ local function DiffToColor(diff, dark)
     end
 end
 
+--we need this function because we need to get the current Steps for non-human players.
+--however, non-human players don't actually have a current Steps.
+local function GetCurrentSteps(pn)
+	if not GAMESTATE:IsHumanPlayer(pn) then
+		return GAMESTATE:GetCurrentSteps(GAMESTATE:GetMasterPlayerNumber())
+	end
+	return GAMESTATE:GetCurrentSteps(pn)
+end
+
 local function AnyPlayerThisDiff(diff)
-    for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
-        if GAMESTATE:GetCurrentSteps(pn):GetDifficulty()==diff then return true end
+    for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+        if GetCurrentSteps(pn):GetDifficulty()==diff then return true end
     end
     return false
+end
+
+local function PlayerLabelName(pn)
+	local name = GAMESTATE:IsHumanPlayer(pn) and string.lower(ToEnumShortString(pn)) or "cpu"
+	return 'SNDifficultyList player label '..name..' (doubleres)'
 end
 
 local difficultiesToDraw = {
@@ -70,8 +84,8 @@ local function Update(self, _)
         local song = GAMESTATE:GetCurrentSong()
         local steps = {}
         local anyStepsChanged = false
-        for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
-            steps[pn] = GAMESTATE:GetCurrentSteps(pn)
+        for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+            steps[pn] = GetCurrentSteps(pn)
             if steps[pn] ~= lastSteps[pn] then anyStepsChanged = true break end
         end
         local songChanged = song~=lastSong
@@ -91,10 +105,10 @@ for _, pn in pairs(PlayerNumber) do
         Name='Indicator'..pn,
         InitCommand=function(self) self:visible(false) end,
         SNDLUpdateMessageCommand=function(self)
-			if not GAMESTATE:IsHumanPlayer(pn) then return end
+			if not GAMESTATE:IsPlayerEnabled(pn) then return end
             self:finishtweening()
             local currentlyVisible = self:GetVisible()
-            local steps = GAMESTATE:GetCurrentSteps(pn)
+            local steps = GetCurrentSteps(pn)
             if steps and GAMESTATE:GetCurrentSong() then
                 if currentlyVisible then
                     self:linear(0.1)
@@ -114,8 +128,11 @@ for _, pn in pairs(PlayerNumber) do
         },
         Def.Sprite{
             Name='PlayerLabel',
-            Texture='SNDifficultyList player label '..string.lower(ToEnumShortString(pn))..' (doubleres)',
-            InitCommand=function(self) SetXFromPlayerNumber(self:draworder(1000), pn) end
+            Texture=PlayerLabelName(pn),
+            InitCommand=function(self) SetXFromPlayerNumber(self:draworder(1000), pn) end,
+			PlayerJoinedMessageCommand=function(self,p) 
+				if p.Player==pn then self:Load(ResolveRelativePath(PlayerLabelName(pn),1)) end
+			end
         }
     }
     table.insert(ret, indicator)
@@ -160,12 +177,11 @@ for idx, diff in pairs(difficultiesToDraw) do
                         local meter = steps:GetMeter()
                         if meter > 10 then
                             self:glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
-                            return
                         else
                             self:stopeffect():diffuse(DiffToColor(diff, true))
+							local attr = {Length=meter,Diffuse=DiffToColor(diff)}
+                        	self:AddAttribute( 0, attr )
                         end
-                        local attr = {Length=meter,Diffuse=DiffToColor(diff)}
-                        self:AddAttribute( 0, attr )
                     else
                         self:stopeffect()
                     end
