@@ -21,7 +21,7 @@ local function DiffToColor(diff, dark)
 end
 
 local function AnyPlayerThisDiff(diff)
-    for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+    for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
         if GAMESTATE:GetCurrentSteps(pn):GetDifficulty()==diff then return true end
     end
     return false
@@ -70,7 +70,7 @@ local function Update(self, _)
         local song = GAMESTATE:GetCurrentSong()
         local steps = {}
         local anyStepsChanged = false
-        for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+        for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
             steps[pn] = GAMESTATE:GetCurrentSteps(pn)
             if steps[pn] ~= lastSteps[pn] then anyStepsChanged = true break end
         end
@@ -91,6 +91,7 @@ for _, pn in pairs(PlayerNumber) do
         Name='Indicator'..pn,
         InitCommand=function(self) self:visible(false) end,
         SNDLUpdateMessageCommand=function(self)
+			if not GAMESTATE:IsHumanPlayer(pn) then return end
             self:finishtweening()
             local currentlyVisible = self:GetVisible()
             local steps = GAMESTATE:GetCurrentSteps(pn)
