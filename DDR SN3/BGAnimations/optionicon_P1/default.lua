@@ -223,7 +223,8 @@ return Def.ActorFrame {
 	Def.Sprite {
 		InitCommand=function(self)
 			self:x(85);
-			if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'battery') then			
+			if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'battery') 
+				and GAMESTATE:GetPlayMode() ~= 'PlayMode_Oni' then			
 				self:Load(THEME:GetPathB("","optionicon_P1/Risky"));			
 			end;
 		end;

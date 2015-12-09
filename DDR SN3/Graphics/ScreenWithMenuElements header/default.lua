@@ -23,6 +23,9 @@ local function UpdateAni(self)
 		local time = timer:GetSeconds()
 		local ftime = time - math.floor(time)
 		ani:rotationz(360*ftime)
+	elseif timer then
+		timer:visible(false)
+		self:SetUpdateFunction(nil)
 	end
 end
 
@@ -32,20 +35,19 @@ local out = Def.ActorFrame{
 	LoadActor("base")..{
 		InitCommand=cmd(x,SCREEN_LEFT;halign,0);
 	};
-	LoadActor("time")..{
-		InitCommand=cmd(x,SCREEN_RIGHT-50;y,SCREEN_TOP+12);
-		OffCommand=cmd(bouncebegin,0.25;zoom,0);
-	};
 }
 
 if PREFSMAN:GetPreference("MenuTimer") == true then
+	table.insert(out,LoadActor("time")..{
+		InitCommand=cmd(x,SCREEN_RIGHT-50;y,SCREEN_TOP+12);
+		OffCommand=cmd(bouncebegin,0.25;zoom,0);
+	})
 	table.insert(out,LoadActor("ani")..{
 		Name="ani";
 		InitCommand=cmd(x,SCREEN_RIGHT-50;y,SCREEN_TOP+12;diffusealpha,0.5);
 		OnCommand=cmd(addy,-76;sleep,0.2;decelerate,0.2;addy,76;blend,Blend.Add);
 		OffCommand=cmd(bouncebegin,0.25;zoom,0);
 	})
-
 end
 
 if headerTextImage then
