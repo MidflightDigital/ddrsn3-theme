@@ -2,7 +2,7 @@
 
 -- The math.floor(10000*aspect) trick is used to circumvent float precision problems.
 local aspectRatioSuffix = {
-	[math.floor(10000*4/3)] = "",
+	[math.floor(10000*4/3)] = " standard",
 	[math.floor(10000*16/9)] = " widescreen"
 }
 --fall back on the 4:3 frame if we don't know about this aspect ratio at all

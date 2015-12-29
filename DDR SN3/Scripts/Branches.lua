@@ -3,8 +3,11 @@ Branch.StartGame = function()
 		-- xxx: use titlemenu and titlejoin as needed
 		return "ScreenTitleMenu"
 	end
-
-	return PREFSMAN:GetPreference("ShowCaution") and "ScreenCaution" or "ScreenSelectStyle"
+	if PROFILEMAN:GetNumLocalProfiles() >=1 then
+		return "ScreenSelectProfile"
+	else
+		return "ScreenCaution"
+	end
 end
 
 -- normal instructions
