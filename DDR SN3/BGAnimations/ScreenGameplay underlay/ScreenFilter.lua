@@ -34,7 +34,7 @@ if numPlayers == 1 then
 	end
 	t[#t+1] = Def.Quad{
 		Name="SinglePlayerFilter";
-		InitCommand=cmd(x,pos;CenterY;zoomto,filterWidth*1.5,SCREEN_HEIGHT;diffusecolor,filterColor;diffusealpha,filterAlphas[player];fadeleft,1/32;faderight,1/32);
+		InitCommand=cmd(x,pos;CenterY;zoomto,filterWidth*1.2,SCREEN_HEIGHT;diffusecolor,filterColor;diffusealpha,filterAlphas[player];fadeleft,1/32;faderight,1/32);
 	};
 else
 	-- two players... a bit more complex.
@@ -45,7 +45,7 @@ else
 		local metricName = "PlayerP".. pNum .."TwoPlayersSharedSidesX"
 		t[#t+1] = Def.Quad{
 			Name="RoutineFilter";
-			InitCommand=cmd(x,THEME:GetMetric("ScreenGameplay",metricName);CenterY;zoomto,filterWidth*1.5,SCREEN_HEIGHT;diffusecolor,filterColor;diffusealpha,filterAlphas[player];fadeleft,1/32;faderight,1/32);
+			InitCommand=cmd(x,THEME:GetMetric("ScreenGameplay",metricName);CenterY;zoomto,filterWidth*1.2,SCREEN_HEIGHT;diffusecolor,filterColor;diffusealpha,filterAlphas[player];fadeleft,1/32;faderight,1/32);
 		};
 	else
 		-- otherwise we need two separate ones. to the pairsmobile!
@@ -56,7 +56,7 @@ else
 			local pos = THEME:GetMetric("ScreenGameplay",metricName)
 			t[#t+1] = Def.Quad{
 				Name="Player"..pNum.."Filter";
-				InitCommand=cmd(x,pos;CenterY;zoomto,filterWidth*1.5,SCREEN_HEIGHT;diffusecolor,filterColor;diffusealpha,filterAlphas[player];fadeleft,1/32;faderight,1/32);
+				InitCommand=cmd(x,pos;CenterY;zoomto,filterWidth*1.2,SCREEN_HEIGHT;diffusecolor,filterColor;diffusealpha,filterAlphas[player];fadeleft,1/32;faderight,1/32);
 			};
 		end
 	end
