@@ -1,3 +1,7 @@
+function Background_ShowDancingCharacters()
+	return GetUserPrefB("FirstReMIX_ShowDancingCharacters")
+end
+
 function ScreenGameplay_P1X()
 	local st = GAMESTATE:GetCurrentStyle():GetStepsType();
 	if st == "StepsType_Dance_Solo" then

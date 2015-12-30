@@ -1,3 +1,15 @@
+function cutin(player)
+	local ShowDancingCharacters = GetUserPrefB("FirstReMIX_ShowDancingCharacters");
+	local character = GAMESTATE:GetCharacter(player):GetCharacterID();
+	if not ShowDancingCharacters then
+		return false;
+	elseif character == "Afro" or character == "Lady" or character == "Emi" then
+		return true;
+	else
+		return false;
+	end;
+end;
+
 function TextBannerAfterSet(self,param) 
 	local Title=self:GetChild("Title")
 	local Subtitle=self:GetChild("Subtitle")

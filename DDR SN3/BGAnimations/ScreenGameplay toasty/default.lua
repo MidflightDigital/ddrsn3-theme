@@ -23,7 +23,7 @@ t[#t+1] = Def.ActorFrame {
 		StartTransitioningCommand=cmd(diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;linear,0.5;diffusealpha,0);
 	};
 };
-elseif GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then
+elseif GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') and GAMESTATE:IsHumanPlayer('PlayerNumber_P2') == true and GAMESTATE:GetCurrentStyle() == "single" then
 t[#t+1] = Def.ActorFrame {
 	LoadActor("toasty_maskP2 Single")..{
 		InitCommand=cmd(diffusealpha,0;zwrite,1;clearzbuffer,true;blend,Blend.NoEffect;;halign,0;x,SCREEN_WIDTH-280;y,SCREEN_CENTER_Y;);

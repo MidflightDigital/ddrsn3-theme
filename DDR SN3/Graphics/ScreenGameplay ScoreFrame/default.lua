@@ -22,7 +22,8 @@ local t = Def.ActorFrame{
 	};
 	Def.TextBanner{
 		InitCommand = function(self) self:Load("TextBannerGameplay")
-        		self:x(SCREEN_CENTER_X-100):y(-8)
+        	:SetFromSong(GAMESTATE:GetCurrentSong())
+        	:x(SCREEN_CENTER_X-100):y(-8)
         end;
         CurrentSongChangedMessageCommand = function(self)
         	self:SetFromSong(GAMESTATE:GetCurrentSong())

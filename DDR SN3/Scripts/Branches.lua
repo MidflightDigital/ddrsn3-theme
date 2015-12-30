@@ -1,7 +1,56 @@
+function SMOnlineScreen()
+	for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
+		if not IsSMOnlineLoggedIn(pn) then
+			return "ScreenSMOnlineLogin"
+		end
+	end
+	return "ScreenNetRoom"
+end
+
+function SelectMusicOrCourse()
+	if IsNetSMOnline() then
+		return "ScreenNetSelectMusic"
+	elseif GAMESTATE:IsCourseMode() then
+		return "ScreenSelectCourse"
+	else
+		return "ScreenSelectMusic"
+	end
+end
+
+Branch.Init = function() return "ScreenInit" end
+	
+Branch.AfterInit = function()
+	if GAMESTATE:GetCoinMode() == 'CoinMode_Home' then
+		return Branch.TitleMenu()
+	else
+		return "ScreenLogo"
+	end
+end
+
+Branch.NoiseTrigger = function()
+	local hour = Hour()
+	return hour > 3 and hour < 6 and "ScreenNoise" or "ScreenInit"
+end
+
+Branch.TitleMenu = function()
+	-- home mode is the most assumed use of sm-ssc.
+	if GAMESTATE:GetCoinMode() == "CoinMode_Home" then
+		return "ScreenTitleMenu"
+	end
+	-- arcade junk:
+	if GAMESTATE:GetCoinsNeededToJoin() > GAMESTATE:GetCoins() then
+		-- if no credits are inserted, don't show the Join screen. SM4 has
+		-- this as the initial screen, but that means we'd be stuck in a
+		-- loop with ScreenInit. No good.
+		return "ScreenTitleJoin"
+	else
+		return "ScreenTitleJoin"
+	end
+end
+
 Branch.StartGame = function()
 	if SONGMAN:GetNumSongs() == 0 and SONGMAN:GetNumAdditionalSongs() == 0 then
-		-- xxx: use titlemenu and titlejoin as needed
-		return "ScreenTitleMenu"
+		return "ScreenHowToInstallSongs"
 	end
 	if PROFILEMAN:GetNumLocalProfiles() >=1 then
 		return "ScreenSelectProfile"
@@ -10,12 +59,32 @@ Branch.StartGame = function()
 	end
 end
 
--- normal instructions
+Branch.Profile = function()
+	if PROFILEMAN:GetNumLocalProfiles() >= 1 then
+		return "ScreenSelectProfile"
+	else
+		return "ScreenCaution"
+	end
+end
+
+Branch.Net = function()
+	if IsNetSMOnline() then
+		return SMOnlineScreen()
+	else
+		return "ScreenCaution"
+	end
+end
+
+Branch.AfterSMOLogin = SMOnlineScreen()
+
+Branch.BackOutOfPlayerOptions = function()
+	return SelectMusicOrCourse()
+end
+
 Branch.InstructionsNormal = function()
 	return PREFSMAN:GetPreference("ShowInstructions") and "ScreenInstructions" or "ScreenSelectMusic"
 end
 
--- nonstop and oni instructions
 Branch.InstructionsCourse = function()
 	return PREFSMAN:GetPreference("ShowInstructions") and "ScreenInstructions" or "ScreenSelectCourse"
 end
@@ -24,7 +93,6 @@ Branch.AfterInstructions = function()
 	return GAMESTATE:IsCourseMode() and "ScreenSelectCourse" or "ScreenSelectMusic"
 end
 
--- gameplay branch that takes extra stage into account
 Branch.GameplayScreen = function()
 	if IsRoutine() then
 		return "ScreenGameplayShared"
@@ -34,8 +102,6 @@ Branch.GameplayScreen = function()
 	return "ScreenGameplay"
 end
 
--- somewhat proper evaluation screen usage.
--- handles online, oni, nonstop/endless (shared), rave, normal
 Branch.AfterGameplay = function()
 	if IsNetSMOnline() then
 		-- even though online mode isn't supported in this theme yet
@@ -55,50 +121,48 @@ Branch.AfterGameplay = function()
 	end
 end
 
--- xxx: needs to be less broken
 Branch.AfterEvaluation = function()
-	if GAMESTATE:IsCourseMode() then
-		-- (nonstop, oni, endless eval)
-		return "ScreenNameEntry"
+	if GAMESTATE:GetSmallestNumStagesLeftForAnyHumanPlayer() >= 1 then
+		return "ScreenProfileSave"
+	elseif GAMESTATE:GetCurrentStage() == "Stage_Extra1" or GAMESTATE:GetCurrentStage() == "Stage_Extra2" then
+		return "ScreenProfileSave"
+	elseif STATSMAN:GetCurStageStats():AllFailed() then
+		return "ScreenProfileSaveSummary"
+	elseif GAMESTATE:IsCourseMode() then
+		return "ScreenProfileSaveSummary"
 	else
-		-- (normal, rave eval)
+		return "ScreenEvaluationSummary"
+	end
+end
 
-		-- event mode is classic infinite.
-		if GAMESTATE:IsEventMode() then return "ScreenProfileSave" end
+Branch.AfterSummary = "ScreenProfileSummary"
+	
+Branch.Network = function()
+	return IsNetConnected() and "ScreenTitleMenu" or "ScreenTitleMenu"
+end
 
-		-- non-event mode
-		local maxStages = PREFSMAN:GetPreference("SongsPerPlay")
-		local stagesLeft = GAMESTATE:GetSmallestNumStagesLeftForAnyHumanPlayer()
-		local allFailed = STATSMAN:GetCurStageStats():AllFailed()
+Branch.AfterSaveSummary = function()
+	if PROFILEMAN:GetNumLocalProfiles() >= 1 then
+		return "ScreenDataSaveSummary"
+	else
+		return "ScreenGameOver"
+	end
+end
 
-		local song = GAMESTATE:GetCurrentSong()
-
-		if stagesLeft >= 1 then
-			-- enough stages left to play
-			return "ScreenProfileSave"
-		-- UNCHANGED CRAP
-		elseif song:IsLong() and maxStages <= 2 and stagesLeft < 1 and allFailed then
-			return "ScreenProfileSaveSummary"
-		elseif song:IsMarathon() and maxStages <= 3 and stagesLeft < 1 and allFailed then
-			return "ScreenProfileSaveSummary"
-		elseif maxStages >= 2 and stagesLeft < 1 and allFailed then
-			return "ScreenProfileSaveSummary"
-		elseif allFailed then
-			return "ScreenProfileSaveSummary"
-		-- END UNCHANGED CRAP
-		else
-			-- unknown situation
-			return "ScreenProfileSave"
-		end
+Branch.AfterDataSaveSummary = function()
+	if GAMESTATE:AnyPlayerHasRankingFeats() then
+		return "ScreenDataSaveSummaryEnd"
+	else
+		return "ScreenDataSaveSummaryEnd"
 	end
 end
 
 -- needs to be tested
 Branch.AfterProfileSave = function()
 	if GAMESTATE:IsCourseMode() then
-		-- course modes go to whatever, depending on ranking crap.
-		-- 3.9 says it goes to ScreenNameEntry all the time.
-		return "ScreenNameEntry"
+	-- course modes go to whatever, depending on ranking crap.
+	-- 3.9 says it goes to ScreenNameEntry all the time.
+	return "ScreenNameEntry"
 	else
 		if GAMESTATE:IsEventMode() then
 			-- infinite play
@@ -124,31 +188,7 @@ Branch.Ending = function()
 	if GAMESTATE:IsEventMode() then
 		return SelectMusicOrCourse()
 	end
-
 	-- best final grade better than AA: show the credits.
 	-- otherwise, show music scroll.
 	return STATSMAN:GetBestFinalGrade() <= 'Grade_Tier03' and "ScreenCredits" or "ScreenMusicScroll"
-end
-
--- broken too;
-Branch.AfterSaveSummary = function()
-	local getRankingName = PREFSMAN:GetPreference("GetRankingName")
-	if getRankingName == "RankingName_Off" then
-		-- never show ranking screen
-		return Branch.Ending()
-	elseif getRankingName == "RankingName_List" then
-		-- check if we've set the conditions (e.g. ranked course)
-	elseif getRankingName == "RankingName_On" then
-		-- check for ranking via GAMESTATE:AnyPlayerHasRankingFeats()
-		if GAMESTATE:AnyPlayerHasRankingFeats() then return "ScreenNameEntry" end
-	end
-
-	return "ScreenGameOver"
-	--[[ Enable when Finished ]]
-	--return GAMESTATE:AnyPlayerHasRankingFeats() and "ScreenNameEntry" or "ScreenGameOver"
-end
-
-function InitialScreen()
-	if GAMESTATE:Dopefish() then return "foon" end
-	return "ScreenCompany"
 end

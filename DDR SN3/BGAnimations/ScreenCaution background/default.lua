@@ -2,7 +2,7 @@ return Def.ActorFrame{
 	Def.Quad{
 		InitCommand=cmd(FullScreen;diffuse,color("0,0,0,1"));
 	};
-	LoadActor(THEME:GetPathB("","ScreenLogo background/back"))..{
+	LoadActor(THEME:GetPathB("","ScreenLogo background/_bck"))..{
 		InitCommand=cmd(Center;FullScreen);
 		OnCommand=cmd(diffusealpha,1;sleep,2;linear,0.165;diffusealpha,0);
 	};
