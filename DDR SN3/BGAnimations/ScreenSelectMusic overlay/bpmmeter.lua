@@ -7,7 +7,15 @@ local function CalculateBaseForBPM(bpm)
 	return 1 - (clamp(bpm, 100, 300) - 115) / 155
 end
 
+local ScreenSelectMusic
+
 local function UpdateBPMGauge(self)
+	if not ScreenSelectMusic then
+		local top = SCREENMAN:GetTopScreen()
+		if top and top:GetChild("BPMDisplay") then
+			ScreenSelectMusic = top
+		else return end
+	end
 	local maximumTwiddleDistance = 13/86
 	--13/86 was chosen because it's roughly the height of two bar pieces -tertu
 	local gauge = self:GetChild("bpm gauge bright")
@@ -28,7 +36,7 @@ local function UpdateBPMGauge(self)
 			elseif not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
 				--This song has two display BPMs: read the current BPM off the BPMDisplay
 				gauge:finishtweening()
-				local bpmDisplay = SCREENMAN:GetTopScreen():GetChild("BPMDisplay")
+				local bpmDisplay = ScreenSelectMusic:GetChild("BPMDisplay")
 				gauge:croptop(clamp(CalculateBaseForBPM(tonumber(bpmDisplay:GetText()) or 0), 0, 1))
 			else
 				if gauge:GetTweenTimeLeft()==0 then
