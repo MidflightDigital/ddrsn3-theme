@@ -1,3 +1,21 @@
+local ProfileInfoCache = {}
+setmetatable(ProfileInfoCache, {__index = 
+function(table, ind) 
+    local out = {}
+    local prof = PROFILEMAN:GetLocalProfileFromIndex(ind-1) 
+    out.SongsAndCoursesPercentCompleteAllDifficultiesSingle = prof:GetSongsAndCoursesPercentCompleteAllDifficulties('StepsType_Dance_Single')
+    out.SongsAndCoursesPercentCompleteAllDifficultiesDouble = prof:GetSongsAndCoursesPercentCompleteAllDifficulties('StepsType_Dance_Double')
+    out.TotalCaloriesBurned = prof:GetTotalCaloriesBurned()
+    out.CaloriesBurnedToday = prof:GetCaloriesBurnedToday()
+    out.LastPlayedSong = prof:GetLastPlayedSong()
+    out.DisplayName = prof:GetDisplayName()
+    out.NumTotalSongsPlayed = prof:GetNumTotalSongsPlayed()
+    out.GUID = prof:GetGUID()
+    rawset(table, ind, out)
+    return out
+end
+})
+
 function GetLocalProfiles()
 	local t = {};
 
@@ -702,8 +720,8 @@ function UpdateInternal3(self, Player)
 			
 			
 			if ind > 0 then
-				local PcntCompleteSingle = PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetSongsAndCoursesPercentCompleteAllDifficulties('StepsType_Dance_Single');
-				local PcntCompleteDouble = PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetSongsAndCoursesPercentCompleteAllDifficulties('StepsType_Dance_Double');
+				local PcntCompleteSingle = ProfileInfoCache[ind].SongsAndCoursesPercentCompleteAllDifficultiesSingle;
+				local PcntCompleteDouble = ProfileInfoCache[ind].SongsAndCoursesPercentCompleteAllDifficultiesDouble;
 				--HonorName
 				
 				if PcntCompleteSingle>PcntCompleteDouble then
@@ -802,30 +820,30 @@ function UpdateInternal3(self, Player)
 				end
 				selHonorPic:shadowlength(1);
 				
-				local Lv = (math.ceil(math.sqrt(PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetTotalCaloriesBurned())));
-				local pcnt =((PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetTotalCaloriesBurned())-((Lv-1)*(Lv-1))) /((Lv*Lv)-((Lv-1)*(Lv-1)));
+				local Lv = math.ceil(math.sqrt(ProfileInfoCache[ind].TotalCaloriesBurned));
+				local pcnt =(ProfileInfoCache[ind].TotalCaloriesBurned-((Lv-1)*(Lv-1))) /((Lv*Lv)-((Lv-1)*(Lv-1)));
 				local totalPcnt = (PcntCompleteSingle + PcntCompleteDouble) / 2;
 					--totalPcnt = PcntLarger;				
-				--local pcnt =((PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetTotalCaloriesBurned())-((Lv-1)*(Lv-1))) /((Lv*Lv)-((Lv-1)*(Lv-1)));
+				--local pcnt =((ProfileInfoCache[ind].TotalCaloriesBurned-((Lv-1)*(Lv-1))) /((Lv*Lv)-((Lv-1)*(Lv-1)));
 				bigframe:visible(true);
 				scroller:SetDestinationItem(ind-1);
-				seltext:settext(PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetDisplayName());
-				selLevel:settext(math.ceil(math.sqrt(PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetTotalCaloriesBurned())) );
-				selTotalCaloriesBurned:settext((math.ceil(PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetCaloriesBurnedToday()))..' kCals.');
-				selMostSongPlayed:Load(GetSongGPath(PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetLastPlayedSong()));
-				selSongsPlayed:settext(tostring(math.ceil(PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetNumTotalSongsPlayed())));
+				seltext:settext(ProfileInfoCache[ind].DisplayName);
+				selLevel:settext(math.ceil(math.sqrt(ProfileInfoCache[ind].TotalCaloriesBurned) ));
+				selTotalCaloriesBurned:settext(math.ceil(ProfileInfoCache[ind].CaloriesBurnedToday)..' kCals.');
+				selMostSongPlayed:Load(GetSongGPath(ProfileInfoCache[ind].LastPlayedSong));
+				selSongsPlayed:settext(tostring(math.ceil(ProfileInfoCache[ind].NumTotalSongsPlayed)));
 				selLvBar:cropright(1-pcnt);
 				--selPercentComplete:settext(string.format("%6.2f", totalPcnt*100).." %");
 				selPercentComplete:settext(string.format("%6.2f", PcntLarger).." %");
 				
-				selPlayerUID = PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetGUID();
+				selPlayerUID = ProfileInfoCache[ind].GUID;
 				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
-				local RadarFile = RageFileUtil:CreateRageFile()
+				--local RadarFile = RageFileUtil:CreateRageFile()
 				
-				local RadarValueTableSingle = {};
-				local RadarValueTableDouble = {};
+				local RadarValueTableSingle = {0,0,0,0,0}};
+				local RadarValueTableDouble = {0,0,0,0,0};
 				
-				----------Single Radar 
+				--[[----------Single Radar 
 				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_S1.txt",1) then --Stram--
 					local str = RadarFile:Read();
 					CurrentValue = tonumber(str);
@@ -919,7 +937,7 @@ function UpdateInternal3(self, Player)
 					RadarValueTableDouble[5] = 0;
 				end
 				
-				RadarFile:Close();
+				RadarFile:Close();]]
 				
 				-----Rank From Radar Value
 				SetRankFromRadarValue(selectRank,RadarValueTableSingle,RadarValueTableDouble);
