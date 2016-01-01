@@ -50,7 +50,9 @@ local function ReadOrCreateRadarValueForPlayer(PlayerUID, ValueTable)
 		RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_D5.txt",2);
 		RadarFile:Write("0.0");
 		ValueTable[5]=0;
-	end	
+	end
+	--We don't have any code that reads these files! -tertu
+	--[[
 	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_D1P.txt",2);
 	RadarFile:Write(tostring(ValueTable[1]));
 	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_D2P.txt",2);
@@ -61,6 +63,7 @@ local function ReadOrCreateRadarValueForPlayer(PlayerUID, ValueTable)
 	RadarFile:Write(tostring(ValueTable[4]));
 	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_D5P.txt",2);
 	RadarFile:Write(tostring(ValueTable[5]));
+	]]
 	RadarFile:Close();
 end
 

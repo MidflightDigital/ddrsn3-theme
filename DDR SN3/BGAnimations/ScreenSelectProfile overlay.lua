@@ -643,6 +643,7 @@ function LoadPlayerStuff(Player)
 end;
 
 function UpdateInternal3(self, Player)
+    
 	local pn = (Player == PLAYER_1) and 1 or 2;
 	local frame = self:GetChild(string.format('P%uFrame', pn));
 	local scroller = frame:GetChild('Scroller');
@@ -838,7 +839,7 @@ function UpdateInternal3(self, Player)
 				
 				selPlayerUID = ProfileInfoCache[ind].GUID;
 				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
-				local RadarFile = RageFileUtil:CreateRageFile()
+                local RadarFile = RageFileUtil:CreateRageFile()
 				
 				local RadarValueTableSingle = {};
 				local RadarValueTableDouble = {};
@@ -938,7 +939,6 @@ function UpdateInternal3(self, Player)
 				end
 				
 				RadarFile:Close();
-				
 				-----Rank From Radar Value
 				SetRankFromRadarValue(selectRank,RadarValueTableSingle,RadarValueTableDouble);
 				
@@ -1122,7 +1122,7 @@ local t = Def.ActorFrame {
 		LoadActor( THEME:GetPathS("Common","cancel") )..{
 			BackButtonMessageCommand=cmd(play);
 		};
-		LoadActor( THEME:GetPathS("Common","value") )..{
+		LoadActor( THEME:GetPathS("ScreenOptions","change") )..{
 			DirectionButtonMessageCommand=cmd(play);
 		};
 	};

@@ -3,7 +3,7 @@ local tt={};
 tt[1],tt[2],tt[3],tt[4],tt[5] = ...
 
 local function ReadOrCreateRadarValueForPlayer(PlayerUID, ValueTable)
-
+	local x = GetTimeSinceStart()
 	local RadarFile = RageFileUtil:CreateRageFile()
 	-- Read RadarValue From File
 	
@@ -52,6 +52,8 @@ local function ReadOrCreateRadarValueForPlayer(PlayerUID, ValueTable)
 		ValueTable[5]=0;
 	end	
 	
+	--We don't have any code that reads these files! -tertu
+	--[[
 	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S1P.txt",2);
 	RadarFile:Write(tostring(ValueTable[1]));
 	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S2P.txt",2);
@@ -62,8 +64,10 @@ local function ReadOrCreateRadarValueForPlayer(PlayerUID, ValueTable)
 	RadarFile:Write(tostring(ValueTable[4]));
 	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S5P.txt",2);
 	RadarFile:Write(tostring(ValueTable[5]));
+	]]
 		
 	RadarFile:Close();
+	SCREENMAN:SystemMessage(GetTimeSinceStart()-x)
 end
 
 local function radarSet(self)
