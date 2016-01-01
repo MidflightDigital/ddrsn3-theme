@@ -3,7 +3,6 @@ local tt={};
 tt[1],tt[2],tt[3],tt[4],tt[5] = ...
 
 local function ReadOrCreateRadarValueForPlayer(PlayerUID, ValueTable)
-	local x = GetTimeSinceStart()
 	local RadarFile = RageFileUtil:CreateRageFile()
 	-- Read RadarValue From File
 	
@@ -67,7 +66,6 @@ local function ReadOrCreateRadarValueForPlayer(PlayerUID, ValueTable)
 	]]
 		
 	RadarFile:Close();
-	SCREENMAN:SystemMessage(GetTimeSinceStart()-x)
 end
 
 local function radarSet(self)
