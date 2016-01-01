@@ -1,7 +1,7 @@
 local t = Def.ActorFrame{};
 
-if FILEMAN:DoesFileExist("Themes/Random/default.lua") then
-t[#t+1] = LoadActor("../../../Random")..{
+if CHARMAN:GetCharacterCount() >=1 then
+t[#t+1] = LoadActor("../BGScripts")..{
 	OnCommand=function(self)
 	local song = GAMESTATE:GetCurrentSong();
 	if song then
@@ -23,7 +23,7 @@ t[#t+1] = LoadActor("../../../Random")..{
 		end;
 	end;
 	};
-end;
+end
 
 t[#t+1] = LoadActor("Danger");
 t[#t+1] = LoadActor("ScreenFilter");

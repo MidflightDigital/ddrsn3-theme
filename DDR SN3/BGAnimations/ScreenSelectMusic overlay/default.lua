@@ -53,4 +53,140 @@ local t = Def.ActorFrame{
 	};
 };
 
+--grades
+t[#t+1] = Def.ActorFrame {
+InitCommand=cmd();
+	Def.Quad{
+	InitCommand=cmd(zoom,0.25;shadowlength,1;x,SCREEN_RIGHT-40;y,SCREEN_CENTER_Y-38;horizalign,center;draworder,2);
+	OffCommand=cmd(bouncebegin,0.15;zoom,0);
+		BeginCommand=cmd(playcommand,"Set");
+		SetCommand=function(self)
+			local SongOrCourse, StepsOrTrail;
+			if GAMESTATE:IsCourseMode() then
+				SongOrCourse = GAMESTATE:GetCurrentCourse();
+				StepsOrTrail = GAMESTATE:GetCurrentTrail(PLAYER_1);
+			else
+				SongOrCourse = GAMESTATE:GetCurrentSong();
+				StepsOrTrail = GAMESTATE:GetCurrentSteps(PLAYER_1);
+			end;
+
+			local profile, scorelist;
+			local text = "";
+			if SongOrCourse and StepsOrTrail then
+				local st = StepsOrTrail:GetStepsType();
+				local diff = StepsOrTrail:GetDifficulty();
+				local courseType = GAMESTATE:IsCourseMode() and SongOrCourse:GetCourseType() or nil;
+
+				if PROFILEMAN:IsPersistentProfile(PLAYER_1) then
+					-- player profile
+					profile = PROFILEMAN:GetProfile(PLAYER_1);
+				else
+					-- machine profile
+					profile = PROFILEMAN:GetMachineProfile();
+				end;
+
+				scorelist = profile:GetHighScoreList(SongOrCourse,StepsOrTrail);
+				assert(scorelist);
+					local scores = scorelist:GetHighScores();
+					assert(scores);
+					local topscore=0;
+					if scores[1] then
+						topscore = scores[1]:GetScore();
+					end;
+					assert(topscore);
+					local topgrade;
+					if scores[1] then
+						topgrade = scores[1]:GetGrade();
+						assert(topgrade);
+						if scores[1]:GetScore()>1  then
+							if scores[1]:GetScore()==1000000 and topgrade=="Grade_Tier07" then
+								self:LoadBackground(THEME:GetPathG("GradeDisplayEval","Tier01"));
+								self:diffusealpha(1);
+							else
+								self:LoadBackground(THEME:GetPathG("GradeDisplayEval",ToEnumShortString(topgrade)));
+								self:diffusealpha(1);
+							end;	
+						else
+							self:diffusealpha(0);
+						end;
+					else
+						self:diffusealpha(0);
+					end;
+			else
+				self:diffusealpha(0);
+			end;
+		end;
+		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
+	};
+--p2
+	Def.Quad{
+	InitCommand=cmd(zoom,0.4;shadowlength,1;x,SCREEN_RIGHT-40;y,SCREEN_CENTER_Y+38;horizalign,center;draworder,2);
+	OffCommand=cmd(bouncebegin,0.15;zoom,0);
+		BeginCommand=cmd(playcommand,"Set");
+		SetCommand=function(self)
+			local SongOrCourse, StepsOrTrail;
+			if GAMESTATE:IsCourseMode() then
+				SongOrCourse = GAMESTATE:GetCurrentCourse();
+				StepsOrTrail = GAMESTATE:GetCurrentTrail(PLAYER_2);
+			else
+				SongOrCourse = GAMESTATE:GetCurrentSong();
+				StepsOrTrail = GAMESTATE:GetCurrentSteps(PLAYER_2);
+			end;
+
+			local profile, scorelist;
+			local text = "";
+			if SongOrCourse and StepsOrTrail then
+				local st = StepsOrTrail:GetStepsType();
+				local diff = StepsOrTrail:GetDifficulty();
+				local courseType = GAMESTATE:IsCourseMode() and SongOrCourse:GetCourseType() or nil;
+
+				if PROFILEMAN:IsPersistentProfile(PLAYER_2) then
+					-- player profile
+					profile = PROFILEMAN:GetProfile(PLAYER_2);
+				else
+					-- machine profile
+					profile = PROFILEMAN:GetMachineProfile();
+				end;
+
+				scorelist = profile:GetHighScoreList(SongOrCourse,StepsOrTrail);
+				assert(scorelist);
+					local scores = scorelist:GetHighScores();
+					assert(scores);
+					local topscore=0;
+					if scores[1] then
+						topscore = scores[1]:GetScore();
+					end;
+					assert(topscore);
+					local topgrade;
+					if scores[1] then
+						topgrade = scores[1]:GetGrade();
+						assert(topgrade);
+						if scores[1]:GetScore()>1  then
+							if scores[1]:GetScore()==1000000 and topgrade=="Grade_Tier07" then
+								self:LoadBackground(THEME:GetPathG("GradeDisplayEval","Tier01"));
+								self:diffusealpha(1);
+							else
+								self:LoadBackground(THEME:GetPathG("GradeDisplayEval",ToEnumShortString(topgrade)));
+								self:diffusealpha(1);
+							end;	
+						else
+							self:diffusealpha(0);
+						end;
+					else
+						self:diffusealpha(0);
+					end;
+			else
+				self:diffusealpha(0);
+			end;
+		end;
+		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
+		CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
+	};
+};
+
 return t;

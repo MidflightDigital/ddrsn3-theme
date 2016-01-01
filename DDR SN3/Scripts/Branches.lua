@@ -135,7 +135,7 @@ Branch.AfterEvaluation = function()
 	end
 end
 
-Branch.AfterSummary = "ScreenProfileSummary"
+Branch.AfterSummary = "ScreenProfileSaveSummary"
 	
 Branch.Network = function()
 	return IsNetConnected() and "ScreenTitleMenu" or "ScreenTitleMenu"
@@ -154,32 +154,6 @@ Branch.AfterDataSaveSummary = function()
 		return "ScreenDataSaveSummaryEnd"
 	else
 		return "ScreenDataSaveSummaryEnd"
-	end
-end
-
--- needs to be tested
-Branch.AfterProfileSave = function()
-	if GAMESTATE:IsCourseMode() then
-	-- course modes go to whatever, depending on ranking crap.
-	-- 3.9 says it goes to ScreenNameEntry all the time.
-	return "ScreenNameEntry"
-	else
-		if GAMESTATE:IsEventMode() then
-			-- infinite play
-			return SelectMusicOrCourse()
-		elseif STATSMAN:GetCurStageStats():AllFailed() then
-			-- if the player failed extra stage, don't game over.
-			if GAMESTATE:IsExtraStage() or GAMESTATE:IsExtraStage2() then
-				return "ScreenEvaluationSummary"
-			else
-				return "ScreenGameOver"
-			end
-		elseif GAMESTATE:GetSmallestNumStagesLeftForAnyHumanPlayer() == 0 then
-			return "ScreenEvaluationSummary"
-		else
-			-- when do we get here??
-			return SelectMusicOrCourse()
-		end
 	end
 end
 

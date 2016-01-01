@@ -1,35 +1,23 @@
 local x = Def.ActorFrame{};
-x[#x+1] = Def.ActorFrame {
-	Def.Quad{
-		InitCommand=cmd(Center;zoomto,SCREEN_WIDTH,80;diffuse,color("0,0,0,0.0"));
-		OnCommand=cmd(smooth,0.2;diffuse,color("0,0,0,0.5"));
-		OffCommand=cmd(smooth,0.2;diffuse,color("0,0,0,0.0"));
-	};
-	LoadFont("Common Normal")..{
-		Text=ScreenString("Saving Profiles");
-		InitCommand=cmd(Center;diffuse,color("1,1,1,1");shadowlength,1);
-		OffCommand=cmd(linear,0.15;diffusealpha,0);
-	};
-};
 if GAMESTATE:HasEarnedExtraStage() and GAMESTATE:IsExtraStage() and not GAMESTATE:IsExtraStage2() then
 x[#x+1] = Def.ActorFrame {
-
-	LoadActor("RDAdoorALL")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;);
-		OffCommand=cmd(sleep,0.15;);
+	LoadActor(("cleared"))..{
+		StartTransitioningCommand=cmd(play);
 	};
-	LoadActor("flowerLL")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
-		OffCommand=cmd(linear,0.25;x,SCREEN_CENTER_X);
-		
+	LoadActor( THEME:GetPathS("ScreenEvaluation","try Extra1" ) ) .. {
+		OnCommand=cmd(play);
 	};
-	LoadActor("flowerRR")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
-		OffCommand=cmd(linear,0.25;x,SCREEN_CENTER_X);
+	LoadActor("Extradoor1")..{
+		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;CenterY;zoom,1.01;halign,1);
+		OnCommand=cmd(linear,0.5;x,SCREEN_CENTER_X+50;);
 	};
-	LoadActor("RDAtitle.png")..{
+	LoadActor("Extradoor2")..{
+		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;CenterY;zoom,1.01;halign,0);
+		OnCommand=cmd(linear,0.5;x,SCREEN_CENTER_X-50;);
+	};
+	LoadActor("Extratitle")..{
 		InitCommand=cmd(zoom,1;x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
-		OffCommand=cmd(linear,0.1;zoom,1);
+		OnCommand=cmd(diffusealpha,0;zoomx,4;zoomy,0;accelerate,0.132;zoomx,1;zoomy,1;diffusealpha,1;sleep,1;accelerate,0.132;zoomx,4;zoomy,0;diffusealpha,0);
 	};
 }
 end
