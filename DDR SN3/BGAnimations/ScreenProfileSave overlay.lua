@@ -35,7 +35,8 @@ x[#x+1] = Def.ActorFrame {
 end
 
 
-local function SaveRadarValue( PlayerUID, ActualValue, CurrentValue, StyleWord, CataNumber )
+local function SaveRadarValue( PlayerUID, ActualValue, CurrentValue, StyleWord, CataNumber, This )
+	local user = This:GetUserTable()
 	local RadarFile = RageFileUtil:CreateRageFile();
 	if RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_"..StyleWord..CataNumber..".txt",1) then 
 		local str = RadarFile:Read();
@@ -63,7 +64,7 @@ local function SaveRadarValue( PlayerUID, ActualValue, CurrentValue, StyleWord, 
 	end
 	RadarFile:Close();	
 	
-	
+	user["DDRSN3Radar"..StyleWord..CataNumber] = CurrentValue
 	local RadarFile2 = RageFileUtil:CreateRageFile();
 	RadarFile2:Open("Save/MyGrooveRadar/"..PlayerUID.."_"..StyleWord..CataNumber..".txt",2);
 	RadarFile2:Write(tostring(CurrentValue));
@@ -74,6 +75,7 @@ end
 if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
 
 local PlayerUID = PROFILEMAN:GetProfile(PLAYER_1):GetGUID();
+local myProfile = PROFILEMAN:GetProfile(PLAYER_1)
 
 local StreamActualValue = (STATSMAN:GetCurStageStats():GetPlayerStageStats("PlayerNumber_P1"):GetRadarActual():GetValue("RadarCategory_Stream"))*(STATSMAN:GetCurStageStats():GetPlayerStageStats("PlayerNumber_P1"):GetRadarPossible():GetValue("RadarCategory_Stream"));
 local VoltageActualValue = (STATSMAN:GetCurStageStats():GetPlayerStageStats("PlayerNumber_P1"):GetRadarActual():GetValue("RadarCategory_Voltage"))*(STATSMAN:GetCurStageStats():GetPlayerStageStats("PlayerNumber_P1"):GetRadarPossible():GetValue("RadarCategory_Voltage"));
@@ -90,17 +92,17 @@ local ChaosCurrentValue = 0;
 
 	if not GAMESTATE:IsCourseMode() then
 		if GAMESTATE:GetCurrentStyle():GetStepsType() == 'StepsType_Dance_Single' then ---------Single
-			SaveRadarValue(PlayerUID,StreamActualValue,StreamCurrentValue,"S","1");
-			SaveRadarValue(PlayerUID,VoltageActualValue,VoltageCurrentValue,"S","2");
-			SaveRadarValue(PlayerUID,AirActualValue,AirCurrentValue,"S","3");
-			SaveRadarValue(PlayerUID,FreezeActualValue,FreezeCurrentValue,"S","4");
-			SaveRadarValue(PlayerUID,ChaosActualValue,ChaosCurrentValue,"S","5");
+			SaveRadarValue(PlayerUID,StreamActualValue,StreamCurrentValue,"S","1",myProfile);
+			SaveRadarValue(PlayerUID,VoltageActualValue,VoltageCurrentValue,"S","2",myProfile);
+			SaveRadarValue(PlayerUID,AirActualValue,AirCurrentValue,"S","3",myProfile);
+			SaveRadarValue(PlayerUID,FreezeActualValue,FreezeCurrentValue,"S","4",myProfile);
+			SaveRadarValue(PlayerUID,ChaosActualValue,ChaosCurrentValue,"S","5",myProfile);
 		else-----------------------Double
-			SaveRadarValue(PlayerUID,StreamActualValue,StreamCurrentValue,"D","1");
-			SaveRadarValue(PlayerUID,VoltageActualValue,VoltageCurrentValue,"D","2");
-			SaveRadarValue(PlayerUID,AirActualValue,AirCurrentValue,"D","3");
-			SaveRadarValue(PlayerUID,FreezeActualValue,FreezeCurrentValue,"D","4");
-			SaveRadarValue(PlayerUID,ChaosActualValue,ChaosCurrentValue,"D","5");
+			SaveRadarValue(PlayerUID,StreamActualValue,StreamCurrentValue,"D","1",myProfile);
+			SaveRadarValue(PlayerUID,VoltageActualValue,VoltageCurrentValue,"D","2",myProfile);
+			SaveRadarValue(PlayerUID,AirActualValue,AirCurrentValue,"D","3",myProfile);
+			SaveRadarValue(PlayerUID,FreezeActualValue,FreezeCurrentValue,"D","4",myProfile);
+			SaveRadarValue(PlayerUID,ChaosActualValue,ChaosCurrentValue,"D","5",myProfile);
 		end
 	end;
 end;
@@ -108,6 +110,7 @@ end;
 if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
 
 local PlayerUID = PROFILEMAN:GetProfile(PLAYER_2):GetGUID();
+local myProfile = PROFILEMAN:GetProfile(PLAYER_2)
 
 local StreamActualValue = (STATSMAN:GetCurStageStats():GetPlayerStageStats("PlayerNumber_P2"):GetRadarActual():GetValue("RadarCategory_Stream"))*(STATSMAN:GetCurStageStats():GetPlayerStageStats("PlayerNumber_P2"):GetRadarPossible():GetValue("RadarCategory_Stream"));
 local VoltageActualValue = (STATSMAN:GetCurStageStats():GetPlayerStageStats("PlayerNumber_P2"):GetRadarActual():GetValue("RadarCategory_Voltage"))*(STATSMAN:GetCurStageStats():GetPlayerStageStats("PlayerNumber_P2"):GetRadarPossible():GetValue("RadarCategory_Voltage"));
@@ -122,17 +125,17 @@ local FreezeCurrentValue = 0;
 local ChaosCurrentValue = 0;
 	if not GAMESTATE:IsCourseMode() then
 		if GAMESTATE:GetCurrentStyle():GetStepsType() == 'StepsType_Dance_Single' then ---------Single
-			SaveRadarValue(PlayerUID,StreamActualValue,StreamCurrentValue,"S","1");
-			SaveRadarValue(PlayerUID,VoltageActualValue,VoltageCurrentValue,"S","2");
-			SaveRadarValue(PlayerUID,AirActualValue,AirCurrentValue,"S","3");
-			SaveRadarValue(PlayerUID,FreezeActualValue,FreezeCurrentValue,"S","4");
-			SaveRadarValue(PlayerUID,ChaosActualValue,ChaosCurrentValue,"S","5");
+			SaveRadarValue(PlayerUID,StreamActualValue,StreamCurrentValue,"S","1",myProfile);
+			SaveRadarValue(PlayerUID,VoltageActualValue,VoltageCurrentValue,"S","2",myProfile);
+			SaveRadarValue(PlayerUID,AirActualValue,AirCurrentValue,"S","3",myProfile);
+			SaveRadarValue(PlayerUID,FreezeActualValue,FreezeCurrentValue,"S","4",myProfile);
+			SaveRadarValue(PlayerUID,ChaosActualValue,ChaosCurrentValue,"S","5",myProfile);
 		else-----------------------Double
-			SaveRadarValue(PlayerUID,StreamActualValue,StreamCurrentValue,"D","1");
-			SaveRadarValue(PlayerUID,VoltageActualValue,VoltageCurrentValue,"D","2");
-			SaveRadarValue(PlayerUID,AirActualValue,AirCurrentValue,"D","3");
-			SaveRadarValue(PlayerUID,FreezeActualValue,FreezeCurrentValue,"D","4");
-			SaveRadarValue(PlayerUID,ChaosActualValue,ChaosCurrentValue,"D","5");
+			SaveRadarValue(PlayerUID,StreamActualValue,StreamCurrentValue,"D","1",myProfile);
+			SaveRadarValue(PlayerUID,VoltageActualValue,VoltageCurrentValue,"D","2",myProfile);
+			SaveRadarValue(PlayerUID,AirActualValue,AirCurrentValue,"D","3",myProfile);
+			SaveRadarValue(PlayerUID,FreezeActualValue,FreezeCurrentValue,"D","4",myProfile);
+			SaveRadarValue(PlayerUID,ChaosActualValue,ChaosCurrentValue,"D","5",myProfile);
 		end
 	end;
 end;
