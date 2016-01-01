@@ -840,10 +840,10 @@ function UpdateInternal3(self, Player)
 				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
 				--local RadarFile = RageFileUtil:CreateRageFile()
 				
-				local RadarValueTableSingle = {0,0,0,0,0}};
-				local RadarValueTableDouble = {0,0,0,0,0};
+				local RadarValueTableSingle = {};
+				local RadarValueTableDouble = {};
 				
-				--[[----------Single Radar 
+				----------Single Radar 
 				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_S1.txt",1) then --Stram--
 					local str = RadarFile:Read();
 					CurrentValue = tonumber(str);
@@ -937,7 +937,7 @@ function UpdateInternal3(self, Player)
 					RadarValueTableDouble[5] = 0;
 				end
 				
-				RadarFile:Close();]]
+				RadarFile:Close();
 				
 				-----Rank From Radar Value
 				SetRankFromRadarValue(selectRank,RadarValueTableSingle,RadarValueTableDouble);
