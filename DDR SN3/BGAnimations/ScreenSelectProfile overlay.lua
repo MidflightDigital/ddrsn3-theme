@@ -838,7 +838,7 @@ function UpdateInternal3(self, Player)
 				
 				selPlayerUID = ProfileInfoCache[ind].GUID;
 				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
-				--local RadarFile = RageFileUtil:CreateRageFile()
+				local RadarFile = RageFileUtil:CreateRageFile()
 				
 				local RadarValueTableSingle = {};
 				local RadarValueTableDouble = {};
