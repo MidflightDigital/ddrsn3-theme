@@ -35,40 +35,15 @@ x[#x+1] = Def.ActorFrame {
 end
 
 
+--XXX: This file needs more modifications, this is just a quick Make It Work Right Now hack
 local function SaveRadarValue( PlayerUID, ActualValue, CurrentValue, StyleWord, CataNumber, This )
-	local user = This:GetUserTable()
-	local RadarFile = RageFileUtil:CreateRageFile();
-	if RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_"..StyleWord..CataNumber..".txt",1) then 
-		local str = RadarFile:Read();
-		CurrentValue = tonumber(str);
-		RadarFile:Close();	
-	else
-		RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_"..StyleWord..CataNumber..".txt",2);
-		RadarFile:Write("0.0");
-		RadarFile:Close();	
-	end
-	
-	-- if ActualValue > CurrentValue+0.005 then
-		-- if (ActualValue-CurrentValue)/20 > 0.05 then
-			-- CurrentValue = CurrentValue + 0.05;
-		-- elseif  (ActualValue-CurrentValue)/20 < 0.005 then
-			-- CurrentValue = CurrentValue + 0.005;
-		-- else
-			-- CurrentValue = CurrentValue +(ActualValue-CurrentValue)/20;
-		-- end
-	-- elseif ActualValue > CurrentValue then
-		-- CurrentValue = ActualValue;  --If value is very close (difference in 0.005) then new radar value = ActualValue
-	-- end
-	if ActualValue > CurrentValue then
-		CurrentValue = CurrentValue +(ActualValue-CurrentValue)/10;
-	end
-	RadarFile:Close();	
-	
-	user["DDRSN3Radar"..StyleWord..CataNumber] = CurrentValue
-	local RadarFile2 = RageFileUtil:CreateRageFile();
-	RadarFile2:Open("Save/MyGrooveRadar/"..PlayerUID.."_"..StyleWord..CataNumber..".txt",2);
-	RadarFile2:Write(tostring(CurrentValue));
-	RadarFile2:Close();
+    --I didn't bother looking at whatever this did but it seemed important
+    if ActualValue > CurrentValue then
+        CurrentValue = CurrentValue +(ActualValue-CurrentValue)/10;
+    end
+    local styleMappings = {S='single',D='double'}
+    local categoryMappings = {'stream','voltage','air','freeze','chaos'}
+    ProfileData.SetRadarData(This,styleMappings[StyleWord],categoryMappings[tonumber(CataNumber)],CurrentValue)
 end
 
 --Save My Groove Radar Values

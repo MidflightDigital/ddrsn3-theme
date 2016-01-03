@@ -1,72 +1,7 @@
 local tt={};
 --Get parameter
+--WHY THE FUCK DO YOU GET PARAMETERS IF YOU'RE JUST GONNA BOMB THEM LATER AUGH!!! -tertu
 tt[1],tt[2],tt[3],tt[4],tt[5] = ...
-
-local function ReadOrCreateRadarValueForPlayer(PlayerUID, ValueTable)
-	local RadarFile = RageFileUtil:CreateRageFile()
-	-- Read RadarValue From File
-	
-	if RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S1.txt",1) then --Stram--
-		local str = RadarFile:Read();
-		ValueTable[1] =tonumber(str);
-	else
-		RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S1.txt",2);
-		RadarFile:Write("0.0");
-		ValueTable[1]=0;
-	end
-	
-	if RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S2.txt",1) then --Voltage--
-		local str = RadarFile:Read();
-		ValueTable[2] =tonumber(str);
-	else
-		RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S2.txt",2);
-		RadarFile:Write("0.0");
-		ValueTable[2]=0;
-	end
-	
-	if RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S3.txt",1) then --Air--
-		local str = RadarFile:Read();
-		ValueTable[3] =tonumber(str);
-	else
-		RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S3.txt",2);
-		RadarFile:Write("0.0");
-		ValueTable[3]=0;
-	end
-
-	if RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S4.txt",1) then --Freeze--
-		local str = RadarFile:Read();
-		ValueTable[4] =tonumber(str);
-	else
-		RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S4.txt",2);
-		RadarFile:Write("0.0");
-		ValueTable[4]=0;
-	end
-
-	if RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S5.txt",1) then --Chaos--
-		local str = RadarFile:Read();
-		ValueTable[5] =tonumber(str);
-	else
-		RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S5.txt",2);
-		RadarFile:Write("0.0");
-		ValueTable[5]=0;
-	end	
-	
-	--We don't have any code that reads these files! -tertu
-	--[[
-	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S1P.txt",2);
-	RadarFile:Write(tostring(ValueTable[1]));
-	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S2P.txt",2);
-	RadarFile:Write(tostring(ValueTable[2]));
-	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S3P.txt",2);
-	RadarFile:Write(tostring(ValueTable[3]));
-	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S4P.txt",2);
-	RadarFile:Write(tostring(ValueTable[4]));
-	RadarFile:Open("Save/MyGrooveRadar/"..PlayerUID.."_S5P.txt",2);
-	RadarFile:Write(tostring(ValueTable[5]));
-	]]
-		
-	RadarFile:Close();
-end
 
 local function radarSet(self)
 	
@@ -81,12 +16,7 @@ local function radarSet(self)
 			local ind = SCREENMAN:GetTopScreen():GetProfileIndex(PLAYER_1);
 			if ind > 0 then -------------處理要顯示的內容
 			
-			local PlayerUID = PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetGUID()  --取得uid
-			
-			ReadOrCreateRadarValueForPlayer(PlayerUID,tt);
-
-
-			
+			tt = ProfileData.GetRadarDataPackaged(PROFILEMAN:GetLocalProfileFromIndex(ind-1),'single')
 			self:SetFromValues(PLAYER_1,tt);
 			
 			
