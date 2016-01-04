@@ -32,6 +32,11 @@ t[#t+1] = StandardDecorationFromFileOptional("SongOptions","SongOptions")
 -- other items (balloons, etc.)
 t[#t+1] = StandardDecorationFromFile( "Balloon", "Balloon" );
 t[#t+1] = StandardDecorationFromFile("Explanation","Explanation")
+t[#t+1] = Def.ActorFrame {
+	LoadActor(THEME:GetPathS("","Music_In"))..{
+		OnCommand=cmd(play);
+	};
+};
 
 if not GAMESTATE:IsCourseMode() then
 	t[#t+1] = StandardDecorationFromFileOptional("NewSong","NewSong") .. {

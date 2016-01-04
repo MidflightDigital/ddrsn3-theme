@@ -2,10 +2,14 @@ local counter = 0;
 local t = Def.ActorFrame{
 };
 if GAMESTATE:GetCoinMode() == 'CoinMode_Home' then
+
 t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)
 		self:zoom(1);
 	end;
+	LoadActor(THEME:GetPathS("","Title_In"))..{
+		OnCommand=cmd(play);
+	};
 	LoadActor(THEME:GetPathB("ScreenWithMenuElements","background/honeyright.png"))..{
 		InitCommand=cmd(halign,1;x,SCREEN_RIGHT;CenterY;blend,Blend.Add;;diffusealpha,0.5);
 	};

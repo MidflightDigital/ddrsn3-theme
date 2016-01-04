@@ -1035,24 +1035,24 @@ local t = Def.ActorFrame {
 	children = {
 		Def.ActorFrame {
 			Name = 'P1Frame';
-			InitCommand=cmd(x,SCREEN_CENTER_X-260;y,SCREEN_CENTER_Y;zoom,1.5);
+			InitCommand=cmd(x,SCREEN_CENTER_X-160;y,SCREEN_CENTER_Y+20;zoom,2);
 			OnCommand=cmd();
 			OffCommand=cmd();
 			PlayerJoinedMessageCommand=function(self,param)
 				if param.Player == PLAYER_1 then
-					(cmd(zoomx,1.5;zoomy,0.15;linear,0.175;zoomy,1.5;))(self);
+					(cmd(zoomx,2;zoomy,0.15;linear,0.175;zoomy,2;))(self);
 				end;
 			end;
 			children = LoadPlayerStuff(PLAYER_1);
 		};
 		Def.ActorFrame {
 			Name = 'P2Frame';
-			InitCommand=cmd(x,SCREEN_CENTER_X+260;y,SCREEN_CENTER_Y;zoom,1.5);
+			InitCommand=cmd(x,SCREEN_CENTER_X+160;y,SCREEN_CENTER_Y+20;zoom,2);
 			OnCommand=cmd();
 			OffCommand=cmd();
 			PlayerJoinedMessageCommand=function(self,param)
 				if param.Player == PLAYER_2 then
-					(cmd(zoomx,1.5;zoomy,0.15;linear,0.175;zoomy,1.5;))(self);
+					(cmd(zoomx,2;zoomy,0.15;linear,0.175;zoomy,2;))(self);
 				end;
 			end;
 			children = LoadPlayerStuff(PLAYER_2);

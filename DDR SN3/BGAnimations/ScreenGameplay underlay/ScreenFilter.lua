@@ -22,7 +22,10 @@ local filterWidth = (arrowWidth * cols) + padding
 if numPlayers == 1 then
 	local player = GAMESTATE:GetMasterPlayerNumber()
 	local pNum = (player == PLAYER_1) and 1 or 2
-	filterAlphas[player] = tonumber(getenv("ScreenFilterP"..pNum)) or 0;
+	local PlayerUID = PROFILEMAN:GetProfile(player):GetGUID()  
+	filterAlphas[player] = ReadOrCreateScreenFilterValueForPlayer(PlayerUID,filterAlphas[player])
+	
+	--filterAlphas[player] = tonumber(getenv("ScreenFilterP"..pNum));
 
 	local pos;
 	-- [ScreenGameplay] PlayerP#Player*Side(s)X
@@ -45,13 +48,15 @@ else
 		local metricName = "PlayerP".. pNum .."TwoPlayersSharedSidesX"
 		t[#t+1] = Def.Quad{
 			Name="RoutineFilter";
-			InitCommand=cmd(x,THEME:GetMetric("ScreenGameplay",metricName);CenterY;zoomto,filterWidth*1.2,SCREEN_HEIGHT;diffusecolor,filterColor;diffusealpha,filterAlphas[player];fadeleft,1/32;faderight,1/32);
+			InitCommand=cmd(x,THEME:GetMetric("ScreenGameplay",metricName);CenterY;zoomto,filterWidth*1.5,SCREEN_HEIGHT;diffusecolor,filterColor;diffusealpha,filterAlphas[player];fadeleft,1/32;faderight,1/32);
 		};
 	else
 		-- otherwise we need two separate ones. to the pairsmobile!
 		for i, player in ipairs(PlayerNumber) do
 			local pNum = (player == PLAYER_1) and 1 or 2
-			filterAlphas[player] = tonumber(getenv("ScreenFilterP"..pNum));
+			local PlayerUID = PROFILEMAN:GetProfile(player):GetGUID()  
+			filterAlphas[player] = ReadOrCreateScreenFilterValueForPlayer(PlayerUID,filterAlphas[player])
+			--filterAlphas[player] = tonumber(getenv("ScreenFilterP"..pNum));
 			local metricName = string.format("PlayerP%i%sX",pNum,styleType)
 			local pos = THEME:GetMetric("ScreenGameplay",metricName)
 			t[#t+1] = Def.Quad{
@@ -63,14 +68,16 @@ else
 end
 local function FilterUpdate(self)
 	local song = GAMESTATE:GetCurrentSong();
-	local start = song:GetFirstBeat();
-	local last = song:GetLastBeat();
-	if (GAMESTATE:GetSongBeat() >= last) then
-		self:visible(false);
-	elseif (GAMESTATE:GetSongBeat() >= start-8) then
-		self:visible(true);
-	else
-		self:visible(false);
+	if song then
+		local start = song:GetFirstBeat();
+		local last = song:GetLastBeat();
+		if (GAMESTATE:GetSongBeat() >= last+8) then
+			self:visible(false);
+		elseif (GAMESTATE:GetSongBeat() >= start-8) then
+			self:visible(true);
+		else
+			self:visible(false);
+		end;
 	end;
 end;
 t.InitCommand=cmd(SetUpdateFunction,FilterUpdate);

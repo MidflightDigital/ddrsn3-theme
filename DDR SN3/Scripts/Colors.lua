@@ -14,7 +14,7 @@ Color = {
 	Yellow		=	color("#fff200"),
 	Orange		=	color("#f7941d"),
 	Purple		=	color("#92278f"),
-	Outline		=	color("0,0,0,0.5"),
+	Outline		=	color("0,0,0,1"),
 	Invisible	=	color("1,1,1,0"),
 	Stealth		=	color("0,0,0,0"),
 -- Color Functions
@@ -50,6 +50,8 @@ GameColor = {
 		Hard		= color("0,0.996,0,1"),			-- green
 		Challenge	= color("0.78,0.4,1,1"),			-- light cyan
 		Edit		= color("0.8,0.8,0.8,1"),		-- gray
+		Couple		= color("#ed0972"),			-- hot pink
+		Routine		= color("#ff9a00"),			-- orange
 		--[[ These are for courses, so let's slap them here in case someone
 		wanted to use Difficulty in Course and Step regions. ]]
 		Difficulty_Beginner	= color("0.37,0.74,0.88,1"),	-- light blue
@@ -58,6 +60,8 @@ GameColor = {
 		Difficulty_Hard		= color("0,0.996,0,1"),		-- green
 		Difficulty_Challenge	= color("0.78,0.4,1,1"),		-- purple
 		Difficulty_Edit 	= color("0.8,0.8,0.8,1"),		-- gray
+		Difficulty_Couple	= color("#ed0972"),				-- hot pink
+		Difficulty_Routine	= color("#ff9a00")				-- orange
 	},
 	Stage = {
 		Stage_1st	= color("#00ffc7"),
