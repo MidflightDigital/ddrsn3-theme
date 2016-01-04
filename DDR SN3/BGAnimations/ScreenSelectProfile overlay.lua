@@ -735,93 +735,9 @@ function UpdateInternal3(self, Player)
 				end
 				PcntLarger = PcntLarger*100;
 				
-				if PcntLarger==0 then
-					selHonorName:settext('--');
-					selHonorPic:Load(THEME:GetPathB("","_ability/000"));
-				elseif PcntLarger>=0 and PcntLarger<10 then
-					selHonorName:settext('stone');
-					if PcntLarger >8 then selHonorPic:Load(THEME:GetPathB("","_ability/008")); 
-					elseif PcntLarger >6 then selHonorPic:Load(THEME:GetPathB("","_ability/006")); 
-					elseif PcntLarger >4 then selHonorPic:Load(THEME:GetPathB("","_ability/004"));
-					elseif PcntLarger >2 then selHonorPic:Load(THEME:GetPathB("","_ability/002")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/000")); 					
-					end
-				elseif PcntLarger>=10 and PcntLarger<20 then
-					selHonorName:settext('soap bubble');
-					if PcntLarger >18 then selHonorPic:Load(THEME:GetPathB("","_ability/018")); 
-					elseif PcntLarger >16 then selHonorPic:Load(THEME:GetPathB("","_ability/016")); 
-					elseif PcntLarger >14 then selHonorPic:Load(THEME:GetPathB("","_ability/014"));
-					elseif PcntLarger >12 then selHonorPic:Load(THEME:GetPathB("","_ability/012")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/010")); 					
-					end
-				elseif PcntLarger>=20 and PcntLarger<30 then
-					selHonorName:settext('pencil');
-					if PcntLarger >28 then selHonorPic:Load(THEME:GetPathB("","_ability/028")); 
-					elseif PcntLarger >26 then selHonorPic:Load(THEME:GetPathB("","_ability/026")); 
-					elseif PcntLarger >24 then selHonorPic:Load(THEME:GetPathB("","_ability/024"));
-					elseif PcntLarger >22 then selHonorPic:Load(THEME:GetPathB("","_ability/022")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/020")); 					
-					end
-				elseif PcntLarger>=30 and PcntLarger<40 then
-					selHonorName:settext('macaron');
-					if PcntLarger >38 then selHonorPic:Load(THEME:GetPathB("","_ability/038")); 
-					elseif PcntLarger >36 then selHonorPic:Load(THEME:GetPathB("","_ability/036")); 
-					elseif PcntLarger >34 then selHonorPic:Load(THEME:GetPathB("","_ability/034"));
-					elseif PcntLarger >32 then selHonorPic:Load(THEME:GetPathB("","_ability/032")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/030")); 					
-					end
-				elseif PcntLarger>=40 and PcntLarger<50 then
-					selHonorName:settext('lotus');
-					if PcntLarger >48 then selHonorPic:Load(THEME:GetPathB("","_ability/048")); 
-					elseif PcntLarger >46 then selHonorPic:Load(THEME:GetPathB("","_ability/046")); 
-					elseif PcntLarger >44 then selHonorPic:Load(THEME:GetPathB("","_ability/044"));
-					elseif PcntLarger >42 then selHonorPic:Load(THEME:GetPathB("","_ability/042")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/040")); 					
-					end
-				elseif PcntLarger>=50 and PcntLarger<60 then
-					selHonorName:settext('beetle');
-					if PcntLarger >58 then selHonorPic:Load(THEME:GetPathB("","_ability/058")); 
-					elseif PcntLarger >56 then selHonorPic:Load(THEME:GetPathB("","_ability/056")); 
-					elseif PcntLarger >54 then selHonorPic:Load(THEME:GetPathB("","_ability/054"));
-					elseif PcntLarger >52 then selHonorPic:Load(THEME:GetPathB("","_ability/052")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/050")); 					
-					end
-				elseif PcntLarger>=60 and PcntLarger<70 then
-					selHonorName:settext('jellyfish');
-					if PcntLarger >68 then selHonorPic:Load(THEME:GetPathB("","_ability/068")); 
-					elseif PcntLarger >66 then selHonorPic:Load(THEME:GetPathB("","_ability/066")); 
-					elseif PcntLarger >64 then selHonorPic:Load(THEME:GetPathB("","_ability/064"));
-					elseif PcntLarger >62 then selHonorPic:Load(THEME:GetPathB("","_ability/062")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/060")); 					
-					end
-				elseif PcntLarger>=70 and PcntLarger<80 then
-					selHonorName:settext('hummingbird');
-					if PcntLarger >78 then selHonorPic:Load(THEME:GetPathB("","_ability/078")); 
-					elseif PcntLarger >76 then selHonorPic:Load(THEME:GetPathB("","_ability/076")); 
-					elseif PcntLarger >74 then selHonorPic:Load(THEME:GetPathB("","_ability/074"));
-					elseif PcntLarger >72 then selHonorPic:Load(THEME:GetPathB("","_ability/072")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/070")); 					
-					end
-				elseif PcntLarger>=80 and PcntLarger<90 then
-					selHonorName:settext('kaleidoscope');
-					if PcntLarger >88 then selHonorPic:Load(THEME:GetPathB("","_ability/088")); 
-					elseif PcntLarger >86 then selHonorPic:Load(THEME:GetPathB("","_ability/086")); 
-					elseif PcntLarger >84 then selHonorPic:Load(THEME:GetPathB("","_ability/084"));
-					elseif PcntLarger >82 then selHonorPic:Load(THEME:GetPathB("","_ability/082")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/080")); 					
-					end
-				elseif PcntLarger>=90 and PcntLarger<100 then
-					selHonorName:settext('prism');
-					if PcntLarger >98 then selHonorPic:Load(THEME:GetPathB("","_ability/098")); 
-					elseif PcntLarger >96 then selHonorPic:Load(THEME:GetPathB("","_ability/096")); 
-					elseif PcntLarger >94 then selHonorPic:Load(THEME:GetPathB("","_ability/094"));
-					elseif PcntLarger >92 then selHonorPic:Load(THEME:GetPathB("","_ability/092")); 
-					else selHonorPic:Load(THEME:GetPathB("","_ability/090")); 					
-					end
-				elseif PcntLarger>=100  then
-					selHonorName:settext('prism');
-					selHonorPic:Load(THEME:GetPathB("","_ability/100"));
-				end
+				selHonorName:settext(RadarHelpers.GetHonorTitle(PcntLarger))
+				selHonorPic:Load(RadarHelpers.GetHonorPicturePath(PcntLarger))
+				
 				selHonorPic:shadowlength(1);
 				
 				local Lv = math.ceil(math.sqrt(ProfileInfoCache[ind].TotalCaloriesBurned));

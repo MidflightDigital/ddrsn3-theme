@@ -100,20 +100,3 @@ function ProfileData.ImportRadarData(prf)
         f:destroy()
     end
 end
-
-RadarHelpers = {}
-
-function RadarHelpers.PackageArbitraryRadarData(tbl, style)
-    if tbl then
-        local out = {}
-        local myVals = tbl[style]
-        if myVals then
-            for idx, category in ipairs(categoryMappings) do
-                out[idx] = myVals[category]
-            end
-            return out
-        end
-    end
-    --if we did not do this it would crash!
-    return {0,0,0,0,0}
-end

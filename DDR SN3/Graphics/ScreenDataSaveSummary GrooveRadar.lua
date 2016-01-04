@@ -1,26 +1,27 @@
 local tt={};
 --Get parameter
-tt[1],tt[2],tt[3],tt[4],tt[5],tt[6],tt[7] = ...
+tt[1],tt[2],tt[3],tt[4],tt[5],tt[6],tt[7],tt[8] = ...
 local style = (tt[6] == 1) and 'single' or 'double'
 local past = tt[7] == 1
+local player = tt[8]
 
 local function radarSet(self)
 
-	self:SetFromValues(PLAYER_2,tt);
+	self:SetFromValues(player,tt);
 	self:visible(true);	
 	
-	if GAMESTATE:IsHumanPlayer(PLAYER_2) then
+	if GAMESTATE:IsHumanPlayer(player) then
 		self:visible(true);
-		local profile = PROFILEMAN:GetProfile(PLAYER_2)  --取得uid but not really
+		local profile = PROFILEMAN:GetProfile(player)  --取得uid but not really
 		if not past then
 			tt = ProfileData.GetRadarDataPackaged(profile, style)
 		else
 			local env = GAMESTATE:Env()
 			local pastVals = env.PastRadarValues
-			local myPast = pastVals[PLAYER_2]
+			local myPast = pastVals[player]
 			tt = RadarHelpers.PackageArbitraryRadarData(myPast,style)
 		end
-		self:SetFromValues(PLAYER_2,tt);
+		self:SetFromValues(player,tt);
 	else
 		self:visible(false);
 	end
