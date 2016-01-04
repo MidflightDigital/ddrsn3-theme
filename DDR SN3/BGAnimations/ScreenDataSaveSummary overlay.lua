@@ -643,160 +643,58 @@ function UpdateInternal(self, Player)
 				--selPercentComplete:settext(string.format("%6.2f", totalPcnt*100).." %");
 				selPercentComplete:settext(string.format("%6.2f", PcntLarger).." %");
 				
-				selPlayerUID = PROFILEMAN:GetProfile(Player):GetGUID();
+				local selPlayerProf = PROFILEMAN:GetProfile(Player)
+				selPlayerUID = selPlayerProf:GetGUID();
+
+				local stype = GAMESTATE:GetCurrentStyle():GetStyleType()
+				local style = ((stype == 'StyleType_OnePlayerTwoSides') or (stype == 'StyleType_TwoPlayersSharedSides'))
+					and 'double'
+					or 'single'
 				
 				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
 				local RadarFile = RageFileUtil:CreateRageFile()
 				
 				--New Radar Value
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."1.txt",1) then --Stram--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_N1:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_N1:settext("0");
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."2.txt",1) then --Voltage--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_N2:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_N2:settext("0");
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."3.txt",1) then --Air--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_N3:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_N3:settext("0");
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."4.txt",1) then --Freeze--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_N4:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_N4:settext("0");
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."5.txt",1) then --Chaos--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_N5:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_N5:settext("0");
-				end
+				--Stram--
+				selGVRDValue_N1:settext(string.format("%0.1f", 
+					ProfileData.GetRadarData(selPlayerProf, style, 'stream')*100));
+				--Voltage--
+				selGVRDValue_N2:settext(string.format("%0.1f", 
+					ProfileData.GetRadarData(selPlayerProf, style, 'voltage')*100));
+				--Air--
+				selGVRDValue_N3:settext(string.format("%0.1f", 
+					ProfileData.GetRadarData(selPlayerProf, style, 'air')*100));
+				--Freeze--
+				selGVRDValue_N4:settext(string.format("%0.1f", 
+					ProfileData.GetRadarData(selPlayerProf, style, 'freeze')*100));
+				--Chaos--
+				selGVRDValue_N5:settext(string.format("%0.1f", 
+					ProfileData.GetRadarData(selPlayerProf, style, 'chaos')*100));
 				
 				--Old Radar Value
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."1P.txt",1) then --Stram--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_O1:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_O1:settext("0");
+				local env = GAMESTATE:Env()
+				local pastVals = env.PastRadarValues
+				local actualRadar = pastVals[Player][style]
+				for k,v in pairs(actualRadar) do
+					print(k,v)
 				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."2P.txt",1) then --Voltage--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_O2:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_O2:settext("0");
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."3P.txt",1) then --Air--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_O3:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_O3:settext("0");
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."4P.txt",1) then --Freeze--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_O4:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_O4:settext("0");
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_"..style.."5P.txt",1) then --Chaos--
-					local str = RadarFile:Read();
-					CurrentValue = tonumber(str);
-					selGVRDValue_O5:settext(string.format("%0.1f", CurrentValue*100));
-				else
-					selGVRDValue_O5:settext("0");
-				end
-
-				RadarFile:Close();
+				--Stream--
+				selGVRDValue_O1:settext(string.format("%0.1f", actualRadar.stream*100));
+				--Voltage--
+				selGVRDValue_O2:settext(string.format("%0.1f", actualRadar.voltage*100));
+				--Air--
+				selGVRDValue_O3:settext(string.format("%0.1f", actualRadar.air*100));
+				--Freeze--
+				selGVRDValue_O4:settext(string.format("%0.1f", actualRadar.freeze*100));
+				--Chaos--
+				selGVRDValue_O5:settext(string.format("%0.1f", actualRadar.chaos*100));
 				
 				------Calculate Rank
-				local RadarValueTableSingle = {};
-				local RadarValueTableDouble = {};
-				
-				----------Single Radar 
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_S1.txt",1) then --Stram--
-					local str = RadarFile:Read();
-					RadarValueTableSingle[1] = tonumber(str);
-				else
-					RadarValueTableSingle[1] = 0;
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_S2.txt",1) then --Voltage--
-					local str = RadarFile:Read();
-					RadarValueTableSingle[2] = tonumber(str);
-				else
-					RadarValueTableSingle[2] = 0;
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_S3.txt",1) then --Air--
-					local str = RadarFile:Read();
-					RadarValueTableSingle[3] = tonumber(str);
-				else
-					RadarValueTableSingle[3] = 0;
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_S4.txt",1) then --Freeze--
-					local str = RadarFile:Read();
-					RadarValueTableSingle[4] = tonumber(str);
-				else
-					RadarValueTableSingle[4] = 0;
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_S5.txt",1) then --Chaos--
-					local str = RadarFile:Read();
-					RadarValueTableSingle[5] = tonumber(str);
-				else
-					RadarValueTableSingle[5] = 0;
-				end
-				
-				----------Double Radar 
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_D1.txt",1) then --Stram--
-					local str = RadarFile:Read();
-					RadarValueTableDouble[1] = tonumber(str);
-				else
-					RadarValueTableDouble[1] = 0;
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_D2.txt",1) then --Voltage--
-					local str = RadarFile:Read();
-					RadarValueTableDouble[2] = tonumber(str);
-				else
-					RadarValueTableDouble[2] = 0;
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_D3.txt",1) then --Air--
-					local str = RadarFile:Read();
-					RadarValueTableDouble[3] = tonumber(str);
-				else
-					RadarValueTableDouble[3] = 0;
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_D4.txt",1) then --Freeze--
-					local str = RadarFile:Read();
-					RadarValueTableDouble[4] = tonumber(str);
-				else
-					RadarValueTableDouble[4] = 0;
-				end
-				if RadarFile:Open("Save/MyGrooveRadar/"..selPlayerUID.."_D5.txt",1) then --Chaos--
-					local str = RadarFile:Read();
-					RadarValueTableDouble[5] = tonumber(str);
-				else
-					RadarValueTableDouble[5] = 0;
-				end
-				
-				RadarFile:Close();
+				local RadarValueTableSingle = ProfileData.GetRadarDataPackaged(selPlayerProf, 'single');
+				local RadarValueTableDouble = ProfileData.GetRadarDataPackaged(selPlayerProf, 'double');
 				
 				-----Rank From Radar Value
 				SetRankFromRadarValue(selectRank,RadarValueTableSingle,RadarValueTableDouble);
-	
 end
 
 if GAMESTATE:IsPlayerEnabled(PLAYER_1) then

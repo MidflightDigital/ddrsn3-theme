@@ -67,6 +67,7 @@ function ProfileData.GetRadarTable(prf)
     end
 end
 
+--I define 'packaged' radar data as radar data ready to be fed into a Def.GrooveRadar.
 function ProfileData.GetRadarDataPackaged(prf, style)
     local out = {}
     for idx, category in pairs(categoryMappings) do
@@ -98,4 +99,21 @@ function ProfileData.ImportRadarData(prf)
         end
         f:destroy()
     end
+end
+
+RadarHelpers = {}
+
+function RadarHelpers.PackageArbitraryRadarData(tbl, style)
+    if tbl then
+        local out = {}
+        local myVals = out[style]
+        if myVals then
+            for idx, category in ipairs(categoryMappings) do
+                out[idx] = myVals[category]
+            end
+            return out
+        end
+    end
+    --if we did not do this it would crash!
+    return {0,0,0,0,0}
 end

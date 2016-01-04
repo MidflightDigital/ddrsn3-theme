@@ -37,12 +37,13 @@ end
 
 --XXX: This file needs more modifications, this is just a quick Make It Work Right Now hack
 local function SaveRadarValue( PlayerUID, ActualValue, CurrentValue, StyleWord, CataNumber, This )
+    local styleMappings = {S='single',D='double'}
+    local categoryMappings = {'stream','voltage','air','freeze','chaos'}
+	CurrentValue = tonumber(ProfileData.GetRadarData(This,styleMappings[StyleWord],categoryMappings[tonumber(CataNumber)]))
     --I didn't bother looking at whatever this did but it seemed important
     if ActualValue > CurrentValue then
         CurrentValue = CurrentValue +(ActualValue-CurrentValue)/10;
     end
-    local styleMappings = {S='single',D='double'}
-    local categoryMappings = {'stream','voltage','air','freeze','chaos'}
     ProfileData.SetRadarData(This,styleMappings[StyleWord],categoryMappings[tonumber(CataNumber)],CurrentValue)
 end
 

@@ -885,10 +885,7 @@ function UpdateInternal3(self, Player)
 
 				-- Save the past values, which we will need later
 				local pastValues = GetOrCreateChild(GAMESTATE:Env(), 'PastRadarValues')
-				pastValues[Player] = DeepCopy(ProfileData.GetRadarTable(prf))
-				
-				
-				
+				pastValues[Player] = DeepCopy(ProfileData.GetRadarTable(profile))
 				
 			else
 				if SCREENMAN:GetTopScreen():SetProfileIndex(Player, 1) then

@@ -22,7 +22,7 @@ local filterWidth = (arrowWidth * cols) + padding
 if numPlayers == 1 then
 	local player = GAMESTATE:GetMasterPlayerNumber()
 	local pNum = (player == PLAYER_1) and 1 or 2
-	filterAlphas[player] = tonumber(getenv("ScreenFilterP"..pNum));
+	filterAlphas[player] = tonumber(getenv("ScreenFilterP"..pNum)) or 0;
 
 	local pos;
 	-- [ScreenGameplay] PlayerP#Player*Side(s)X
