@@ -106,7 +106,7 @@ RadarHelpers = {}
 function RadarHelpers.PackageArbitraryRadarData(tbl, style)
     if tbl then
         local out = {}
-        local myVals = out[style]
+        local myVals = tbl[style]
         if myVals then
             for idx, category in ipairs(categoryMappings) do
                 out[idx] = myVals[category]

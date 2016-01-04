@@ -675,9 +675,6 @@ function UpdateInternal(self, Player)
 				local env = GAMESTATE:Env()
 				local pastVals = env.PastRadarValues
 				local actualRadar = pastVals[Player][style]
-				for k,v in pairs(actualRadar) do
-					print(k,v)
-				end
 				--Stream--
 				selGVRDValue_O1:settext(string.format("%0.1f", actualRadar.stream*100));
 				--Voltage--
