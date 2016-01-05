@@ -1,26 +1,27 @@
 local tt={};
 --Get parameter
-tt[1],tt[2],tt[3],tt[4],tt[5] = ...
+tt[1],tt[2],tt[3],tt[4],tt[5],tt[6],tt[7] = ...
+local player = tt[6]
+local style = tt[7]
 
 local function radarSet(self)
 	
 	
-	self:SetFromValues(PLAYER_2,tt);
+	self:SetFromValues(player,tt);
 	self:visible(true);	
 	
-	if GAMESTATE:IsHumanPlayer(PLAYER_2) then
+	if GAMESTATE:IsHumanPlayer(player) then
 		self:visible(true);
-		if MEMCARDMAN:GetCardState(PLAYER_2) == 'MemoryCardState_none' then
+		if MEMCARDMAN:GetCardState(player) == 'MemoryCardState_none' then
 			self:visible(true);
-			local ind = SCREENMAN:GetTopScreen():GetProfileIndex(PLAYER_2);
+			local ind = SCREENMAN:GetTopScreen():GetProfileIndex(player);
 			if ind > 0 then -------------處理要顯示的內容
 			
-			tt = ProfileData.GetRadarDataPackaged(PROFILEMAN:GetLocalProfileFromIndex(ind-1),'double')
-			self:SetFromValues(PLAYER_2,tt);
-			
+			tt = ProfileData.GetRadarDataPackaged(PROFILEMAN:GetLocalProfileFromIndex(ind-1),style)
+			self:SetFromValues(player,tt);
 			
 			else
-				if SCREENMAN:GetTopScreen():SetProfileIndex(PLAYER_2, 1) then
+				if SCREENMAN:GetTopScreen():SetProfileIndex(player, 1) then
 					self:visible(false);
 					self:queuecommand('UpdateInternal2');
 				else
