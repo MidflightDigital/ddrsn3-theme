@@ -42,7 +42,7 @@ local t = Def.ActorFrame{
 	};
 	LoadActor("icon")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-93);
-		OnCommand=cmd(queuecommand,"GainFocus");
+		OnCommand=cmd(zoomy,0;diffusealpha,0.5;sleep,0.114;sleep,0.033;zoomy,0.676;linear,0.033;zoomy,1;linear,0;diffusealpha,1);
 		GainFocusCommand=cmd(zoomy,0;diffusealpha,0.5;sleep,0.114;sleep,0.033;zoomy,0.676;linear,0.033;zoomy,1;linear,0;diffusealpha,1);
 		LoseFocusCommand=cmd(sleep,0.05;linear,0.066;zoomy,0;diffusealpha,0);
 		OffCommand=cmd(sleep,0.116;linear,0.066;zoomy,0;diffusealpha,0);
