@@ -28,11 +28,12 @@ t[#t+1] = Def.ActorFrame {
 				self:Load(path)
 			end
 		end;
-		OffCommand=cmd(accelerate,0.4;addx,-274);
+		OffCommand=cmd(accelerate,0.4;addx,-SCREEN_WIDTH);
 	};
 	LoadActor("left_panel")..{
 		InitCommand=cmd(x,SCREEN_LEFT+47;y,SCREEN_CENTER_Y);
 		OnCommand=cmd(addx,-94;decelerate,0.2;addx,94);
+		OffCommand=cmd(accelerate,0.2;addx,-94);
 	};
 	LoadActor("home_dialog")..{
 		InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-80);
