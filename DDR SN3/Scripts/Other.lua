@@ -41,7 +41,15 @@ function TextBannerGameplayAfterSet(self, param)
 	self:GetChild("Artist"):maxwidth(200/0.6)
 end
 
-function GetDifficultyIconFrame(diff) return (Enum.Reverse 'Difficulty')[diff] or 5 end
+local difficultyToIconIndex = {
+	Difficulty_Beginner		= 0,
+	Difficulty_Easy			= 1,
+	Difficulty_Medium		= 2,
+	Difficulty_Hard			= 3,
+	Difficulty_Challenge 	= 4,
+	Difficulty_Edit			= 5
+}
+function GetDifficultyIconFrame(diff) return difficultyToIconIndex[diff] or difficultyToIconIndex['Difficulty_Edit'] end
 
 function LoadStepsDisplayGameplayFrame(self,player)
 	local difficultyStates = {

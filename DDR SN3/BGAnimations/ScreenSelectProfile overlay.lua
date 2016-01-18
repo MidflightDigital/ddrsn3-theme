@@ -181,6 +181,11 @@ function LoadPlayerStuff(Player)
 		end;
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
+	
+	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
+		Name = 'selectPlayerUID';
+		InitCommand=cmd(visible,false);
+	};
 
 
 	t[#t+1] =LoadFont("_handelgothic bt 20px") .. {
@@ -294,6 +299,7 @@ function UpdateInternal3(self, Player)
 	local selLevel = frame:GetChild('SelectedProfileLevel');
 	local selTotalCalWord = frame:GetChild('selectTotalCalWord');
 	local selTotalCaloriesBurned = frame:GetChild('selectedTotalCaloriesBurned');
+	local selectPlayerUID = frame:GetChild('selectPlayerUID');
 	local selMostSongPlayed = frame:GetChild('selectedMostSongPlayed');
 	local selSongsPlayed = frame:GetChild('selectSongsPlayed');
 	local selLvBarBack = frame:GetChild('selectLvBarBack');
@@ -362,6 +368,10 @@ function UpdateInternal3(self, Player)
 				selSongsPlayed:settext(tostring(math.ceil(ProfileInfoCache[ind].NumTotalSongsPlayed)));
 				selLvBar:cropright(1-pcnt);
 				
+				selPlayerUID = PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetGUID();
+				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
+				local RadarFile = RageFileUtil:CreateRageFile()
+				
 				local RadarValueTableSingle = {};
 				local RadarValueTableDouble = {};
 				
@@ -397,6 +407,7 @@ function UpdateInternal3(self, Player)
 					bigframe:visible(false);
 					scroller:visible(false);
 					seltext:settext('No profile');
+					selectPlayerUID:settext('------------');
 					selLevel:settext('No level info');
 					selTotalCaloriesBurned:settext('No Played Songs Info');
 					selMostSongPlayed:visible(false);
@@ -423,6 +434,7 @@ function UpdateInternal3(self, Player)
 		joinframe:visible(true);
 		scroller:visible(false);
 		seltext:visible(false);
+		selectPlayerUID:visible(false);
 		smallframe:visible(false);
 		bigframe:visible(false);
 		selLevel:visible(false);

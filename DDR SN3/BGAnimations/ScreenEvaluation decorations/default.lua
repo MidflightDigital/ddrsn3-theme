@@ -3,6 +3,19 @@ local t = LoadFallbackB();
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
 
+-- difficulty display
+if ShowStandardDecoration("DifficultyIcon") then
+	if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
+		-- in rave mode, we always have two players.
+	else
+		-- otherwise, we only want the human players
+		for pn in ivalues(GAMESTATE:GetHumanPlayers()) do
+			local diffIcon = LoadActor(THEME:GetPathG(Var "LoadingScreen", "DifficultyIcon"), pn)
+			t[#t+1] = StandardDecorationFromTable("DifficultyIcon" .. ToEnumShortString(pn), diffIcon);
+		end
+	end
+end
+
 t[#t+1] = LoadActor("grade")..{
 	InitCommand=cmd(diffusealpha,1;draworder,11);
 	OffCommand=cmd(sleep,0.2;linear,0.2;diffusealpha,0);

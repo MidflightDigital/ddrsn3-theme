@@ -10,9 +10,6 @@ t[#t+1] = Def.ActorFrame {
 	LoadActor(THEME:GetPathS("","Title_In"))..{
 		OnCommand=cmd(play);
 	};
-	LoadActor(THEME:GetPathB("ScreenWithMenuElements","background/honeyright.png"))..{
-		InitCommand=cmd(halign,1;x,SCREEN_RIGHT;CenterY;blend,Blend.Add;;diffusealpha,0.5);
-	};
 	LoadActor(THEME:GetPathB("ScreenLogo","background/ddrsn_logo.png"))..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9;);
 	};

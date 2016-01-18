@@ -14,7 +14,7 @@ t = Def.ActorFrame{
 	InitCommand=cmd(addx,200);
 	};
 		LoadActor("P2Cursor")..{
-		InitCommand=cmd(addx,320;addy,0;zoomy,1.0;zoomx,1.0;bounce;effectmagnitude,8,0,0;effectclock,'beatnooffset');
+		InitCommand=cmd(addx,300;addy,0;zoomy,1.0;zoomx,1.0;);
 	};
 };	
 return t;

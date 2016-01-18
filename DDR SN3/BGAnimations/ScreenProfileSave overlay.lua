@@ -1,4 +1,5 @@
 local x = Def.ActorFrame{};
+--[[
 if GAMESTATE:HasEarnedExtraStage() and GAMESTATE:IsExtraStage() and not GAMESTATE:IsExtraStage2() then
 x[#x+1] = Def.ActorFrame {
 	LoadActor(("cleared"))..{
@@ -21,7 +22,7 @@ x[#x+1] = Def.ActorFrame {
 	};
 }
 end
-
+--]]
 
 --XXX: This file needs more modifications, this is just a quick Make It Work Right Now hack
 local function SaveRadarValue( PlayerUID, ActualValue, CurrentValue, StyleWord, CataNumber, This )
