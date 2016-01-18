@@ -7,7 +7,12 @@ t[#t+1] = Def.ActorFrame {
 		self:zoom(1);
 	end;
 	Def.ActorFrame{
-		LoadActor(THEME:GetPathB("ScreenWithMenuElements","background/default.lua"));
+		LoadActor("_bck")..{
+			InitCommand=cmd(Center;FullScreen);
+		};
+		LoadActor("grid")..{
+			InitCommand=cmd(FullScreen;diffuse,color("#14fc00");diffusealpha,0.2;);
+		};
 		LoadActor("ddrsn_logo.png")..{
 			InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9);
 		};
