@@ -26,20 +26,6 @@ local t = Def.ActorFrame{
 		GainFocusCommand=cmd(sleep,0.116;zoom,0);
 		OffCommand=cmd(bouncebegin,0.264;zoom,0);
 	};
-	LoadActor("back1.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-87);
-		OnCommand=cmd(queuecommand,"GainFocus");
-		GainFocusCommand=cmd(addx,-17;diffusealpha,0;zoomy,1;zoomx,0.5;sleep,0.114;linear,0.066;zoomx,1;diffusealpha,0.5;linear,0.033;addx,17;diffusealpha,1);
-		LoseFocusCommand=cmd(linear,0.033;addx,-54;diffusealpha,0.5;linear,0.033;zoomx,0.5;diffusealpha,0;linear,0;addx,54;zoomy,0);
-		OffCommand=cmd(sleep,0.116;linear,0.066;zoomy,0;diffusealpha,0);
-	};
-	LoadActor("back2.png")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-87);
-		OnCommand=cmd(queuecommand,"GainFocus");
-		GainFocusCommand=cmd(addx,17;diffusealpha,0;zoomy,1;zoomx,0.5;sleep,0.114;linear,0.066;zoomx,1;diffusealpha,0.5;linear,0.033;addx,-17;diffusealpha,1);
-		LoseFocusCommand=cmd(linear,0.033;addx,54;diffusealpha,0.5;linear,0.033;zoomx,0.5;diffusealpha,0;linear,0;addx,-54;zoomy,0);
-		OffCommand=cmd(sleep,0.116;linear,0.066;zoomy,0;diffusealpha,0);
-	};
 	LoadActor("icon")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y-93);
 		OnCommand=cmd(zoomy,0;diffusealpha,0.5;sleep,0.114;sleep,0.033;zoomy,0.676;linear,0.033;zoomy,1;linear,0;diffusealpha,1);

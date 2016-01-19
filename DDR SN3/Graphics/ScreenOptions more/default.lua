@@ -1,6 +1,6 @@
 return Def.ActorFrame{
 	Def.ActorFrame{
-		InitCommand=cmd(player,PLAYER_1;x,-230;y,77.5);
+		InitCommand=cmd(player,PLAYER_1;x,-150;y,77.5);
 		LoadActor("1P_OK")..{
 			InitCommand=cmd(diffusealpha,0;zoomy,0);
 		--	ExitSelectedP1Command=cmd(stoptweening;bob;effectmagnitude,0,2,0;effectperiod,1;bounceend,0.2;diffusealpha,1;zoom,1);
@@ -21,7 +21,7 @@ return Def.ActorFrame{
 		};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(player,PLAYER_2;x,230;y,77.5);
+		InitCommand=cmd(player,PLAYER_2;x,150;y,77.5);
 		LoadActor("2P_OK")..{
 			InitCommand=cmd(diffusealpha,0;zoomy,0);
 		--	ExitSelectedP2Command=cmd(stoptweening;bob;effectmagnitude,0,2,0;effectperiod,1;bounceend,0.2;diffusealpha,1;zoom,1);

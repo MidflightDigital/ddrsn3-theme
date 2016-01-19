@@ -22,16 +22,10 @@ local tapNoteScoresToIgnore = {
 function SN2Scoring.PrepareScoringInfo()
     if GAMESTATE then
         local stageSeed = GAMESTATE:GetStageSeed()
-        --if the seed hasn't changed, we're in the same game so we don't want
-        --to re-initialize
         if stageSeed == ScoringInfo.seed then return end
         ScoringInfo.seed = stageSeed
         local inCourse = GAMESTATE:IsCourseMode()
         local maker = inCourse and SN2Scoring.MakeCourseScoringFunctions or SN2Scoring.MakeNormalScoringFunctions
-        --cool lua trick: GAMESTATE:GetCurrentTrail(pn) is equivalent to 
-        --GameState.GetCurrentTrail(GAMESTATE,pn) so we can save the right
-        --function to a variable and save... 3 lines of code or so...
-        --oh well.
         local dataFetcher = inCourse and GameState.GetCurrentTrail or GameState.GetCurrentSteps
         for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
             local data = dataFetcher(GAMESTATE,pn)
@@ -152,26 +146,3 @@ function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
 
     return package
 end
-
--- (c) 2015-2016 John Walstrom, "Inorizushi"
--- All rights reserved.
--- 
--- Permission is hereby granted, free of charge, to any person obtaining a
--- copy of this software and associated documentation files (the
--- "Software"), to deal in the Software without restriction, including
--- without limitation the rights to use, copy, modify, merge, publish,
--- distribute, and/or sell copies of the Software, and to permit persons to
--- whom the Software is furnished to do so, provided that the above
--- copyright notice(s) and this permission notice appear in all copies of
--- the Software and that both the above copyright notice(s) and this
--- permission notice appear in supporting documentation.
--- 
--- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
--- OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
--- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
--- THIRD PARTY RIGHTS. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS
--- INCLUDED IN THIS NOTICE BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT
--- OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
--- OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
--- OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
--- PERFORMANCE OF THIS SOFTWARE.

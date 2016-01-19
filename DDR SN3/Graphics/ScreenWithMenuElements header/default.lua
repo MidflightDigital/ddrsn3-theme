@@ -6,6 +6,10 @@ if screenName == "ScreenSelectMusic" then
     headerTextImage = "Music (doubleres).png"
 elseif string.find(screenName, "Options") then
     headerTextImage = "Options (doubleres).png"
+elseif screenName == "ScreenMapControllers" then
+	headerTextImage = "Options (doubleres).png"
+elseif screenName == "ScreenSelectProfile" then
+	headerTextImage = "Profile (doubleres).png"
 elseif screenName == "ScreenDataSaveSummary" then
 	headerTextImage = "Save (doubleres).png"
 elseif screenName == "ScreenSelectStyle" then

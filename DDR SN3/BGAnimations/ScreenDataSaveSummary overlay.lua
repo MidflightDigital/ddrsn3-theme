@@ -61,6 +61,11 @@ t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
 	
+t[#t+1] = LoadFont("_sveningsson Bold 60px") .. {
+		Name = 'selectPlayerUID';
+		InitCommand=cmd(visible,false);
+	};	
+	
 	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		Name = 'selectSongsPlayed';
 		InitCommand=cmd(x,25;y,-56;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,0.1,1");strokecolor,Color("Outline");maxwidth,150);
@@ -273,7 +278,7 @@ function UpdateInternal(self, Player)
 	local selMostSongPlayed = self:GetChild('selectedMostSongPlayed');
 	local selSongsPlayed = self:GetChild('selectSongsPlayed');
 	local selLvBar = self:GetChild('selectLvBarBack');
-
+	local selPlayerUID;
 	local selGVRD = (Player == PLAYER_1) and self:GetChild('GVRD1') or self:GetChild('GVRD2');
 	local selGVRDP = (Player == PLAYER_1) and self:GetChild('GVRD1P') or self:GetChild('GVRD2P');
 	
@@ -303,6 +308,11 @@ function UpdateInternal(self, Player)
 				--selSongsPlayed:settext(tostring(math.ceil(PROFILEMAN:GetProfile(Player):GetNumTotalSongsPlayed())));
 				selLvBar:cropright(1-pcnt);
 			
+				selPlayerUID = PROFILEMAN:GetProfile(Player):GetGUID();
+				
+				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
+				local RadarFile = RageFileUtil:CreateRageFile()
+	
 				local selPlayerProf = PROFILEMAN:GetProfile(Player)
 
 				local stype = GAMESTATE:GetCurrentStyle():GetStyleType()
