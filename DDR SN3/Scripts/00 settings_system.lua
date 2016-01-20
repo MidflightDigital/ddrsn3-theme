@@ -14,6 +14,98 @@ function get_element_by_path(container, path)
 	return current
 end
 
+--These live in 01 misc.lua in Consensual, but in this theme they are only used here
+--so they don't get a separate file.
+function string_needs_escape(str)
+	if str:match("^[a-zA-Z_][a-zA-Z_0-9]*$") then
+		return false
+	else
+		return true
+	end
+end
+
+function lua_table_to_string(t, indent, line_pos)
+	indent= indent or ""
+	line_pos= (line_pos or #indent) + 1
+	local internal_indent= indent .. "  "
+	local ret= "{"
+	local has_table= false
+	for k, v in pairs(t) do if type(v) == "table" then has_table= true end
+	end
+	if has_table then
+		ret= "{\n" .. internal_indent
+		line_pos= #internal_indent
+	end
+	local separator= ""
+	local function do_value_for_key(k, v, need_key_str)
+		if type(v) == "nil" then return end
+		local k_str= k
+		if type(k) == "number" then
+			k_str= "[" .. k .. "]"
+		else
+			if string_needs_escape(k) then
+				k_str= "[" .. ("%q"):format(k) .. "]"
+			else
+				k_str= k
+			end
+		end
+		if need_key_str then
+			k_str= k_str .. "= "
+		else
+			k_str= ""
+		end
+		local v_str= ""
+		if type(v) == "table" then
+			v_str= lua_table_to_string(v, internal_indent, line_pos + #k_str)
+		elseif type(v) == "string" then
+			v_str= ("%q"):format(v)
+		elseif type(v) == "number" then
+			if v ~= math.floor(v) then
+				v_str= ("%.6f"):format(v)
+				local last_nonz= v_str:reverse():find("[^0]")
+				if last_nonz then
+					v_str= v_str:sub(1, -last_nonz)
+				end
+			else
+				v_str= tostring(v)
+			end
+		else
+			v_str= tostring(v)
+		end
+		local to_add= k_str .. v_str
+		if type(v) == "table" then
+			if separator == "" then
+				to_add= separator .. to_add
+			else
+				to_add= separator .."\n" .. internal_indent .. to_add
+			end
+		else
+			if line_pos + #separator + #to_add > 80 then
+				line_pos= #internal_indent + #to_add
+				to_add= separator .. "\n" .. internal_indent .. to_add
+			else
+				to_add= separator .. to_add
+				line_pos= line_pos + #to_add
+			end
+		end
+		ret= ret .. to_add
+		separator= ", "
+	end
+	-- do the integer indices from 0 to n first, in order.
+	do_value_for_key(0, t[0], true)
+	for n= 1, #t do
+		do_value_for_key(n, t[n], false)
+	end
+	for k, v in pairs(t) do
+		local is_integer_key= (type(k) == "number") and (k == math.floor(k)) and k >= 0 and k <= #t
+		if not is_integer_key then
+			do_value_for_key(k, v, true)
+		end
+	end
+	ret= ret .. "}"
+	return ret
+end
+
 function set_element_by_path(container, path, value)
 	local parts= split_name(path)
 	local current= container
@@ -156,7 +248,8 @@ local setting_mt= {
 			self.data_set[id]= data
 		end,
 		set_dirty= function(self, id)
-			id= slot or ""
+			id= id or ""
+			Warn(id.." is dirty now.")
 			self.dirty_table[id]= true
 		end,
 		check_dirty= function(self, id)
@@ -170,13 +263,13 @@ local setting_mt= {
 		end,
 		get_filename= function(self, id)
 			id= id or ""
-			local prof_dir= id_to_prof_dir(is, "write " .. self.name)
+			local prof_dir= id_to_prof_dir(id, "write " .. self.name)
 			if not prof_dir then return end
 			return prof_dir .. settings_prefix .. self.file
 		end,
 		save= function(self, id)
 			id= id or ""
-			if not self:check_dirty(id) then return end
+			if not self:check_dirty(id) then Warn"Ouch!" return end
 			local fname= self:get_filename(id)
 			local file_handle= RageFileUtil.CreateRageFile()
 			if not file_handle:Open(fname, 2) then
