@@ -16,7 +16,6 @@ FlameyBoy
 
 hypnoticmarten77
 
-MadkaT
 
 # Graphics
 Inorizushi
