@@ -1,3 +1,25 @@
+--This comes in handy in a number of places
+function GetOrCreateChild(tab, field, kind)
+    kind = kind or 'table'
+    local out
+    if not tab[field] then
+        if kind == 'table' then
+            out = {}
+        elseif kind == 'number' then
+            out = 0
+        elseif kind == 'boolean_df' or kind == 'boolean' then
+            out = false
+        elseif kind == 'boolean_dt' then
+            out = true
+        else
+            error("GetOrCreateChild: I don't know a default value for type "..kind)
+        end
+        tab[field] = out
+    else out = tab[field] end
+    return out
+end
+
+--XXX: Do we actually use this?
 function cutin(player)
 	local ShowDancingCharacters = GetUserPrefB("FirstReMIX_ShowDancingCharacters");
 	local character = GAMESTATE:GetCharacter(player):GetCharacterID();
@@ -74,16 +96,6 @@ function LoadStepsDisplayGameplayFrame(self,player)
 	if player == PLAYER_2 then state = state + 1; end;
 	return state;
 end;
-
-function Actor:scale_or_crop_background()
-	if PREFSMAN:GetPreference("StretchBackgrounds") then
-		self:cropto(SCREEN_WIDTH, SCREEN_HEIGHT)
-	else
-		local graphicAspect = self:GetWidth()/self:GetHeight()
-		self:zoomto(SCREEN_HEIGHT*graphicAspect,SCREEN_HEIGHT)
-	end
-end
-
 -- summary evaluation banner handling (for 1-5 stages)
 -- ganked from my ddr 5th mix port
 local summaryBannerX = {

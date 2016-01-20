@@ -19,7 +19,6 @@ local function radarSet(self)
 			
 			tt = MyGrooveRadar.GetRadarDataPackaged(PROFILEMAN:GetLocalProfileIDFromIndex(ind-1),style)
 			self:SetFromValues(player,tt);
-			
 			else
 				if SCREENMAN:GetTopScreen():SetProfileIndex(player, 1) then
 					self:visible(false);

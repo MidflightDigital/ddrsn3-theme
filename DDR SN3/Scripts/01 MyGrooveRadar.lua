@@ -91,7 +91,7 @@ end
 function MyGrooveRadar.GetRadarDataPackaged(ident, style)
     local out = {}
     for idx, category in pairs(categoryToActorMappings) do
-        out[idx] = MyGrooveRadar.GetRadarData(prf, style, category)
+        out[idx] = MyGrooveRadar.GetRadarData(ident, style, category)
     end
     return out
 end
