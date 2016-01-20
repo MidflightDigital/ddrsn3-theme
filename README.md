@@ -1,9 +1,7 @@
 # ddrsn3-theme
 Contains SN3 theme files
 
-"DDR SN3" = Stepmania 5.09 theme
-
-"sn3_3.9+" = Stepmania 3.9 theme
+"DDR SN3" = the theme
 
 The SM5 theme is still being built from the ground up. Please keep your git copy updated regularly if you plan to push any changes.
 
@@ -11,22 +9,23 @@ Contributors:
 --
 
 # Metrics/Lua
-TakuyaMAXX (3.9)
 
-hypnoticmarten77 (3.9/5)
+Inorizushi
 
-FlameyBoy (5)
+FlameyBoy
 
-Inorizushi(5)
+hypnoticmarten77
 
-MadkaT (5)
+MadkaT
 
 # Graphics
-SoulEdge5000
+Inorizushi
+
+hypnoticmarten77
 
 JunkoXXX
 
-hypnoticmarten77
+SoulEdge5000
 
 Dreamland200
 
