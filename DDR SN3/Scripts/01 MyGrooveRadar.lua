@@ -62,7 +62,9 @@ function MyGrooveRadar.GetProfileIDForPlayer(pn)
                     return id
                 end
             end
-            error("Couldn't find a local profile that is supposed to exist.")
+            --apparently this just means we're using the machine profile if this all fails.
+            pidCache[pn] = "!MACHINE"
+            return "!MACHINE"
         end
     end
     return "!MACHINE"

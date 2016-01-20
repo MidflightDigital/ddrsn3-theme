@@ -15,7 +15,7 @@ local function radarSet(self)
 		if MEMCARDMAN:GetCardState(player) == 'MemoryCardState_none' then
 			self:visible(true);
 			local ind = SCREENMAN:GetTopScreen():GetProfileIndex(player);
-			if ind > 0 then -------------處理要顯示的內容
+			if ind > 0 then --We can display this.
 			
 			tt = MyGrooveRadar.GetRadarDataPackaged(PROFILEMAN:GetLocalProfileIDFromIndex(ind-1),style)
 			self:SetFromValues(player,tt);
