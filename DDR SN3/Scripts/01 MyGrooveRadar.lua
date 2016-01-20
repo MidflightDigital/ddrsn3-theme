@@ -103,7 +103,7 @@ function MyGrooveRadar.ApplyBonuses(ident, stageStats, styleName)
         local earnedValue = actualRadar:GetValue(stepsCat)*possibleRadar:GetValue(stepsCat)
         local savedValue = MyGrooveRadar.GetRadarData(ident, styleName, savedCat)
         if savedValue < earnedValue then
-            MyGrooveRadar.SetRadarData(ident, styleName, savedCat, savedValue + earnedValue/10)
+            MyGrooveRadar.SetRadarData(ident, styleName, savedCat, savedValue + (earnedValue-savedValue)/10)
         end
     end
 end
