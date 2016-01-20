@@ -1,6 +1,7 @@
 --settings_system from Consensual by Kyzentun.
 --github.com/kyzentun/consensual
 local settings_prefix= "/MidflightDigital/"
+--note: this doesn't use this (it's probably here because of how Consensual works.)
 global_cur_game= GAMESTATE:GetCurrentGame():GetName():lower()
 
 function get_element_by_path(container, path)
@@ -142,6 +143,10 @@ local setting_mt= {
 			end
 			return self.data_set[id]
 		end,
+		is_loaded= function(self, id)
+			id= id or ""
+			return self.data_set[id]~=nil
+		end,
 		get_data= function(self, id)
 			id= id or ""
 			return self.data_set[id] or self.default
@@ -158,7 +163,7 @@ local setting_mt= {
 			id= id or ""
 			return self.dirty_table[id]
 		end,
-		clear_slot= function(self, id)
+		clear_id= function(self, id)
 			id= id or ""
 			self.dirty_table[id]= nil
 			self.data_set[id]= nil
