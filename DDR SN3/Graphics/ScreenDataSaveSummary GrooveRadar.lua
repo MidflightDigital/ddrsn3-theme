@@ -12,14 +12,14 @@ local function radarSet(self)
 	
 	if GAMESTATE:IsHumanPlayer(player) then
 		self:visible(true);
-		local profile = PROFILEMAN:GetProfile(player)  --取得uid but not really
+		local profileID = MyGrooveRadar.GetProfileIDForPlayer(player)  --取得uid but not really
 		if not past then
-			tt = ProfileData.GetRadarDataPackaged(profile, style)
+			tt = MyGrooveRadar.GetRadarDataPackaged(profileID, style)
 		else
 			local env = GAMESTATE:Env()
 			local pastVals = env.PastRadarValues
 			local myPast = pastVals[player]
-			tt = RadarHelpers.PackageArbitraryRadarData(myPast,style)
+			tt = MyGrooveRadar.PackageArbitraryRadarData(myPast,style)
 		end
 		self:SetFromValues(player,tt);
 	else

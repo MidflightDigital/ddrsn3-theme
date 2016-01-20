@@ -41,6 +41,33 @@ function MyGrooveRadar.GetRadarTable(ident)
     return mgrData:get_data(ident)
 end
 
+function MyGrooveRadar.GetProfileIDForPlayer(pn)
+    if GAMESTATE:IsHumanPlayer(pn) then
+        local profile = PROFILEMAN:GetProfile(pn)
+        if profile == PROFILEMAN:GetMachineProfile() then
+            return "!MACHINE"
+        end
+        if PROFILEMAN:ProfileWasLoadedFromMemoryCard(pn) then
+            return (pn=='PlayerNumber_P1') and "!MC0" or "!MC1"
+        end
+        if GAMESTATE:Env() then
+            local pidCache = GetOrCreateChild(GAMESTATE:Env(),"PlayerLocalIDs")
+            if pidCache[pn] then
+                return pidCache[pn]
+            end
+            --worst case scenario: we have to search all the local profiles to find it.
+            for _, id in pairs(PROFILEMAN:GetLocalProfileIDs()) do
+                if PROFILEMAN:GetLocalProfile(id) == profile then
+                    pidCache[pn] = id
+                    return id
+                end
+            end
+            error("Couldn't find a local profile that is supposed to exist.")
+        end
+    end
+    return "!MACHINE"
+end
+
 function MyGrooveRadar.GetRadarData(ident, style, category)
     local rData = MyGrooveRadar.GetRadarTable(ident)
     if rData[style] then
@@ -69,14 +96,14 @@ function MyGrooveRadar.GetRadarDataPackaged(ident, style)
     return out
 end
 
-function MyGrooveRadar.ApplyBonuses(ident, steps)
-    local styleName = (steps:GetStepsType():lower()):find("double") and "double" or "single"
-    local radarValues = steps:GetRadarValues()
+function MyGrooveRadar.ApplyBonuses(ident, stageStats, styleName)
+    local actualRadar = stageStats:GetRadarActual()
+    local possibleRadar = stageStats:GetRadarPossible()
     for savedCat, stepsCat in pairs(savedCategoryToSMCategory) do
-        local stepsValue = radarValues:GetValue(stepsCat)
+        local earnedValue = actualRadar:GetValue(stepsCat)*possibleRadar:GetValue(stepsCat)
         local savedValue = MyGrooveRadar.GetRadarData(ident, styleName, savedCat)
-        if savedValue < stepsValue then
-            MyGrooveRadar.SetRadarData(ident, styleName, savedCat, savedValue + stepsValue/10)
+        if savedValue < earnedValue then
+            MyGrooveRadar.SetRadarData(ident, styleName, savedCat, savedValue + earnedValue/10)
         end
     end
 end

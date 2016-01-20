@@ -16,7 +16,6 @@ function(table, ind)
     out.DisplayName = prof:GetDisplayName()
     out.NumTotalSongsPlayed = prof:GetNumTotalSongsPlayed()
     out.UserTable = prof:GetUserTable()
-    ProfileData.GetRadarData(prof,'single','chaos')
     rawset(table, ind, out)
     return out
 end
@@ -370,31 +369,32 @@ function UpdateInternal3(self, Player)
 				
 				selPlayerUID = PROFILEMAN:GetLocalProfileFromIndex(ind-1):GetGUID();
 				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
-				local RadarFile = RageFileUtil:CreateRageFile()
 				
 				local RadarValueTableSingle = {};
 				local RadarValueTableDouble = {};
 				
+				local profileID = PROFILEMAN:GetLocalProfileIDFromIndex(ind-1)
+
 				----------Single Radar 
 				--Stream--
-				RadarValueTableSingle[1] = ProfileData.GetRadarData(profile, 'single', 'stream')
+				RadarValueTableSingle[1] = MyGrooveRadar.GetRadarData(profileID, 'single', 'stream')
                 selGVRDValue_S1:settext(string.format("%0.1f", RadarValueTableSingle[1]*100));
                 --Voltage--
-                RadarValueTableSingle[2] = ProfileData.GetRadarData(profile, 'single', 'voltage')
+                RadarValueTableSingle[2] = MyGrooveRadar.GetRadarData(profileID, 'single', 'voltage')
                 selGVRDValue_S2:settext(string.format("%0.1f", RadarValueTableSingle[2]*100));
                 --Air--
-                RadarValueTableSingle[3] = ProfileData.GetRadarData(profile, 'single', 'air')
+                RadarValueTableSingle[3] = MyGrooveRadar.GetRadarData(profileID, 'single', 'air')
                 selGVRDValue_S3:settext(string.format("%0.1f", RadarValueTableSingle[3]*100));
 				--Freeze--
-                RadarValueTableSingle[4] = ProfileData.GetRadarData(profile, 'single', 'freeze')
+                RadarValueTableSingle[4] = MyGrooveRadar.GetRadarData(profileID, 'single', 'freeze')
                 selGVRDValue_S4:settext(string.format("%0.1f", RadarValueTableSingle[4]*100));
 				--Chaos--
-                RadarValueTableSingle[5] = ProfileData.GetRadarData(profile, 'single', 'chaos')
+                RadarValueTableSingle[5] = MyGrooveRadar.GetRadarData(profileID, 'single', 'chaos')
                 selGVRDValue_S5:settext(string.format("%0.1f", RadarValueTableSingle[5]*100));
 
 				-- Save the past values, which we will need later
 				local pastValues = GetOrCreateChild(GAMESTATE:Env(), 'PastRadarValues')
-				pastValues[Player] = DeepCopy(ProfileData.GetRadarTable(profile))
+				pastValues[Player] = DeepCopy(MyGrooveRadar.GetRadarTable(profileID))
 				
 			else
 				if SCREENMAN:GetTopScreen():SetProfileIndex(Player, 1) then

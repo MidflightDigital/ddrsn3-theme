@@ -320,8 +320,6 @@ function UpdateInternal(self, Player)
 					and 'double'
 					or 'single'
 				
-				local RadarFile = RageFileUtil:CreateRageFile()
-				
 end
 
 if GAMESTATE:IsPlayerEnabled(PLAYER_1) then

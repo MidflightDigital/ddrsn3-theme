@@ -249,7 +249,6 @@ local setting_mt= {
 		end,
 		set_dirty= function(self, id)
 			id= id or ""
-			Warn(id.." is dirty now.")
 			self.dirty_table[id]= true
 		end,
 		check_dirty= function(self, id)
@@ -269,7 +268,7 @@ local setting_mt= {
 		end,
 		save= function(self, id)
 			id= id or ""
-			if not self:check_dirty(id) then Warn"Ouch!" return end
+			if not self:check_dirty(id) then return end
 			local fname= self:get_filename(id)
 			local file_handle= RageFileUtil.CreateRageFile()
 			if not file_handle:Open(fname, 2) then

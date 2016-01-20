@@ -17,7 +17,7 @@ local function radarSet(self)
 			local ind = SCREENMAN:GetTopScreen():GetProfileIndex(player);
 			if ind > 0 then -------------處理要顯示的內容
 			
-			tt = ProfileData.GetRadarDataPackaged(PROFILEMAN:GetLocalProfileFromIndex(ind-1),style)
+			tt = MyGrooveRadar.GetRadarDataPackaged(PROFILEMAN:GetLocalProfileIDFromIndex(ind-1),style)
 			self:SetFromValues(player,tt);
 			
 			else
