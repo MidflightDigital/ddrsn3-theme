@@ -1,6 +1,3 @@
-local function GetMetricNumber(name)
-    return tonumber(THEME:GetMetric("ScreenGameplay",name))
-end
 local flickerState = false
 local function HotLifeUpdate(self, _)
     flickerState = not flickerState

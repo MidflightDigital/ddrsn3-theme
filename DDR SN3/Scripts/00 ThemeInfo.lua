@@ -1,8 +1,8 @@
 -- theme identification:
 themeInfo = {
-ProductCode = "DDR SuperNOVA 3a",
-Name = "DDR SN3a",
-Version = "alpha1",
-Date = "YYYYMMDD",
+ProductCode = "DDR SuperNOVA 3",
+Name = "DDR SN3",
+Version = "alpha1.1",
+Date = "201601DD",
 Author = "MidflightDigital"
 }
