@@ -123,7 +123,7 @@ InitCommand=cmd();
 	};
 --p2
 	Def.Quad{
-	InitCommand=cmd(zoom,0.4;shadowlength,1;x,SCREEN_RIGHT-40;y,SCREEN_CENTER_Y+38;horizalign,center;draworder,2);
+	InitCommand=cmd(zoom,0.25;shadowlength,1;x,SCREEN_RIGHT-40;y,SCREEN_CENTER_Y+38;horizalign,center;draworder,2);
 	OffCommand=cmd(bouncebegin,0.15;zoom,0);
 		BeginCommand=cmd(playcommand,"Set");
 		SetCommand=function(self)

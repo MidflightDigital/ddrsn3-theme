@@ -6,9 +6,9 @@ t[#t+1] = LoadActor("../BGScripts")..{
 	local song = GAMESTATE:GetCurrentSong();
 	if song then
 		if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'StaticBG') or GAMESTATE:PlayerIsUsingModifier(PLAYER_2,'StaticBG') or song:HasBGChanges() then
-		self:diffusealpha(0);
+		self:visible(false);
 		else
-		self:diffusealpha(1);
+		self:visible(true);
 		end;
 		end;
 	end;
@@ -16,9 +16,9 @@ t[#t+1] = LoadActor("../BGScripts")..{
 	local song = GAMESTATE:GetCurrentSong();
 	if song then
 		if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'StaticBG') or GAMESTATE:PlayerIsUsingModifier(PLAYER_2,'StaticBG') or song:HasBGChanges() then
-		self:diffusealpha(0);
+		self:visible(false);
 		else
-		self:diffusealpha(1);
+		self:visible(true);
 		end;
 		end;
 	end;
