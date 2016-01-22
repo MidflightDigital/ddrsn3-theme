@@ -4,6 +4,13 @@ local charP2 = GAMESTATE:GetCHaracter('PlayerNumber_P2'):GetDisplayName();
 local t = Def.ActorFrame{};
 
 if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') and GAMESTATE:IsHumanPlayer('PlayerNumber_P1') == true and GAMESTATE:GetCurrentStyle():GetName() == "single" then
+
+--I have no idea how the fuck to get this working.
+--[[function 
+local charset = RageFileUtil:CreateRageFile();
+if charset:Open(THEME:GetCurrentThemeDirectory() .. "BGAnimationts/ScreenGameplay toasty/" ..charP1 .."/settings.txt",1) then
+--]]
+
 t[#t+1] = Def.ActorFrame {
 	LoadActor("../toasty_maskP1 Single")..{
 		InitCommand=cmd(diffusealpha,0;zwrite,1;blend,Blend.NoEffect;;clearzbuffer,true;x,SCREEN_RIGHT-120;y,SCREEN_CENTER_Y;);
