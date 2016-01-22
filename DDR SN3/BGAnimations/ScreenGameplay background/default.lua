@@ -6,8 +6,10 @@ t[#t+1] = LoadActor("../BGScripts")..{
 	local song = GAMESTATE:GetCurrentSong();
 	if song then
 		if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'StaticBG') or GAMESTATE:PlayerIsUsingModifier(PLAYER_2,'StaticBG') or song:HasBGChanges() then
+		SCREENMAN:GetTopScreen():GetChild("SongBackground"):visible(true);
 		self:visible(false);
 		else
+		SCREENMAN:GetTopScreen():GetChild("SongBackground"):visible(false);
 		self:visible(true);
 		end;
 		end;
@@ -16,15 +18,15 @@ t[#t+1] = LoadActor("../BGScripts")..{
 	local song = GAMESTATE:GetCurrentSong();
 	if song then
 		if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'StaticBG') or GAMESTATE:PlayerIsUsingModifier(PLAYER_2,'StaticBG') or song:HasBGChanges() then
+		SCREENMAN:GetTopScreen():GetChild("SongBackground"):visible(true);
 		self:visible(false);
 		else
+		SCREENMAN:GetTopScreen():GetChild("SongBackground"):visible(false);
 		self:visible(true);
 		end;
 		end;
 	end;
 	};
 end
-
-t[#t+1] = LoadActor("Danger");
 
 return t;

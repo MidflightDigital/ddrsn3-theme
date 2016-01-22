@@ -32,11 +32,6 @@ t[#t+1] = Def.ActorFrame {
 		InitCommand=cmd(diffusealpha,0;blend,Blend.Add;;x,SCREEN_RIGHT-180+20;y,SCREEN_CENTER_Y+40;);
 		StartTransitioningCommand=cmd(diffusealpha,0;sleep,0.166;linear,0.1;diffusealpha,1;linear,0.3;addy,120;linear,0.5;diffusealpha,0;sleep,0.1;addy,-120);
 	};
---[[	LoadActor(charP1 . . "/toasty_gradient")..{
-		InitCommand=cmd(diffusealpha,0;blend,Blend.Add;;x,SCREEN_RIGHT-180;y,SCREEN_CENTER_Y;);
-		StartTransitioningCommand=cmd(diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;linear,0.5;diffusealpha,0);
-	};
---]]
 	Def.Quad {
 		InitCommand=cmd(setsize,200,480;diffusetop,color(black);diffusebottom,color("1,0.5,1,1");blend,Blend.Add;;x,SCREEN_RIGHT-180;CenterY;);
 		StartTransitioningCommand=cmd(diffusealpha,0;sleep,0.166llinear,0.1;diffusealpha,1;linear,0.3;addy,120;linear,0.5;diffusealpha,0;sleep,0.1;addy,-120);
