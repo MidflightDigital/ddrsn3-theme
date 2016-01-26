@@ -21,6 +21,10 @@ t[#t+1] = LoadActor("grade")..{
 	OffCommand=cmd(sleep,0.2;linear,0.2;diffusealpha,0);
 };
 
+t[#t+1] = LoadActor("../grade")..{
+	OnCommand=cmd(play);
+};
+
 for pn in ivalues(PlayerNumber) do
 	local MetricsName = "MachineRecord" .. PlayerNumberToString(pn);
 	t[#t+1] = LoadActor( THEME:GetPathG(Var "LoadingScreen", "MachineRecord"), pn ) .. {

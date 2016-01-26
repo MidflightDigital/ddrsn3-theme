@@ -5,8 +5,8 @@ t[#t+1] = Def.ActorFrame {
 		self:fov(120);
 	end;
 	Def.ActorFrame{
-		LoadActor("back")..{
-			InitCommand=cmd(FullScreen);
+		LoadActor(THEME:GetPathB("ScreenLogo","background/back"))..{
+			InitCommand=cmd(FullScreen;rainbow;effectperiod,100);
 		};
 	};
 	Def.ActorFrame{
@@ -51,30 +51,33 @@ t[#t+1] = Def.ActorFrame {
 	};
 	Def.ActorFrame{
 	InitCommand=cmd(Center;queuecommand,"Animate";blend,Blend.Add;;diffusealpha,0.6);
-	AnimateCommand=cmd(rotationz,0;rotationy,0;linear,90;rotationz,360;rotationy,360;queuecommand,"Animate");
+	AnimateCommand=cmd(spin;effectmagnitude,-90,60,30);
+		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
+			InitCommand=cmd(diffusealpha,1;zoom,0.2;rotationx,45);
+		};
+		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
+			InitCommand=cmd(diffusealpha,1;zoom,0.2;rotationx,90);
+		};
+		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
+			InitCommand=cmd(diffusealpha,1;zoom,0.2;rotationy,90);
+		};
+		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
+			InitCommand=cmd(diffusealpha,1;zoom,0.2;rotationy,45);
+		};
 		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
 			InitCommand=cmd(diffusealpha,0.2;zoom,0.5);
-			OnCommand=cmd(spin;effectmagnitude,0,0,120);
 		};
 		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
-			InitCommand=cmd(diffusealpha,0.5;zoom,0.5);
-			OnCommand=cmd(spin;effectmagnitude,0,0,-120);
-		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
-			InitCommand=cmd(diffusealpha,0.5;zoom,0.5;rotationx,90);
-			OnCommand=cmd(spin;effectmagnitude,0,0,-120);
+			InitCommand=cmd(diffusealpha,0.2;zoom,0.5;rotationx,45);
 		};
 		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
 			InitCommand=cmd(diffusealpha,0.5;zoom,0.5;rotationx,90);
-			OnCommand=cmd(spin;effectmagnitude,0,0,120);
 		};
 		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
 			InitCommand=cmd(diffusealpha,0.5;zoom,0.5;rotationy,90);
-			OnCommand=cmd(spin;effectmagnitude,0,0,-120);
 		};
 		LoadActor(THEME:GetPathB("","ScreenLogo background/tri"))..{
-			InitCommand=cmd(diffusealpha,0.5;zoom,0.5;rotationy,90);
-			OnCommand=cmd(spin;effectmagnitude,0,0,120);
+			InitCommand=cmd(diffusealpha,0.5;zoom,0.5;rotationy,45);
 		};
 	};
 };
