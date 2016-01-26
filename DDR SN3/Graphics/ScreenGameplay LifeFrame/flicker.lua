@@ -22,7 +22,7 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
         InitCommand=function(self)
             local short = ToEnumShortString(pn)
             self:visible(false):setsize((SCREEN_WIDTH/2.53),13)
-            :skewx(-0.9):diffuse(color "#FFFFFF"):x(xPosPlayer[short])
+            :skewx(-0.9):diffuse(color "0.5,0.5,0.5,0.8"):x(xPosPlayer[short])
             :halign(0.75)
         end,
         OnCommand=function(s) s:draworder(3):zoomx(pn=='PlayerNumber_P2' and -1 or 1) end,
