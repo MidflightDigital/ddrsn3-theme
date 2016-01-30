@@ -3,6 +3,25 @@ local t = LoadFallbackB();
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
 
+t[#t+1] = LoadActor(THEME:GetPathG("","_footer/confirm"))..{ 
+	InitCommand=cmd(draworder,199;x,SCREEN_RIGHT-71;y,SCREEN_BOTTOM-35;);
+	OnCommand=cmd(draworder,80;halign,1;addy,54;sleep,0.2;decelerate,0.2;addy,-54);
+	OffCommand=cmd(decelerate,0.2;addy,54);
+}
+
+-- judge labels
+t[#t+1] = LoadActor("labels")..{
+	InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+32;zoomy,0);
+	OnCommand=cmd(linear,0.3;zoomy,1);
+	OffCommand=cmd(sleep,0.2;linear,0.2;zoomy,0);
+};
+
+t[#t+1] = LoadActor("frame")..{
+	InitCommand=cmd(diffusealpha,0.5;CenterX;y,SCREEN_CENTER_Y+35;zoomy,0);
+	OnCommand=cmd(linear,0.3;zoomy,1);
+	OffCommand=cmd(sleep,0.2;linear,0.2;zoomy,0);
+};
+
 -- difficulty display
 if ShowStandardDecoration("DifficultyIcon") then
 	if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then

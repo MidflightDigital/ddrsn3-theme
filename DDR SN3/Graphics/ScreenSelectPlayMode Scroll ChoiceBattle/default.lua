@@ -1,4 +1,16 @@
 local t = Def.ActorFrame{
+	LoadActor("../_inner")..{
+		OnCommand=cmd(zoom,0;spin;effectmagnitude,0,0,40);
+		GainFocusCommand=cmd(visible,true;zoom,0.5;linear,0.2;zoom,1);
+		LoseFocusCommand=cmd(visible,false);
+		OffCommand=cmd(sleep,0.116;linear,0.066;zoomy,0;diffusealpha,0);
+	};
+	LoadActor("../_outer")..{
+		OnCommand=cmd(zoom,0;spin;effectmagnitude,0,0,-40);
+		GainFocusCommand=cmd(visible,true;zoom,0.5;linear,0.2;zoom,1);
+		LoseFocusCommand=cmd(visible,false;);
+		OffCommand=cmd(sleep,0.116;linear,0.066;zoomy,0;diffusealpha,0);
+	};
 	-- Information panel
 	LoadActor("icon")..{
 		OnCommand=cmd(queuecommand,"LoseFocus");

@@ -58,7 +58,7 @@ local t = Def.ActorFrame{
 	Name="bpm gauge bright",
 	Texture="bpm gauge",
 		InitCommand=function(self)
-			self:hibernate(1.25):draworder(101):x(SCREEN_LEFT+74):y(SCREEN_CENTER_Y-1):visible(false)
+			self:hibernate(1.25):draworder(101):x(SCREEN_LEFT+75):y(SCREEN_CENTER_Y-1):visible(false)
 		end,
 		OnCommand=function(self)
 			self:sleep(0.264):visible(true)
