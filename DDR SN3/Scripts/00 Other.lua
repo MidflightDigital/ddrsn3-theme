@@ -204,3 +204,10 @@ end
 function JoinStringsWithSpace(a, b)
 	return a:gsub("%s*$","").." "..b:gsub("^%s*","")
 end
+
+function ToastyTriggersAt(level)
+	if level == 0 then
+		return 20
+	end
+	return 50*level
+end
