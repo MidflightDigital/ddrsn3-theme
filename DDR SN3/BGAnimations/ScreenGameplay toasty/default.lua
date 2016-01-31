@@ -1,7 +1,16 @@
 local charP1 = GAMESTATE:GetCharacter('PlayerNumber_P1'):GetDisplayName();
 local charP2 = GAMESTATE:GetCharacter('PlayerNumber_P2'):GetDisplayName();
 
-local t = Def.ActorFrame {};
+local t = Def.ActorFrame {
+    ToastyAchievedMessageCommand=function(s, p)
+        if SN3Debug then
+            SCREENMAN:SystemMessage(string.format("Toasty! player: %s level: %s combo: %s",
+                tostring(p.PlayerNumber),
+                tostring(p.Level),
+                tostring(p.ToastyCombo)))
+        end
+    end,
+};
 
 if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/ScreenGameplay toasty/" .. charP1 .. "/default.lua") and GAMESTATE:IsPlayerEnabled("PlayerNumber_P1") then
 t[#t+1] = Def.ActorFrame {

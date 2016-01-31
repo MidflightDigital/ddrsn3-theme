@@ -19,6 +19,11 @@ function GetOrCreateChild(tab, field, kind)
     return out
 end
 
+SN3Debug = FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."debug.txt")
+if SN3Debug then
+	print("SN3 debug mode enabled.")
+end
+
 function TextBannerAfterSet(self,param) 
 	local Title=self:GetChild("Title")
 	local Subtitle=self:GetChild("Subtitle")
@@ -205,7 +210,9 @@ function JoinStringsWithSpace(a, b)
 	return a:gsub("%s*$","").." "..b:gsub("^%s*","")
 end
 
-function ToastyTriggersAt(level)
+function ToastyTriggersAt(_, level)
+	SCREENMAN:SystemMessage(level)
+	level = level or 0
 	if level == 0 then
 		return 20
 	end
