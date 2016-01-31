@@ -1,29 +1,17 @@
-local netConnected = IsNetConnected();
-local loggedOnSMO = IsNetSMOnline();
-
 local t = Def.ActorFrame{
 	LoadFont("ScreenSystemLayer Credits") .. {
-		InitCommand=cmd(uppercase,true;zoom,1;shadowlength,1);
+		InitCommand=cmd(uppercase,true;zoom,1;shadowlength,1;queuecommand,"Begin";);
 		BeginCommand=function(self)
+			SCREENMAN:SystemMessage("Checking...")
 			-- check network status
-			if netConnected then
-				self:strokecolor(color("#000000"));
-				self:settext( Screen.String("Network OK") );
+			if IsNetSMOnline() then
+				self:settext( THEME:GetString( "ScreenSystemLayer", "Network OK" ) );
 			else
-				self:strokecolor(color("#000000"));
-				self:settext( Screen.String("Offline") );
+				self:settext( THEME:GetString( "ScreenSystemLayer", "Offline" ) );
 			end;
+			self:sleep(1):queuecommand "Begin"
 		end;
 	};
 };
-
-if netConnected then
-	t[#t+1] = LoadFont("_network") .. {
-		InitCommand=cmd(y,16;horizalign,left;zoom,0.5875;shadowlength,1;diffuse,color("0.72,0.89,1,1"));
-		BeginCommand=function(self)
-			self:settext( string.format(Screen.String("Connected to %s"), GetServerName()) );
-		end;
-	};
-end;
 
 return t;
