@@ -10,11 +10,14 @@ local function setVisibility(self)
 			shouldShowBGScripts = not opts:StaticBackground()
 		end
 	end
-	SCREENMAN:GetTopScreen():GetChild("SongBackground"):visible(not shouldShowBGScripts);
+	local bg = SCREENMAN:GetTopScreen():GetChild("SongBackground")
+	if bg then
+		bg:visible(not shouldShowBGScripts);
+	end
 	self:visible(shouldShowBGScripts);
 end
 
-if CHARMAN:GetCharacterCount() >=1 then
+if CHARMAN:GetCharacterCount() >=0 then
 t[#t+1] = LoadActor("../BGScripts")..{
 	OnCommand=setVisibility,
 	CurrentSongChangedMessageCommand=setVisibility
