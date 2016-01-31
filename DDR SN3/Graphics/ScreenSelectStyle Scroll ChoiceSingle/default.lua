@@ -18,7 +18,7 @@ local t = Def.ActorFrame{
 		LoseFocusCommand=cmd(linear,0.1;addx,225;addy,49);
 		OffCommand=cmd(sleep,0.264;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
-	LoadActor("_panel.png")..{
+	LoadActor("_panel (doubleres)")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-112;y,SCREEN_CENTER_Y+119;);
 		OnCommand=cmd(zoom,0;diffusealpha,0;sleep,0.264;sleep,0.792;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1);
 		GainFocusCommand=cmd(linear,0.1;addx,-30;addy,-10);

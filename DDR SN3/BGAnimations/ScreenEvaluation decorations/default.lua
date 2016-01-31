@@ -3,7 +3,7 @@ local t = LoadFallbackB();
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
 
-t[#t+1] = LoadActor(THEME:GetPathG("","_footer/confirm"))..{ 
+t[#t+1] = LoadActor(THEME:GetPathG("","_footer/skip"))..{ 
 	InitCommand=cmd(draworder,199;x,SCREEN_RIGHT-71;y,SCREEN_BOTTOM-35;);
 	OnCommand=cmd(draworder,80;halign,1;addy,54;sleep,0.2;decelerate,0.2;addy,-54);
 	OffCommand=cmd(decelerate,0.2;addy,54);

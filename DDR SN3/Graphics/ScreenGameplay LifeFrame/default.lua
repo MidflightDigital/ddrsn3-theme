@@ -39,5 +39,6 @@ t[#t+1] = LoadActor(lifeFrame)..{
 			end
 		end;
 };
+	
 
 return t

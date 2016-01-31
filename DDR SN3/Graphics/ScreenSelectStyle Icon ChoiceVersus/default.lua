@@ -10,7 +10,7 @@ return Def.ActorFrame{
 	LoadActor("../_Style highlight")..{
 		InitCommand=cmd(x,SCREEN_RIGHT-236;y,SCREEN_CENTER_Y+52;draworder,99);
 		OnCommand=cmd(diffusealpha,0;sleep,0.264;sleep,0.528;diffusealpha,1);
-		GainFocusCommand=cmd(visible,true;glowshift;blend,Blend.Add;;effectcolor1,color("0,0,2,0");effectcolor2,color("#ffff00");effectperiod,0.528);
+		GainFocusCommand=cmd(visible,true;glowshift;blend,Blend.Add;;effectcolor1,color("#36ff00");effectcolor2,color("#114f00");effectperiod,0.2);
 		LoseFocusCommand=cmd(visible,false);
 		OffCommand=cmd(visible,false);
 	};

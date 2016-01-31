@@ -10,7 +10,7 @@ return Def.ActorFrame {
 	};
 	LoadFont("_shared_title") .. {
 		Text=gc:GetText(),
-		InitCommand=function(self) self:uppercase(true):shadowlength(2):halign(0):zoomy(0.8):diffuse(color("#00ff00")) end,
+		InitCommand=function(self) self:uppercase(true):halign(0):zoomy(0.8):diffuse(color("#00ff00")) end,
 		OnCommand=function() end,
 		GainFocusCommand=function(self) self:finishtweening():diffuse(color("#ffffff")) 
             MESSAGEMAN:Broadcast("TitleSelection", {Choice=gc:GetName()}) end,
