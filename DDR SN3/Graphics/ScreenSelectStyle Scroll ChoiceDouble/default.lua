@@ -1,11 +1,10 @@
-local masterPlayer = GAMESTATE:GetMasterPlayerNumber() == PLAYER_1 and "P1" or "P2"
-local unjoinedPlayer = GAMESTATE:GetMasterPlayerNumber() == PLAYER_1 and "P2" or "P1"
+local masterPlayer = ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())
 
 local t = Def.ActorFrame{
 	-- Information panel
 	LoadActor("_info")..{
 		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+11;y,SCREEN_CENTER_Y-75;);
-		GainFocusCommand=cmd(visible,true;addx,-11;decelerate,0.1;addx,11);
+		GainFocusCommand=function(s) MESSAGEMAN:Broadcast("PadsTwo") s:visible(true):addx(-11):decelerate(0.1):addx(11) end;
 		LoseFocusCommand=cmd(visible,false);
 		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
