@@ -7,11 +7,11 @@ t[#t+1] = Def.ActorFrame {
 		StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.8;sleep,1;linear,0.166;diffusealpha,0);
 	};
 	LoadActor("toasty_bg")..{
-	InitCommand=cmd(diffusealpha,0;;x,SCREEN_RIGHT-180;y,SCREEN_CENTER_Y;);
+	InitCommand=cmd(diffusealpha,0;x,SCREEN_RIGHT-180;y,SCREEN_CENTER_Y;);
 		StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.6;sleep,1;linear,0.166;diffusealpha,0);
 	};
 	LoadActor("toasty_bg")..{
-	InitCommand=cmd(diffusealpha,0;;x,SCREEN_RIGHT-180;y,SCREEN_CENTER_Y;);
+	InitCommand=cmd(diffusealpha,0;x,SCREEN_RIGHT-180;y,SCREEN_CENTER_Y;);
 		OnCommand=function(self)
 			local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
 			local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
@@ -48,7 +48,7 @@ t[#t+1] = Def.ActorFrame {
 elseif GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') and GAMESTATE:IsHumanPlayer('PlayerNumber_P2') == true and GAMESTATE:GetCurrentStyle():GetName() == "single" then
 t[#t+1] = Def.ActorFrame {
 	LoadActor("../toasty_maskP2 Single")..{
-		InitCommand=cmd(diffusealpha,0;zwrite,1;clearzbuffer,true;blend,Blend.NoEffect;;x,SCREEN_WIDTH-120;y,SCREEN_CENTER_Y;);
+		InitCommand=cmd(diffusealpha,0;zwrite,1;clearzbuffer,true;blend,Blend.NoEffect;x,SCREEN_LEFT+180;y,SCREEN_CENTER_Y;);
 		StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,1;sleep,1;linear,0.166;diffusealpha,0);
 	};
 	LoadActor("toasty_bg")..{
@@ -107,7 +107,7 @@ t[#t+1] = Def.ActorFrame {
 		StartTransitioningCommand=cmd(ztest,true;diffusealpha,0;linear,0.166;diffusealpha,0.2;sleep,1;linear,0.166;diffusealpha,0);
 	};
 	LoadActor("toastyChar")..{
-		InitCommand=cmd(diffusealpha,0;x,SCREEN_CENTER;y,SCREEN_CENTER_Y+44;);
+		InitCommand=cmd(diffusealpha,0;x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y+44;);
 		StartTransitioningCommand=cmd(diffusealpha,0;sleep,0.066;linear,0.1;addy,-4;diffusealpha,1;linear,1;addy,-10;linear,0.1;addy,-4;diffusealpha,0;sleep,0.1;addy,18);
 	};
 	LoadActor("toasty_circles")..{

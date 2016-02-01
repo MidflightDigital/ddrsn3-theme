@@ -4,7 +4,8 @@
 -- ChangeCourseSongOutMessageCommand
 -- FinishCommand
 -- in stars
-return Def.ActorFrame{
+
+return Def.ActorFrame {
 	-- song banner
 	Def.Banner{
 		Name="SongBanner";
