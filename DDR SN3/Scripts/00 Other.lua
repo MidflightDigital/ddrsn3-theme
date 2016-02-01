@@ -211,10 +211,11 @@ function JoinStringsWithSpace(a, b)
 end
 
 function ToastyTriggersAt(_, level)
-	SCREENMAN:SystemMessage(level)
-	level = level or 0
 	if level == 0 then
 		return 20
+	elseif level == 1 then
+		return 30
+	else
+		return 50
 	end
-	return 50*level
 end

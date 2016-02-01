@@ -17,7 +17,7 @@ local function setVisibility(self)
 	self:visible(shouldShowBGScripts);
 end
 
-if CHARMAN:GetCharacterCount() >=0 then
+if CHARMAN:GetCharacterCount() >=1 then
 t[#t+1] = LoadActor("../BGScripts")..{
 	OnCommand=setVisibility,
 	CurrentSongChangedMessageCommand=setVisibility
