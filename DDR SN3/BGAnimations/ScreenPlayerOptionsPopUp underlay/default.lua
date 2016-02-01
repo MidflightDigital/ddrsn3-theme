@@ -4,6 +4,12 @@ return Def.ActorFrame {
 		OnCommand=cmd(diffusealpha,0;linear,0.5;diffusealpha,0.5);
 		OffCommand=cmd(sleep,1;linear,0.5;diffusealpha,0);
 	};
+	LoadActor( THEME:GetPathG("ScreenWithMenuElements","header/base"))..{
+		InitCommand=cmd(x,SCREEN_LEFT;halign,0;y,SCREEN_TOP+38);
+	};
+	LoadActor( THEME:GetPathG("ScreenWithMenuElements","header/Options"))..{
+		InitCommand=cmd(x,SCREEN_LEFT+95;halign,0;valign,1;y,SCREEN_TOP+38+5);
+	};
 	--p1
 	LoadActor( "../ScreenPlayerOptions underlay/Back" )..{
 		InitCommand=cmd(Center);
