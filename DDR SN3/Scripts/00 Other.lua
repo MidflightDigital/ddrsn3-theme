@@ -212,7 +212,9 @@ end
 
 function ToastyTriggersAt(_, level)
 	if level == 0 then
-		return 20
+		--the code that loads the toasty triggers appears to add 1 to this value.
+		--and ONLY this value.
+		return 19
 	elseif level == 1 then
 		return 30
 	else
