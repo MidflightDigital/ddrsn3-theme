@@ -221,3 +221,21 @@ function ToastyTriggersAt(_, level)
 		return 50
 	end
 end
+
+--MakeDeck(source)
+--Takes a table and balfkaf
+function MakeDeck(source)
+	assert(source, "need to pass in a table")
+	assert(next(source), "table needs to contain something")
+	local keys = nil
+	local function FindKeys()
+		keys = {}
+		for key, _ in pairs(source) do
+			table.insert(keys, key)
+		end
+	end
+	return function()
+		if next(keys) == nil then FindKeys() end
+		return source[table.remove(keys, math.random(1,#keys))]
+	end
+end
