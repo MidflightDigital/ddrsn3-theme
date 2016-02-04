@@ -6,7 +6,7 @@ local StageDisplay = Def.ActorFrame{
 for s in ivalues(Stage) do
 
 if s ~= 'Stage_Next' and s ~= 'Stage_Nonstop' and s ~= 'Stage_Oni' and s ~= 'Stage_Endless' then
-	StageDisplay[#StageDisplay+1] = LoadActor( THEME:GetPathG("ScreenWithMenuElements","StageDisplay/"..s) ) .. {
+	StageDisplay[#StageDisplay+1] = LoadActor( THEME:GetPathG("ScreenWithMenuElements","StageDisplay/"..s.." (doubleres)") ) .. {
 		SetCommand=function(self, params)
 			local Stage = GAMESTATE:GetCurrentStage();
 			local StageIndex = GAMESTATE:GetCurrentStageIndex();
