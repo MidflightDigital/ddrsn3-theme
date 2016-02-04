@@ -5,19 +5,18 @@ Contains SN3 theme files
 
 The SM5 theme is still being built from the ground up. Please keep your git copy updated regularly if you plan to push any changes.
 
-Contributors:
+#Contributors:
+
+Metrics/Lua
 --
-
-# Metrics/Lua
-
 Inorizushi
 
 FlameyBoy
 
 hypnoticmarten77
 
-
-# Graphics
+Graphics
+--
 Inorizushi
 
 hypnoticmarten77
