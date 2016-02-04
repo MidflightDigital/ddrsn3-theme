@@ -4,8 +4,8 @@ local charName = GAMESTATE:GetCharacter(GAMESTATE:GetMasterPlayerNumber()):GetDi
 local rmax = 9;
 local num = math.random(1);
 
-if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/BGScripts/" .. charName .. "_" .. num .. ".[avi$mp4$mpeg$mpg]") then
-	t[#t+1] = LoadActor( charName .. "_" .. num .. ".[avi$mp4$mpeg$mpg]" )..{
+if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/BGScripts/" .. charName .. "_" .. num .. ".avi") then
+	t[#t+1] = LoadActor( charName .. "_" .. num .. ".avi" )..{
 		InitCommand=cmd(draworder,1;Center;zoomto,SCREEN_WIDTH,SCREEN_HEIGHT;);	
 	};
 
