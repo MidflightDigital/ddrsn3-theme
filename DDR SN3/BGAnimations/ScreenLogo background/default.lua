@@ -21,10 +21,10 @@ t[#t+1] = Def.ActorFrame {
 			QueueCommand=cmd(diffusealpha,0;addy,SCREEN_HEIGHT;sleep,4;queuecommand,"On");
 		};
 		LoadActor("grid")..{
-			InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-120;rotationx,75;diffusealpha,0.5;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
+			InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-120;zoomx,1.5;rotationx,75;diffusealpha,0.5;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
 		};
 		LoadActor("grid")..{
-			InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+120;rotationx,-75;diffusealpha,0.5;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
+			InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+120;zoomx,1.5;rotationx,-75;diffusealpha,0.5;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
 		};
 		LoadActor("ddrsn_logo.png")..{
 			InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9);

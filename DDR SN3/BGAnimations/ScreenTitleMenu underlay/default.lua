@@ -43,7 +43,7 @@ t[#t+1] = Def.ActorFrame {
 		OnCommand=cmd(cropbottom,1;sleep,0.1;accelerate,0.3;cropbottom,0);
 	};
 };
-elseif GAMESTATE:GetCoinMode() == 'CoinMode_Pay' or 'CoinMode_Freeplay' then
+else
 t[#t+1] = Def.ActorFrame {
 	LoadActor(THEME:GetPathB("","ScreenLogo background/JOINT PREMIUM"))..{
 		InitCommand=cmd(x,SCREEN_RIGHT-48;y,SCREEN_CENTER_Y-180);
