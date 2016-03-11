@@ -24,8 +24,13 @@ end
 --卡片內容物件---------------------------
 function LoadCard(cColor,cColor2,Player,IsJoinFrame)
 	local t = Def.ActorFrame {
-		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardBackground") ) .. {
-			InitCommand=cmd(shadowlength,0;zoomy,0;diffuse,cColor);
+		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardBG01") ) .. {
+			InitCommand=function(self)
+				if Player==PLAYER_2 then
+					self:zoomx(-1);
+				end
+				(cmd(shadowlength,0;zoomy,0;diffuse,cColor))(self);
+			end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;zoomy,1;);
 			OffCommand=function(self)
 				if IsJoinFrame then
@@ -35,7 +40,50 @@ function LoadCard(cColor,cColor2,Player,IsJoinFrame)
 				end
 			end;
 		};
+		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardBG02") ) .. {
+			InitCommand=function(self)
+				(cmd(shadowlength,0;zoomy,0;diffuse,cColor2))(self);
+			end;
+			OnCommand=cmd(sleep,0.3;linear,0.3;zoomy,1;);
+			OffCommand=function(self)
+				if IsJoinFrame then
+					(cmd(sleep,0.5;linear,0.2;zoomy,0.100;linear,0.2;zoomx,0;diffusealpha,1))(self);
+				else
+					(cmd(linear,0.2;zoomy,0.100;linear,0.2;zoomx,0;diffusealpha,1))(self);
+				end
+			end;
+		};
 		
+		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardBG03") ) .. {
+			InitCommand=function(self)
+				if Player==PLAYER_2 then
+					self:zoomx(-1);
+				end
+				(cmd(shadowlength,0;zoomy,0))(self);
+			end;
+			OnCommand=cmd(sleep,0.3;linear,0.3;zoomy,1;);
+			OffCommand=function(self)
+				if IsJoinFrame then
+					(cmd(sleep,0.5;linear,0.2;zoomy,0.100;linear,0.2;zoomx,0;diffusealpha,1))(self);
+				else
+					(cmd(linear,0.2;zoomy,0.100;linear,0.2;zoomx,0;diffusealpha,1))(self);
+				end
+			end;
+		};
+		LoadFont("_futura std medium 20px") .. {
+		InitCommand=cmd(x,15;y,-95;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("#03ff03");strokecolor,color("#001f00");maxwidth,320);
+		OnCommand=function(self)
+			if Player== PLAYER_1 then
+				self:settext("PLAYER:1");
+			else
+				self:settext("PLAYER:2");
+				self:x(-15);
+			end
+			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.40;zoomx,0.60))(self);
+		end;
+		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
+	};
+	
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","LvWord") ) .. {
 			InitCommand=cmd(shadowlength,0;zoom,0;y,46;x,18;diffuse,cColor2);
 			OnCommand=cmd(sleep,0.3;linear,0.3;zoom,0.5;);
@@ -43,29 +91,100 @@ function LoadCard(cColor,cColor2,Player,IsJoinFrame)
 		};
 		
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","DancerNameWord") ) .. {
-			InitCommand=cmd(shadowlength,0;zoom,0;y,-60;x,-24;diffuse,cColor2;);
+			InitCommand=cmd(shadowlength,0;zoom,0;y,-82.5;x,-34.5;diffuse,cColor2;);
 			OnCommand=cmd(sleep,0.3;linear,0.3;zoom,0.4;);
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
 		};
-		
-			--上下框架------------
-		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardFrameA") )..{
-			Name = "Frame";
-			InitCommand=cmd(y,0;zoomx,0);
-			OnCommand=cmd(linear,0.3;zoomx,1;linear,0.3;y,-83);
-			OffCommand=function(self)
-				if IsJoinFrame then
-					(cmd(sleep,0.5;linear,0.2;y,0.100;linear,0.2;diffusealpha,0))(self);
-				else
-					(cmd(linear,0.2;y,0.100;linear,0.2;diffusealpha,0))(self);
-				end
-			end;
-			
+		LoadActor( THEME:GetPathG("ScreenSelectProfile","RankWord") ) .. {
+			InitCommand=cmd(shadowlength,0;zoom,0;y,-58;x,-34.5;diffuse,cColor2;);
+			OnCommand=cmd(sleep,0.3;linear,0.3;zoom,0.4;);
+			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
 		};
 	};
 
 	return t
 end
+
+function SetRank02(Rank02, minValue)
+	
+	if minValue >=1.98 then
+		Rank02 = "True God";
+	elseif minValue >=1.80 then
+		Rank02 = "Dazu God";
+	elseif minValue >=1.60 then
+		Rank02 = "God";
+	elseif minValue >=1.40 then
+		Rank02 = "Deity";
+	elseif minValue >=1.20 then
+		Rank02 = "Phoenix";
+	elseif minValue >=1.00 then
+		Rank02 = "Dragon";
+	elseif minValue >=0.85 then
+		Rank02 = "Emperor";
+	elseif minValue >=0.70 then
+		Rank02 = "King";
+	elseif minValue >=0.55 then
+		Rank02 = "Shogun";
+	elseif minValue >=0.40 then
+		Rank02 = "Noble";
+	elseif minValue >=0.30 then
+		Rank02 = "Knight";
+	elseif minValue >=0.20 then
+		Rank02 = "Samurai";
+	elseif minValue >=0.10 then
+		Rank02 = "Warrior";
+	elseif minValue >0 then
+		Rank02 = "Beginner";
+	else
+		Rank02 = "???";
+		
+	end
+	
+	return Rank02;
+end
+
+
+function SetRankFromRadarValue(selectRank, SingleTable)
+	local Rank01;
+	local Rank02 = "123";
+
+	local singleMax = math.max(SingleTable[1],SingleTable[2],SingleTable[3],SingleTable[4],SingleTable[5]);
+	local singleMin = math.min(SingleTable[1],SingleTable[2],SingleTable[3],SingleTable[4],SingleTable[5]);
+	
+	local totalMax = math.max(SingleTable[1],SingleTable[2],SingleTable[3],SingleTable[4],SingleTable[5]);
+
+	-- local totalMin = math.min(SingleTable[1],SingleTable[2],SingleTable[3],SingleTable[4],SingleTable[5],
+								-- DoubleTable[1],DoubleTable[2],DoubleTable[3],DoubleTable[4],DoubleTable[5]);
+	
+	if totalMax == SingleTable[1] then
+		Rank01 = "Stream";
+	elseif totalMax == SingleTable[2] then
+		Rank01 = "Voltage";
+	elseif totalMax == SingleTable[3] then
+		Rank01 = "Air";
+	elseif totalMax == SingleTable[4] then
+		Rank01 = "Freeze";
+	else
+		Rank01 = "Chaos";
+	end
+	
+	if (totalMax == SingleTable[1] or 
+		totalMax == SingleTable[2] or 
+		totalMax == SingleTable[3] or 
+		totalMax == SingleTable[4] or
+		totalMax == SingleTable[5]) then
+	
+		Rank02 = SetRank02(Rank02,singleMin);
+	else
+		Rank02 = SetRank02(Rank02,doubleMin);
+	end
+	
+	if Rank02 == "???" then
+		Rank01 ="???"
+	end
+
+	selectRank:settext(Rank01.." ".. Rank02);
+end;
 
 function LoadPlayerStuff(Player)
 	
@@ -120,7 +239,7 @@ function LoadPlayerStuff(Player)
 	--下方卡片-----------------
 	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		Name = 'SelectedProfileText';
-		InitCommand=cmd(y,-48;zoom,0.6;shadowlength,1;diffuse,color("1,1,1,0");strokecolor,Color("Outline");maxwidth,400);
+		InitCommand=cmd(y,-71;zoom,0.6;shadowlength,1;diffuse,color("1,1,1,0");strokecolor,Color("Outline");maxwidth,400);
 		OnCommand=cmd(sleep,0.8;linear,0.5;diffusealpha,1);
 		OffCommand=cmd(stoptweening;linear,0.01;zoomy,0;diffusealpha,0);
 	};
@@ -146,7 +265,14 @@ function LoadPlayerStuff(Player)
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
 	
-
+	t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
+		Name = 'selectRank';
+		InitCommand=cmd(y,-46;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,350);
+		OnCommand=function(self)
+			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.5;zoomx,0.5))(self);
+		end;
+		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
+	};
 	
 	t[#t+1] = Def.Sprite{
 		Name = 'selectedMostSongPlayed';
@@ -185,22 +311,6 @@ function LoadPlayerStuff(Player)
 		Name = 'selectPlayerUID';
 		InitCommand=cmd(visible,false);
 	};
-
-
-	t[#t+1] =LoadFont("_handelgothic bt 20px") .. {
-		InitCommand=cmd(x,0;y,-83;zoom,0;diffuse,color("1,1,1,1");maxwidth,270);
-		OnCommand=function(self)
-			if Player== PLAYER_1 then
-				self:settext("PLAYER 1");
-				self:diffuse(color("#00ff30"));
-			else
-				self:settext("PLAYER 2");
-				self:diffuse(color("#00ff30"));
-			end
-			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.5))(self);
-		end;
-		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
-	};	
 	------MyGrooveRadar
 	if (Player == PLAYER_1) then
 		t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile", "GrooveRadar" ),1,0.2,0.2,0.2,0.5,PLAYER_1,'single')..{
@@ -298,6 +408,7 @@ function UpdateInternal3(self, Player)
 	local selLevel = frame:GetChild('SelectedProfileLevel');
 	local selTotalCalWord = frame:GetChild('selectTotalCalWord');
 	local selTotalCaloriesBurned = frame:GetChild('selectedTotalCaloriesBurned');
+	local selectRank = frame:GetChild('selectRank');
 	local selectPlayerUID = frame:GetChild('selectPlayerUID');
 	local selMostSongPlayed = frame:GetChild('selectedMostSongPlayed');
 	local selSongsPlayed = frame:GetChild('selectSongsPlayed');
@@ -326,6 +437,7 @@ function UpdateInternal3(self, Player)
 			selLevel:visible(true);
 			selTotalCalWord:visible(true);
 			selTotalCaloriesBurned:visible(true);
+			selectRank:visible(true);
 			selMostSongPlayed:visible(false);
 			selSongsPlayed:visible(false);
 			selLvBarBack:visible(true);
@@ -396,6 +508,8 @@ function UpdateInternal3(self, Player)
 				local pastValues = GetOrCreateChild(GAMESTATE:Env(), 'PastRadarValues')
 				pastValues[Player] = DeepCopy(MyGrooveRadar.GetRadarTable(profileID))
 				
+				SetRankFromRadarValue(selectRank,RadarValueTableSingle);
+				
 			else
 				if SCREENMAN:GetTopScreen():SetProfileIndex(Player, 1) then
 					bigframe:visible(false);
@@ -410,6 +524,7 @@ function UpdateInternal3(self, Player)
 					selectPlayerUID:settext('------------');
 					selLevel:settext('No level info');
 					selTotalCaloriesBurned:settext('No Played Songs Info');
+					selectRank:settext('???');
 					selMostSongPlayed:visible(false);
 					selSongsPlayed:visible(false);
 					selLvBarBack:visible(true);
@@ -440,6 +555,7 @@ function UpdateInternal3(self, Player)
 		selLevel:visible(false);
 		selTotalCalWord:visible(false);
 		selTotalCaloriesBurned:visible(false);
+		selectRank:visible(false);
 		selMostSongPlayed:visible(false);
 		selSongsPlayed:visible(false);
 		selLvBarBack:visible(false);

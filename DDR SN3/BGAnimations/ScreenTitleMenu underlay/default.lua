@@ -1,6 +1,5 @@
 local counter = 0;
-local t = Def.ActorFrame{
-};
+local t = Def.ActorFrame{};
 if GAMESTATE:GetCoinMode() == 'CoinMode_Home' then
 
 t[#t+1] = Def.ActorFrame {
@@ -59,5 +58,12 @@ t[#t+1] = Def.ActorFrame {
 	};
 }
 
+t[#t+1] = Def.ActorFrame{
+	LoadActor("../profile")..{
+		InitCommand=cmd(Center);
+		OnCommand=cmd(bob;effectmagnitude,0,5,0);
+		OffCommand=cmd(sleep,0.2;linear,0.3;zoomy,0;diffusealpha,0);
+	};
+};
 
 return t

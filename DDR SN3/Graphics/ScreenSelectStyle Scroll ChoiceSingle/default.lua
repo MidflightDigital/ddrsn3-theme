@@ -27,7 +27,7 @@ local t = Def.ActorFrame{
 	};
 	
 	-- Picture
-	LoadActor("dancer"..masterPlayer)..{
+	LoadActor("../dancer"..masterPlayer)..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-146;y,SCREEN_CENTER_Y+108);
 		BeginCommand=cmd(playcommand,"CheckNumPlayers");
 		OnCommand=cmd(vertalign,bottom;draworder,90;diffusealpha,0;zoom,0;sleep,0.264;sleep,0.792;sleep,0.264;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1);

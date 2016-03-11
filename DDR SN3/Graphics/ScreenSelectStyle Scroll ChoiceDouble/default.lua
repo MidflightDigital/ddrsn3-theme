@@ -10,7 +10,7 @@ local t = Def.ActorFrame{
 		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
 	-- Picture
-	LoadActor("dancer"..masterPlayer)..{
+	LoadActor("../dancer"..masterPlayer)..{
 		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-164;y,SCREEN_CENTER_Y+92;);
 		BeginCommand=cmd(playcommand,"CheckNumPlayers");
 		GainFocusCommand=cmd(visible,true;bounceend,0.2;zoom,1);
