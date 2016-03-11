@@ -58,12 +58,14 @@ t[#t+1] = Def.ActorFrame {
 	};
 }
 
-t[#t+1] = Def.ActorFrame{
-	LoadActor("../profile")..{
-		InitCommand=cmd(Center);
-		OnCommand=cmd(bob;effectmagnitude,0,5,0);
-		OffCommand=cmd(sleep,0.2;linear,0.3;zoomy,0;diffusealpha,0);
+if PROFILEMAN:GetNumLocalProfiles() <=1 then
+	t[#t+1] = Def.ActorFrame{
+		LoadActor("../profile")..{
+			InitCommand=cmd(Center);
+			OnCommand=cmd(bob;effectmagnitude,0,5,0);
+			OffCommand=cmd(sleep,0.2;linear,0.3;zoomy,0;diffusealpha,0);
+		};
 	};
-};
+end
 
 return t
