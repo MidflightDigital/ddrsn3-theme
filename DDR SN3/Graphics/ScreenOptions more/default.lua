@@ -5,26 +5,26 @@ return Def.ActorFrame{
 			OnCommand=cmd(zoomy,0);
 			OffCommand=cmd(linear,0.1;zoomy,1;sleep,0.5;linear,0.1;zoomy,0);
 		};
-		LoadActor("left")..{
+		LoadActor("1P_LEFT")..{
 			OnCommand=cmd(diffusealpha,0;);
 			OffCommand=cmd(diffusealpha,1;linear,0.1;addx,-10;linear,0.1;addx,10;sleep,0.2;zoomy,0);
 		};
-		LoadActor("right")..{
+		LoadActor("1P_RIGHT")..{
 			OnCommand=cmd(diffusealpha,0;);
 			OffCommand=cmd(diffusealpha,1;linear,0.1;addx,10;linear,0.1;addx,-10;sleep,0.2;zoomy,0);
 		};
 	};
 	Def.ActorFrame{
 		InitCommand=cmd(player,PLAYER_2;x,240;y,77.5);
-		LoadActor("1P_OK")..{
+		LoadActor("2P_OK")..{
 			OnCommand=cmd(zoomy,0);
 			OffCommand=cmd(linear,0.1;zoomy,1;sleep,0.5;linear,0.1;zoomy,0);
 		};
-		LoadActor("left")..{
+		LoadActor("2P_LEFT")..{
 			OnCommand=cmd(diffusealpha,0;);
 			OffCommand=cmd(diffusealpha,1;linear,0.1;addx,-10;linear,0.1;addx,10;sleep,0.2;zoomy,0);
 		};
-		LoadActor("right")..{
+		LoadActor("2P_RIGHT")..{
 			OnCommand=cmd(diffusealpha,0;);
 			OffCommand=cmd(diffusealpha,1;linear,0.1;addx,10;linear,0.1;addx,-10;sleep,0.2;zoomy,0);
 		};

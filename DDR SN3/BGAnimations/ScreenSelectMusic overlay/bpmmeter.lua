@@ -4,7 +4,7 @@
 --This is not necessarily true at 100 BPM, so a negative value is generated.
 --155 is simply 270-115, the spread between 0 and 1. - tertu
 local function CalculateBaseForBPM(bpm)
-	return 1 - (clamp(bpm, 100, 300) - 115) / 155
+	return 1 - (clamp(bpm, 100, 300) - 100) / 140
 end
 
 local ScreenSelectMusic

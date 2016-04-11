@@ -8,16 +8,24 @@ elseif string.find(screenName, "Options") then
     headerTextImage = "Options (doubleres).png"
 elseif screenName == "ScreenMapControllers" then
 	headerTextImage = "Options (doubleres).png"
-elseif screenName == "ScreenSelectProfile" then
-	headerTextImage = "Profile (doubleres).png"
-elseif screenName == "ScreenDataSaveSummary" then
-	headerTextImage = "Save (doubleres).png"
 elseif screenName == "ScreenSelectStyle" then
     headerTextImage = "Style (doubleres).png"
 elseif screenName == "ScreenSelectPlayMode" then
     headerTextImage = "Mode (doubleres).png"
 elseif screenName == "ScreenSelectCourse" then
     headerTextImage = "Course (doubleres).png"
+end
+
+local headerBaseImage
+
+if screenName == "ScreenSelectProfile" then
+	headerBaseImage = "profile (doubleres).png"
+elseif screenName == "ScreenDataSaveSummary" then
+	headerBaseImage = "save (doubleres).png"
+elseif screenName == "ScreenEvaluation" then
+	headerBaseImage = "eval (doubleres).png"
+else
+	headerBaseImage = "base (doubleres).png"
 end
 
 local function UpdateAni(self)
@@ -36,8 +44,14 @@ end
 
 local out = Def.ActorFrame{
 	InitCommand=function(self) self:SetUpdateFunction(UpdateAni) end;
-	LoadActor("base")..{
-		InitCommand=cmd(x,SCREEN_LEFT;halign,0);
+	LoadActor(headerBaseImage)..{
+		InitCommand=function(self)
+			if screenName == "ScreenSelectProfile" then
+				self:x(SCREEN_CENTER_X):halign(0.5);
+			else
+				self:x(SCREEN_LEFT):halign(0);
+			end;
+		end;
 	};
 }
 

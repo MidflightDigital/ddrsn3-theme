@@ -84,4 +84,71 @@ t[#t+1] = Def.ActorFrame {
 
 };
 
+t[#t+1] = StandardDecorationFromFileOptional("SongInformation","SongInformation") .. {
+	BeginCommand=function(self)
+		local SongOrCourse;
+		if GAMESTATE:GetCurrentSong() then
+			SongOrCourse = GAMESTATE:GetCurrentSong();
+		elseif GAMESTATE:GetCurrentCourse() then
+			SongOrCourse = GAMESTATE:GetCurrentCourse();
+		else
+			return
+		end
+		
+		if SongOrCourse:HasBanner() then
+			self:visible(false);
+		else
+			self:visible(true);
+		end
+	end;
+	SetCommand=function(self)
+		local c = self:GetChildren();
+		local SongOrCourse;
+		if GAMESTATE:GetCurrentSong() then
+			SongOrCourse = GAMESTATE:GetCurrentSong();
+
+			c.TextTitle:settext( SongOrCourse:GetDisplayMainTitle() or nil );
+			c.TextSubtitle:settext( SongOrCourse:GetDisplaySubTitle() or nil );
+			c.TextArtist:settext( SongOrCourse:GetDisplayArtist() or nil );
+
+			if SongOrCourse:GetDisplaySubTitle() == "" then
+				c.TextTitle:visible(true);
+				c.TextTitle:y(-16.5/2);
+				c.TextSubtitle:visible(false);
+				c.TextSubtitle:y(0);
+				c.TextArtist:visible(true);
+				c.TextArtist:y(18/2);
+			else
+				c.TextTitle:visible(true);
+				c.TextTitle:y(-16.5);
+				c.TextSubtitle:visible(true);
+				c.TextSubtitle:y(0);
+				c.TextArtist:visible(true);
+				c.TextArtist:y(18);
+			end
+-- 			self:playcommand("Tick");
+		elseif GAMESTATE:GetCurrentCourse() then
+			SongOrCourse = GAMESTATE:GetCurrentCourse();
+			
+			c.TextTitle:settext( SongOrCourse:GetDisplayMainTitle() or nil );
+			c.TextSubtitle:settext( SongOrCourse:GetDisplaySubTitle() or nil );
+			c.TextArtist:settext( SongOrCourse:GetDisplayArtist() or nil );
+			
+-- 			self:playcommand("Tick");
+		else
+			SongOrCourse = nil;
+			
+			c.TextTitle:settext("");
+			c.TextSubtitle:settext("");
+			c.TextArtist:settext("");
+			
+			self:playcommand("Hide")
+		end
+	end;
+-- 	OnCommand=cmd(playcommand,"Set");
+	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+	DisplayLanguageChangedMessageCommand=cmd(playcommand,"Set");
+};
+
 return t
