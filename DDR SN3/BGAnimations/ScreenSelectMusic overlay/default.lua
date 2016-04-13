@@ -211,25 +211,4 @@ if not GAMESTATE:IsCourseMode() then
 	};
 end;
 
-t[#t+1] = Def.ActorFrame {
-	Def.Sprite{
-		InitCommand=cmd(Center);
-		SetMessageCommand=function(self,params)
-		local song = params.Song;
-		local pssp1 = STATSMAN:GetCurStageStats(params.Song):GetPlayerStageStats("PlayerNumber_P1")
-		local staw1 = STATSMAN:GetCurStageStats(params.Song):GetPlayerStageStats("PlayerNumber_P1"):GetStageAward();
-		local pssp2 = STATSMAN:GetCurStageStats(params.Song):GetPlayerStageStats("PlayerNumber_P2")
-			if song then
-				if not PROFILEMAN:IsSongNew(params.Song) then
-				self:Load(THEME:GetPathG("MusicWheelItem Song","NormalPart/score"));
-				self:diffusealpha(1);
-				self:draworder(2);
-				else
-				self:diffusealpha(0);
-				end;
-			end;
-		end;
-	};
-};
-
 return t;

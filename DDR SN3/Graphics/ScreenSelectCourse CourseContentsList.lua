@@ -3,7 +3,7 @@ local transform = function(self,offsetFromCenter,itemIndex,numitems)
 end
 return Def.CourseContentsList {
 	MaxSongs = 10;
-    NumItemsToDraw = 8;
+    NumItemsToDraw = 5;
 	SetCommand=function(self)
 		self:SetFromGameState();
 		self:SetCurrentAndDestinationItem(3);
