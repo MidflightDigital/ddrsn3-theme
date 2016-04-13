@@ -20,7 +20,7 @@ if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."BGAnimations/ScreenG
 				self:y(SCREEN_CENTER_Y);
 			elseif GAMESTATE:GetCurrentStyle():GetName() == "versus" then
 				self:x(SCREEN_CENTER_X);
-				self:y(SCREEN_CENTER_Y);
+				self:y(SCREEN_CENTER_Y-120);
 			end;
 		end;
 		LoadActor(charP1 .. "/toasty_bg")..{
@@ -62,7 +62,7 @@ elseif FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/S
 				self:y(SCREEN_CENTER_Y);
 			elseif GAMESTATE:GetCurrentStyle():GetName() == "versus" then
 				self:x(SCREEN_CENTER_X);
-				self:y(SCREEN_CENTER_Y);
+				self:y(SCREEN_CENTER_Y+120);
 			end;
 		end;
 		LoadActor(charP2 .. "/toasty_bg")..{
