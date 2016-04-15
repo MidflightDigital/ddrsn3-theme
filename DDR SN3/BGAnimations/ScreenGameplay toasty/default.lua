@@ -20,7 +20,7 @@ if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."BGAnimations/ScreenG
 				self:y(SCREEN_CENTER_Y);
 			elseif GAMESTATE:GetCurrentStyle():GetName() == "versus" then
 				self:x(SCREEN_CENTER_X);
-				self:y(SCREEN_CENTER_Y-120);
+				self:y(SCREEN_CENTER_Y+120);
 			end;
 		end;
 		LoadActor(charP1 .. "/toasty_bg")..{
@@ -62,8 +62,14 @@ elseif FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/S
 				self:y(SCREEN_CENTER_Y);
 			elseif GAMESTATE:GetCurrentStyle():GetName() == "versus" then
 				self:x(SCREEN_CENTER_X);
-				self:y(SCREEN_CENTER_Y+120);
+				self:y(SCREEN_CENTER_Y-120);
 			end;
+		end;
+		if GAMESTATE:GetCurrentStyle():GetName() == "versus" then
+			LoadActor("toasty_maskP2 Versus.png")..{
+				InitCommand=cmd(diffusealpha,0;zwrite,1;blend,Blend.NoEffect;;clearzbuffer,true;);
+				StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.8;sleep,1;linear,0.166;diffusealpha,0);
+			};
 		end;
 		LoadActor(charP2 .. "/toasty_bg")..{
 		StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.6;sleep,1;linear,0.166;diffusealpha,0);
