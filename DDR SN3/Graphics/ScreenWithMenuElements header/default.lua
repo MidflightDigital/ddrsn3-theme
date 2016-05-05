@@ -10,20 +10,30 @@ elseif screenName == "ScreenMapControllers" then
 	headerTextImage = "Options (doubleres).png"
 elseif screenName == "ScreenSelectStyle" then
     headerTextImage = "Style (doubleres).png"
-elseif screenName == "ScreenSelectPlayMode" then
+elseif screenName == "ScreenSelectPlayMode" or screenName == "ScreenSelectPlayCourseMode" then
     headerTextImage = "Mode (doubleres).png"
 elseif screenName == "ScreenSelectCourse" then
     headerTextImage = "Course (doubleres).png"
+elseif screenName == "ScreenSelectProfile" then
+	headerTextImage = "profile (doubleres).png"
+elseif screenName == "ScreenDataSaveSummary" then
+	headerTextImage = "save (doubleres).png"
+elseif screenName == "ScreenEvaluationNormal" then
+	headerTextImage = "eval (doubleres).png"
+elseif screenName == "ScreenEvaluationOni" then
+	headerTextImage = "eval (doubleres).png"
 end
 
 local headerBaseImage
 
 if screenName == "ScreenSelectProfile" then
-	headerBaseImage = "profile (doubleres).png"
+	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenDataSaveSummary" then
-	headerBaseImage = "save (doubleres).png"
-elseif screenName == "ScreenEvaluation" then
-	headerBaseImage = "eval (doubleres).png"
+	headerBaseImage = "centerbase (doubleres).png"
+elseif screenName == "ScreenEvaluationNormal" then
+	headerBaseImage = "centerbase (doubleres).png"
+elseif screenName == "ScreenEvaluationOni" then
+	headerBaseImage = "centerbase (doubleres).png"
 else
 	headerBaseImage = "base (doubleres).png"
 end
@@ -47,7 +57,13 @@ local out = Def.ActorFrame{
 	LoadActor(headerBaseImage)..{
 		InitCommand=function(self)
 			if screenName == "ScreenSelectProfile" then
-				self:x(SCREEN_CENTER_X):halign(0.5);
+				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
+			elseif screenName == "ScreenEvaluationNormal" then
+				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
+			elseif screenName == "ScreenEvaluationOni" then
+				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
+			elseif screenName == "ScreenDataSaveSummary" then
+				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
 			else
 				self:x(SCREEN_LEFT):halign(0);
 			end;
@@ -70,7 +86,20 @@ end
 
 if headerTextImage then
 	table.insert(out,LoadActor(headerTextImage)..{
-		InitCommand=function(self) self:x(SCREEN_LEFT+95):y(5):halign(0):valign(1) end,
+		InitCommand=function(self)
+			self:y(5):valign(1);
+			if screenName == "ScreenSelectProfile" then
+				self:x(SCREEN_CENTER_X):halign(0.5);
+			elseif screenName == "ScreenEvaluationNormal" then
+				self:x(SCREEN_CENTER_X):halign(0.5);
+			elseif screenName == "ScreenEvaluationOni" then
+				self:x(SCREEN_CENTER_X):halign(0.5);
+			elseif screenName == "ScreenDataSaveSummary" then
+				self:x(SCREEN_CENTER_X):halign(0.5);
+			else
+				self:x(SCREEN_LEFT+40):halign(0);
+			end;
+		end;
 	})
 end
 

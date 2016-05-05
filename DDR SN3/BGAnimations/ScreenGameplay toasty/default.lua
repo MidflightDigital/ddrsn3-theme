@@ -20,7 +20,8 @@ if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."BGAnimations/ScreenG
 				self:y(SCREEN_CENTER_Y);
 			elseif GAMESTATE:GetCurrentStyle():GetName() == "versus" then
 				self:x(SCREEN_CENTER_X);
-				self:y(SCREEN_CENTER_Y+120);
+				self:y(SCREEN_CENTER_Y-120);
+				self:draworder(-1);
 			end;
 		end;
 		LoadActor(charP1 .. "/toasty_bg")..{
@@ -54,22 +55,19 @@ if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."BGAnimations/ScreenG
 			StartTransitioningCommand=cmd(blend,Blend.Add;;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;linear,0.5;diffusealpha,0);
 		};
 	};
-elseif FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/ScreenGameplay toasty/" .. charP2 .. "/toastyChar") and GAMESTATE:IsPlayerEnabled("PlayerNumber_P2") then
+end;
+
+if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/ScreenGameplay toasty/" .. charP2 .. "/toastyChar.png") and GAMESTATE:IsPlayerEnabled("PlayerNumber_P2") then
 	t[#t+1] = Def.ActorFrame {
 		InitCommand=function(self)
 			if GAMESTATE:GetCurrentStyle():GetName() == "single" then
 				self:x(SCREEN_LEFT+180);
 				self:y(SCREEN_CENTER_Y);
+				self:draworder(99);
 			elseif GAMESTATE:GetCurrentStyle():GetName() == "versus" then
 				self:x(SCREEN_CENTER_X);
-				self:y(SCREEN_CENTER_Y-120);
+				self:y(SCREEN_CENTER_Y+120);
 			end;
-		end;
-		if GAMESTATE:GetCurrentStyle():GetName() == "versus" then
-			LoadActor("toasty_maskP2 Versus.png")..{
-				InitCommand=cmd(diffusealpha,0;zwrite,1;blend,Blend.NoEffect;;clearzbuffer,true;);
-				StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.8;sleep,1;linear,0.166;diffusealpha,0);
-			};
 		end;
 		LoadActor(charP2 .. "/toasty_bg")..{
 		StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.6;sleep,1;linear,0.166;diffusealpha,0);
@@ -104,4 +102,12 @@ elseif FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/S
 	};
 end;
 
+if GAMESTATE:GetCurrentStyle():GetName() == "versus" then
+	t[#t+1] = Def.ActorFrame {
+		LoadActor("toasty_maskP2 Versus.png")..{
+				InitCommand=cmd(draworder,999;zwrite,true;blend,'BlendMode_NoEffect';Center);
+				StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.8;sleep,1;linear,0.166;diffusealpha,0);
+		};
+	};
+end;
 return t

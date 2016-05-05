@@ -23,6 +23,10 @@ return Def.ActorFrame {
 	StartCommand=function(self)
 		self:sleep(3.01)
 	end;
+	LoadActor(("failed"))..{
+		ChangeCourseSongInMessageCommand=cmd(queuecommand,("Play"));
+		PlayCommand=cmd(play;);
+	};
 	LoadActor("Door1")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;CenterY;zoom,1.01;halign,1);
 		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+50);
@@ -72,11 +76,11 @@ return Def.ActorFrame {
 	LoadActor("ScreenStageInformation in/bottom_stage")..{
 		InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-27);
 		ChangeCourseSongInMessageCommand=cmd(addy,54;sleep,0.396;linear,0.198;addy,-54);
-		ChangeCourseSongOutMessageCommand=cmd(sleep,1;linear,0.198;addy,54);
+		FinishCommand=cmd(sleep,1;linear,0.198;addy,54);
 	};
 	LoadActor("ScreenStageInformation in/top_stage")..{
 		InitCommand=cmd(CenterX;y,SCREEN_TOP+52);
 		ChangeCourseSongInMessageCommand=cmd(addy,-104;sleep,0.396;linear,0.198;addy,104);
-		ChangeCourseSongOutMessageCommand=cmd(sleep,1;linear,0.198;addy,-104);
+		FinishCommand=cmd(sleep,1;linear,0.198;addy,-104);
 	};
 };
