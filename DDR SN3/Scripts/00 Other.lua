@@ -239,3 +239,11 @@ function MakeDeck(source)
 		return source[table.remove(keys, math.random(1,#keys))]
 	end
 end
+
+--It turns out that past tertu fucked this function up.
+--A fix will probably hit 5.1 but for now we're going to do this.
+function ThemeManager:GetAbsolutePath(sPath)
+	sFinPath = "/Themes/"..self:GetCurThemeName().."/"..sPath
+	assert(FILEMAN:DoesFileExist(sFinPath), "the theme element "..sPath.." is missing")
+	return sFinPath
+end
