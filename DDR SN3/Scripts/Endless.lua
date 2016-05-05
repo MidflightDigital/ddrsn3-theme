@@ -1,27 +1,3 @@
-Endless = {}
-
-function Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)
-    local ret = {}
-    assert(minLevel <= maxLevel)
-    for _, song in pairs(SONGMAN:GetAllSongs()) do
-        if not SONGMAN:IsSongLocked(song) then
-            for _, steps in pairs(song:GetStepsByStepsType(stepsType)) do
-                if not steps:GetDifficulty() == 'Difficulty_Edit' then
-                    local meter = steps:GetMeter()
-                    if (meter >= minLevel) and (meter <= maxLevel) then
-                        table.insert(ret, {song, steps})
-                    end
-                end
-            end
-        end
-    end
-    return ret
-end
-
-function Endless.CreateState()
-end
-
-
 --This is an arbitrary-precision integer based implementation
 --of the DDR X endless scoring method.
 EndlessScoring = {}
@@ -37,7 +13,8 @@ function EndlessScoring.Create(level)
     local penaltyCounter = bn.Int(bn.zero)
     local tnsReverse = Enum.Reverse(PlayerNumber)
     local lastCombo = 0
-    return function(noteScore, stageNumber, curCombo)
+    return {
+    handleNoteScore = function(noteScore, stageNumber, curCombo)
         if score < MAX_SCORE then
             noteCounter = noteCounter + bn.one
             
@@ -68,5 +45,33 @@ function EndlessScoring.Create(level)
             if score > MAX_SCORE then score = bn.Int(MAX_SCORE) end
             lastCombo = curCombo
         end
+    end,
+    getScoreString= function()
+        return(score:tostring())
     end
+    }
+end
+
+Endless = {}
+
+function Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)
+    local ret = {}
+    assert(minLevel <= maxLevel)
+    for _, song in pairs(SONGMAN:GetAllSongs()) do
+        if not SONGMAN:IsSongLocked(song) then
+            for _, steps in pairs(song:GetStepsByStepsType(stepsType)) do
+                if not steps:GetDifficulty() == 'Difficulty_Edit' then
+                    local meter = steps:GetMeter()
+                    if (meter >= minLevel) and (meter <= maxLevel) then
+                        table.insert(ret, {song, steps})
+                    end
+                end
+            end
+        end
+    end
+    return ret
+end
+
+function Endless.CreateState(stepsType, minLevel, maxLevel)
+    return MakeDeck(Endless.GetSongChartBlock(stepsType, minLevel, maxLevel))
 end
