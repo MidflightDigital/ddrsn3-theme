@@ -3,8 +3,12 @@
 --115 is about the lowest BPM where there will always be showing bar pieces.
 --This is not necessarily true at 100 BPM, so a negative value is generated.
 --155 is simply 270-115, the spread between 0 and 1. - tertu
+
+--13/86 was chosen because it's roughly the height of two bar pieces -tertu
+local twiddleDistance = 13/86
+
 local function CalculateBaseForBPM(bpm)
-	return 1 - (clamp(bpm, 100, 300) - 100) / 140
+	return 1 - (((clamp(bpm, 100, 300) - 100) / 140)+twiddleDistance/2)
 end
 
 local ScreenSelectMusic
@@ -16,8 +20,6 @@ local function UpdateBPMGauge(self)
 			ScreenSelectMusic = top
 		else return end
 	end
-	local maximumTwiddleDistance = 13/86
-	--13/86 was chosen because it's roughly the height of two bar pieces -tertu
 	local gauge = self:GetChild("bpm gauge bright")
 	assert(gauge, "UpdateBPMGauge: Can't find the bright part of the BPM gauge.")
 	if GAMESTATE then
@@ -31,7 +33,7 @@ local function UpdateBPMGauge(self)
 				local displayBpms = song:GetDisplayBpms()
 				local displayBpm = displayBpms[1]
 				local crop = CalculateBaseForBPM(displayBpm)
-				crop = clamp(crop - (math.random() * maximumTwiddleDistance), 0, 1)
+				crop = clamp(crop - ((math.random()-0.5) * twiddleDistance), 0, 1)
 				gauge:croptop(crop)
 			elseif not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
 				--This song has two display BPMs: read the current BPM off the BPMDisplay

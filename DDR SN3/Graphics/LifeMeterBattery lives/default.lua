@@ -31,7 +31,7 @@ local t = Def.ActorFrame {
 };
 --]]
 	-- Battery 2-7 line
-	LoadActor("normal")..{
+	LoadActor(THEME:GetPathG("StreamDisplay","normal"))..{
 		InitCommand=function(self)
 			self:texcoordvelocity(0.8,0)
 			self:setsize((SCREEN_WIDTH/2.53),13)
@@ -39,6 +39,7 @@ local t = Def.ActorFrame {
 			self:visible(false)
 		end;
 		LifeChangedMessageCommand=function(self,params)
+			if not params.LivesLeft then return end;
 			if params.Player == player then
 				if params.LivesLeft >= 2 then
 					self:visible(true)
@@ -49,7 +50,7 @@ local t = Def.ActorFrame {
 		end;
 	};
 	-- Battery full line
-	LoadActor("Full")..{
+	LoadActor(THEME:GetPathG("StreamDisplay","hot"))..{
 		InitCommand=function(self)
 			self:texcoordvelocity(0.8,0)
 			self:setsize((SCREEN_WIDTH/2.53),13)
@@ -84,6 +85,7 @@ local t = Def.ActorFrame {
 			self:diffusetopedge(color("#5d1115"));
 			self:diffusebottomedge(color("#f50d0d"));
 			self:halign(1);
+			self:skewx(0.9);
 			self:x(SCREEN_WIDTH/5);
 		end;
 		BeginCommand=function(self,params)
@@ -97,6 +99,7 @@ local t = Def.ActorFrame {
 		end;
 		LifeChangedMessageCommand=function(self,params)
 			if params.Player ~= player then return end;
+			if not params.LivesLeft then return end;
 			self:finishtweening();
 			self:linear(0);
 			self:diffusetopedge(color("#5d1115"));
@@ -107,7 +110,7 @@ local t = Def.ActorFrame {
 			self:diffusebottomedge(color("#404040"));
 		end;	
 	};
---[[	-- 4 Battery empty over
+-- 4 Battery empty over
 	Def.Quad{
 		InitCommand=function(self)
 			self:diffusetopedge(color("#707171"));
@@ -135,48 +138,10 @@ local t = Def.ActorFrame {
 		end;
 		LifeChangedMessageCommand=function(self,params)
 			if params.Player ~= player then return end;
+			if not params.LivesLeft then return end;
 			self:finishtweening();
 			self:sleep(0.33);
-			self:skewx(-0.9);
 		end;
 	};
-
-	Def.Sprite {
-		BeginCommand=function(self)
-			local screen = SCREENMAN:GetTopScreen();
-			local glifemeter = screen:GetLifeMeter(player);
-			
-			local style = GAMESTATE:GetCurrentStyle():GetStyleType()
-			
-			if GAMESTATE:IsExtraStage() or GAMESTATE:IsExtraStage2() then
-				if glifemeter:GetTotalLives() > 5 then
-					self:Load(THEME:GetPathG("LifeMeterBattery","lives/_8frame_2013"));
-				else
-					self:Load(THEME:GetPathG("LifeMeterBattery","lives/wide split"));
-				end
-			elseif glifemeter:GetTotalLives() > 5 then
-				self:Load(THEME:GetPathG("LifeMeterBattery","lives/_8frame_2013"));
-			else
-				--[[
-				if style == "StyleType_TwoPlayersTwoSides" then
-					self:Load(THEME:GetPathG("LifeMeterBattery","lives/4frame"));
-				else
-					local bComboGraphic = ComboGraphic(player);
-					if bComboGraphic == '2013' then
-						self:Load(THEME:GetPathG("LifeMeterBattery","lives/_4frame_2013"));
-						self:zoomx(WideScale(1,0.696));
-						self:y(20);
-					else
-						self:Load(THEME:GetPathG("LifeMeterBattery","lives/4frame"));
-						self:y(0);
-					end
-				end;
-				--]]
-				self:y(0);
-				self:Load(THEME:GetPathG("LifeMeterBattery","lives/wide split"));
-			end
-		end;
-	};
---]]
 };
 return t;
