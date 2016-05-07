@@ -39,6 +39,18 @@ t[#t+1] = LoadActor(lifeFrame)..{
 			end
 		end;
 };
+t[#t+1] = LoadActor("danger 2x1")..{
+		InitCommand=cmd(x,WideScale(-160,-213.5);visible,false);
+		HealthStateChangedMessageCommand=function(self, param)
+			if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
+				if param.HealthState == "HealthState_Danger" then
+					self:visible(true);
+				else
+					self:visible(false);
+				end;
+			end;
+		end;
+};
 	
 
 return t

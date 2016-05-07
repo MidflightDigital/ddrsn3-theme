@@ -7,7 +7,7 @@ t[#t+1] = Def.ActorFrame {
 		self:fov(120);
 	end;
 	Def.ActorFrame{
-		LoadActor("_bck")..{
+		LoadActor("titleback")..{
 			InitCommand=cmd(Center;FullScreen);
 		};
 		LoadActor("1")..{
@@ -20,13 +20,13 @@ t[#t+1] = Def.ActorFrame {
 			OnCommand=cmd(diffusealpha,0;blend,Blend.Add;;linear,2;diffusealpha,0.55;addy,-SCREEN_HEIGHT;queuecommand,"Queue");
 			QueueCommand=cmd(diffusealpha,0;addy,SCREEN_HEIGHT;sleep,4;queuecommand,"On");
 		};
-		LoadActor("grid")..{
+--[[		LoadActor("grid")..{
 			InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-120;zoomx,1.5;rotationx,75;diffusealpha,0.5;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
 		};
 		LoadActor("grid")..{
 			InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+120;zoomx,1.5;rotationx,-75;diffusealpha,0.5;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
 		};
-		LoadActor("ddrsn_logo.png")..{
+--]]		LoadActor("ddrsn_logo.png")..{
 			InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9);
 		};
 		LoadActor("ddrsn_logo.png")..{
