@@ -1,7 +1,7 @@
 return Def.ActorFrame {
 	--p1
 	LoadActor( "Back" )..{
-		InitCommand=cmd(Center);
+		InitCommand=cmd(Center;zoomto,SCREEN_WIDTH,480);
 		OnCommand=cmd(addx,-SCREEN_WIDTH;sleep,0.5;accelerate,0.5;addx,SCREEN_WIDTH);
 		OffCommand=cmd(sleep,0.2;accelerate,0.5;addx,SCREEN_WIDTH);
 	};

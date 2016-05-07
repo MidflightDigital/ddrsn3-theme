@@ -3,56 +3,17 @@ return Def.ActorFrame {
 	Def.Sprite {
 		OnCommand=function(self)
 			self:x(-85);
-			if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'1x') and SCREENMAN:GetTopScreen():GetScreenType() == "ScreenType_Gameplay" then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x1_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'1.25x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x1_25_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'1.5x') then
+			
+			if GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'1.5x') and SCREENMAN:GetTopScreen():GetScreenType() == "ScreenType_Gameplay" then
 				self:Load(THEME:GetPathB("","optionicon_P1/speed_x1_5_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'1.75x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x1_75_P1"));
 			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'2x') then
 				self:Load(THEME:GetPathB("","optionicon_P1/speed_x2_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'2.25x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x2_25_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'2.5x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x2_5_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'2.75x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x2_75_P1"));
 			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'3x') then
 				self:Load(THEME:GetPathB("","optionicon_P1/speed_x3_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'3.5x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x3_5_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'4x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x4_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'4.5x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x4_5_P1"));
 			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'5x') then
 				self:Load(THEME:GetPathB("","optionicon_P1/speed_x5_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'5.5x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x5_5_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'6x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x6_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'6.5x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x6_5_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'7x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x7_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'7.5x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x7_5_P1"));
 			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'8x') then
 				self:Load(THEME:GetPathB("","optionicon_P1/speed_x8_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'0.75x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x0_75_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'0.5x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x0_5_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'0.25x') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_x0_25_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'C150') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_xC_150_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'C200') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_xC_200_P1"));
-			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'C300') then
-				self:Load(THEME:GetPathB("","optionicon_P1/speed_xC_300_P1"));
 			end;
 		end;
 		PlayerJoinedMessageCommand=function(self, params)
@@ -167,6 +128,8 @@ return Def.ActorFrame {
 			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'NORMAL-RAINBOW')
 			or GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'CLASSIC-RAINBOW')
 			or GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'SOLO-RAINBOW')
+			or GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'DDRX-VIVID')
+			or GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'DDRX-RAINBOW')
 			or GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'PS3-RAINBOW') then
 				self:Load(THEME:GetPathB("","optionicon_P1/arrow_rainbow_P1"));
 			end;

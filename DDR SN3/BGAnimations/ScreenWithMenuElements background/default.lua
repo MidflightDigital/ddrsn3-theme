@@ -23,7 +23,8 @@ t[#t+1] = Def.ActorFrame {
 	end;
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("ScreenLogo","background/back"))..{
-			InitCommand=cmd(FullScreen);	
+			InitCommand=cmd(FullScreen);
+		--My god you are amazing kenp.	
 		OnCommand=function(self)
 		local seed = math.random(1,13);
 			--seed breakdown:
@@ -86,7 +87,7 @@ t[#t+1] = Def.ActorFrame {
 			OnCommand=cmd(diffusealpha,0;blend,Blend.Add;;linear,2;diffusealpha,0.55;addy,SCREEN_HEIGHT;queuecommand,"Queue");
 			QueueCommand=cmd(diffusealpha,0;addy,-SCREEN_HEIGHT;sleep,4;queuecommand,"On");
 		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/shader"))
+		LoadActor(THEME:GetPathB("","ScreenLogo background/shader"));
 	};
 	Def.ActorFrame{
 		LoadActor("BoxBody") .. {

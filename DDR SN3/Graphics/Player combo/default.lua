@@ -17,7 +17,7 @@ local t = Def.ActorFrame {
 		Name="Number";
 		OnCommand=THEME:GetMetric("Combo", "NumberOnCommand");
 	};
-	LoadActor("_label") .. {
+	LoadActor("_combogreat") .. {
 		Name="Label";
 		OnCommand=THEME:GetMetric("Combo", "LabelOnCommand");
 	};

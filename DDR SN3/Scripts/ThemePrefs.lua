@@ -39,7 +39,19 @@ function InitUserPrefs()
 	setenv("ScreenFilterP1",0)
 	setenv("ScreenFilterP2",0)
 end
-
+--[[
+function OptionRowCharSel()
+	local t = {
+		Name="CharacterSel"
+		LayoutType = "ShowAllInRow"
+		SelectTyle = "SelectOne",
+		OneChoiceForAllPlayers = false,
+		ExportOnChange = false,
+		Choices = { THEME:GetString('OptionNames','Off'), 'Alice', 'Baby-Lon', 'Disco', 'Emi', 'Jenny', 'Rage', 'Yuni', },
+		LoadSelections = function(self, list, pn)
+			local pName= ToEnumShortString(pn)
+			local 
+--]]
 function OptionRowScreenFilter()
 	--we use integers equivalent to the alpha value multiplied by 10
 	--to work around float precision issues

@@ -13,16 +13,22 @@ t[#t+1] = Def.ActorFrame {
 		InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9;);
 	};
 	Def.Quad{
-		InitCommand=cmd(FullScreen;diffuse,color("0,0,0,0.6"));
+		InitCommand=cmd(FullScreen;diffuse,color("0,0,0,0.5"));
 	};
 	LoadActor("image")..{
-		InitCommand=cmd(x,SCREEN_LEFT+182;y,SCREEN_CENTER_Y-50);
-		OnCommand=cmd(addx,-274;accelerate,0.4;addx,274);
+		InitCommand=cmd(x,SCREEN_LEFT-92;y,SCREEN_CENTER_Y-50);
+		OnCommand=cmd(accelerate,0.2;addx,274);
 		TitleSelectionMessageCommand=function(self, params)
 			local path = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_ScreenTitleMenu image "..string.lower(params.Choice)..".png"
-			if FILEMAN:DoesFileExist(path) then
-				self:Load(path)
-			end
+			self:finishtweening()
+			self:accelerate(0.05);
+			self:addx(-274);
+				if FILEMAN:DoesFileExist(path) then
+					self:Load(path)
+				end;
+			self:sleep(0.2);
+			self:accelerate(0.2);
+			self:addx(274);
 		end;
 		OffCommand=cmd(accelerate,0.4;addx,-274);
 	};

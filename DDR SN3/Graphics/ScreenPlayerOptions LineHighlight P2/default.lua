@@ -1,7 +1,10 @@
 local t = ...;
 t = Def.ActorFrame{
 	LoadActor("ScreenOptions line highlightPP2")..{
-	InitCommand=cmd();
+	InitCommand=cmd(diffuseleftedge,color("1,1,1,0"));
+	};
+	LoadActor("ScreenOptions line highlightPB2")..{
+		InitCommand=cmd(addx,200);
 	};
 	Def.Sprite {
 	Texture="ScreenPlayerOptions LineHighlight P1 1x2";
@@ -14,7 +17,7 @@ t = Def.ActorFrame{
 	InitCommand=cmd(addx,200);
 	};
 		LoadActor("P2Cursor")..{
-		InitCommand=cmd(addx,300;addy,0;zoomy,1.0;zoomx,1.0;);
+		InitCommand=cmd(addx,290;addy,0;zoomy,1.0;zoomx,1.0;);
 	};
 };	
 return t;

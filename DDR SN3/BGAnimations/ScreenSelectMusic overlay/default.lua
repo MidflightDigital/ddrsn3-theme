@@ -22,22 +22,22 @@ local t = Def.ActorFrame{
 	LoadActor(THEME:GetPathG("","_footer/confirm"))..{
 		InitCommand=cmd(x,SCREEN_RIGHT-71;y,SCREEN_BOTTOM-32);
 		OnCommand=cmd(diffuseblink;effectcolor1,0,0,0,0;effectcolor2,1,1,1,1;effectperiod,2;halign,1;addy,54;sleep,0.2;decelerate,0.2;addy,-54);
-		OffCommand=cmd(linear,0.4;addx,236;linear,0;addy,999);
+		OffCommand=cmd(decelerate,0.2;addy,54);
 	};
 	LoadActor(THEME:GetPathG("","_footer/select"))..{
 		InitCommand=cmd(x,SCREEN_RIGHT-183;y,SCREEN_BOTTOM-32;halign,1);
 		OnCommand=cmd(diffuseblink;effectcolor1,0,0,0,0;effectcolor2,1,1,1,1;effectperiod,2;addy,54;sleep,0.2;decelerate,0.2;addy,-54);
-		OffCommand=cmd(linear,0.4;addx,236;linear,0;addy,999);
+		OffCommand=cmd(decelerate,0.2;addy,54);
 	};
 	LoadActor(THEME:GetPathG("","_footer/difficulty"))..{
 		InitCommand=cmd(x,SCREEN_RIGHT-115;y,SCREEN_BOTTOM-12;halign,1);
 		OnCommand=cmd(diffuseblink;effectcolor1,0,0,0,0;effectcolor2,1,1,1,1;effectperiod,2;addy,54;sleep,0.2;decelerate,0.2;addy,-54);
-		OffCommand=cmd(linear,0.4;addx,236;linear,0;addy,999);
+		OffCommand=cmd(decelerate,0.2;addy,54);
 	};
 	LoadActor(THEME:GetPathG("","_footer/sort"))..{
 		InitCommand=cmd(x,SCREEN_RIGHT-125;y,SCREEN_BOTTOM-32;halign,1);
 		OnCommand=cmd(diffuseblink;effectcolor1,1,1,1,1;effectcolor2,0,0,0,0;effectperiod,2;addy,54;sleep,0.2;decelerate,0.2;addy,-54);
-		OffCommand=cmd(linear,0.4;addx,236;linear,0;addy,999);
+		OffCommand=cmd(decelerate,0.2;addy,54);
 	};
 	LoadActor( THEME:GetPathB("","optionicon_P1") ) .. {
 		InitCommand=cmd(player,PLAYER_1;x,SCREEN_LEFT+109;y,SCREEN_CENTER_Y+201;draworder,1);

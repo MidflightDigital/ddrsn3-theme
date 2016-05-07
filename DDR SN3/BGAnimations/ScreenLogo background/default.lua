@@ -7,27 +7,36 @@ t[#t+1] = Def.ActorFrame {
 		self:fov(120);
 	end;
 	Def.ActorFrame{
-		LoadActor("titleback")..{
-			InitCommand=cmd(Center;FullScreen);
+	InitCommand=cmd(Center;blend,Blend.Add;;);
+		LoadActor("back")..{
+			InitCommand=cmd(diffuse,color("0,1,0,0.812"));
 		};
-		LoadActor("1")..{
-			InitCommand=cmd(Center;zoomx,SCREEN_WIDTH;rotationx,75;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
+		LoadActor(THEME:GetPathB("","ScreenLogo background/stars"))..{
+			InitCommand=cmd(diffusealpha,0.3;fadetop,0.5;fadebottom,0.5);
+		};
+		LoadActor(THEME:GetPathB("","ScreenLogo background/flash"))..{
+			InitCommand=cmd(y,-50;x,-200;diffusealpha,0.5);
+			OnCommand=cmd(spin;effectmagnitude,0,0,50);
+		};
+		LoadActor(THEME:GetPathB("","ScreenLogo background/left flash"))..{
+			OnCommand=cmd(diffusealpha,0;sleep,4;accelerate,0.2;diffusealpha,1;sleep,0.5;linear,1;diffusealpha,0;queuecommand,'On');
+		};
+		LoadActor(THEME:GetPathB("","ScreenLogo background/right flash"))..{
+			OnCommand=cmd(diffusealpha,0;sleep,2;accelerate,0.2;diffusealpha,1;sleep,0.5;linear,1;diffusealpha,0;sleep,2;queuecommand,'On');
+		};
+		LoadActor(THEME:GetPathB("","ScreenLogo background/round grid"))..{
+			InitCommand=cmd(diffusealpha,0.5);
+		};
+		LoadActor(THEME:GetPathB("","ScreenLogo background/middle flash"))..{
+			InitCommand=cmd(y,-240;CenterX;zoomx,SCREEN_WIDTH;fadetop,0.5;fadebottom,0.5);
 			OnCommand=cmd(diffusealpha,0;blend,Blend.Add;;linear,2;diffusealpha,0.55;addy,SCREEN_HEIGHT;queuecommand,"Queue");
 			QueueCommand=cmd(diffusealpha,0;addy,-SCREEN_HEIGHT;sleep,4;queuecommand,"On");
 		};
-		LoadActor("1")..{
-			InitCommand=cmd(Center;zoomx,SCREEN_WIDTH;rotationx,-75;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
-			OnCommand=cmd(diffusealpha,0;blend,Blend.Add;;linear,2;diffusealpha,0.55;addy,-SCREEN_HEIGHT;queuecommand,"Queue");
-			QueueCommand=cmd(diffusealpha,0;addy,SCREEN_HEIGHT;sleep,4;queuecommand,"On");
-		};
---[[		LoadActor("grid")..{
-			InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-120;zoomx,1.5;rotationx,75;diffusealpha,0.5;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
-		};
-		LoadActor("grid")..{
-			InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+120;zoomx,1.5;rotationx,-75;diffusealpha,0.5;fadetop,0.5;fadebottom,0.5;diffuse,color("#14fc00"));
-		};
---]]		LoadActor("ddrsn_logo.png")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9);
+		LoadActor(THEME:GetPathB("","ScreenLogo background/shader"));
+	};
+	Def.ActorFrame{
+		LoadActor("ddrsn_logo.png")..{
+			InitCommand=cmd(x,SCREEN_CENTER_X+1;y,SCREEN_CENTER_Y-8;zoom,0.9);
 		};
 		LoadActor("ddrsn_logo.png")..{
 			InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9);

@@ -161,11 +161,3 @@ Branch.Ending = function()
 	-- otherwise, show music scroll.
 	return STATSMAN:GetBestFinalGrade() <= 'Grade_Tier03' and "ScreenCredits" or "ScreenMusicScroll"
 end
-
-Branch.ServiceOptions = function()
-	if GAMESTATE:GetCoinMode() == 'CoinMode_Home' then
-		return "ScreenOptionsHome"
-	else
-		return "ScreenOptionsService"
-	end
-end
