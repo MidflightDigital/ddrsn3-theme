@@ -1,72 +1,52 @@
 local t = Def.ActorFrame{
 };
+local p = {
+	red = color("1,0,0,0.812"),
+	green = color("0,1,0,0.812"),
+	blue = color("0,0,1,0.812"),
+	yellow = color("1,1,0,0.812"),
+	pink = color("1,0,1,0.812"),
+	cyan = color("0,1,1,0.812")
+}
+local colorPatterns = 
+{
+	--first pattern block: YRPBCG with different start indices
+	{[0]=p.yellow, p.red, p.pink, p.blue, p.cyan, p.green},
+	--second pattern block: GCBPRY with different start indices
+	{[0]=p.pink, p.red, p.yellow, p.green, p.cyan, p.blue}
+}
+local curPattern = 1
+local curPatternIdx = 0
 t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)
 		self:fov(120);
 	end;
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("ScreenLogo","background/back"))..{
-			InitCommand=cmd(FullScreen);
-		--My god you are amazing kenp.	
+			InitCommand=cmd(FullScreen);	
 		OnCommand=function(self)
-		local seed = math.random(1000)%13;
-		--local seed = GAMESTATE:GetGameSeed()%13;
-			if (seed == 12) then
-				self:diffuse(color("1,1,0,0.812"));
-				self:playcommand("AnimateA");
-			elseif (seed == 11) then
-				self:diffuse(color("1,0,0,0.812"));
-				self:playcommand("AnimateB");
-			elseif (seed == 10) then
-				self:diffuse(color("1,0,1,0.812"));
-				self:playcommand("AnimateC");
-			elseif (seed == 9) then
-				self:diffuse(color("0,0,1,0.812"));
-				self:playcommand("AnimateD");
-			elseif (seed == 8) then
-				self:diffuse(color("0,1,1,0.812"));
-				self:playcommand("AnimateE");
-			elseif (seed == 7) then
-				self:diffuse(color("0,1,0,0.812"));
-				self:playcommand("AnimateF");
-			elseif (seed == 6) then
-				self:diffuse(color("1,0,1,0.812"));
-				self:playcommand("AnimateG");
-			elseif (seed == 5) then
-				self:diffuse(color("1,0,0,0.812"));
-				self:playcommand("AnimateH");
-			elseif (seed == 4) then
-				self:diffuse(color("1,1,0,0.812"));
-				self:playcommand("AnimateI");
-			elseif (seed == 3) then
-				self:diffuse(color("0,1,0,0.812"));
-				self:playcommand("AnimateJ");
-			elseif (seed == 2) then
-				self:diffuse(color("0,1,1,0.812"));
-				self:playcommand("AnimateK");
-			elseif (seed == 1) then
-				self:diffuse(color("0,0,1,0.812"));
-				self:playcommand("AnimateL");				
+		local seed = math.random(1,13);
+			if seed > 1 then
+				if seed > 7 then
+					curPattern = 1
+					curPatternIdx = seed - 8
+				else
+					curPattern = 2
+					curPatternIdx = seed - 2
+				end
+				self:diffuse(colorPatterns[curPattern][curPatternIdx])
+				self:queuecommand("Animate")			
 			else 
 				self:rainbow();
-				self:effectperiod(160);
-				
+				self:effectperiod(120);
 			end;
 		end;
-		AnimateACommand=cmd(linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("1,1,0,0.812");queuecommand,"AnimateA");
-		AnimateBCommand=cmd(linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("1,0,0,0.812");queuecommand,"AnimateB");
-		AnimateCCommand=cmd(linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,0,1,0.812");queuecommand,"AnimateC");
-		AnimateDCommand=cmd(linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("0,0,1,0.812");queuecommand,"AnimateD");
-		AnimateECommand=cmd(linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("0,1,1,0.812");queuecommand,"AnimateE");
-		AnimateFCommand=cmd(linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,1,0,0.812");queuecommand,"AnimateF");
-		
-		AnimateGCommand=cmd(linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("1,0,1,0.812");queuecommand,"AnimateG");
-		AnimateHCommand=cmd(linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("1,0,0,0.812");queuecommand,"AnimateH");
-		AnimateICommand=cmd(linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,1,0,0.812");queuecommand,"AnimateI");
-		AnimateJCommand=cmd(linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("0,1,0,0.812");queuecommand,"AnimateJ");
-		AnimateKCommand=cmd(linear,20;diffuse,color("0,0,1,0.812");linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("0,1,1,0.812");queuecommand,"AnimateK");
-		AnimateLCommand=cmd(linear,20;diffuse,color("1,0,1,0.812");linear,20;diffuse,color("1,0,0,0.812");linear,20;diffuse,color("1,1,0,0.812");linear,20;diffuse,color("0,1,0,0.812");linear,20;diffuse,color("0,1,1,0.812");linear,20;diffuse,color("0,0,1,0.812");queuecommand,"AnimateL");
-	
+		AnimateCommand = function(s)
+			curPatternIdx = (curPatternIdx + 1) % 6
+			s:linear(20)
+			:diffuse(colorPatterns[curPattern][curPatternIdx])
+			:queuecommand("Animate")
+		end;
 	};
 	};
 	Def.ActorFrame{

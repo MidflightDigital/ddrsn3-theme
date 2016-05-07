@@ -4,25 +4,6 @@ local curLives = nil
 local lastLives = nil
 
 local t = Def.ActorFrame {
-	-- Battery 2-7 line
-	LoadActor(THEME:GetPathG("StreamDisplay","normal"))..{
-		InitCommand=function(self)
-			self:texcoordvelocity(0.8,0)
-			self:setsize((SCREEN_WIDTH/2.53),13)
-			self:skewx(-0.9)
-			self:visible(false)
-		end;
-		LifeChangedMessageCommand=function(self,params)
-			if not params.LivesLeft then return end;
-			if params.Player == player then
-				if params.LivesLeft >= 2 then
-					self:visible(true)
-				else
-					self:visible(false)
-				end
-			end
-		end;
-	};
 	-- Battery full line
 	LoadActor(THEME:GetPathG("StreamDisplay","hot"))..{
 		InitCommand=function(self)
@@ -48,7 +29,8 @@ local t = Def.ActorFrame {
 				elseif params.LivesLeft == glifemeter:GetTotalLives() then
 					self:visible(true)
 				else
-					self:visible(false)
+					self:visible(true)
+					self:Load(THEME:GetPathG("StreamDisplay","normal"))
 				end
 			end
 		end;
