@@ -1,6 +1,10 @@
 # ddrsn3-theme
 Contains SN3 theme files
 
+"Announcers" = the announcers
+TAZ = DDRMAX through SN2
+THOMAS = 1st through 5th
+
 "DDR SN3" = the theme
 
 The SM5 theme is still being built from the ground up. Please keep your git copy updated regularly if you plan to push any changes.
