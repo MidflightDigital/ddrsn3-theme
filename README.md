@@ -2,8 +2,11 @@
 Contains SN3 theme files
 
 "Announcers" = the announcers
+
 TAZ = DDRMAX through SN2
+
 THOMAS = 1st through 5th
+
 
 "DDR SN3" = the theme
 
