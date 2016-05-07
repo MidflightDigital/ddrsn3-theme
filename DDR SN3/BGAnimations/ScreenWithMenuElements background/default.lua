@@ -26,6 +26,10 @@ t[#t+1] = Def.ActorFrame {
 			InitCommand=cmd(FullScreen);	
 		OnCommand=function(self)
 		local seed = math.random(1,13);
+			--seed breakdown:
+			--8-13: pattern 1, increasing start color
+			--2-7: pattern 2, increasing start color
+			--1: rainbow
 			if seed > 1 then
 				if seed > 7 then
 					curPattern = 1
@@ -42,7 +46,8 @@ t[#t+1] = Def.ActorFrame {
 			end;
 		end;
 		AnimateCommand = function(s)
-			curPatternIdx = (curPatternIdx + 1) % 6
+			--bump the current color to the next color in the pattern
+			curPatternIdx = (curPatternIdx + 1) % #(colorPatterns[curPattern])
 			s:linear(20)
 			:diffuse(colorPatterns[curPattern][curPatternIdx])
 			:queuecommand("Animate")

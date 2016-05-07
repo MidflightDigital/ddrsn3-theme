@@ -41,19 +41,27 @@ function InitUserPrefs()
 end
 
 function OptionRowScreenFilter()
+	--we use integers equivalent to the alpha value multiplied by 10
+	--to work around float precision issues
+	local choiceToAlpha = {0, 3, 6, 9}
+	local alphaToChoice = {[0]=1, [3]=2, [6]=3, [9]=4}
 	local t = {
 		Name="FILTER",
 		LayoutType = "ShowAllInRow",
 		SelectType = "SelectOne",
 		OneChoiceForAllPlayers = false,
 		ExportOnChange = false,
-		Choices = { THEME:GetString('OptionNames','Off'), '0.25', '0.5', '0.75', '1.0', },
+		Choices = { THEME:GetString('OptionNames','Off'), 
+			THEME:GetString('OptionTitles', 'FilterDark'),
+			THEME:GetString('OptionTitles', 'FilterDarker'),
+			THEME:GetString('OptionTitles', 'FilterDarkest'),
+		 },
 		LoadSelections = function(self, list, pn)
 			local pName = ToEnumShortString(pn)
 			local filterValue = getenv("ScreenFilter"..pName)
 			
 			if filterValue ~= nil then
-				local val = scale(tonumber(filterValue),0,1,1,#list )
+				local val = alphaToChoice[filterValue] or 1
 				list[val] = true
 			else
 				setenv("ScreenFilter"..pName,0)
@@ -66,8 +74,7 @@ function OptionRowScreenFilter()
 			for i=1,#list do
 				if not found then
 					if list[i] == true then
-						local val = scale(i,1,#list,0,1)
-						setenv("ScreenFilter"..pName,val)
+						setenv("ScreenFilter"..pName,choiceToAlpha[i])
 						found = true
 					end
 				end
