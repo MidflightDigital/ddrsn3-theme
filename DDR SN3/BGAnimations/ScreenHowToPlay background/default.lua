@@ -1,5 +1,5 @@
-local t = Def.ActorFrame {};
-
+local t = Def.ActorFrame {
+};
 t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)
 		self:fov(90);
