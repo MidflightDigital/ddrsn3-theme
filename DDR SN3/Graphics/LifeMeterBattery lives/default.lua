@@ -31,6 +31,7 @@ local t = Def.ActorFrame {
 				else
 					self:visible(true)
 					self:Load(THEME:GetPathG("StreamDisplay","normal"))
+					self:setsize((SCREEN_WIDTH/2.53),13)
 				end
 			end
 		end;
@@ -61,12 +62,15 @@ local t = Def.ActorFrame {
 			self:diffusetopedge(color("#5d1115"));
 			self:diffusebottomedge(color("#f50d0d"));
 			self:skewx(0);
-			self:setsize((SCREEN_WIDTH/2.53)-((params.LivesLeft-1)*113.5),13);
+			self:setsize((SCREEN_WIDTH/2.53)-((params.LivesLeft-1)*WideScale(84.3,113.5)),13);
 			self:skewx(-0.9);
 			self:linear(0.33);
 			self:diffusetopedge(color("#707171"));
 			self:diffusebottomedge(color("#404040"));
 		end;	
+	};
+	LoadActor("wide split")..{
+		InitCommand=cmd(skewx,-0.9);
 	};
 };
 return t;
