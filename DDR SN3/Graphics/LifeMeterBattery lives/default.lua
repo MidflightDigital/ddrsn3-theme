@@ -16,6 +16,7 @@ local t = Def.ActorFrame {
 			local glifemeter = screen:GetLifeMeter(player);
 			if params.LostLife then
 				self:Load(THEME:GetPathG("StreamDisplay","normal"))
+				self:setsize((SCREEN_WIDTH/2.53),13)
 			end
 		end;
 	};
