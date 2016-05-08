@@ -11,15 +11,6 @@ local t = Def.ActorFrame {
 			self:setsize((SCREEN_WIDTH/2.53),13)
 			self:skewx(-0.9)
 		end;
-		BeginCommand=function(self)
-			local screen = SCREENMAN:GetTopScreen();
-			local glifemeter = screen:GetLifeMeter(player);
-			if glifemeter:GetTotalLives() == 1 then
-				self:visible(false)
-			else
-				self:visible(true)
-			end
-		end;
 		LifeChangedMessageCommand=function(self,params)
 			local screen = SCREENMAN:GetTopScreen();
 			local glifemeter = screen:GetLifeMeter(player);
@@ -61,9 +52,7 @@ local t = Def.ActorFrame {
 			self:linear(0);
 			self:diffusetopedge(color("#5d1115"));
 			self:diffusebottomedge(color("#f50d0d"));
-			self:skewx(0);
-			self:setsize((SCREEN_WIDTH/2.53)-((params.LivesLeft-1)*WideScale(84.3,113.5)),13);
-			self:skewx(-0.9);
+			self:setsize((SCREEN_WIDTH/10.12)*(4-math.min(4,params.LivesLeft)), 13);
 			self:linear(0.33);
 			self:diffusetopedge(color("#707171"));
 			self:diffusebottomedge(color("#404040"));

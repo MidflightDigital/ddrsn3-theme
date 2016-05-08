@@ -225,8 +225,11 @@ end
 --MakeDeck(source)
 --Takes a table and balfkaf
 function MakeDeck(source)
-	assert(source, "need to pass in a table")
-	assert(next(source), "table needs to contain something")
+	assert(source, "MakeDeck: you need to pass in a table")
+	if not next(source) then
+		print("MakeDeck: got empty table, returning NOTHING!!!")
+		return nil
+	end
 	local keys = nil
 	local function FindKeys()
 		keys = {}
@@ -238,6 +241,11 @@ function MakeDeck(source)
 		if next(keys) == nil then FindKeys() end
 		return source[table.remove(keys, math.random(1,#keys))]
 	end
+end
+
+--CANNOT KILL THE FAMILY
+function BatteryIsFoundInMe()
+	
 end
 
 --It turns out that past tertu fucked this function up.
