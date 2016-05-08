@@ -35,10 +35,10 @@ t[#t+1] = Def.ActorFrame {
 		LoadActor(THEME:GetPathB("","ScreenLogo background/shader"));
 	};
 	Def.ActorFrame{
-		LoadActor("ddrsn_logo.png")..{
+		LoadActor("ddrsn_logo")..{
 			InitCommand=cmd(x,SCREEN_CENTER_X+1;y,SCREEN_CENTER_Y-8;zoom,0.9);
 		};
-		LoadActor("ddrsn_logo.png")..{
+		LoadActor("ddrsn_logo")..{
 			InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9);
 			OnCommand=cmd(sleep,2;diffusealpha,0.4;zoom,0.9;linear,2;zoom,1;diffusealpha,0;queuecommand,"Queue");
 			QueueCommand=cmd(sleep,3.5;queuecommand,"On");

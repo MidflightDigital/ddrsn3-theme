@@ -47,8 +47,5 @@ local t = Def.ActorFrame {
 			self:diffusebottomedge(color("#404040"));
 		end;	
 	};
-	LoadActor("wide split")..{
-		InitCommand=cmd(skewx,-0.9);
-	};
 };
 return t;

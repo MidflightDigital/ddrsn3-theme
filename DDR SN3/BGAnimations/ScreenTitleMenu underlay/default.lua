@@ -9,7 +9,7 @@ t[#t+1] = Def.ActorFrame {
 	LoadActor(THEME:GetPathS("","Title_In"))..{
 		OnCommand=cmd(play);
 	};
-	LoadActor(THEME:GetPathB("ScreenLogo","background/ddrsn_logo.png"))..{
+	LoadActor(THEME:GetPathB("ScreenLogo","background/ddrsn_logo"))..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-1;y,SCREEN_CENTER_Y-8;zoom,0.9;);
 	};
 	Def.Quad{
@@ -19,7 +19,7 @@ t[#t+1] = Def.ActorFrame {
 		InitCommand=cmd(x,SCREEN_LEFT-92;y,SCREEN_CENTER_Y-50);
 		OnCommand=cmd(accelerate,0.2;addx,274);
 		TitleSelectionMessageCommand=function(self, params)
-			local path = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_ScreenTitleMenu image "..string.lower(params.Choice)..".png"
+			local path = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_ScreenTitleMenu image "..string.lower(params.Choice).." (doubleres)"..".png"
 			self:finishtweening()
 			self:accelerate(0.05);
 			self:addx(-274);

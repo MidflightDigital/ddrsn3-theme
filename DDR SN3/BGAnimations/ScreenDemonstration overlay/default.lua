@@ -6,7 +6,7 @@ return Def.ActorFrame{
 	LoadActor("demup")..{
 		InitCommand=cmd(x,SCREEN_LEFT;;halign,0;valign,0);
 	};
-	LoadActor("demdown")..{
+--[[	LoadActor("demdown")..{
 		InitCommand=cmd(x,SCREEN_RIGHT;y,SCREEN_BOTTOM;halign,1;valign,1);
-	};
+	};--]]
 };

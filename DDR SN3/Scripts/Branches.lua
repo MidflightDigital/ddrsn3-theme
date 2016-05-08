@@ -80,10 +80,6 @@ Branch.InstructionsNormal = function()
 	return PREFSMAN:GetPreference("ShowInstructions") and "ScreenInstructions" or "ScreenSelectMusic"
 end
 
-Branch.InstructionsCourse = function()
-	return PREFSMAN:GetPreference("ShowInstructions") and "ScreenInstructions" or "ScreenSelectCourse"
-end
-
 Branch.AfterInstructions = function()
 	return GAMESTATE:IsCourseMode() and "ScreenSelectCourse" or "ScreenSelectMusic"
 end
