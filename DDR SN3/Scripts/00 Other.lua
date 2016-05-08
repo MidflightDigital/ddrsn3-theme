@@ -223,11 +223,13 @@ function ToastyTriggersAt(_, level)
 end
 
 --MakeDeck(source)
---Takes a table and balfkaf
+--Takes a table and returns a deck based on that table.
+--A deck is a function that, when it is called, returns a random value from
+--a table. It will go through every entry in the table before repeating. 
 function MakeDeck(source)
 	assert(source, "MakeDeck: you need to pass in a table")
 	if not next(source) then
-		print("MakeDeck: got empty table, returning NOTHING!!!")
+		Warn("MakeDeck: got empty table, returning NOTHING!!!")
 		return nil
 	end
 	local keys = nil
@@ -245,7 +247,7 @@ end
 
 --CANNOT KILL THE FAMILY
 function BatteryIsFoundInMe()
-	
+
 end
 
 --It turns out that past tertu fucked this function up.

@@ -14,24 +14,16 @@ local t = Def.ActorFrame {
 		LifeChangedMessageCommand=function(self,params)
 			local screen = SCREENMAN:GetTopScreen();
 			local glifemeter = screen:GetLifeMeter(player);
-			if params.Player == player then
-				if glifemeter:GetTotalLives() == 1 then
-					self:visible(false)
-				elseif params.LivesLeft == glifemeter:GetTotalLives() then
-					self:visible(true)
-				else
-					self:visible(true)
-					self:Load(THEME:GetPathG("StreamDisplay","normal"))
-					self:setsize((SCREEN_WIDTH/2.53),13)
-				end
+			if params.LostLife then
+				self:Load(THEME:GetPathG("StreamDisplay","normal"))
 			end
 		end;
 	};
 	-- 4 Battery empty red
 	Def.Quad{
 		InitCommand=function(self)
-			self:diffusetopedge(color("#5d1115"));
-			self:diffusebottomedge(color("#f50d0d"));
+			self:diffusetopedge(color("#707171"));
+			self:diffusebottomedge(color("#404040"));
 			self:halign(1);
 			self:skewx(-0.9);
 			self:x(SCREEN_WIDTH/5);
@@ -39,11 +31,7 @@ local t = Def.ActorFrame {
 		BeginCommand=function(self,params)
 			local screen = SCREENMAN:GetTopScreen();
 			local glifemeter = screen:GetLifeMeter(player);
-			if glifemeter:GetTotalLives() <= 5 then
-				self:visible(true)
-			else
-				self:visible(false)
-			end
+			self:setsize((SCREEN_WIDTH/10.12)*(4-math.min(4,glifemeter:GetTotalLives())), 13);
 		end;
 		LifeChangedMessageCommand=function(self,params)
 			if params.Player ~= player then return end;
