@@ -14,7 +14,7 @@ local t = Def.ActorFrame {
 		LifeChangedMessageCommand=function(self,params)
 			local screen = SCREENMAN:GetTopScreen();
 			local glifemeter = screen:GetLifeMeter(player);
-			if params.LostLife then
+			if params.LostLife and params.Player == player then
 				self:Load(THEME:GetPathG("StreamDisplay","normal"))
 				self:setsize((SCREEN_WIDTH/2.53),13)
 			end
@@ -46,9 +46,6 @@ local t = Def.ActorFrame {
 			self:diffusetopedge(color("#707171"));
 			self:diffusebottomedge(color("#404040"));
 		end;	
-	};
-	LoadActor("wide split")..{
-		InitCommand=cmd(skewx,-0.9);
 	};
 };
 return t;

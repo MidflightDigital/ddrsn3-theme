@@ -13,8 +13,8 @@ local host = Def.ActorFrame{
 }
 
 local xPosPlayer = {
-    P1 = -157, 
-    P2 = 157
+    P1 = -(SCREEN_WIDTH/5.5), 
+    P2 = (SCREEN_WIDTH/5.5)
 }
 
 for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do

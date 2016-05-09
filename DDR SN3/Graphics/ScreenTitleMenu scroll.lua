@@ -10,9 +10,8 @@ return Def.ActorFrame {
 	};
 	LoadFont("_shared_title") .. {
 		Text=gc:GetText(),
-		InitCommand=function(self) self:uppercase(true):halign(0):zoomy(0.8):diffuse(color("#00ff00")) end,
-		OnCommand=function() end,
-		GainFocusCommand=function(self) self:finishtweening():diffuse(color("#ffffff")) 
+		InitCommand=cmd(uppercase,true;halign,0;zoomy,0.9;diffusebottomedge,color("#30e823");strokecolor,color("#000000"));
+		GainFocusCommand=function(self) self:finishtweening():diffuse(color("1,1,1,1")):diffusetopedge(color("#a6f5a1")):diffusebottomedge(color("#30e823")) 
             MESSAGEMAN:Broadcast("TitleSelection", {Choice=gc:GetName()}) end,
 		LoseFocusCommand=function(self) self:stopeffect():diffuse(color("0.5,0.5,0.5,1")) end
 	};
