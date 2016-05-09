@@ -257,3 +257,8 @@ function ThemeManager:GetAbsolutePath(sPath)
 	assert(FILEMAN:DoesFileExist(sFinPath), "the theme element "..sPath.." is missing")
 	return sFinPath
 end
+
+local videoRenderers = split(",",PREFSMAN:GetPreference("VideoRenderers"))
+if videoRenderers[1] == "d3d" then
+	Warn("Direct3D mode detected. Some visual effects may not work properly.\nDo not report these problems as bugs, they are limitations of Direct3D mode.")
+end
