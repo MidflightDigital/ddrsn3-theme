@@ -1,2 +1,2 @@
 -- Title Menu version info
-return LoadFont("Common Normal")..{ Text=string.format("Stepmania %s",ProductVersion()) }
+return LoadFont("Common Normal")..{ Text=string.format("StepMania %s",ProductVersion()) }
