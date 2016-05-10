@@ -19,7 +19,7 @@ local tapNoteScoresToIgnore = {
     TapNoteScore_AvoidMine = true
 }
 
-function SN2Scoring.PrepareScoringInfo()
+function SN2Scoring.PrepareScoringInfo(ddrARules)
     if GAMESTATE then
         local stageSeed = GAMESTATE:GetStageSeed()
         --if the seed hasn't changed, we're in the same game so we don't want
@@ -36,7 +36,7 @@ function SN2Scoring.PrepareScoringInfo()
         for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
             local data = dataFetcher(GAMESTATE,pn)
             if data then
-                ScoringInfo[pn] = maker(data,pn)
+                ScoringInfo[pn] = maker(data,pn,ddrARules)
             end
         end
     end
