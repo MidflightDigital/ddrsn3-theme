@@ -44,7 +44,7 @@ end
 
 --Normal scoring
 
-function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn)
+function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn,ddrARules)
     local package = {}
     local radar = stepsObject:GetRadarValues(pn)
     local baseScore = 1000000/(radar:GetValue('RadarCategory_TapsAndHolds')+radar:GetValue('RadarCategory_Holds')+radar:GetValue('RadarCategory_Rolls'))
@@ -60,8 +60,17 @@ function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn)
             currentScore = currentScore + baseScore
         elseif tapNoteScore == 'TapNoteScore_W2' then
             currentScore = currentScore + (baseScore - 10)
-        elseif tapNoteScore == 'TapNoteScore_W3' then
-            currentScore = currentScore + (baseScore / 2 - 10)
+        end
+        if not ddrARules then
+            if tapNoteScore == 'TapNoteScore_W3' then
+                currentScore = currentScore + (baseScore / 2 - 10)
+            end
+        else
+            if tapNoteScore == 'TapNoteScore_W3' then
+                currentScore = currentScore + (baseScore * 0.6 - 10)
+            elseif tapNoteScore == 'TapNoteScore_W4' then
+                currentScore = currentScore + (baseScore * 0.2 - 10)
+            end
         end
     end
 
