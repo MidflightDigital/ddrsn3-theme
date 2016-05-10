@@ -65,7 +65,7 @@ t[#t+1] = Def.ActorFrame {
 	};
 }
 
-if PROFILEMAN:GetNumLocalProfiles() <=1 then
+if PROFILEMAN:GetNumLocalProfiles() <1 then
 	t[#t+1] = Def.ActorFrame{
 		LoadActor("../profile")..{
 			InitCommand=cmd(Center);
