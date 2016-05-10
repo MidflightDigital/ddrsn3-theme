@@ -37,7 +37,7 @@ function EndlessScoring.Create(level)
             if noteScore == 'TapNoteScore_W1' then
                 score = score + (three * (effectiveNotes+w1Counter) * levelFactor )
             elseif noteScore == 'TapNoteScore_W2' or noteScore == 'HoldNoteScore_Held' then
-                score = score + (2 * effectiveNotes * levelFactor)
+                score = score + (bn.two * effectiveNotes * levelFactor)
             elseif noteScore == 'TapNoteScore_W3' then
                 score = score + effectiveNotes * levelFactor
             end
@@ -47,7 +47,7 @@ function EndlessScoring.Create(level)
         end
     end,
     getScoreString= function()
-        return(score:tostring())
+        return score:tostring()
     end
     }
 end
@@ -58,9 +58,9 @@ function Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)
     local ret = {}
     assert(minLevel <= maxLevel)
     for _, song in pairs(SONGMAN:GetAllSongs()) do
-        if not SONGMAN:IsSongLocked(song) then
+        if UNLOCKMAN:IsSongLocked(song) == 0 then
             for _, steps in pairs(song:GetStepsByStepsType(stepsType)) do
-                if not steps:GetDifficulty() == 'Difficulty_Edit' then
+                if not (steps:GetDifficulty() == 'Difficulty_Edit') then
                     local meter = steps:GetMeter()
                     if (meter >= minLevel) and (meter <= maxLevel) then
                         table.insert(ret, {song, steps})
@@ -72,6 +72,16 @@ function Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)
     return ret
 end
 
-function Endless.CreateState(stepsType, minLevel, maxLevel)
-    return MakeDeck(Endless.GetSongChartBlock(stepsType, minLevel, maxLevel))
+local levelToRange = {
+    {1,3},
+    {3,5},
+    {5,7},
+    {7,9},
+    {1,11}
+}
+
+function Endless.CreateState(stepsType, endlessLevel)
+    local minLevel, maxLevel = unpack(levelToRange[endlessLevel])
+    return {scoring=EndlessScoring.Create(endlessLevel), 
+        choiceDeck = MakeDeck(Endless.GetSongChartBlock(stepsType, minLevel, maxLevel))}
 end
