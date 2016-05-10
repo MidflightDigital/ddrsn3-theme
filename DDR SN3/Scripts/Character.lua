@@ -13,6 +13,11 @@ function CharacterExtras.GetPath(name)
     end
 end
 
+--function 
+
+--
+--function CharacterExtras.GetAllCharacters
+
 --Returns a dancer video or nothing if none exist.
 function CharacterExtras.GetDancerVideo(name)
     local potentialVideos = {} 
