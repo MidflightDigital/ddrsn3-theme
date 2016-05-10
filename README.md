@@ -22,6 +22,8 @@ FlameyBoy
 
 hypnoticmarten77
 
+Special thanks to KENp, Kyzentun, and holidia.
+
 Graphics
 --
 Inorizushi
