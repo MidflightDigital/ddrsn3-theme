@@ -239,6 +239,7 @@ function MakeDeck(source)
 			table.insert(keys, key)
 		end
 	end
+	FindKeys()
 	return function()
 		if next(keys) == nil then FindKeys() end
 		return source[table.remove(keys, math.random(1,#keys))]
