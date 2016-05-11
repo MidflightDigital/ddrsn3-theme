@@ -32,22 +32,7 @@ t[#t+1] = Def.ActorFrame {
 			OnCommand=cmd(diffusealpha,0;blend,Blend.Add;;linear,2;diffusealpha,0.55;addy,SCREEN_HEIGHT;queuecommand,"Queue");
 			QueueCommand=cmd(diffusealpha,0;addy,-SCREEN_HEIGHT;sleep,4;queuecommand,"On");
 		};
-		--Top Shade
-		Def.Quad{
-			InitCommand=cmd(FullScreen;diffuse,color("0,0,0,1);fadebottom,0.6);
-		};
-		--Bottom Shade
-		Def.Quad{
-			InitCommand=cmd(FullScreen;diffuse,color("0,0,0,1);fadetop,0.6);
-		};
-		--Left Shade
-		Def.Quad{
-			InitCommand=cmd(FullScreen;diffuse,color("0,0,0,1);fadeleft,0.8);
-		};
-		--Right Shade
-		Def.Quad{
-			InitCommand=cmd(FullScreen;diffuse,color("0,0,0,1);faderight,0.8);
-		};
+		LoadActor("shader");
 	};
 	Def.ActorFrame{
 		LoadActor("ddrsn_logo")..{
