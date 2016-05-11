@@ -33,6 +33,13 @@ t[#t+1] = Def.Actor{
         local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(params.Player)
         pss:SetScore(info.GetCurrentScore())
         pss:SetCurMaxScore(info.GetCurrentMaxScore())
+        local es = (GAMESTATE:Env()).EndlessState
+        if es then
+            es.scoring.handleNoteScore(params.HoldNoteScore or params.TapNoteScore,
+                GAMESTATE:GetCurrentStageIndex()+1,
+                pss:GetCurrentCombo())
+            SCREENMAN:SystemMessage(es.scoring.getScoreString())
+        end
     end,
 }
 

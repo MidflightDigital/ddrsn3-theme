@@ -31,6 +31,9 @@ function EndlessScoring.Create(level)
                 levelFactor = bn.Int(2*(stageNumber^3))
             else
                 levelFactor = bn.Int(stageNumber^3/levelLookup[level])
+                if levelFactor < bn.one then
+                    levelFactor = bn.Int(bn.one)
+                end
             end
 
             local effectiveNotes = noteCounter - penaltyCounter
