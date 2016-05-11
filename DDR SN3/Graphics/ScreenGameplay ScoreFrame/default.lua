@@ -24,10 +24,10 @@ t[#t+1]=Def.ActorFrame{
 		end
 	end;
 	Def.Quad{
-		InitCommand=cmd(halign,0;x,SCREEN_LEFT-3;setsize,389,46);
+		InitCommand=cmd(halign,0;x,SCREEN_LEFT-3;setsize,193,23);
 	};
 	Def.Quad{
-		InitCommand=cmd(halign,0;x,SCREEN_LEFT;setsize,380,40;diffuse,color("0,0,0,1"));
+		InitCommand=cmd(halign,0;x,SCREEN_LEFT;setsize,190,20;diffuse,color("0,0,0,1"));
 	};
 };
 t[#t+1]=Def.ActorFrame{
@@ -38,10 +38,10 @@ t[#t+1]=Def.ActorFrame{
 		end
 	end;
 	Def.Quad{
-		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+3;setsize,389,46);
+		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+3;setsize,199,23);
 	};
 	Def.Quad{
-		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+3;setsize,380,40;diffuse,color("0,0,0,1"));
+		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+3;setsize,190,20;diffuse,color("0,0,0,1"));
 	};
 };
 
