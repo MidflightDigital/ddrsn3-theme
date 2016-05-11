@@ -190,6 +190,34 @@ for idx, diff in pairs(difficultiesToDraw) do
                     self:stopeffect()
                 end
             end,
+        },
+        Def.Quad{
+            Name="TicksDark",
+            InitCommand = function(self) self:setsize(140,16):x(tickPos):diffuse(color("#000000")):skewx(-0.3) end,
+        },
+        Def.Quad{
+            Name = "TicksBright",
+            InitCommand = function(self) self:setsize(0,16):x(tickPos-70):diffuse(DiffToColor(diff)):halign(0):skewx(-0.3) end,
+            SNDLUpdateMessageCommand=function(self, params)
+                local song = GAMESTATE:GetCurrentSong()
+                if song then
+                    if params.SongChanged then self:stopeffect() end
+                    local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
+                    if steps then
+                        local meter = steps:GetMeter()
+                        if meter > 10 then
+                            self:setsize(140,16):glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
+                        else
+                            self:stopeffect():setsize(14*meter,16)
+                        end
+                    else
+                        self:stopeffect():setsize(0,16)
+                    end
+                else
+                    self:stopeffect()
+                    self:setsize(0,16)
+                end
+            end,
         }
     }
     table.insert(ret, element)
