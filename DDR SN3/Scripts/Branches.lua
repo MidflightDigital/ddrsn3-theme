@@ -46,7 +46,8 @@ end
 Branch.StartGame = function()
 	if IsNetSMOnline() then
 		return SMOnlineScreen()
-	elseif SONGMAN:GetNumSongs() == 0 and SONGMAN:GetNumAdditionalSongs() == 0 then
+	end
+	if SONGMAN:GetNumSongs() == 0 and SONGMAN:GetNumAdditionalSongs() == 0 then
 		return "ScreenHowToInstallSongs"
 	end
 	if PROFILEMAN:GetNumLocalProfiles() >=1 then
