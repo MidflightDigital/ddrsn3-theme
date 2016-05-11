@@ -76,9 +76,6 @@ t[#t+1] = Def.ActorFrame {
 		LoadActor(THEME:GetPathB("","ScreenLogo background/right flash"))..{
 			OnCommand=cmd(diffusealpha,0;sleep,2;accelerate,0.2;diffusealpha,1;sleep,0.5;linear,1;diffusealpha,0;sleep,2;queuecommand,'On');
 		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/dots"))..{
-			InitCommand=cmd(diffusealpha,0.05);
-		};
 		LoadActor(THEME:GetPathB("","ScreenLogo background/round grid"))..{
 			InitCommand=cmd(diffusealpha,0.5);
 		};
@@ -86,12 +83,6 @@ t[#t+1] = Def.ActorFrame {
 			InitCommand=cmd(y,-240;CenterX;zoomx,SCREEN_WIDTH;fadetop,0.5;fadebottom,0.5);
 			OnCommand=cmd(diffusealpha,0;blend,Blend.Add;;linear,2;diffusealpha,0.55;addy,SCREEN_HEIGHT;queuecommand,"Queue");
 			QueueCommand=cmd(diffusealpha,0;addy,-SCREEN_HEIGHT;sleep,4;queuecommand,"On");
-		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/shader"));
-	};
-	Def.ActorFrame{
-		LoadActor("BoxBody") .. {
-			InitCommand=cmd(zbuffer,true;z,-1000;Center;zoom,20;rotationy,75;rotationx,0;diffusealpha,0.5;spin;effectmagnitude,35,10,20;blend,'BlendMode_Add');
 		};
 	};
 	Def.ActorFrame{
