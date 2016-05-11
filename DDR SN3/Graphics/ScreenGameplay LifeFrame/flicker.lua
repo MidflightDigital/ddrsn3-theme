@@ -1,15 +1,26 @@
+local beginTime = GetTimeSinceStart()
+local lastSeenTime = beginTime
+local minTransitionTime = 0.016
 local flickerState = false
+
+local function FlickerUpdate(self, _)
+    local curTime = GetTimeSinceStart()
+    
+    if (curTime - lastSeenTime) >= minTransitionTime then 
+        flickerState = not flickerState
+    end
+    
+    for pn, item in pairs(self:GetChildren()) do
+        item:visible((GAMESTATE:GetPlayerState(pn):GetHealthState() == 'HealthState_Hot')
+            and flickerState)
+    end
+    
+    lastSeenTime = curTime
+end
+
 local host = Def.ActorFrame{
     Name = "HotLifeFlicker",
-    InitCommand = function(self) self:queuecommand("HotLifeUpdate") end;
-    HotLifeUpdateCommand = function(self)
-        flickerState = not flickerState
-        for pn, item in pairs(self:GetChildren()) do
-            item:visible((GAMESTATE:GetPlayerState(pn):GetHealthState() == 'HealthState_Hot')
-                and flickerState)
-        end
-        self:sleep(1/60):queuecommand("HotLifeUpdate")
-    end,
+    InitCommand = function(self) self:SetUpdateFunction(FlickerUpdate) end;
 }
 
 local xPosPlayer = {
