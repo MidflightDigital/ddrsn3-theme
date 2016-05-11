@@ -84,6 +84,6 @@ function Endless.CreateState(stepsType, endlessLevel, breakStages)
     assert((breakStages > 0) and stepsType and (endlessLevel >= 1) and (endlessLevel <= 5))
     local minLevel, maxLevel = unpack(levelToRange[endlessLevel])
     return {scoring=EndlessScoring.Create(endlessLevel), 
-        choiceDeck = MakeDeck(Endless.GetSongChartBlock(stepsType, minLevel, maxLevel))
+        choiceDeck = MakeDeck(Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)),
         breakAfter=breakStages}
 end
