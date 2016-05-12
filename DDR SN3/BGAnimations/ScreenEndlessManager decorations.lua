@@ -1,5 +1,7 @@
 --ScreenEndlessManager
 
+local targetScreen = "ScreenGameplayEndless"
+
 local present = Def.ActorFrame{}
 
 local endlessState = (GAMESTATE:Env()).EndlessState
@@ -22,6 +24,13 @@ local pastStageStats = STATSMAN:GetPlayedStageStats(1)
         end
     end
 
+if pastStageStats then
+    if pastStageStats:AllFailed() then
+        PREFSMAN:SetPreference("ComboContinuesBetweenSongs", false)
+        targetScreen = "ScreenTitleMenu"
+    end
+end
+
 --get and set up the next song
 local nextUp = endlessState.choiceDeck()
 
@@ -30,7 +39,7 @@ GAMESTATE:SetCurrentSteps(GAMESTATE:GetMasterPlayerNumber(), nextUp[2])
 
 --if this is a break stage, the input callback will continue for us instead
 if not breaking then
-    table.insert(present,Def.Actor{OnCommand=function(s) SCREENMAN:GetTopScreen():SetNextScreenName("ScreenGameplayEndless"):StartTransitioningScreen("SM_GoToNextScreen") end })
+    table.insert(present,Def.Actor{OnCommand=function(s) SCREENMAN:GetTopScreen():SetNextScreenName(targetScreen):StartTransitioningScreen("SM_GoToNextScreen") end })
 end
 
 return present

@@ -1,7 +1,9 @@
 local env = GAMESTATE:Env()
 GAMESTATE:SetTemporaryEventMode(true)
 
-env.EndlessState = Endless.CreateState('StepsType_Dance_Single', 4, 5)
+env.EndlessState = Endless.CreateState('StepsType_Dance_Single', 3, 5)
+
+PREFSMAN:SetPreference("ComboContinuesBetweenSongs", true)
 
 SCREENMAN:SystemMessage("holy FUCKQUE it Worked")
 
