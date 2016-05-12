@@ -1,16 +1,22 @@
+![alt-text](http://inori.s-ul.eu/bQYRsBk1.png)
+
 # ddrsn3-theme
 Contains SN3 theme files
 
-"Announcers" = the announcers
+##### z-i-v thread [Here!](https://zenius-i-vanisher.com/v5.2/thread?threadid=7660)
 
+##### dev blog (tumblr) [Here!](http://sn3next.tumblr.com)
+
+# Announcers
+###### The Announcers.
 TAZ = DDRMAX through SN2
 
 THOMAS = 1st through 5th
 
-
-"DDR SN3" = the theme
-
-The SM5 theme is still being built from the ground up. Please keep your git copy updated regularly if you plan to push any changes.
+# Theme
+## DDR SN3
+###### The Theme.
+**The SM5 theme is still being built from the ground up. Please keep your git copy updated regularly if you plan to push any changes.**
 
 #Contributors:
 
