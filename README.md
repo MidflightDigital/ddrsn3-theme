@@ -1,23 +1,23 @@
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [ddrsn3-theme](#)
+- [ddrsn3-theme](#ddrsn3-theme)
 				- [z-i-v thread Here!](#)
 				- [dev blog (tumblr) Here!](#)
-- [Installation](#)
-	- [Current Working Copy](#)
-	- [Alpha/Beta/Release Candidate Builds](#)
-- [Announcers](#)
-					- [The Announcers.](#)
-- [DDR SN3](#)
-					- [The Theme.](#)
-- [Contributors:](#)
-	- [Metrics/Lua](#)
-	- [Graphics](#)
-- [Copyright](#)
+- [Installation](#Installation)
+	- [Current Working Copy](#Current Working Copy)
+	- [Alpha/Beta/Release Candidate Builds](#Alpha/Beta/Release Candidate Builds)
+- [Announcers](#Announcers)
+					- [The Announcers.](#The Announcers)
+- [DDR SN3](#DDR SN3)
+					- [The Theme.](#The Theme)
+- [Contributors:](#Contributors)
+	- [Metrics/Lua](#Metrics/Lua)
+	- [Graphics](#Graphics)
+- [Copyright](#Copyright)
 
 ![alt-text](http://inori.s-ul.eu/bQYRsBk1.png)
 
-# ddrsn3-theme
+#ddrsn3-theme
 Contains SN3 theme files
 
 ##### z-i-v thread [Here!](https://zenius-i-vanisher.com/v5.2/thread?threadid=7660)
