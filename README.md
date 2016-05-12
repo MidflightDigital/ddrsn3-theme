@@ -1,3 +1,5 @@
+![alt-text](http://inori.s-ul.eu/bQYRsBk1.png)
+
 **Table of Contents**
  * [ddrsn3-theme](#ddrsn3-theme)
  * [Installation](#installation)
@@ -6,17 +8,15 @@
  * [Contributors:](#contributors)
  * [Copyright](#copyright)
 
-![alt-text](http://inori.s-ul.eu/bQYRsBk1.png)
-
 ddrsn3-theme
 ============
 Contains SN3 theme files
 
 z-i-v thread [Here!](https://zenius-i-vanisher.com/v5.2/thread?threadid=7660)
 
-
 dev blog (tumblr) [Here!](http://sn3next.tumblr.com)
---
+
+============
 
 Installation
 ============
@@ -32,7 +32,8 @@ Alpha/Beta/Release Candidate Builds
 2. Download **source code (.zip)** from the most recent release. (It'll be at the top)
 3. ???
 4. Profit.
- 
+
+============
 
 Announcers
 ============
@@ -44,6 +45,8 @@ DDR SN3
 ============
 The Theme.
 **The SM5 theme is still being built from the ground up. Please keep your git copy updated regularly if you plan to push any changes.**
+
+============
 
 Contributors:
 ============
@@ -73,6 +76,8 @@ Dreamland200
 riskofsoundingnerdy
 
 **Special thanks to Konami and Google Images for inspiration.**
+
+===========
 
 Copyright
 ============
