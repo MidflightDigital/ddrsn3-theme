@@ -163,41 +163,10 @@ for idx, diff in pairs(difficultiesToDraw) do
                 end
             end
         },
-        Def.BitmapText{
-            Name = "Ticks",
-            Font = "_SNDifficultyList ticks",
-            InitCommand = function(self) self:settext(string.rep("x", 10)):x(tickPos):diffuse(DiffToColor(diff, true)):textglowmode('TextGlowMode_Inner') end,
-            SNDLUpdateMessageCommand=function(self, params)
-                local song = GAMESTATE:GetCurrentSong()
-                if song then
-                    self:ClearAttributes()
-                    if params.SongChanged then self:stopeffect() end
-                    local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
-                    if steps then
-                        local meter = steps:GetMeter()
-                        if meter > 10 then
-                            self:glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
-                        else
-                            self:stopeffect():diffuse(DiffToColor(diff, true))
-							local attr = {Length=meter,Diffuse=DiffToColor(diff)}
-                        	self:AddAttribute( 0, attr )
-                        end
-                    else
-                        self:stopeffect()
-                    end
-                else
-                    self:ClearAttributes()
-                    self:stopeffect()
-                end
-            end,
-        },
-        Def.Quad{
-            Name="TicksDark",
-            InitCommand = function(self) self:setsize(140,16):x(tickPos):diffuse(color("#000000")):skewx(-0.3) end,
-        },
-        Def.Quad{
+        Def.Sprite{
             Name = "TicksBright",
-            InitCommand = function(self) self:setsize(0,16):x(tickPos-70):diffuse(DiffToColor(diff)):halign(0):skewx(-0.3) end,
+            Texture = "ticks",
+            InitCommand = function(self) self:x(tickPos-80):diffuse(DiffToColor(diff)):halign(0):cropright(1):draworder(2) end,
             SNDLUpdateMessageCommand=function(self, params)
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
@@ -206,18 +175,22 @@ for idx, diff in pairs(difficultiesToDraw) do
                     if steps then
                         local meter = steps:GetMeter()
                         if meter > 10 then
-                            self:setsize(140,16):glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
+                            self:cropright(0):glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
                         else
-                            self:stopeffect():setsize(14*meter,16)
+                            self:stopeffect():cropright(1-meter/10)
                         end
                     else
-                        self:stopeffect():setsize(0,16)
+                        self:stopeffect():cropright(1)
                     end
                 else
-                    self:stopeffect()
-                    self:setsize(0,16)
+                    self:stopeffect():cropright(1)
                 end
             end,
+        },
+        Def.Sprite{
+            Name="TicksDark",
+            Texture="ticks",
+            InitCommand = function(self) self:x(tickPos-5):diffuse(DiffToColor(diff,true)):draworder(1) end,
         }
     }
     table.insert(ret, element)
