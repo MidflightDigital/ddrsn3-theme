@@ -73,13 +73,6 @@ t[#t+1] = LoadFont("_sveningsson Bold 60px") .. {
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
 	
-	t[#t+1] = Def.Sprite{
-		Name = 'selectedMostSongPlayed';
-		InitCommand=cmd(x,32.5;y,-16;zoom,0;scaletoclipped,20,20);
-		OnCommand=cmd(sleep,1.9;linear,0.05;diffusealpha,1;diffuse,color("1,1,1,1");zoom,0.5;);
-		OffCommand=cmd(stoptweening;linear,0.1;scaletoclipped,0,0;);
-	};
-	
 	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","LvBar") ) .. {
 			Name = 'selectLvBarBack';
 			InitCommand=cmd(diffusealpha,0;y,46;x,-2;zoomx,0.5;halign,1);
@@ -275,7 +268,6 @@ function UpdateInternal(self, Player)
 	local selTotalCaloriesBurned = self:GetChild('selectedTotalCaloriesBurned');
 	local selectRank = self:GetChild('selectRank');
 	local selectPlayerUID = self:GetChild('selectPlayerUID');
-	local selMostSongPlayed = self:GetChild('selectedMostSongPlayed');
 	local selSongsPlayed = self:GetChild('selectSongsPlayed');
 	local selLvBar = self:GetChild('selectLvBarBack');
 	local selPlayerUID;
@@ -303,8 +295,6 @@ function UpdateInternal(self, Player)
 				seltext:settext(PROFILEMAN:GetProfile(Player):GetDisplayName());
 				selLevel:settext(math.ceil(math.sqrt(PROFILEMAN:GetProfile(Player):GetTotalCaloriesBurned())) );
 				selTotalCaloriesBurned:settext((math.ceil(PROFILEMAN:GetProfile(Player):GetCaloriesBurnedToday()))..' kCals.');
-				selMostSongPlayed:Load(GetSongGPath(PROFILEMAN:GetProfile(Player):GetLastPlayedSong()));
-				selMostSongPlayed:visible(false);
 				--selSongsPlayed:settext(tostring(math.ceil(PROFILEMAN:GetProfile(Player):GetNumTotalSongsPlayed())));
 				selLvBar:cropright(1-pcnt);
 			
