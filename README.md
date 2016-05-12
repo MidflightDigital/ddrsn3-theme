@@ -1,5 +1,3 @@
-![alt-text](http://inori.s-ul.eu/bQYRsBk1.png)
-
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [ddrsn3-theme](#)
@@ -16,6 +14,8 @@
 	- [Metrics/Lua](#)
 	- [Graphics](#)
 - [Copyright](#)
+
+![alt-text](http://inori.s-ul.eu/bQYRsBk1.png)
 
 # ddrsn3-theme
 Contains SN3 theme files
