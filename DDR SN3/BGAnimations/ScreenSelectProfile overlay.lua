@@ -274,12 +274,6 @@ function LoadPlayerStuff(Player)
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
 	
-	t[#t+1] = Def.Sprite{
-		Name = 'selectedMostSongPlayed';
-		InitCommand=cmd(x,65;y,-32;zoom,0;scaletoclipped,0,0;);
-		OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;diffuse,color("1,1,1,1");scaletoclipped,40,40;);
-		OffCommand=cmd(stoptweening;linear,0.1;scaletoclipped,0,0;);
-	};
 	
 	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","LvBar") ) .. {
 			Name = 'selectLvBarBack';
@@ -410,7 +404,6 @@ function UpdateInternal3(self, Player)
 	local selTotalCaloriesBurned = frame:GetChild('selectedTotalCaloriesBurned');
 	local selectRank = frame:GetChild('selectRank');
 	local selectPlayerUID = frame:GetChild('selectPlayerUID');
-	local selMostSongPlayed = frame:GetChild('selectedMostSongPlayed');
 	local selSongsPlayed = frame:GetChild('selectSongsPlayed');
 	local selLvBarBack = frame:GetChild('selectLvBarBack');
 	local selLvBar = frame:GetChild('selectLvBar');
@@ -438,7 +431,6 @@ function UpdateInternal3(self, Player)
 			selTotalCalWord:visible(true);
 			selTotalCaloriesBurned:visible(true);
 			selectRank:visible(true);
-			selMostSongPlayed:visible(false);
 			selSongsPlayed:visible(false);
 			selLvBarBack:visible(true);
 			selLvBar:visible(true);
@@ -475,7 +467,6 @@ function UpdateInternal3(self, Player)
 				seltext:settext(ProfileInfoCache[ind].DisplayName);
 				selLevel:settext(math.ceil(math.sqrt(ProfileInfoCache[ind].TotalCaloriesBurned) ));
 				selTotalCaloriesBurned:settext(math.ceil(ProfileInfoCache[ind].CaloriesBurnedToday)..' kCals.');
-				selMostSongPlayed:Load(GetSongGPath(ProfileInfoCache[ind].LastPlayedSong));
 				selSongsPlayed:settext(tostring(math.ceil(ProfileInfoCache[ind].NumTotalSongsPlayed)));
 				selLvBar:cropright(1-pcnt);
 				
@@ -525,7 +516,6 @@ function UpdateInternal3(self, Player)
 					selLevel:settext('No level info');
 					selTotalCaloriesBurned:settext('No Played Songs Info');
 					selectRank:settext('???');
-					selMostSongPlayed:visible(false);
 					selSongsPlayed:visible(false);
 					selLvBarBack:visible(true);
 					selLvBar:visible(false);
@@ -556,7 +546,6 @@ function UpdateInternal3(self, Player)
 		selTotalCalWord:visible(false);
 		selTotalCaloriesBurned:visible(false);
 		selectRank:visible(false);
-		selMostSongPlayed:visible(false);
 		selSongsPlayed:visible(false);
 		selLvBarBack:visible(false);
 		selLvBar:visible(false);

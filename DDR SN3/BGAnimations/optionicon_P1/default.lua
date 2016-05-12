@@ -14,6 +14,8 @@ return Def.ActorFrame {
 				self:Load(THEME:GetPathB("","optionicon_P1/speed_x5_P1"));
 			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'8x') then
 				self:Load(THEME:GetPathB("","optionicon_P1/speed_x8_P1"));
+			elseif GAMESTATE:PlayerIsUsingModifier(PLAYER_1,'0.5x') then
+				self:Load(THEME:GetPathB("","optionicon_P1/speed_x0_5_P1"));
 			end;
 		end;
 		PlayerJoinedMessageCommand=function(self, params)
