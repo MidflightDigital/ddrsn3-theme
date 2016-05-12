@@ -100,42 +100,52 @@ end
 local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SCREEN_CENTER_Y+90):hibernate(1.25):SetUpdateFunction(Update) end,
     OffCommand=function(self) self:sleep(0.5):visible(false) end}
 
-for _, pn in pairs(PlayerNumber) do
-    local indicator = Def.ActorFrame{
-        Name='Indicator'..pn,
-        InitCommand=function(self) self:visible(false) end,
-        SNDLUpdateMessageCommand=function(self)
-			if not GAMESTATE:IsPlayerEnabled(pn) then return end
-            self:finishtweening()
-            local currentlyVisible = self:GetVisible()
-            local steps = GetCurrentSteps(pn)
-            if steps and GAMESTATE:GetCurrentSong() then
-                if currentlyVisible then
-                    self:linear(0.1)
-                end
-                local yPos = DiffToYPos(steps:GetDifficulty())
-                if yPos then
-                    self:visible(true)
-                    self:y(yPos)
-                    return
-                end
-            end
-            self:visible(false)
-        end,
-        Def.Quad{
-            Name='Background',
-            InitCommand=function(self) self:diffuse{0,0,0,0.5}:zoomx(indWidth):zoomy(itemSpacingY):x(indX) end,
-        },
-        Def.Sprite{
+local function IndicatorUpdate(self, pn)
+    if not GAMESTATE:IsPlayerEnabled(pn) then return end
+    self:finishtweening()
+    local currentlyVisible = self:GetVisible()
+    local steps = GetCurrentSteps(pn)
+    if steps and GAMESTATE:GetCurrentSong() then
+        if currentlyVisible then
+            self:linear(0.1)
+        end
+        local yPos = DiffToYPos(steps:GetDifficulty())
+        if yPos then
+            self:visible(true)
+            self:y(yPos)
+            return
+        end
+    end
+    self:visible(false)
+end
+
+local function AddContentsToOutput(tbl)
+    for _, e in pairs(tbl) do
+        table.insert(ret, e)
+    end
+end
+
+do
+    local indicatorBackgrounds = {}
+    local indicatorLabels = {}
+    for _, pn in pairs(PlayerNumber) do
+        table.insert(indicatorBackgrounds, Def.Quad{
+            Name='Background'..ToEnumShortString(pn),
+            InitCommand=function(self) self:diffuse{0,0,0,0.5}:zoomx(indWidth):zoomy(itemSpacingY):x(indX):visible(false) end,
+            SNDLUpdateMessageCommand=function(self) return IndicatorUpdate(self, pn) end
+        })
+        table.insert(indicatorLabels, Def.Sprite{
             Name='PlayerLabel',
             Texture=PlayerLabelName(pn),
-            InitCommand=function(self) SetXFromPlayerNumber(self:draworder(1000), pn) end,
-			PlayerJoinedMessageCommand=function(self,p) 
-				if p.Player==pn then self:Load(ResolveRelativePath(PlayerLabelName(pn),1)) end
-			end
-        }
-    }
-    table.insert(ret, indicator)
+            InitCommand=function(self) SetXFromPlayerNumber(self:visible(false), pn) end,
+            SNDLUpdateMessageCommand=function(self) return IndicatorUpdate(self, pn) end,
+            PlayerJoinedMessageCommand=function(self,p) 
+                if p.Player==pn then self:Load(ResolveRelativePath(PlayerLabelName(pn),1)) end
+            end
+        })
+    end
+    AddContentsToOutput(indicatorBackgrounds)
+    AddContentsToOutput(indicatorLabels)
 end
 
 
