@@ -24,27 +24,27 @@ Contains SN3 theme files
 
 ##### dev blog (tumblr) [Here!](http://sn3next.tumblr.com)
 
-# Installation
-## Current Working Copy
+#Installation
+##Current Working Copy
 1. Click the ***Download as zip*** button.
 2. ???
 3. Profit.
 
-## Alpha/Beta/Release Candidate Builds
+##Alpha/Beta/Release Candidate Builds
 1. Click the ***Releases*** tab
 2. Download **source code (.zip)** from the most recent release. (It'll be at the top)
 3. ???
 4. Profit.
  
 
-# Announcers
-###### The Announcers.
+#Announcers
+######The Announcers.
 TAZ = DDRMAX through SN2
 
 THOMAS = 1st through 5th
 
-# DDR SN3
-###### The Theme.
+#DDR SN3
+######The Theme.
 **The SM5 theme is still being built from the ground up. Please keep your git copy updated regularly if you plan to push any changes.**
 
 #Contributors:
@@ -75,7 +75,7 @@ riskofsoundingnerdy
 
 **Special thanks to Konami and Google Images for inspiration.**
 
-# Copyright
+#Copyright
 We are **in no way affiliated with Konami.** Any references made to the DanceDanceRevolution franchise is strictly for continuity purposes. 
 
 Do not use any graphical elements from this project **without explicit permission from the Graphics Team.**
