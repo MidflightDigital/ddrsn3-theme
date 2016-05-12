@@ -1,5 +1,22 @@
 ![alt-text](http://inori.s-ul.eu/bQYRsBk1.png)
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [ddrsn3-theme](#)
+				- [z-i-v thread Here!](#)
+				- [dev blog (tumblr) Here!](#)
+- [Installation](#)
+	- [Current Working Copy](#)
+	- [Alpha/Beta/Release Candidate Builds](#)
+- [Announcers](#)
+					- [The Announcers.](#)
+- [DDR SN3](#)
+					- [The Theme.](#)
+- [Contributors:](#)
+	- [Metrics/Lua](#)
+	- [Graphics](#)
+- [Copyright](#)
+
 # ddrsn3-theme
 Contains SN3 theme files
 
