@@ -26,7 +26,7 @@ local pastStageStats = STATSMAN:GetPlayedStageStats(1)
 
 if pastStageStats then
     if pastStageStats:AllFailed() then
-        PREFSMAN:SetPreference("ComboContinuesBetweenSongs", false)
+        PREFSMAN:SetPreference("ComboContinuesBetweenSongs", endlessState.startingCC)
         targetScreen = "ScreenTitleMenu"
     end
 end
