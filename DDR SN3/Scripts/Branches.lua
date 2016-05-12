@@ -54,13 +54,21 @@ Branch.StartGame = function()
 	end
 end
 
+Branch.Profile = function()
+	if PROFILEMAN:GetNumLocalProfiles() >= 1 then
+		return "ScreenSelectProfile"
+	else
+		return "ScreenCaution"
+	end
+end
+
 Branch.Net = function()
- -	if IsNetSMOnline() then
- -		return SMOnlineScreen()
- -	else
- -		return "ScreenCaution"
- -	end
- -end
+	if IsNetSMOnline() then
+		return SMOnlineScreen()
+	else
+		return "ScreenCaution"
+	end
+end
 
 Branch.AfterSMOLogin = SMOnlineScreen()
 
