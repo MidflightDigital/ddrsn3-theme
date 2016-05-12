@@ -1,47 +1,52 @@
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
-
-- [ddrsn3-theme](#ddrsn3-theme)
-- [Installation](#Installation)
-- [Announcers](#Announcers)
-- [DDR SN3](#DDR SN3)
-- [Contributors:](#Contributors)
-- [Copyright](#Copyright)
+**Table of Contents**
+ * [ddrsn3-theme](#ddrsn3-theme)
+ * [Installation](#installation)
+ * [Announcers](#announcers)
+ * [DDR SN3](#ddr-sn3)
+ * [Contributors:](#contributors)
+ * [Copyright](#copyright)
 
 ![alt-text](http://inori.s-ul.eu/bQYRsBk1.png)
 
-#ddrsn3-theme
+ddrsn3-theme
+============
 Contains SN3 theme files
 
-##### z-i-v thread
-[Here!](https://zenius-i-vanisher.com/v5.2/thread?threadid=7660)
+z-i-v thread [Here!](https://zenius-i-vanisher.com/v5.2/thread?threadid=7660)
 
-##### dev blog (tumblr)
-[Here!](http://sn3next.tumblr.com)
 
-#Installation
-##Current Working Copy
+dev blog (tumblr) [Here!](http://sn3next.tumblr.com)
+--
+
+Installation
+============
+Current Working Copy
+--
 1. Click the ***Download as zip*** button.
 2. ???
 3. Profit.
 
-##Alpha/Beta/Release Candidate Builds
+Alpha/Beta/Release Candidate Builds
+--
 1. Click the ***Releases*** tab
 2. Download **source code (.zip)** from the most recent release. (It'll be at the top)
 3. ???
 4. Profit.
  
 
-#Announcers
-######The Announcers.
+Announcers
+============
 TAZ = DDRMAX through SN2
 
 THOMAS = 1st through 5th
 
-#DDR SN3
-######The Theme.
+DDR SN3
+============
+The Theme.
 **The SM5 theme is still being built from the ground up. Please keep your git copy updated regularly if you plan to push any changes.**
 
-#Contributors:
+Contributors:
+============
 
 Metrics/Lua
 --
@@ -69,7 +74,8 @@ riskofsoundingnerdy
 
 **Special thanks to Konami and Google Images for inspiration.**
 
-#Copyright
+Copyright
+============
 We are **in no way affiliated with Konami.** Any references made to the DanceDanceRevolution franchise is strictly for continuity purposes. 
 
 Do not use any graphical elements from this project **without explicit permission from the Graphics Team.**
