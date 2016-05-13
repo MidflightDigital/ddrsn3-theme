@@ -86,7 +86,7 @@ We are **in no way affiliated with Konami.** Any references made to the DanceDan
 Do not use any graphical elements from this project **without explicit permission from the Graphics Team.**
 
 **A list of files exempt from these rules can be found in [this file.]**
-[this file.]: http://www.reddit.com
+[this file.]: https://github.com/MidflightDigital/ddrsn3-theme/blob/master/permissible-elements.md
 
 You are allowed to borrow code/metrics **if you ask the Metrics/Lua team or if credit is given.** *Our team has spent many months developing this theme and coming up with newer implementations for several elements. Please respect our work, it'll only take a couple of keystrokes.*
 
