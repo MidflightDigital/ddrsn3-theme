@@ -6,4 +6,4 @@
 
 **Metrics**
 
-Any script file that contains license text may be used under the terms of that license.
+Any script file that contains license text may be used under the terms of the license text it includes. Any license text in a file applies **only** to that file.
