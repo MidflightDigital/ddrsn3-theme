@@ -25,34 +25,49 @@ if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."BGAnimations/ScreenG
 			end;
 		end;
 		LoadActor(charP1 .. "/toasty_bg")..{
-		StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.6;sleep,1;linear,0.166;diffusealpha,0);
+		InitCommand=cmd(setsize,200,SCREEN_HEIGHT);
+		StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,1;sleep,1;linear,0.166;diffusealpha,0);
 		};
 		LoadActor(charP1 .. "/toasty_bg")..{
+		InitCommand=cmd(setsize,200,SCREEN_HEIGHT;blend,Blend.Add;;);
 			OnCommand=function(self)
 				local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
 				local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
-				self:customtexturerect(0,0,w*0.5,h*0.5);
-				self:texcoordvelocity(-1,0);
+				self:customtexturerect(0,0,w*0.5,h*SCREEN_HEIGHT);
+				self:texcoordvelocity(-0.5,0);
 			end;
-			StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.2;sleep,1;linear,0.166;diffusealpha,0);
+			StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.4;sleep,1;linear,0.166;diffusealpha,0);
 		};
-		LoadActor(charP1 .. "/toastyChar")..{
+		Def.Sprite{
 			StartTransitioningCommand=cmd(y,44;diffusealpha,0;sleep,0.066;linear,0.1;addy,-4;diffusealpha,1;linear,1;addy,-10;linear,0.1;addy,-4;diffusealpha,0;sleep,0.1;addy,18);
+			BeginCommand=function(self)
+			local CurCombo = STATSMAN:GetCurStageStats():GetPlayerStageStats('PlayerNumber_P1'):GetCurrentCombo()
+				if CurCombo >= 100 then
+					self:Load(THEME:GetPathB("ScreenGameplay","toasty/" .. charP1 .. "/toasty100Char"));
+				end;
+				if CurCombo <100 then
+					self:Load(THEME:GetPathB("ScreenGameplay","toasty/" .. charP1 .. "/toastyChar"));
+				end;
+			end;
+		};
+--[[		LoadActor(charP1 .. "/toastyChar")..{
+			StartTransitioningCommand=cmd(y,44;diffusealpha,0;sleep,0.066;linear,0.1;addy,-4;diffusealpha,1;linear,1;addy,-10;linear,0.1;addy,-4;diffusealpha,0;sleep,0.1;addy,18);
+		};--]]
+		LoadActor(charP1 .. "/toasty_circles")..{
+			StartTransitioningCommand=cmd(blend,Blend.Add;;finishtweening;x,-40;zoomy,4;diffusealpha,0;sleep,0.2;linear,0.1;diffusealpha,0.5;accelerate,0.5;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor(charP1 .. "/toasty_circles")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;x,-40;zoomy,4;diffusealpha,0;sleep,0.2;linear,0.1;diffusealpha,0.5;accelerate,0.5;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			StartTransitioningCommand=cmd(blend,Blend.Add;;finishtweening;x,40;y,40;zoomy,4;diffusealpha,0;sleep,0.166;linear,0.1;diffusealpha,0.5;accelerate,0.4;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor(charP1 .. "/toasty_circles")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;x,40;y,40;zoomy,4;diffusealpha,0;sleep,0.166;linear,0.1;diffusealpha,0.5;accelerate,0.4;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			StartTransitioningCommand=cmd(blend,Blend.Add;;finishtweening;x,20;y,60;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.233;linear,0.1;diffusealpha,0.5;accelerate,0.3;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor(charP1 .. "/toasty_circles")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;x,20;y,60;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.233;linear,0.1;diffusealpha,0.5;accelerate,0.3;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
-		};
-		LoadActor(charP1 .. "/toasty_circles")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;x,-20;y,40;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.3;linear,0.1;diffusealpha,0.5;accelerate,0.6;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			StartTransitioningCommand=cmd(blend,Blend.Add;;finishtweening;x,-20;y,40;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.3;linear,0.1;diffusealpha,0.5;accelerate,0.6;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor(charP1 .. "/toasty_gradient")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;linear,0.5;diffusealpha,0);
+			InitCommand=cmd(setsize,200,SCREEN_HEIGHT);
+			StartTransitioningCommand=cmd(blend,Blend.Add;;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;sleep,0.5;linear,0.2;diffusealpha,0);
 		};
 	};
 end;
@@ -70,34 +85,49 @@ if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/Scree
 			end;
 		end;
 		LoadActor(charP2 .. "/toasty_bg")..{
+		InitCommand=cmd(setsize,200,SCREEN_HEIGHT);
 		StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.6;sleep,1;linear,0.166;diffusealpha,0);
 		};
 		LoadActor(charP2 .. "/toasty_bg")..{
+		InitCommand=cmd(setsize,200,SCREEN_HEIGHT;blend,Blend.Add;;);
 			OnCommand=function(self)
 				local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
 				local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
-				self:customtexturerect(0,0,w*0.5,h*0.5);
-				self:texcoordvelocity(-1,0);
+				self:customtexturerect(0,0,w*0.5,h*SCREEN_HEIGHT);
+				self:texcoordvelocity(-0.5,0);
 			end;
-			StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.2;sleep,1;linear,0.166;diffusealpha,0);
+			StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.4;sleep,1;linear,0.166;diffusealpha,0);
 		};
-		LoadActor(charP2 .. "/toastyChar")..{
+		Def.Sprite{
 			StartTransitioningCommand=cmd(y,44;diffusealpha,0;sleep,0.066;linear,0.1;addy,-4;diffusealpha,1;linear,1;addy,-10;linear,0.1;addy,-4;diffusealpha,0;sleep,0.1;addy,18);
+			BeginCommand=function(self)
+			local CurCombo = STATSMAN:GetCurStageStats():GetPlayerStageStats('PlayerNumber_P2'):GetCurrentCombo()
+				if CurCombo >= 100 then
+					self:Load(THEME:GetPathB("ScreenGameplay","toasty/" .. charP2 .. "/toasty100Char"));
+				end;
+				if CurCombo <100 then
+					self:Load(THEME:GetPathB("ScreenGameplay","toasty/" .. charP2 .. "/toastyChar"));
+				end;
+			end;
+		};
+--[[		LoadActor(charP2 .. "/toastyChar")..{
+			StartTransitioningCommand=cmd(y,44;diffusealpha,0;sleep,0.066;linear,0.1;addy,-4;diffusealpha,1;linear,1;addy,-10;linear,0.1;addy,-4;diffusealpha,0;sleep,0.1;addy,18);
+		};--]]
+		LoadActor(charP2 .. "/toasty_circles")..{
+			StartTransitioningCommand=cmd(blend,Blend.Add;;finishtweening;x,-40;zoomy,4;diffusealpha,0;sleep,0.2;linear,0.1;diffusealpha,0.5;accelerate,0.5;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor(charP2 .. "/toasty_circles")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;x,-40;zoomy,4;diffusealpha,0;sleep,0.2;linear,0.1;diffusealpha,0.5;accelerate,0.5;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			StartTransitioningCommand=cmd(blend,Blend.Add;;finishtweening;x,40;y,40;zoomy,4;diffusealpha,0;sleep,0.166;linear,0.1;diffusealpha,0.5;accelerate,0.4;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor(charP2 .. "/toasty_circles")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;x,40;y,40;zoomy,4;diffusealpha,0;sleep,0.166;linear,0.1;diffusealpha,0.5;accelerate,0.4;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			StartTransitioningCommand=cmd(blend,Blend.Add;;finishtweening;x,20;y,60;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.233;linear,0.1;diffusealpha,0.5;accelerate,0.3;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor(charP2 .. "/toasty_circles")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;x,20;y,60;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.233;linear,0.1;diffusealpha,0.5;accelerate,0.3;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
-		};
-		LoadActor(charP2 .. "/toasty_circles")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;x,-20;y,40;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.3;linear,0.1;diffusealpha,0.5;accelerate,0.6;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			StartTransitioningCommand=cmd(blend,Blend.Add;;finishtweening;x,-20;y,40;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.3;linear,0.1;diffusealpha,0.5;accelerate,0.6;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor(charP2 .. "/toasty_gradient")..{
-			StartTransitioningCommand=cmd(blend,Blend.Add;;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;linear,0.5;diffusealpha,0);
+			InitCommand=cmd(setsize,200,SCREEN_HEIGHT);
+			StartTransitioningCommand=cmd(blend,Blend.Add;;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;sleep,0.5;linear,0.2;diffusealpha,0);
 		};
 	};
 end;
