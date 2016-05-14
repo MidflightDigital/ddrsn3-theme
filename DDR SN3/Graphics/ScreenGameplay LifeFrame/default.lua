@@ -24,8 +24,8 @@ if ResolveRelativePath(lifeFrame..suffix,1,true) then
 	line = "lines" .. suffix
 else
 	Warn("ScreenGameplay LifeFrame: missing frame \""..lifeFrame..suffix.."\". Using fallback assets.")
-	lifeFrame = lifeFrame.." standard"
-	line = "lines standard"
+	lifeFrame = lifeFrame.." 4_3"
+	line = "lines 4_3"
 end
 
 local xPosPlayer = {
