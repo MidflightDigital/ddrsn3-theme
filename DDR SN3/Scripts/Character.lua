@@ -3,7 +3,7 @@ local c = Characters
 
 local requiredFiles = {"combo.png", "combo100.png"}
 
-local rootPath = THEME:GetCurrentThemeDirectory().."/Characters/"
+local rootPath = THEME:GetCurrentThemeDirectory().."Characters/"
 
 --Loads the file at path and runs it in the specified environment,
 --or an empty one if no environment is provided. Catches any errors that occur.
@@ -41,6 +41,7 @@ end
 
 --Characters.GetConfig is cached.
 --It returns the configuration if it is valid, nothing if not.
+local ClearConfigCache
 do
 
 local characterConfigs = {}
@@ -72,7 +73,7 @@ end
 --This function actually does the work, Characters.GetConfig just decides
 --whether the cached value can be used or not
 local function GetConfigInternal(name)
-    local charPath = c.GetPath()
+    local charPath = c.GetPath(name)
     if charPath then
         local configPath = charPath.."config.lua"
         if FILEMAN:DoesFileExist(configPath) then
@@ -104,11 +105,14 @@ function Characters.GetConfig(name, forceRecheck)
     end
 end
 
+ClearConfigCache = function() characterConfigs = {} end
+
 end
 --!!end Characters.GetConfig!!
 
 --Characters.Validate is cached because I feel like it could take a while.
 --Returns true if a character is valid, false if not.
+local ClearValidateCache
 do
 
 local characterValidity = {}
@@ -140,13 +144,28 @@ function Characters.Validate(name, forceRecheck)
     end
 end
 
+ClearValidateCache = function() characterValidity = {} end
+
 end
 --!!end Characters.Validate!!
 
 
 --Returns a table with every character name in it, unvalidated.
 function Characters.GetAllPotentialCharacterNames()
-    return table.sort(FILEMAN:GetDirListing(rootPath, true, false))
+    local output = FILEMAN:GetDirListing(rootPath, true, false)
+    table.sort(output)
+    return output
+end
+
+function Characters.GetAllCharacterNames()
+    local potentials = c.GetAllPotentialCharacterNames()
+    local output = {}
+    for charName in ivalues(potentials) do
+        if c.Validate(charName) then
+            table.insert(output, charName)
+        end
+    end
+    return output
 end
 
 --Returns a dancer video or nothing if none exist.
@@ -166,6 +185,11 @@ function Characters.GetDancerVideo(name)
     if #potentialVideos ~= 0 then
         return potentialVideos[math.random(1,#potentialVideos)]
     end
+end
+
+if SN3Debug then
+    Trace("potential characters: "..table.concat(c.GetAllPotentialCharacterNames(), " "))
+    Trace("valid characters: "..table.concat(c.GetAllCharacterNames(), " "))
 end
 
 -- (c) 2016 John Walstrom
