@@ -86,7 +86,7 @@ t[#t+1] = Def.ActorFrame {
 		};
 	};
 	Def.ActorFrame{
-		InitCommand=cmd(Center;zoom,1.5);
+		InitCommand=cmd(Center;zoom,1.5;diffuse,color("1,1,1,1"));
 		LoadActor("inside dots back");
 		LoadActor("ball");
 		LoadActor("inside dots front");

@@ -1,29 +1,5 @@
 local t = Def.ActorFrame {};
 
-t[#t+1] = Def.ActorFrame {
-	InitCommand=cmd(Center);
-	Def.Banner {
-		SetCommand=function(self)
-		if not GAMESTATE:IsCourseMode() then
-		local song = GAMESTATE:GetCurrentSong();
-			if song then
-			self:CenterX();
-				if song:HasBackground() then
-					self:diffusealpha(1);
-					self:LoadBackground(song:GetBackgroundPath());
-					self:zoomtowidth(SCREEN_WIDTH);
-					self:zoomtoheight(SCREEN_HEIGHT);
-				end;
-			end;
-		else
-			self:diffusealpha(0);
-		end;
-		self:stoptweening();
-		end;
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-	};
-};
-
 local factors = {201, 167, 135, 104, 75, 47, 21, -3, -28, -53, -79, -107, -136, -167, -199}
 
 for i=1,15 do
