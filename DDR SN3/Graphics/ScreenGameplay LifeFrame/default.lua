@@ -59,6 +59,7 @@ t[#t+1] = LoadActor(line)..{
 			self:visible(true);
 		end;
 	end;
+	OnCommand=cmd(diffusealpha,0.4);
 };
 
 --Player 1 Risky Splitter

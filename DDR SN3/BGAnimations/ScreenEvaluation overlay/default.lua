@@ -25,14 +25,16 @@ local t = Def.ActorFrame{
 	LoadActor( THEME:GetPathB("","optionicon_P1") ) .. {
 		InitCommand=cmd(halign,0;player,PLAYER_1;x,SCREEN_LEFT+110;y,SCREEN_CENTER_Y;draworder,1);
 		OnCommand=function(self)
-			self:y(SCREEN_CENTER_Y+180);
+			self:y(SCREEN_CENTER_Y+180;zoomy,0;linear,0.2;zoomy,0);
 		end;
+		OffCommand=cmd(linear,0.2;zoomy,0);
 	};
 	LoadActor( THEME:GetPathB("","optionicon_P2") ) .. {
 		InitCommand=cmd(halign,1;player,PLAYER_2;x,SCREEN_RIGHT-110;y,SCREEN_CENTER_Y;draworder,1);
 		OnCommand=function(self)
-			self:y(SCREEN_CENTER_Y+180);
+			self:y(SCREEN_CENTER_Y+180;zoomy,0;linear,0.2;zoomy,0);
 		end;
+		OffCommand=cmd(linear,0.2;zoomy,0);
 	};
 };
 

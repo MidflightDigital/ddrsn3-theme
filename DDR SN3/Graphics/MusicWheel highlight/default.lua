@@ -2,7 +2,7 @@ local t = Def.ActorFrame {
 	LoadActor("Backing");
 	 Def.Sprite{
     Texture=THEME:GetPathG("MusicWheelItem Song","NormalPart/score");
-    InitCommand=function(s) s:x(-155) end;
+    InitCommand=function(s) s:x(-155):diffuse(color("#00f0ff")) end;
     CurrentSongChangedMessageCommand=function(self,params)
     local song = GAMESTATE:GetCurrentSong();
         if song then

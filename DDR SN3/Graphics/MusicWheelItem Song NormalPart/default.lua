@@ -26,6 +26,7 @@ Def.Sprite{
 		if song then
 			if not PROFILEMAN:IsSongNew(params.Song) then
 			self:Load(THEME:GetPathG("MusicWheelItem Song","NormalPart/score"));
+			self:diffuse(color("#00f0ff"));
 			self:diffusealpha(1);
 			self:draworder(1);
 			else
