@@ -3,7 +3,7 @@ local c = Characters
 
 local requiredFiles = {"combo.png", "combo100.png"}
 
-local rootPath = THEME:GetCurrentThemeDirectory().."Characters/"
+local rootPath = "/SNCharacters/"
 
 --Loads the file at path and runs it in the specified environment,
 --or an empty one if no environment is provided. Catches any errors that occur.
@@ -122,7 +122,8 @@ local characterValidity = {}
 local function ValidateInternal(name)
     local charPath = c.GetPath(name)
     if charPath then
-        if c.GetConfig(name) then
+        --presumably we want to recheck the config every time we actually run
+        if c.GetConfig(name, true) then
             for fileName in ivalues(requiredFiles) do
                 if not FILEMAN:DoesFileExist(charPath..fileName) then
                     return false
