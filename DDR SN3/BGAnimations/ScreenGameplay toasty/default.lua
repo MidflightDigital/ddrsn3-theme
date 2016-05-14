@@ -40,13 +40,13 @@ if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory().."BGAnimations/ScreenG
 		};
 		Def.Sprite{
 			StartTransitioningCommand=cmd(y,44;diffusealpha,0;sleep,0.066;linear,0.1;addy,-4;diffusealpha,1;linear,1;addy,-10;linear,0.1;addy,-4;diffusealpha,0;sleep,0.1;addy,18);
-			BeginCommand=function(self)
-			local CurCombo = STATSMAN:GetCurStageStats():GetPlayerStageStats('PlayerNumber_P1'):GetCurrentCombo()
-				if CurCombo >= 100 then
-					self:Load(THEME:GetPathB("ScreenGameplay","toasty/" .. charP1 .. "/toasty100Char"));
-				end;
-				if CurCombo <100 then
-					self:Load(THEME:GetPathB("ScreenGameplay","toasty/" .. charP1 .. "/toastyChar"));
+			ComboChangedMessageCommand=function(self, params)
+			if params.Player ~= 'PlayerNumber_P1' then return end
+			local CurCombo = params.PlayerStageStats:GetCurrentCombo()
+				if CurCombo >= 100 and CurCombo%50 == 0 then
+					self:Load(THEME:GetCurrentThemeDirectory().."/BGAnimations/ScreenGameplay toasty/" .. charP1 .. "/toasty100Char.png");
+				elseif CurCombo == 25 then
+					self:Load(THEME:GetCurrentThemeDirectory().."/BGAnimations/ScreenGameplay toasty/" .. charP1 .. "/toastyChar.png");
 				end;
 			end;
 		};
