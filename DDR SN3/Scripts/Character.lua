@@ -49,10 +49,10 @@ local function ValidateAndProcessConfig(loadedCfg)
     if not (loadedCfg.version and loadedCfg.color) then
         return false, "missing field"
     end
-    if (loadedCfg.version < 1 then)
+    if (loadedCfg.version < 1) then
         return false, "invalid version field"
     end
-    if (loadedCfg.version > 1 then)
+    if (loadedCfg.version > 1) then
         return false, "version too new"
     end
     local colorDef = loadedCfg.color
