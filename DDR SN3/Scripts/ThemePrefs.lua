@@ -58,7 +58,7 @@ function OptionRowScreenFilter()
 	local choiceToAlpha = {0, 3, 6, 9}
 	local alphaToChoice = {[0]=1, [3]=2, [6]=3, [9]=4}
 	local t = {
-		Name="FILTER",
+		Name="Filter",
 		LayoutType = "ShowAllInRow",
 		SelectType = "SelectOne",
 		OneChoiceForAllPlayers = false,

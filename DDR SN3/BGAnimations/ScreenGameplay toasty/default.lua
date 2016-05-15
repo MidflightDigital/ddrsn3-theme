@@ -1,9 +1,9 @@
 --PLEASE NOTe: the default to rage thing is just for testing
 local env = GAMESTATE:Env()
-local charP1Name = "rage"
+local charP1Name = env.SNCharacterP1 or ""
 local charP1Path = Characters.GetPath(charP1Name)
 SCREENMAN:SystemMessage(charP1Path)
-local charP2Name = "rage"
+local charP2Name = env.SNCharacterP2 or ""
 local charP2Path = Characters.GetPath(charP2Name)
 
 local t = Def.ActorFrame {
@@ -49,9 +49,9 @@ if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') and charP1Path then
 			ComboChangedMessageCommand=function(self, params)
 			if params.Player ~= 'PlayerNumber_P1' then return end
 			local CurCombo = params.PlayerStageStats:GetCurrentCombo()
-				if CurCombo >= 99 then
+				if CurCombo > 75 then
 					self:Load(charP1Path .. "/combo100.png");
-				elseif CurCombo < 99 then
+				else
 					self:Load(charP1Path .. "/combo.png");
 				end;
 			end;
@@ -111,15 +111,15 @@ if GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') and charP2Path then
 		};
 		Def.Sprite{
 			StartTransitioningCommand=cmd(y,44;diffusealpha,0;sleep,0.066;linear,0.1;addy,-4;diffusealpha,1;linear,1;addy,-10;linear,0.1;addy,-4;diffusealpha,0;sleep,0.1;addy,18);
-			BeginCommand=function(self)
-			local CurCombo = STATSMAN:GetCurStageStats():GetPlayerStageStats('PlayerNumber_P2'):GetCurrentCombo()
-				if CurCombo >= 100 then
-					self:Load(charP2Path .. "/combo100.png");
-				end;
-				if CurCombo <100 then
-					self:Load(charP2Path .. "/combo.png");
-				end;
-			end;
+            ComboChangedMessageCommand=function(self, params)
+            if params.Player ~= 'PlayerNumber_P2' then return end
+            local CurCombo = params.PlayerStageStats:GetCurrentCombo()
+                if CurCombo > 75 then
+                    self:Load(charP2Path .. "/combo100.png");
+                else
+                    self:Load(charP2Path .. "/combo.png");
+                end;
+            end;
 		};
 --[[		LoadActor(charP2 .. "/toastyChar")..{
 			StartTransitioningCommand=cmd(y,44;diffusealpha,0;sleep,0.066;linear,0.1;addy,-4;diffusealpha,1;linear,1;addy,-10;linear,0.1;addy,-4;diffusealpha,0;sleep,0.1;addy,18);
