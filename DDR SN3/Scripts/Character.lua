@@ -82,7 +82,7 @@ local function GetConfigInternal(name)
                 --ValidateAndProcessConfig works in place, so it doesn't need
                 --to return anything
                 if ValidateAndProcessConfig(result[2]) then
-                    return result
+                    return result[2]
                 end
             end
         end
@@ -95,9 +95,10 @@ end
 
 function Characters.GetConfig(name, forceRecheck)
     if (characterConfigs[name]~=nil and (not forceRecheck)) then
+        Trace("returning from cache for "..name)
         return (characterConfigs[name]~=false) 
             and characterConfigs[name]
-            or nil 
+            or nil
     else
         local cfg = GetConfigInternal(name)
         characterConfigs[name] = cfg
