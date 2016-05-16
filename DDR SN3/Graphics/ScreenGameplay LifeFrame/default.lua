@@ -94,7 +94,9 @@ t[#t+1] = LoadActor("p2 badge")..{
 --Player 1 Risky Splitter
 if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
 t[#t+1] = LoadActor("splitter")..{
-	InitCommand=cmd(x,WideScale(-(SCREEN_WIDTH/5.5),-(SCREEN_WIDTH/6));skewx,-0.9;zoomto,(SCREEN_WIDTH/2.53),14;halign,0.75);
+	InitCommand=function(self)
+		self:x(-(SCREEN_WIDTH/5.7)):skewx(WideScale(-1.5,-0.9)):zoomto((SCREEN_WIDTH/2.54),14):halign(0.75);
+	end;
 	BeginCommand=function(self,param)
 		if GAMESTATE:PlayerIsUsingModifier('PlayerNumber_P1','battery') or GAMESTATE:GetPlayMode() == 'PlayMode_Oni' then
 			self:visible(true);
@@ -108,7 +110,9 @@ end;
 --Player 2 Risky Splitter
 if GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then
 t[#t+1] = LoadActor("splitter")..{
-	InitCommand=cmd(x,WideScale((SCREEN_WIDTH/5.5),(SCREEN_WIDTH/6));skewx,0.9;zoomto,(SCREEN_WIDTH/2.53),14;halign,0.25);
+	InitCommand=function(self)
+		self:x((SCREEN_WIDTH/5.7)):skewx(WideScale(1.5,0.9)):zoomto((SCREEN_WIDTH/2.54),14):halign(0.25);
+	end;
 	BeginCommand=function(self,param)
 		if GAMESTATE:PlayerIsUsingModifier('PlayerNumber_P2','battery') or GAMESTATE:GetPlayMode() == 'PlayMode_Oni' then
 			self:visible(true);
