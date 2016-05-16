@@ -30,6 +30,9 @@ end
 
 --Returns the base path for a character or none if that character doesn't exist.
 function Characters.GetPath(name)
+    if (not string) or (string == "") then
+        return nil
+    end
     if string.find(name, "/") then
         return nil
     end
@@ -82,7 +85,7 @@ local function GetConfigInternal(name)
                 --ValidateAndProcessConfig works in place, so it doesn't need
                 --to return anything
                 if ValidateAndProcessConfig(result[2]) then
-                    return result
+                    return result[2]
                 end
             end
         end
@@ -95,9 +98,10 @@ end
 
 function Characters.GetConfig(name, forceRecheck)
     if (characterConfigs[name]~=nil and (not forceRecheck)) then
+        Trace("returning from cache for "..name)
         return (characterConfigs[name]~=false) 
             and characterConfigs[name]
-            or nil 
+            or nil
     else
         local cfg = GetConfigInternal(name)
         characterConfigs[name] = cfg
@@ -184,8 +188,64 @@ function Characters.GetDancerVideo(name)
         end
     end
     if #potentialVideos ~= 0 then
-        return potentialVideos[math.random(1,#potentialVideos)]
+        if #potentialVideos == 1 then
+            return potentialVideos[1]
+        else
+            return potentialVideos[math.random(1,#potentialVideos)]
+        end
     end
+end
+
+
+
+--an OptionRow, because we need a way to pick this stuff somehow
+
+function OptionRowCharacters()
+    local choiceList = c.GetAllCharacterNames()
+    local choiceListReverse = {}
+    for index, name in pairs(choiceList) do
+        choiceListReverse[name] = index
+    end
+    table.insert(choiceList, 1, THEME:GetString('OptionNames','Off'))
+    local t = {
+        Name="Characters",
+        LayoutType = "ShowAllInRow",
+        SelectType = "SelectOne",
+        OneChoiceForAllPlayers = "false",
+        ExportOnChange = "false",
+        Choices = choiceList,
+        LoadSelections = function(self, list, pn)
+            local pn = ToEnumShortString(pn)
+            local env = GAMESTATE:Env()
+            local currentChar = env['SNCharacter'..pn]
+            if choiceListReverse[currentChar] then
+                list[choiceListReverse[currentChar]+1] = true
+            else
+                list[1] = true
+            end
+        end,
+        SaveSelections = function(self, list, pn)
+            local pn = ToEnumShortString(pn)
+            local env = GAMESTATE:Env()
+            local varName = 'SNCharacter'..pn
+            for idx, selected in ipairs(list) do
+                if selected then
+                    if idx == 1 then
+                        env[varName] = nil
+                    else
+                        env[varName] = choiceList[idx]
+                    end
+                    --nothing bad would happen if i didn't break here
+                    --but it would be a waste of (not very much) time
+                    break
+                end
+            end
+        end
+    }
+    --this is a standard idiom for LuaOptionRows.
+    --I do not know what it does or if it is necessary or not.
+    setmetatable(t,t)
+    return t
 end
 
 if SN3Debug then

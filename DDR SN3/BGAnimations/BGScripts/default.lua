@@ -23,15 +23,16 @@ end
 t.OnCommand = setVisibility
 t.CurrentSongChangedMessageCommand = setVisibility
 
-local charName = GAMESTATE:GetCharacter(GAMESTATE:GetMasterPlayerNumber()):GetDisplayName();
-local rmax = 9;
-local num = math.random(1);
+local charName = (GAMESTATE:Env())['SNCharacter'..
+    ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())] or ""
 
 local loadWorked = false
+local potentialVideo = Characters.GetDancerVideo(charName)
+SCREENMAN:SystemMessage(potentialVideo)
 
-if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory() .. "BGAnimations/BGScripts/" .. charName .. "_" .. num .. ".avi") then
+if potentialVideo then
     loadWorked = true
-	t[#t+1] = LoadActor( charName .. "_" .. num .. ".avi" )..{
+	t[#t+1] = LoadActor( potentialVideo )..{
 		InitCommand=cmd(draworder,1;Center;zoomto,SCREEN_WIDTH+38,SCREEN_HEIGHT+38;);	
 	};
 
