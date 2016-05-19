@@ -1,8 +1,6 @@
---PLEASE NOTe: the default to rage thing is just for testing
 local env = GAMESTATE:Env()
 local charP1Name = env.SNCharacterP1 or ""
 local charP1Path = Characters.GetPath(charP1Name)
-SCREENMAN:SystemMessage(charP1Path)
 local charP2Name = env.SNCharacterP2 or ""
 local charP2Path = Characters.GetPath(charP2Name)
 

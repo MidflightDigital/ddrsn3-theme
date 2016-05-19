@@ -28,7 +28,6 @@ local charName = (GAMESTATE:Env())['SNCharacter'..
 
 local loadWorked = false
 local potentialVideo = Characters.GetDancerVideo(charName)
-SCREENMAN:SystemMessage(potentialVideo)
 
 if potentialVideo then
     loadWorked = true

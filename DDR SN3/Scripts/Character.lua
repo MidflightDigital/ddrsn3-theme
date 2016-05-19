@@ -98,7 +98,6 @@ end
 
 function Characters.GetConfig(name, forceRecheck)
     if (characterConfigs[name]~=nil and (not forceRecheck)) then
-        Trace("returning from cache for "..name)
         return (characterConfigs[name]~=false) 
             and characterConfigs[name]
             or nil
