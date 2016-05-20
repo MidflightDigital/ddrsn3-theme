@@ -4,6 +4,8 @@ local badFiles = {"/Scripts/06 MyGrooveRadarHelpers.lua",
 
 for _, path in pairs(badFiles) do
     if FILEMAN:DoesFileExist(THEME:GetCurrentThemeDirectory()..path) then
-        UndocumentedFeature("You aren't using a clean copy of DDR SuperNOVA 3!")
+        --XXX: Figure out a better thing to do here.
+        Warn("Found file "..badFiles.." that shouldn't exist.\nYou aren't using a clean copy of DDR SuperNOVA 3!\nThis will likely cause problems.")
+        return
     end
 end
