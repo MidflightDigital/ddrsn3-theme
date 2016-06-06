@@ -819,7 +819,7 @@ t[#t+1] = Def.ActorFrame{
 	Def.Sprite{
 		OffCommand=function(self)
 			if pss:FullComboOfScore('TapNoteScore_W1') then
-				self:Load(THEME:GetPathB("ScreenGameplay","overlay/FullCombo/FCM.png"));
+				self:Load(THEME:GetPathB("ScreenGameplay","overlay/FullCombo/FCM"));
 				self:diffusealpha(0);
 				self:rotationz(-5);
 				self:sleep(0.6);
@@ -837,7 +837,7 @@ t[#t+1] = Def.ActorFrame{
 				self:zoomx(TextZoom()*1.195);
 				self:diffusealpha(0);
 			elseif pss:FullComboOfScore('TapNoteScore_W2') then
-				self:Load(THEME:GetPathB("ScreenGameplay","overlay/FullCombo/FCP.png"));
+				self:Load(THEME:GetPathB("ScreenGameplay","overlay/FullCombo/FCP"));
 				self:diffusealpha(0);
 				self:rotationz(-5);
 				self:sleep(0.6);
@@ -855,7 +855,7 @@ t[#t+1] = Def.ActorFrame{
 				self:zoomx(TextZoom()*1.195);
 				self:diffusealpha(0);
 			elseif pss:FullComboOfScore('TapNoteScore_W3') then
-				self:Load(THEME:GetPathB("ScreenGameplay","overlay/FullCombo/FCGr.png"));
+				self:Load(THEME:GetPathB("ScreenGameplay","overlay/FullCombo/FCGr"));
 				self:diffusealpha(0);
 				self:rotationz(-5);
 				self:sleep(0.6);
@@ -873,7 +873,7 @@ t[#t+1] = Def.ActorFrame{
 				self:zoomx(TextZoom()*1.195);
 				self:diffusealpha(0);
 			elseif pss:FullComboOfScore('TapNoteScore_W3') then
-				self:Load(THEME:GetPathB("ScreenGameplay","overlay/FullCombo/FCGo.png"));
+				self:Load(THEME:GetPathB("ScreenGameplay","overlay/FullCombo/FCGo"));
 				self:diffusealpha(0);
 				self:rotationz(-5);
 				self:sleep(0.6);
