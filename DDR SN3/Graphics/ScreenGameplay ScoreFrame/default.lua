@@ -5,6 +5,9 @@ local t = Def.ActorFrame{
 	Def.TextBanner{
 		InitCommand = function(self) self:Load("TextBannerGameplay")
         	:x(SCREEN_CENTER_X-100):y(-8)
+			if GAMESTATE:IsAnExtraStage() then
+				self:zoomy(-1)
+			end
         	if GAMESTATE:GetCurrentSong() then
         		self:SetFromSong(GAMESTATE:GetCurrentSong())
         	end

@@ -10,8 +10,6 @@ local t = Def.ActorFrame{
                 BeginCommand=function(self)
                         if IsSMOnlineLoggedIn('PlayerNumber_P1') then
                                 self:visible(true):x(SCREEN_CENTER_X*1.5);
-                        elseif IsSMOnlineLoggedIn('PlayerNumber_P2') then
-                                self:visible(true):x(SCREEN_CENTER_X*0.5);
                         else
                                 self:visible(false);
                         end;
