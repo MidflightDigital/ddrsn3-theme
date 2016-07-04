@@ -1,5 +1,5 @@
 return Def.ActorFrame{
-	InitCommand=cmd(diffusealpha,0.5);
+	InitCommand=cmd(diffusealpha,0.8);
 	Def.Quad{
 		InitCommand=cmd(diffuse,color("0,0,0,1");zoomto,(SCREEN_WIDTH/2.53),13);
 	};

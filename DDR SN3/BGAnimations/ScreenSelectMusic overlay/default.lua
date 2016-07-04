@@ -2,7 +2,7 @@ local t = Def.ActorFrame{
 	LoadActor("SNDifficultyList.lua");
 	LoadActor("bpmmeter.lua");
 	LoadActor("labels")..{
-		InitCommand=cmd(x,SCREEN_LEFT+201;y,SCREEN_CENTER_Y+7);
+		InitCommand=cmd(x,SCREEN_LEFT+149;y,SCREEN_CENTER_Y+7);
 		OnCommand=cmd(draworder,2;diffusealpha,0;addx,-400;sleep,0.1;linear,0.52;diffusealpha,0;addx,400;sleep,0.3;diffusealpha,1);
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 	};

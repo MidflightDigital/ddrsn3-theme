@@ -22,6 +22,8 @@ elseif screenName == "ScreenDataSaveSummary" then
 	headerTextImage = "save (doubleres).png"
 elseif screenName == "ScreenEvaluationNormal" then
 	headerTextImage = "eval (doubleres).png"
+elseif screenName == "ScreenEvaluationSummary" then
+	headerTextImage = "eval (doubleres).png"
 elseif screenName == "ScreenEvaluationOni" then
 	headerTextImage = "eval (doubleres).png"
 elseif screenName == "ScreenNetEvaluation" then
@@ -35,6 +37,8 @@ if screenName == "ScreenSelectProfile" then
 elseif screenName == "ScreenDataSaveSummary" then
 	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenEvaluationNormal" then
+	headerBaseImage = "centerbase (doubleres).png"
+elseif screenName == "ScreenEvaluationSummary" then
 	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenEvaluationOni" then
 	headerBaseImage = "centerbase (doubleres).png"
@@ -57,7 +61,7 @@ local function UpdateAni(self)
 	end
 end
 
-
+--Base Anchoring
 local out = Def.ActorFrame{
 	InitCommand=function(self) self:SetUpdateFunction(UpdateAni) end;
 	LoadActor(headerBaseImage)..{
@@ -92,6 +96,7 @@ if PREFSMAN:GetPreference("MenuTimer") == true then
 	})
 end
 
+--Text Anchoring
 if headerTextImage then
 	table.insert(out,LoadActor(headerTextImage)..{
 		InitCommand=function(self)
@@ -107,7 +112,7 @@ if headerTextImage then
 			elseif screenName == "ScreenDataSaveSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
 			else
-				self:x(SCREEN_LEFT+40):halign(0);
+				self:x(SCREEN_LEFT+95):halign(0);
 			end;
 		end;
 	})

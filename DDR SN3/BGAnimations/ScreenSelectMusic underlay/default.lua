@@ -13,7 +13,15 @@ for i=1,15 do
 end
 
 t[#t+1] = Def.ActorFrame {
-	LoadActor("WheelHighlight.png")..{
+	LoadActor("difficultylist")..{
+		InitCommand=cmd(x,SCREEN_LEFT+163;y,SCREEN_CENTER_Y+141);
+		OnCommand=cmd(draworder,1;cropright,1;sleep,0.264;sleep,0.6;linear,0.4;cropright,0);
+		OffCommand=cmd(sleep,0.033;accelerate,0.363;x,-237);
+	};
+};
+
+t[#t+1] = Def.ActorFrame {
+	LoadActor("WheelHighlight")..{
 		InitCommand=cmd(x,SCREEN_RIGHT-166;y,SCREEN_CENTER_Y-16);
 		OnCommand=cmd(addx,330;sleep,0.6;decelerate,0.34;addx,-330);
 		OffCommand=cmd(sleep,0.016;accelerate,0.25;addx,380);

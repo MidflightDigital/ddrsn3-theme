@@ -1,4 +1,10 @@
-local t = Def.ActorFrame{}
+local t = Def.ActorFrame{
+	LoadActor( "music" )..{
+		OnCommand=cmd(play);
+		OffCommand=cmd(stop);
+	};
+};
+
 t[#t+1] = Def.ActorFrame{
 	LoadFont("_handelgothic bt 20px")..{
 		InitCommand=function(self)

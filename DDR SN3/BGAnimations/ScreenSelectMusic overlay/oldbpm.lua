@@ -8,7 +8,7 @@
 local twiddleDistance = 13/86
 
 local function CalculateBaseForBPM(bpm)
-	return 1 - (((clamp(bpm, 100, 300) - 110) / 140)+twiddleDistance/2)
+	return 1 - (((clamp(bpm, 100, 300) - 100) / 140)+twiddleDistance/2)
 end
 
 local ScreenSelectMusic
@@ -58,9 +58,9 @@ local t = Def.ActorFrame{
 	InitCommand=function(self) self:SetUpdateFunction(UpdateBPMGauge) end,
 	Def.Sprite {
 	Name="bpm gauge bright",
-	Texture="newgauge",
+	Texture="bpm gauge",
 		InitCommand=function(self)
-			self:hibernate(1.25):draworder(101):x(SCREEN_LEFT+283.5):y(SCREEN_CENTER_Y-139):visible(false)
+			self:hibernate(1.25):draworder(101):x(SCREEN_LEFT+75):y(SCREEN_CENTER_Y-1):visible(false)
 		end,
 		OnCommand=function(self)
 			self:sleep(0.264):visible(true)
