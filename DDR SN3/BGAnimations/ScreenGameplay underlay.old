@@ -20,18 +20,12 @@ local t = Def.ActorFrame{
         };
 };
 
-local xPosPlayer = {
-	P1 = (SCREEN_RIGHT-180),
-	P2 = (SCREEN_LEFT+180)
-}
-if SN3Debug then
-for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') and charP1Path then
     local charP1Color = (Characters.GetConfig(charP1Name)).color
 	t[#t+1] = Def.ActorFrame {
 		InitCommand=function(self)
-			local short = ToEnumShortString(pn)
 			if GAMESTATE:GetCurrentStyle():GetName() == "single" then
-				self:x(xPosPlayer[short]);
+				self:x(SCREEN_RIGHT-180);
 				self:y(SCREEN_CENTER_Y);
 			elseif GAMESTATE:GetCurrentStyle():GetName() == "versus" then
 				self:x(SCREEN_CENTER_X);
@@ -40,6 +34,7 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 			end;
 		end;
 		ComboChangedMessageCommand=function(self, params)
+			if params.Player ~= 'PlayerNumber_P1' then return end
 			local CurCombo = params.PlayerStageStats:GetCurrentCombo()
 			if CurCombo == 25 then
 				self:queuecommand("Animate");
@@ -94,10 +89,11 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 			AnimateCommand=cmd(blend,Blend.Add;;finishtweening;x,-20;y,40;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.3;linear,0.1;diffusealpha,0.5;accelerate,0.6;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor("ScreenGameplay toasty/grayscaled/toasty_gradient")..{
-			InitCommand=function(s) s:setsize(200,SCREEN_HEIGHT):diffuse(unpack(charP1Color)) end,
-			AnimateCommand=cmd(blend,Blend.Add;;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;sleep,0.5;linear,0.2;diffusealpha,0);
+			InitCommand=function(s) s:setsize(200,SCREEN_HEIGHT):diffuse(unpack(charP1Color)) end;
+			AnimateCommand=function(s)
+				s:blend(Blend.Add):finishtweening():diffusealpha(0):sleep(0.166):linear(0.5):diffusealpha(0.8):sleep(0.5):linear(0.2):diffusealpha(0);
+			end;
 		};
 	};
-end;
 end;
 return t;

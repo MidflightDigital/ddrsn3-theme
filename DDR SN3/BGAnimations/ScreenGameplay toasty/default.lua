@@ -14,7 +14,7 @@ local t = Def.ActorFrame {
         end
     end,
 };
-
+if not SN3Debug then
 if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') and charP1Path then
 	local charP1Color = (Characters.GetConfig(charP1Name)).color
 	t[#t+1] = Def.ActorFrame {
@@ -79,7 +79,9 @@ if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') and charP1Path then
 		};
 	};
 end;
+end;
 
+if not SN3Debug then
 if GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') and charP2Path then
 	local charP2Color = (Characters.GetConfig(charP2Name)).color
 	t[#t+1] = Def.ActorFrame {
@@ -144,13 +146,6 @@ if GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') and charP2Path then
         };
 	};
 end;
-
-if GAMESTATE:GetCurrentStyle():GetName() == "versus" then
-	t[#t+1] = Def.ActorFrame {
-		LoadActor("toasty_maskP2 Versus.png")..{
-				InitCommand=cmd(draworder,999;zwrite,true;blend,'BlendMode_NoEffect';Center);
-				StartTransitioningCommand=cmd(diffusealpha,0;linear,0.166;diffusealpha,0.8;sleep,1;linear,0.166;diffusealpha,0);
-		};
-	};
 end;
+
 return t
