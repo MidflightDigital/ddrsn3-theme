@@ -9,12 +9,12 @@ t[#t+1] = LoadActor(THEME:GetPathG("","_footer/skip"))..{
 	OffCommand=cmd(decelerate,0.2;addy,54);
 }
 
+if not GAMESTATE:IsCourseMode() then
 t[#t+1] = Def.Quad{
 	InitCommand=cmd(setsize,SCREEN_WIDTH,48;diffuse,color("0,0,0,1");fadeleft,0.75;faderight,0.75;x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-80;zoomx,0;zoomy,1;diffusealpha,0.8;sleep,0.000;);
 	OnCommand=cmd(sleep,0.333;decelerate,0.133;zoomy,1;diffusealpha,1;accelerate,0.033;zoomx,0.5;decelerate,0.033;zoomx,1);
 	OffCommand=cmd(sleep,0.0000;sleep,0.333;decelerate,0.066;zoomx,0;diffusealpha,0);
 };
-
 t[#t+1] = StandardDecorationFromFileOptional("SongInformation","SongInformation") .. {
 	BeginCommand=function(self)
 		local SongOrCourse;
@@ -76,7 +76,7 @@ t[#t+1] = StandardDecorationFromFileOptional("SongInformation","SongInformation"
 	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
 	DisplayLanguageChangedMessageCommand=cmd(playcommand,"Set");
 };
-
+end;
 -- judge labels
 t[#t+1] = LoadActor("labels")..{
 	InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+32;zoomy,0);
@@ -102,11 +102,6 @@ if ShowStandardDecoration("DifficultyIcon") then
 		end
 	end
 end
-
-t[#t+1] = LoadActor("grade")..{
-	InitCommand=cmd(diffusealpha,1;draworder,11);
-	OffCommand=cmd(sleep,0.2;linear,0.2;diffusealpha,0);
-};
 
 t[#t+1] = LoadActor("../grade")..{
 	OnCommand=cmd(play);
@@ -150,6 +145,11 @@ t[#t+1] = Def.ActorFrame {
 		OnCommand=cmd(play);
 	};
 
+};
+
+t[#t+1] = LoadActor("grade")..{
+	InitCommand=cmd(diffusealpha,1;draworder,100);
+	OffCommand=cmd(sleep,0.2;linear,0.2;diffusealpha,0);
 };
 
 return t

@@ -26,6 +26,8 @@ elseif screenName == "ScreenEvaluationSummary" then
 	headerTextImage = "eval (doubleres).png"
 elseif screenName == "ScreenEvaluationOni" then
 	headerTextImage = "eval (doubleres).png"
+elseif screenName == "ScreenEvaluationNonstop" then
+	headerTextImage = "eval (doubleres).png"
 elseif screenName == "ScreenNetEvaluation" then
 	headerTextImage = "eval (doubleres).png"
 end
@@ -41,6 +43,8 @@ elseif screenName == "ScreenEvaluationNormal" then
 elseif screenName == "ScreenEvaluationSummary" then
 	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenEvaluationOni" then
+	headerBaseImage = "centerbase (doubleres).png"
+elseif screenName == "ScreenEvaluationNonstop" then
 	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenNetEvaluation" then
 	headerBaseImage = "centerbase (doubleres).png"
@@ -73,6 +77,8 @@ local out = Def.ActorFrame{
 			elseif screenName == "ScreenEvaluationSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
 			elseif screenName == "ScreenEvaluationOni" then
+				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
+			elseif screenName == "ScreenEvaluationNonstop" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
 			elseif screenName == "ScreenDataSaveSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
@@ -110,6 +116,8 @@ if headerTextImage then
 			elseif screenName == "ScreenEvaluationSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
 			elseif screenName == "ScreenEvaluationOni" then
+				self:x(SCREEN_CENTER_X):halign(0.5);
+			elseif screenName == "ScreenEvaluationNonstop" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
 			elseif screenName == "ScreenNetEvaluation" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
