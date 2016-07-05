@@ -1,5 +1,8 @@
 local t = Def.ActorFrame {
 	LoadActor("Backing");
+};
+if SCREENMAN:GetTopScreen() ~= "ScreenNetRoom" then
+t[#t+1] = Def.ActorFrame{
 --P1 Light--
 	Def.Sprite{
     Texture=THEME:GetPathG("MusicWheelItem Song","NormalPart/score");
@@ -127,7 +130,8 @@ local t = Def.ActorFrame {
 	end;
 	};
 };
-if GAMESTATE:GetCoinMode() == 'CoinMode_Home' then
+end;
+if GAMESTATE:GetCoinMode() == 'CoinMode_Home' and SCREENMAN:GetTopScreen() ~= "ScreenNetRoom" then
 t[#t+1] = Def.ActorFrame {
 	LoadActor("frame")..{
 		BeginCommand=function(self,param)

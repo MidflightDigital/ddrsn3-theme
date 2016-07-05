@@ -1,9 +1,6 @@
 local t = LoadFallbackB();
 
-t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
-t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay")
 t[#t+1] = StandardDecorationFromFile("Explanation","Explanation")
-t[#t+1] = StandardDecorationFromFile("BannerFrame","BannerFrame")
 t[#t+1] = StandardDecorationFromFile("BPMDisplay","BPMDisplay")
 t[#t+1] = StandardDecorationFromFile("GrooveRadar","GrooveRadar")
 t[#t+1] = StandardDecorationFromFileOptional("SortDisplay","SortDisplay")

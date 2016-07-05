@@ -72,17 +72,6 @@ local t = Def.ActorFrame {
 		cf.LabelNormal:visible(false);
 	end;
 	ComboCommand=function(self, param)
-		if param.Misses then
-			cf.NumberW1:visible(false);
-			cf.NumberW2:visible(false);
-			cf.NumberW3:visible(false);
-			cf.NumberNormal:visible(false);
-			cf.LabelW1:visible(false);
-			cf.LabelW2:visible(false);
-			cf.LabelW3:visible(false);
-			cf.LabelNormal:visible(false);
-			return;
-		end
 		local iCombo = param.Misses or param.Combo;
 		if not iCombo or iCombo < ShowComboAt then
 			cf.NumberW1:visible(false);

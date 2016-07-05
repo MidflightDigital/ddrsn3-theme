@@ -2,10 +2,13 @@
 local player = Var "Player"
 local curLives = nil
 local lastLives = nil
+local stream = "hot"
 
-local t = Def.ActorFrame {
-	-- Battery full line
-	LoadActor(THEME:GetPathG("StreamDisplay","hot"))..{
+local t = Def.ActorFrame {};
+
+t[#t+1] = Def.ActorFrame{	
+-- Battery full line
+	LoadActor(THEME:GetPathG("","StreamDisplay " .. stream ))..{
 		InitCommand=function(self)
 			self:texcoordvelocity(0.8,0)
 			self:setsize((SCREEN_WIDTH/2.53),13)
@@ -15,6 +18,10 @@ local t = Def.ActorFrame {
 			local screen = SCREENMAN:GetTopScreen();
 			local glifemeter = screen:GetLifeMeter(player);
 			if params.LostLife and params.Player == player then
+				self:Load(THEME:GetPathG("StreamDisplay","normal"))
+				self:setsize((SCREEN_WIDTH/2.53),13)
+			elseif params.LivesLeft <= 3 and params.Player == player then
+				stream = "normal"
 				self:Load(THEME:GetPathG("StreamDisplay","normal"))
 				self:setsize((SCREEN_WIDTH/2.53),13)
 			end

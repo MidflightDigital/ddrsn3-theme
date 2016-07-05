@@ -2,7 +2,7 @@ local t = Def.ActorFrame {
 	LoadActor("Backing");
 --new song
 LoadActor("../ScreenSelectMusic NewSong")..{
-	InitCommand=cmd(x,-138;y,-25;finishtweening;draworder,1);
+	InitCommand=cmd(x,-138;y,-25;finishtweening;draworder,1;visible,SCREENMAN:GetTopScreen() ~= "ScreenNetRoom");
 	OnCommand=cmd(diffusealpha,0;sleep,1;diffusealpha,1);
 	SetCommand=function(self,param)
 		if param.Song then
@@ -17,7 +17,7 @@ LoadActor("../ScreenSelectMusic NewSong")..{
 	end;
 };
 Def.Sprite{
-	InitCommand=cmd(x,-154);
+	InitCommand=cmd(x,-154;visible,SCREENMAN:GetTopScreen() ~= "ScreenNetRoom");
 	SetMessageCommand=function(self,params)
 	local song = params.Song;
 	local pssp1 = STATSMAN:GetCurStageStats(params.Song):GetPlayerStageStats("PlayerNumber_P1")
