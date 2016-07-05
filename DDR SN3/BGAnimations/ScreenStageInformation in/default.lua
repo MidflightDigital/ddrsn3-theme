@@ -35,6 +35,16 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
+t[#t+1] = Def.ActorFrame {
+	InitCommand=function(self)
+		self:y(SCREEN_CENTER_Y-124);
+	end;
+	LoadActor(THEME:GetPathG("","ScreenEvaluation bannerframe (doubleres)"))..{
+		InitCommand=cmd(CenterX);
+		OnCommand=cmd(zoomy,0;sleep,0.099;sleep,0.396;linear,0.099;zoomy,1;sleep,2);
+	};
+};
+
 if not GAMESTATE:IsCourseMode() then
 --song jacket--
 t[#t+1] = Def.ActorFrame {
@@ -55,16 +65,6 @@ t[#t+1] = Def.ActorFrame {
 else
 t[#t+1] = LoadActor("CourseDisplay");
 end;
-
-t[#t+1] = Def.ActorFrame {
-	InitCommand=function(self)
-		self:y(SCREEN_CENTER_Y-124);
-	end;
-	LoadActor(THEME:GetPathG("","ScreenEvaluation bannerframe (doubleres)"))..{
-		InitCommand=cmd(CenterX);
-		OnCommand=cmd(zoomy,0;sleep,0.099;sleep,0.396;linear,0.099;zoomy,1;sleep,2);
-	};
-};
 
 t[#t+1] = Def.Sprite {
 	Texture="rayo 1x2.png",

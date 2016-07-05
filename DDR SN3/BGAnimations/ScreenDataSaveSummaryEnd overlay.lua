@@ -1,4 +1,8 @@
-local x = Def.ActorFrame{};
+local x = Def.ActorFrame{
+	Def.Quad{
+		InitCommand=cmd(setsize,SCREEN_WIDTH,SCREEN_HEIGHT;Center;diffuse,color("0,0,0,1"));
+	};
+};
 
 x[#x+1] = Def.Actor {
 		BeginCommand=function(self)

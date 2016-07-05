@@ -66,7 +66,7 @@ local t = Def.ActorFrame{
 			self:sleep(0.264):visible(true)
 		end,
 		OffCommand=function(self)
-			self:sleep(0.033):accelerate(0.33):addx(-400)
+			self:finishtweening():visible(false)
 		end,
 		RandomCommand=function(self)
 			self:croptop(1):linear(0.25):croptop(0):linear(0.25):croptop(1)

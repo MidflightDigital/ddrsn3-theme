@@ -45,7 +45,7 @@ elseif screenName == "ScreenEvaluationOni" then
 elseif screenName == "ScreenNetEvaluation" then
 	headerBaseImage = "centerbase (doubleres).png"
 else
-	headerBaseImage = "base (doubleres).png"
+	headerBaseImage = "regular"
 end
 
 local function UpdateAni(self)
@@ -69,6 +69,8 @@ local out = Def.ActorFrame{
 			if screenName == "ScreenSelectProfile" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
 			elseif screenName == "ScreenEvaluationNormal" then
+				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
+			elseif screenName == "ScreenEvaluationSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
 			elseif screenName == "ScreenEvaluationOni" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
@@ -104,6 +106,8 @@ if headerTextImage then
 			if screenName == "ScreenSelectProfile" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
 			elseif screenName == "ScreenEvaluationNormal" then
+				self:x(SCREEN_CENTER_X):halign(0.5);
+			elseif screenName == "ScreenEvaluationSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
 			elseif screenName == "ScreenEvaluationOni" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
