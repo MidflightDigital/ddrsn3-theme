@@ -29,8 +29,8 @@ else
 end
 
 local xPosPlayer = {
-    P1 = -(SCREEN_WIDTH/6.5), 
-    P2 = (SCREEN_WIDTH/6.5)
+    P1 = -(SCREEN_WIDTH/6.7), 
+    P2 = (SCREEN_WIDTH/6.7)
 }
 
 local t = Def.ActorFrame{}
@@ -65,7 +65,7 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	};
 end;
 
-t[#t+1] = LoadActor("p1 badge")..{
+t[#t+1] = LoadActor("../Badges/P1")..{
 	InitCommand=function(self)
 		self:x(WideScale(-(SCREEN_WIDTH/2.08),-(SCREEN_WIDTH/2.12)))
 	end;
@@ -78,7 +78,7 @@ t[#t+1] = LoadActor("p1 badge")..{
 	end;
 };
 
-t[#t+1] = LoadActor("p2 badge")..{
+t[#t+1] = LoadActor("../Badges/P2")..{
 	InitCommand=function(self)
 		self:x(WideScale((SCREEN_WIDTH/2.08),(SCREEN_WIDTH/2.12)))
 	end,

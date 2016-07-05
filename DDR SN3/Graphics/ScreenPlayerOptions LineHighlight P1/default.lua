@@ -16,7 +16,7 @@ t = Def.ActorFrame{
 	Delay0001=0.5;
 	InitCommand=cmd(addx,-200);
 	};
-	LoadActor("P1Cursor")..{
+	LoadActor("../Badges/P1")..{
 		InitCommand=cmd(addx,-290;addy,0;zoomy,1.0;zoomx,1.0;);
 	};
 };	

@@ -9,6 +9,74 @@ t[#t+1] = LoadActor(THEME:GetPathG("","_footer/skip"))..{
 	OffCommand=cmd(decelerate,0.2;addy,54);
 }
 
+t[#t+1] = Def.Quad{
+	InitCommand=cmd(setsize,SCREEN_WIDTH,48;diffuse,color("0,0,0,1");fadeleft,0.75;faderight,0.75;x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-80;zoomx,0;zoomy,1;diffusealpha,0.8;sleep,0.000;);
+	OnCommand=cmd(sleep,0.333;decelerate,0.133;zoomy,1;diffusealpha,1;accelerate,0.033;zoomx,0.5;decelerate,0.033;zoomx,1);
+	OffCommand=cmd(sleep,0.0000;sleep,0.333;decelerate,0.066;zoomx,0;diffusealpha,0);
+};
+
+t[#t+1] = StandardDecorationFromFileOptional("SongInformation","SongInformation") .. {
+	BeginCommand=function(self)
+		local SongOrCourse;
+		if GAMESTATE:GetCurrentSong() then
+			SongOrCourse = GAMESTATE:GetCurrentSong();
+		elseif GAMESTATE:GetCurrentCourse() then
+			SongOrCourse = GAMESTATE:GetCurrentCourse();
+		else
+			return
+		end
+		
+	end;
+	SetCommand=function(self)
+		local c = self:GetChildren();
+		local SongOrCourse;
+		if GAMESTATE:GetCurrentSong() then
+			SongOrCourse = GAMESTATE:GetCurrentSong();
+
+			c.TextTitle:settext( SongOrCourse:GetDisplayMainTitle() or nil );
+			c.TextSubtitle:settext( SongOrCourse:GetDisplaySubTitle() or nil );
+			c.TextArtist:settext( SongOrCourse:GetDisplayArtist() or nil );
+
+			if SongOrCourse:GetDisplaySubTitle() == "" then
+				c.TextTitle:visible(true);
+				c.TextTitle:y(-16.5/2);
+				c.TextSubtitle:visible(false);
+				c.TextSubtitle:y(0);
+				c.TextArtist:visible(true);
+				c.TextArtist:y(18/2);
+			else
+				c.TextTitle:visible(true);
+				c.TextTitle:y(-16.5);
+				c.TextSubtitle:visible(true);
+				c.TextSubtitle:y(0);
+				c.TextArtist:visible(true);
+				c.TextArtist:y(18);
+			end
+-- 			self:playcommand("Tick");
+		elseif GAMESTATE:GetCurrentCourse() then
+			SongOrCourse = GAMESTATE:GetCurrentCourse();
+			
+			c.TextTitle:settext( SongOrCourse:GetDisplayMainTitle() or nil );
+			c.TextSubtitle:settext( SongOrCourse:GetDisplaySubTitle() or nil );
+			c.TextArtist:settext( SongOrCourse:GetDisplayArtist() or nil );
+			
+-- 			self:playcommand("Tick");
+		else
+			SongOrCourse = nil;
+			
+			c.TextTitle:settext("");
+			c.TextSubtitle:settext("");
+			c.TextArtist:settext("");
+			
+			self:playcommand("Hide")
+		end
+	end;
+-- 	OnCommand=cmd(playcommand,"Set");
+	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+	DisplayLanguageChangedMessageCommand=cmd(playcommand,"Set");
+};
+
 -- judge labels
 t[#t+1] = LoadActor("labels")..{
 	InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y+32;zoomy,0);
@@ -82,73 +150,6 @@ t[#t+1] = Def.ActorFrame {
 		OnCommand=cmd(play);
 	};
 
-};
-
-t[#t+1] = StandardDecorationFromFileOptional("SongInformation","SongInformation") .. {
-	BeginCommand=function(self)
-		local SongOrCourse;
-		if GAMESTATE:GetCurrentSong() then
-			SongOrCourse = GAMESTATE:GetCurrentSong();
-		elseif GAMESTATE:GetCurrentCourse() then
-			SongOrCourse = GAMESTATE:GetCurrentCourse();
-		else
-			return
-		end
-		
-		if SongOrCourse:HasBanner() then
-			self:visible(false);
-		else
-			self:visible(true);
-		end
-	end;
-	SetCommand=function(self)
-		local c = self:GetChildren();
-		local SongOrCourse;
-		if GAMESTATE:GetCurrentSong() then
-			SongOrCourse = GAMESTATE:GetCurrentSong();
-
-			c.TextTitle:settext( SongOrCourse:GetDisplayMainTitle() or nil );
-			c.TextSubtitle:settext( SongOrCourse:GetDisplaySubTitle() or nil );
-			c.TextArtist:settext( SongOrCourse:GetDisplayArtist() or nil );
-
-			if SongOrCourse:GetDisplaySubTitle() == "" then
-				c.TextTitle:visible(true);
-				c.TextTitle:y(-16.5/2);
-				c.TextSubtitle:visible(false);
-				c.TextSubtitle:y(0);
-				c.TextArtist:visible(true);
-				c.TextArtist:y(18/2);
-			else
-				c.TextTitle:visible(true);
-				c.TextTitle:y(-16.5);
-				c.TextSubtitle:visible(true);
-				c.TextSubtitle:y(0);
-				c.TextArtist:visible(true);
-				c.TextArtist:y(18);
-			end
--- 			self:playcommand("Tick");
-		elseif GAMESTATE:GetCurrentCourse() then
-			SongOrCourse = GAMESTATE:GetCurrentCourse();
-			
-			c.TextTitle:settext( SongOrCourse:GetDisplayMainTitle() or nil );
-			c.TextSubtitle:settext( SongOrCourse:GetDisplaySubTitle() or nil );
-			c.TextArtist:settext( SongOrCourse:GetDisplayArtist() or nil );
-			
--- 			self:playcommand("Tick");
-		else
-			SongOrCourse = nil;
-			
-			c.TextTitle:settext("");
-			c.TextSubtitle:settext("");
-			c.TextArtist:settext("");
-			
-			self:playcommand("Hide")
-		end
-	end;
--- 	OnCommand=cmd(playcommand,"Set");
-	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
-	DisplayLanguageChangedMessageCommand=cmd(playcommand,"Set");
 };
 
 return t

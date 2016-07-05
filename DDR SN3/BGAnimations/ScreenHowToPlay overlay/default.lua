@@ -12,12 +12,6 @@ local suffix = aspectRatioSuffix[math.floor(10000*PREFSMAN:GetPreference("Displa
 
 local lifeFrame = "normal"
 
--- todo: show oni on life meter battery as well
-if GAMESTATE:GetPlayMode() == 'PlayMode_Oni' then lifeFrame = "special" end
-if GAMESTATE:GetPlayMode() == 'PlayMode_Nonstop' then lifeFrame = "special" end
-if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then lifeFrame = "special" end
-if GAMESTATE:IsAnExtraStage() then lifeFrame = "special" end
-
 -- fall back on the 4:3 frame if there's no frame available for this aspect ratio
 if ResolveRelativePath(lifeFrame..suffix,1,true) then
 	lifeFrame = lifeFrame .. suffix
@@ -110,19 +104,19 @@ local t = Def.ActorFrame{
 		};
 	};
 };
-t[#t+1] = LoadActor(lifeFrame)..{
+t[#t+1] = LoadActor(THEME:GetPathG("ScreenGameplay","LifeFrame/"..lifeFrame))..{
 		InitCommand=function(self)
 			self:x(WideScale(SCREEN_CENTER_X-172,SCREEN_CENTER_X-237)):y(SCREEN_TOP+25)
 		end,
 	};
-t[#t+1] = LoadActor(line)..{
+t[#t+1] = LoadActor(THEME:GetPathG("ScreenGameplay","LifeFrame/"..line))..{
 	InitCommand=function(self)
 		self:x(WideScale(SCREEN_CENTER_X-172,SCREEN_CENTER_X-237)):y(SCREEN_TOP+25)
 		:diffusealpha(0.4)
 	end,
 };
 
-t[#t+1] = LoadActor("p1 badge")..{
+t[#t+1] = LoadActor(THEME:GetPathG("","Badges/P1"))..{
 	InitCommand=function(self)
 		self:x(SCREEN_LEFT+10):y(SCREEN_TOP+25)
 	end;

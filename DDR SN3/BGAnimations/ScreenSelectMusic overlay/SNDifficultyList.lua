@@ -38,7 +38,7 @@ end
 
 local function PlayerLabelName(pn)
 	local name = GAMESTATE:IsHumanPlayer(pn) and string.lower(ToEnumShortString(pn)) or "cpu"
-	return 'SNDifficultyList player label '..name..' (doubleres)'
+	return '../../Graphics/Badges/'..name..' (doubleres)'
 end
 
 local difficultiesToDraw = {

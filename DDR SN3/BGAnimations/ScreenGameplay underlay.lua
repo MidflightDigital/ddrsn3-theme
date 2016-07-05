@@ -31,6 +31,7 @@ local yPosPlayer = {
 };
 
 for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+	if (charP1Name ~= "") then
     local charP1Color = (Characters.GetConfig(charP1Name)).color
 --Player 1--
 	t[#t+1] = Def.ActorFrame {
@@ -111,5 +112,6 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 			AnimateCommand=cmd(visible,true;blend,Blend.Add;;finishtweening;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;sleep,0.5;linear,0.2;diffusealpha,0);
 		};
 	};
+	end;
 end;
 return t;

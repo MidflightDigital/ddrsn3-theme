@@ -6,14 +6,14 @@ return Def.CourseContentsList {
     NumItemsToDraw = 5;
 	SetCommand=function(self)
 		self:SetFromGameState();
-		self:SetCurrentAndDestinationItem(3);
+		self:SetCurrentAndDestinationItem(1);
 		self:SetPauseCountdownSeconds(1);
 		self:SetSecondsPauseBetweenItems( 0.25 );
 --		self:SetTransformFromFunction(transform);
 		--
-		self:SetDestinationItem(3);
+		self:SetDestinationItem(1);
 		self:SetLoop(false);
-		self:SetMask(0,0);
+		self:SetMask(294,44);
 	end;
 	CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
 	CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");

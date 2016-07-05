@@ -3,7 +3,7 @@ local StageDisplay = Def.ActorFrame{
 	CurrentSongChangedMessageCommand=cmd(finishtweening;playcommand,"Set";);
 };
 
-if (GAMESTATE:Env()).EndlessState then
+if (GAMESTATE:Env()).EndlessState or GAMESTATE:IsCourseMode() then
 	StageDisplay[#StageDisplay+1] = Def.Sprite{
 		Texture="counter background"
 	}

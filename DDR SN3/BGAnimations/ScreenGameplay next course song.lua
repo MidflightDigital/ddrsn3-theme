@@ -20,9 +20,6 @@ else
 end;
 
 return Def.ActorFrame {
-	StartCommand=function(self)
-		self:sleep(3.01)
-	end;
 	LoadActor(("failed"))..{
 		ChangeCourseSongInMessageCommand=cmd(queuecommand,("Play"));
 		PlayCommand=cmd(play;);
@@ -30,17 +27,17 @@ return Def.ActorFrame {
 	LoadActor("Door1")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;CenterY;zoom,1.01;halign,1);
 		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+50);
-		FinishCommand=cmd(sleep,1;linear,0.198;x,SCREEN_CENTER_X-SCREEN_WIDTH);
+		FinishCommand=cmd(sleep,2;linear,0.198;x,SCREEN_CENTER_X-SCREEN_WIDTH);
 	};
 	LoadActor("Door2")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;CenterY;zoom,1.01;halign,0);
 		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X-50);
-		FinishCommand=cmd(sleep,1;linear,0.198;x,SCREEN_CENTER_X+SCREEN_WIDTH);
+		FinishCommand=cmd(sleep,2;linear,0.198;x,SCREEN_CENTER_X+SCREEN_WIDTH);
 	};
 	LoadActor(THEME:GetPathG("","ScreenEvaluation bannerframe (doubleres)"))..{
 		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-124);
 		ChangeCourseSongInMessageCommand=cmd(zoomy,0;sleep,0.099;sleep,0.396;linear,0.099;zoomy,1;);
-		FinishCommand=cmd(sleep,1;linear,0.099;zoomy,0);
+		FinishCommand=cmd(sleep,2;linear,0.099;zoomy,0);
 	};
 	-- song banner
 	Def.Banner{
@@ -57,7 +54,7 @@ return Def.ActorFrame {
 			self:linear(0.099)
 			self:zoomy(1)
 		end;
-		FinishCommand=cmd(sleep,1;linear,0.099;zoomy,0);
+		FinishCommand=cmd(sleep,2;linear,0.099;zoomy,0);
 	};
 	Def.Sprite {
 	Texture="ScreenStageInformation in/rayo 1x2.png",
@@ -66,21 +63,21 @@ return Def.ActorFrame {
 			self:SetAllStateDelays(0.082)
 		end;
 		StartCommand=cmd(diffusealpha,0;sleep,0.396;diffusealpha,1);
-		FinishCommand=cmd(sleep,1;diffusealpha,0);
+		FinishCommand=cmd(sleep,2;diffusealpha,0);
 	};
 	LoadActor( THEME:GetPathG("ScreenStageInformation", "Stage " .. ToEnumShortString(sStage) ) ) .. {
 		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
 		StartCommand=cmd(diffusealpha,0;sleep,0.396;diffusealpha,1);
-		FinishCommand=cmd(sleep,1;diffusealpha,0);
+		FinishCommand=cmd(sleep,2;diffusealpha,0);
 	};
 	LoadActor("ScreenStageInformation in/bottom_stage")..{
 		InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-27);
 		ChangeCourseSongInMessageCommand=cmd(addy,54;sleep,0.396;linear,0.198;addy,-54);
-		FinishCommand=cmd(sleep,1;linear,0.198;addy,54);
+		FinishCommand=cmd(sleep,2;linear,0.198;addy,54);
 	};
 	LoadActor("ScreenStageInformation in/top_stage")..{
 		InitCommand=cmd(CenterX;y,SCREEN_TOP+52);
 		ChangeCourseSongInMessageCommand=cmd(addy,-104;sleep,0.396;linear,0.198;addy,104);
-		FinishCommand=cmd(sleep,1;linear,0.198;addy,-104);
+		FinishCommand=cmd(sleep,2;linear,0.198;addy,-104);
 	};
 };
