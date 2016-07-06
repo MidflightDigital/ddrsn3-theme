@@ -5,17 +5,12 @@ local t = Def.ActorFrame{
 	Def.Actor{ OnCommand=cmd(sleep,5); };
 }
 
-if GAMESTATE:IsCourseMode() then
-	-- courses always show the normal cleared text
-	t[#t+1] = LoadActor("normal")
+if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
+	-- rave logic is handled in normal
+	t[#t+1] = LoadActor("rave")
 else
-	if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
-		-- rave logic is handled in normal
-		t[#t+1] = LoadActor("normal")
-	else
-		-- normal and extra stages
-		t[#t+1] = LoadActor("normal")
-	end
-end
+	-- normal and extra stages
+	t[#t+1] = LoadActor("normal")
+end;
 
-return t
+return t;

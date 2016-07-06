@@ -43,4 +43,23 @@ t[#t+1]=Def.ActorFrame{
 };
 end;
 
+if GAMESTATE:GetPlayMode() == "PlayMode_Rave" then
+t[#t+1]=Def.ActorFrame{
+	LoadFont("_futura std medium 20px")..{
+		InitCommand=function(self)
+			self:settext("Level:")
+			:halign(0):x(SCREEN_LEFT+40):y(2)
+			:diffuse(color("#F9FF20"))
+		end;
+	};
+	LoadFont("_futura std medium 20px")..{
+		InitCommand=function(self)
+			self:settext("Level:")
+			:halign(1):x(SCREEN_RIGHT-80):y(2)
+			:diffuse(color("#F9FF20"))
+		end;
+	};
+};
+end;
+
 return t;

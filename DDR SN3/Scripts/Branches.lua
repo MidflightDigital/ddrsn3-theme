@@ -148,6 +148,7 @@ Branch.AfterDataSaveSummary = function()
 	end
 end
 
+
 -- pick an ending screen
 Branch.Ending = function()
 	if GAMESTATE:IsEventMode() then

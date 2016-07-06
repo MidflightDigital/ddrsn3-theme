@@ -28,10 +28,21 @@ else
 	line = "lines 4_3"
 end
 
+-- fall back on 4:3 frame because tug doesn't like lua scripts.
+if GAMESTATE:GetPlayMode() == "PlayMode_Rave" then
+	lifeFrame = "special 4_3"
+	line = "lines 4_3"
+end
+
 local xPosPlayer = {
     P1 = -(SCREEN_WIDTH/6.7), 
     P2 = (SCREEN_WIDTH/6.7)
 }
+
+local xPosPlayerRave = {
+	P1 = -(640/6.7), 
+    P2 = (640/6.7)
+};
 
 local t = Def.ActorFrame{}
 t[#t+1] = LoadActor("flicker")
@@ -40,16 +51,24 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 		Name = pn,
 		InitCommand=function(self)
 			local short = ToEnumShortString(pn)
-			self:x(xPosPlayer[short])
-			:halign(0.75)
+			if GAMESTATE:GetPlayMode() == "PlayMode_Rave" then
+				self:x(xPosPlayerRave[short])
+			else
+				self:x(xPosPlayer[short])
+			end;
+			self:halign(0.75)
 		end,
 		OnCommand=function(s) s:zoomx(pn=='PlayerNumber_P2' and -1 or 1) end,
 	};
 	t[#t+1] = LoadActor(line)..{
 		InitCommand=function(self)
 			local short = ToEnumShortString(pn)
-			self:x(xPosPlayer[short])
-			:halign(0.75)
+			if GAMESTATE:GetPlayMode() == "PlayMode_Rave" then
+				self:x(xPosPlayerRave[short])
+			else
+				self:x(xPosPlayer[short])
+			end;
+			self:halign(0.75)
 			:diffusealpha(0.4)
 		end,
 		OnCommand=function(s) s:zoomx(pn=='PlayerNumber_P2' and -1 or 1) end,
@@ -67,7 +86,11 @@ end;
 
 t[#t+1] = LoadActor("../Badges/P1")..{
 	InitCommand=function(self)
-		self:x(WideScale(-(SCREEN_WIDTH/2.08),-(SCREEN_WIDTH/2.12)))
+		if GAMESTATE:GetPlayMode() == "PlayMode_Rave" then
+				self:x(-(640/2.08))
+			else
+				self:x(WideScale(-(SCREEN_WIDTH/2.08),-(SCREEN_WIDTH/2.12)))
+			end;
 	end;
 	BeginCommand=function(self,param)
 		if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
@@ -80,7 +103,11 @@ t[#t+1] = LoadActor("../Badges/P1")..{
 
 t[#t+1] = LoadActor("../Badges/P2")..{
 	InitCommand=function(self)
-		self:x(WideScale((SCREEN_WIDTH/2.08),(SCREEN_WIDTH/2.12)))
+		if GAMESTATE:GetPlayMode() == "PlayMode_Rave" then
+				self:x((640/2.08))
+			else
+				self:x(WideScale((SCREEN_WIDTH/2.08),(SCREEN_WIDTH/2.12)))
+			end;
 	end,
 	BeginCommand=function(self,param)
 		if GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then

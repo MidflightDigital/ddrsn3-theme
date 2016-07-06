@@ -12,6 +12,16 @@ local t = Def.ActorFrame{
                 end;
         };
 };
+
+--battleshit
+if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
+t[#t+1] = Def.ActorFrame{
+	LoadActor("Battle Frame")..{
+		InitCommand=cmd(CenterX;y,SCREEN_TOP+78);
+	};
+};
+end;
+
 if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
 t[#t+1] = Def.ActorFrame{
 		LoadActor("P1 Toast.lua");

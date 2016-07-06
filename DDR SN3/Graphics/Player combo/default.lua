@@ -47,16 +47,6 @@ local t = Def.ActorFrame {
 			Name="LabelNormal";
 			OnCommand = THEME:GetMetric("Combo", "LabelOnCommand");
 		};
-	LoadActor(THEME:GetPathG("Combo","100Milestone")) .. {
-		Name="OneHundredMilestone";
-		InitCommand=cmd(visible,true);
-		FiftyMilestoneCommand=cmd(playcommand,"Milestone");
-	};
-	LoadActor(THEME:GetPathG("Combo","1000Milestone")) .. {
-		Name="OneThousandMilestone";
-		InitCommand=cmd(visible,true);
-		ToastyAchievedMessageCommand=cmd(playcommand,"Milestone");
-	};
 	};
 	InitCommand = function(self)
 		c = self:GetChildren();
