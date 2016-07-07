@@ -1,39 +1,56 @@
 local t = Def.ActorFrame {
 	LoadActor("Backing");
 };
+
+local PColor = {
+    P1 = "#00dcff",
+    P2 = "#ff00cf"
+};
+
+local xPosPlayer = {
+	P1 = -158,
+	P2 = -153
+};
+	
+--lights
 if SCREENMAN:GetTopScreen() ~= "ScreenNetRoom" then
+for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 t[#t+1] = Def.ActorFrame{
 --P1 Light--
 	Def.Sprite{
     Texture=THEME:GetPathG("MusicWheelItem Song","NormalPart/score");
     InitCommand=function(s)
+		local short = ToEnumShortString(pn)
 		if GAMESTATE:GetNumPlayersEnabled() == 2 then
-			s:x(-158):zoomx(0.5):diffuse(color("#00f0ff"))
-		elseif GAMESTATE:IsPlayerEnabled(PLAYER_1) then
-			s:x(-155):diffuse(color("#00f0ff"))
+			s:x(xPosPlayer[short]):zoomx(0.5):diffuse(color(PColor[short]))
+		else
+			s:x(-155):diffuse(color(PColor[short]))
 		end;
 	end;
 	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
 	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
 	CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
 	CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
     SetCommand=function(self,params)
+	local short = ToEnumShortString(pn)
 	local SongOrCourse, StepsOrTrail;
 			if GAMESTATE:IsCourseMode() then
 				SongOrCourse = GAMESTATE:GetCurrentCourse();
-				StepsOrTrail = GAMESTATE:GetCurrentTrail(PLAYER_1);
+				StepsOrTrail = GAMESTATE:GetCurrentTrail(pn);
 			else
 				SongOrCourse = GAMESTATE:GetCurrentSong();
-				StepsOrTrail = GAMESTATE:GetCurrentSteps(PLAYER_1);
+				StepsOrTrail = GAMESTATE:GetCurrentSteps(pn);
 			end;
 	if SongOrCourse and StepsOrTrail then
 		local st = StepsOrTrail:GetStepsType();
 		local diff = StepsOrTrail:GetDifficulty();
 		local courseType = GAMESTATE:IsCourseMode() and SongOrCourse:GetCourseType() or nil;
 	
-		if PROFILEMAN:IsPersistentProfile(PLAYER_1) then
+		if PROFILEMAN:IsPersistentProfile(pn) then
 			-- player profile
-			profile = PROFILEMAN:GetProfile(PLAYER_1);
+			profile = PROFILEMAN:GetProfile(pn);
 		else
 			-- machine profile
 			profile = PROFILEMAN:GetMachineProfile();
@@ -48,75 +65,10 @@ t[#t+1] = Def.ActorFrame{
 			assert(grade);
 			if scores[1]:GetScore()>1 then
 				if grade=="Grade_Tier07" then
-					self:visible(true);
-					self:diffuse(color("#ff0000"));
-					self:draworder(1);
+					self:visible(false);
 				else
 					self:visible(true);
-					self:diffuse(color("#00f0ff"));
-				end;
-			else
-				self:visible(false);
-			end;
-		else
-			self:visible(false);
-		end;
-	else
-		self:visible(false);
-	end;
-	end;
-	};
---P2 Light--
-	Def.Sprite{
-    Texture=THEME:GetPathG("MusicWheelItem Song","NormalPart/score");
-    InitCommand=function(s)
-		if GAMESTATE:GetNumPlayersEnabled() == 2 then
-			s:x(-153):zoomx(0.5):diffuse(color("#ff00cf"))
-		elseif GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-			s:x(-155):diffuse(color("#ff00cf"))
-		end;
-	end;
-	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-	CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-    SetCommand=function(self,params)
-	local SongOrCourse, StepsOrTrail;
-			if GAMESTATE:IsCourseMode() then
-				SongOrCourse = GAMESTATE:GetCurrentCourse();
-				StepsOrTrail = GAMESTATE:GetCurrentTrail(PLAYER_2);
-			else
-				SongOrCourse = GAMESTATE:GetCurrentSong();
-				StepsOrTrail = GAMESTATE:GetCurrentSteps(PLAYER_2);
-			end;
-	if SongOrCourse and StepsOrTrail then
-		local st = StepsOrTrail:GetStepsType();
-		local diff = StepsOrTrail:GetDifficulty();
-		local courseType = GAMESTATE:IsCourseMode() and SongOrCourse:GetCourseType() or nil;
-	
-		if PROFILEMAN:IsPersistentProfile(PLAYER_2) then
-			-- player profile
-			profile = PROFILEMAN:GetProfile(PLAYER_2);
-		else
-			-- machine profile
-			profile = PROFILEMAN:GetMachineProfile();
-		end;
-				
-		scorelist = profile:GetHighScoreList(SongOrCourse,StepsOrTrail);
-		assert(scorelist);
-		local scores = scorelist:GetHighScores();
-		local grade;
-		if scores[1] then
-			grade = scores[1]:GetGrade();
-			assert(grade);
-			if scores[1]:GetScore()>1 then
-				if grade=="Grade_Tier07" then
-					self:visible(true);
-					self:diffuse(color("#ff0000"));
-					self:draworder(1);
-				else
-					self:visible(true);
-					self:diffuse(color("#ff00cf"));
+					self:diffuse(color(PColor[short]));
 				end;
 			else
 				self:visible(false);
@@ -131,18 +83,136 @@ t[#t+1] = Def.ActorFrame{
 	};
 };
 end;
+end;
+
+--score underlay
 if GAMESTATE:GetCoinMode() == 'CoinMode_Home' and SCREENMAN:GetTopScreen() ~= "ScreenNetRoom" then
+for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 t[#t+1] = Def.ActorFrame {
 	LoadActor("frame")..{
-		BeginCommand=function(self,param)
-			if not GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
-				self:croptop(0.5)
-			elseif not GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then
-				self:cropbottom(0.5)
-			end
+	OnCommand=cmd(queuecommand,"Set");
+	BeginCommand=function(self,param)
+		if not GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
+			self:croptop(0.5)
+		elseif not GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then
+			self:cropbottom(0.5)
+		end
+	end;
+	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
+	SetCommand= function(self)
+	local SongOrCourse, StepsOrTrail;
+		if GAMESTATE:IsCourseMode() then
+			SongOrCourse = GAMESTATE:GetCurrentCourse();
+			StepsOrTrail = GAMESTATE:GetCurrentTrail(pn);
+		else
+			SongOrCourse = GAMESTATE:GetCurrentSong();
+			StepsOrTrail = GAMESTATE:GetCurrentSteps(pn);
 		end;
+		
+	if SongOrCourse and StepsOrTrail then
+		local st = StepsOrTrail:GetStepsType();
+		local diff = StepsOrTrail:GetDifficulty();
+		local courseType = GAMESTATE:IsCourseMode() and SongOrCourse:GetCourseType() or nil;
+		
+		if PROFILEMAN:IsPersistentProfile(pn) then
+			--player
+			profile = PROFILEMAN:GetProfile(pn);
+		else
+			-- machine profile
+			profile = PROFILEMAN:GetMachineProfile();
+		end;
+		
+		scorelist = profile:GetHighScoreList(SongOrCourse,StepsOrTrail);
+		assert(scorelist)
+		local scores = scorelist:GetHighScores();
+		if scores[1] then
+			topscore = scores[1]:GetScore()
+		else
+			topscore = 0;
+		end;
+		assert(topscore)
+		if topscore ~= 0 then
+			self:diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+	end;
+	end;
 	};
 };
+end;
 end
+
+--Scores
+local yPosPlayer = {
+	P1 = -25,
+	P2 = 25
+};
+
+--Player Scores
+for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+t[#t+1] = Def.RollingNumbers{
+	Font="ScreenSelectMusic score",
+	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
+	CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
+	InitCommand=function(self)
+		local short = ToEnumShortString(pn)
+		self:x(40):y(yPosPlayer[short])
+		:diffusealpha(0)
+		:Load("RollingNumbersMusic")
+	end;
+	OnCommand=cmd(queuecommand,"Set");
+	SetCommand= function(self)
+	local SongOrCourse, StepsOrTrail;
+		if GAMESTATE:IsCourseMode() then
+			SongOrCourse = GAMESTATE:GetCurrentCourse();
+			StepsOrTrail = GAMESTATE:GetCurrentTrail(pn);
+		else
+			SongOrCourse = GAMESTATE:GetCurrentSong();
+			StepsOrTrail = GAMESTATE:GetCurrentSteps(pn);
+		end;
+		
+	if SongOrCourse and StepsOrTrail then
+		local st = StepsOrTrail:GetStepsType();
+		local diff = StepsOrTrail:GetDifficulty();
+		local courseType = GAMESTATE:IsCourseMode() and SongOrCourse:GetCourseType() or nil;
+		
+		if PROFILEMAN:IsPersistentProfile(pn) then
+			--player
+			profile = PROFILEMAN:GetProfile(pn);
+		else
+			-- machine profile
+			profile = PROFILEMAN:GetMachineProfile();
+		end;
+		
+		scorelist = profile:GetHighScoreList(SongOrCourse,StepsOrTrail);
+		assert(scorelist)
+		local scores = scorelist:GetHighScores();
+		if scores[1] then
+			topscore = scores[1]:GetScore()
+		else
+			topscore = 0;
+		end;
+		assert(topscore)
+		if topscore ~= 0 then
+			self:diffusealpha(1)
+			:targetnumber(topscore)
+		else
+			self:diffusealpha(0)
+			:targetnumber(0)
+		end
+	end;
+	end;
+};
+end;
 
 return t;

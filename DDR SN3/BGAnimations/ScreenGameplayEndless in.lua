@@ -1,1 +1,3 @@
-return Def.ActorFrame{}
+return Def.ActorFrame{
+	LoadActor("ScreenGameplay in");
+}

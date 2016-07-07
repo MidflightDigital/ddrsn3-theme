@@ -17,7 +17,7 @@ local t = Def.ActorFrame{
 	LoadActor("glow")..{
 		InitCommand=cmd(x,SCREEN_LEFT;halign,0);
 		OnCommand=cmd(cropright,1;sleep,1;queuecommand,"Animate";draworder,100);
-		AnimateCommand=cmd(finishtweening;decelerate,0.1;cropleft,0;cropright,1;decelerate,0.8;cropright,0;sleep,sleeptime;decelerate,0.8;cropleft,1;sleep,sleeptime;queuecommand,"Animate");
+		AnimateCommand=cmd(decelerate,0.1;cropleft,0;cropright,1;decelerate,0.8;cropright,0;sleep,sleeptime;decelerate,0.8;cropleft,1;sleep,sleeptime;queuecommand,"Animate");
 		OffCommand=cmd(finishtweening);
 	};
 	Def.Sprite{

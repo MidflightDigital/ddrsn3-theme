@@ -8,6 +8,8 @@ local t = Def.ActorFrame{
 if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
 	-- rave logic is handled in normal
 	t[#t+1] = LoadActor("rave")
+elseif GAMESTATE:GetPlayMode() == 'PlayMode_Endless' then
+	t[#t+1] = LoadActor("../ScreenGameplay next course song")
 else
 	-- normal and extra stages
 	t[#t+1] = LoadActor("normal")

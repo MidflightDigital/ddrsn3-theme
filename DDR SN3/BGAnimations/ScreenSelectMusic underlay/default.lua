@@ -21,8 +21,8 @@ t[#t+1] = Def.ActorFrame {
 };
 
 t[#t+1] = Def.ActorFrame {
-	LoadActor("WheelHighlight")..{
-		InitCommand=cmd(x,SCREEN_RIGHT-166;y,SCREEN_CENTER_Y-16);
+	LoadActor(THEME:GetPathG("","_section inner"))..{
+		InitCommand=cmd(x,SCREEN_RIGHT;halign,1;zoom,1.05;y,SCREEN_CENTER_Y-17;diffuseshift;effectcolor1,1,1,1,1;effectcolor2,0.5,0.5,0.5,1;effectperiod,3;);
 		OnCommand=cmd(addx,330;sleep,0.6;decelerate,0.34;addx,-330);
 		OffCommand=cmd(sleep,0.016;accelerate,0.25;addx,380);
 	};

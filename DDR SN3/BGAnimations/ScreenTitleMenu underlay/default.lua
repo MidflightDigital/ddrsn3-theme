@@ -57,6 +57,7 @@ t[#t+1] = Def.ActorFrame {
 };
 end
 
+
 t[#t+1] = Def.ActorFrame {
 	Def.BitmapText{
 	Font="Common normal",

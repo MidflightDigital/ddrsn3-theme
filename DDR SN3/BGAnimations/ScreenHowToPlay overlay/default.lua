@@ -13,7 +13,7 @@ local suffix = aspectRatioSuffix[math.floor(10000*PREFSMAN:GetPreference("Displa
 local lifeFrame = "normal"
 
 -- fall back on the 4:3 frame if there's no frame available for this aspect ratio
-if ResolveRelativePath(lifeFrame..suffix,1,true) then
+if ResolveRelativePath(THEME:GetPathG("ScreenGameplay","LifeFrame/"..lifeFrame..suffix),1,true) then
 	lifeFrame = lifeFrame .. suffix
 	line = "lines" .. suffix
 else
