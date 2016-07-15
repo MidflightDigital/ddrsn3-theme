@@ -1,7 +1,5 @@
 local t = Def.ActorFrame{};
 
-print "fuck penis"
-
 local xPosPlayer = {
     P1 = (SCREEN_RIGHT-180),
     P2 = (SCREEN_LEFT+180)
@@ -17,7 +15,6 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
   local env = GAMESTATE:Env()
   local char = {}
   char.Name = env["SNCharacter"..short] or ""
-  Warn(char.Name)
   char.Path = Characters.GetPath(char.Name)
 if (char.Name ~= "") then
     char.Color = (Characters.GetConfig(char.Name)).color

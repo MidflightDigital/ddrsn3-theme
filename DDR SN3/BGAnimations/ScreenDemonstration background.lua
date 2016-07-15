@@ -25,21 +25,27 @@ t.CurrentSongChangedMessageCommand = setVisibility
 --Set a table for possible dancers
 local vids = Characters.GetAllCharacterNames();
 
---Chooses one of the dancers
-local choose = math.random(1,#vids);
+if #vids > 0 then
 
---Sets the Dancer to be loaded
-local charName = vids[choose]
+    local danceVid = nil
+    repeat
+        --Chooses one of the dancers
+        local choose = table.remove(vids,math.random(1,#vids))
 
-local danceVid = Characters.GetDancerVideo(charName)
+        --Sets the Dancer to be loaded
+        local charName = vids[choose]
 
-if danceVid then
-    --Loads The Video
-    t[#t+1] = LoadActor(danceVid)..{
+        local danceVid = Characters.GetDancerVideo(charName)
+    until (danceVid ~= nil) or (#vids == 0)
+
+    if danceVid then
+        --Loads The Video
+        t[#t+1] = LoadActor(danceVid)..{
 	   InitCommand=cmd(draworder,1;Center;zoomto,SCREEN_WIDTH+38,SCREEN_HEIGHT+38;);	
-    };
-else
-    --hell if i know
+        };
+    else
+        --hell if i know
+    end
 end
 
 return t;
