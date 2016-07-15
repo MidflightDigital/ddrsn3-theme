@@ -1,5 +1,7 @@
 local t = Def.ActorFrame{};
 
+print "fuck penis"
+
 local xPosPlayer = {
     P1 = (SCREEN_RIGHT-180),
     P2 = (SCREEN_LEFT+180)
@@ -14,10 +16,11 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
   local short = ToEnumShortString(pn)
   local env = GAMESTATE:Env()
   local char = {}
-  char[short].Name = env.SNCharacter[short].Name or ""
-  char[short].Path = Characters.GetPath(char[short].Name)
-if (char[short].Name ~= "") then
-    char[short].Color = (Characters.GetConfig(char[short].Name)).color
+  char.Name = env["SNCharacter"..short] or ""
+  Warn(char.Name)
+  char.Path = Characters.GetPath(char.Name)
+if (char.Name ~= "") then
+    char.Color = (Characters.GetConfig(char.Name)).color
 --Player 1--
 	t[#t+1] = Def.ActorFrame {
 		InitCommand=function(self)
@@ -30,21 +33,18 @@ if (char[short].Name ~= "") then
 			end;
 		end;
 		ComboChangedMessageCommand=function(self, params)
-		if params.Player ~= 'PlayerNumber_[short]' then return end
+		if params.Player ~= pn then return end
 			local CurCombo = params.PlayerStageStats:GetCurrentCombo()
-			if CurCombo == 25 then
-				self:queuecommand("Animate");
-			elseif CurCombo ~= 0 and CurCombo % 50 == 0 then
-				self:queuecommand("Animate");
-			elseif CurCombo == 0 then return
+			if (CurCombo == 25) or (CurCombo ~= 0 and CurCombo % 50 == 0) then
+				self:playcommandonchildren("Animate")
 			end;
 		end;
 		LoadActor("../_Toasty/toasty_bg")..{
-		InitCommand=cmd(setsize,200,SCREEN_HEIGHT;visible,false;diffuse,unpack(char[short].Color));
+		InitCommand=cmd(setsize,200,SCREEN_HEIGHT;visible,false;diffuse,unpack(char.Color));
 		AnimateCommand=cmd(visible,true;finishtweening;diffusealpha,0;linear,0.166;diffusealpha,1;sleep,1;linear,0.166;diffusealpha,0);
 		};
 		LoadActor("../_Toasty/toasty_bg")..{
-		InitCommand=cmd(setsize,200,SCREEN_HEIGHT;visible,false;blend,Blend.Add;diffuse,unpack(char[short].Color));
+		InitCommand=cmd(setsize,200,SCREEN_HEIGHT;visible,false;blend,Blend.Add;diffuse,unpack(char.Color));
 			OnCommand=function(self)
 				local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
 				local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
@@ -56,14 +56,14 @@ if (char[short].Name ~= "") then
 		Def.Sprite{
 			InitCommand=cmd(visible,false);
 			ComboChangedMessageCommand=function(self, params)
-				if params.Player ~= 'PlayerNumber_[short]' then return end
+				if params.Player ~= pn then return end
 			local CurCombo = params.PlayerStageStats:GetCurrentCombo()
 				if CurCombo~= 0 and CurCombo % 100 == 0 then
-					self:Load(charP1Path .. "/combo100.png"):queuecommand("Animate");
+					self:Load(char.Path .. "/combo100.png")
 				elseif CurCombo == 25 then
-					self:Load(charP1Path .. "/combo.png"):queuecommand("Animate");
+					self:Load(char.Path .. "/combo.png")
 				elseif CurCombo ~= 0 and CurCombo % 50 == 0 then
-					self:Load(charP1Path .. "/combo.png"):queuecommand("Animate");
+					self:Load(char.Path .. "/combo.png")
 				elseif CurCombo == 0 then return
 				end;
 			end;
@@ -76,24 +76,24 @@ if (char[short].Name ~= "") then
 			end;
 		};
 		LoadActor("../_Toasty/toasty_circles")..{
-			InitCommand=function(s) s:visible(false):diffuse(unpack(char[short].Color)) end,
-			AnimateCommand=cmd(visible,true;blend,Blend.Add;;finishtweening;x,-40;zoomy,4;diffusealpha,0;sleep,0.2;linear,0.1;diffusealpha,0.5;accelerate,0.5;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			InitCommand=function(s) s:visible(false):diffuse(unpack(char.Color)) end,
+			AnimateCommand=cmd(visible,true;blend,Blend.Add;finishtweening;x,-40;zoomy,4;diffusealpha,0;sleep,0.2;linear,0.1;diffusealpha,0.5;accelerate,0.5;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor("../_Toasty/toasty_circles")..{
-			InitCommand=function(s) s:visible(false):diffuse(unpack(char[short].Color)) end,
-			AnimateCommand=cmd(visible,true;blend,Blend.Add;;finishtweening;x,40;y,40;zoomy,4;diffusealpha,0;sleep,0.166;linear,0.1;diffusealpha,0.5;accelerate,0.4;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			InitCommand=function(s) s:visible(false):diffuse(unpack(char.Color)) end,
+			AnimateCommand=cmd(visible,true;blend,Blend.Add;finishtweening;x,40;y,40;zoomy,4;diffusealpha,0;sleep,0.166;linear,0.1;diffusealpha,0.5;accelerate,0.4;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor("../_Toasty/toasty_circles")..{
-			InitCommand=function(s) s:visible(false):diffuse(unpack(char[short].Color)) end,
-			AnimateCommand=cmd(visible,true;blend,Blend.Add;;finishtweening;x,20;y,60;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.233;linear,0.1;diffusealpha,0.5;accelerate,0.3;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			InitCommand=function(s) s:visible(false):diffuse(unpack(char.Color)) end,
+			AnimateCommand=cmd(visible,true;blend,Blend.Add;finishtweening;x,20;y,60;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.233;linear,0.1;diffusealpha,0.5;accelerate,0.3;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor("../_Toasty/toasty_circles")..{
-			InitCommand=function(s) s:visible(false):diffuse(unpack(char[short].Color)) end,
-			AnimateCommand=cmd(visible,true;blend,Blend.Add;;finishtweening;x,-20;y,40;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.3;linear,0.1;diffusealpha,0.5;accelerate,0.6;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
+			InitCommand=function(s) s:visible(false):diffuse(unpack(char.Color)) end,
+			AnimateCommand=cmd(visible,true;blend,Blend.Add;finishtweening;x,-20;y,40;zoomx,1;zoomy,2;diffusealpha,0;sleep,0.3;linear,0.1;diffusealpha,0.5;accelerate,0.6;addy,-SCREEN_HEIGHT;linear,0.3;diffusealpha,0;sleep,0.1;addy,SCREEN_HEIGHT);
 		};
 		LoadActor("../_Toasty/toasty_gradient")..{
-			InitCommand=function(s) s:setsize(200,SCREEN_HEIGHT):visible(false):diffuse(unpack(char[short].Color)) end,
-			AnimateCommand=cmd(visible,true;blend,Blend.Add;;finishtweening;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;sleep,0.5;linear,0.2;diffusealpha,0);
+			InitCommand=function(s) s:setsize(200,SCREEN_HEIGHT):visible(false):diffuse(unpack(char.Color)) end,
+			AnimateCommand=cmd(visible,true;blend,Blend.Add;finishtweening;diffusealpha,0;sleep,0.166;linear,0.5;diffusealpha,0.8;sleep,0.5;linear,0.2;diffusealpha,0);
 		};
 	};
 end;
