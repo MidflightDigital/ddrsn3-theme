@@ -30,6 +30,7 @@ t[#t+1] = StandardDecorationFromFileOptional("NetworkStatus","NetworkStatus");
 	-- Credits
 t[#t+1] = Def.ActorFrame {
  	CreditsText( PLAYER_1 );
+ 	CreditsText( PLAYER_2 );
 };
 	-- Text
 t[#t+1] = Def.ActorFrame {

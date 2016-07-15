@@ -71,12 +71,15 @@ function Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)
     return ret
 end
 
+--The first four are Lv. 1-4, the fifth is All, and the sixth is the unlockable
+--Lv. 5.
 local levelToRange = {
     {1,3},
     {3,5},
     {5,7},
     {7,9},
-    {1,11}
+    {1,11},
+    {9,11}
 }
 
 function Endless.CreateState(stepsType, endlessLevel, breakStages)

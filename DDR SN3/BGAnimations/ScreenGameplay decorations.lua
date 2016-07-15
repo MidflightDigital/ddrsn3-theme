@@ -12,7 +12,7 @@ t[#t+1] = Def.Actor{
     JudgmentMessageCommand = function(_,params)
         if not (( ScoringInfo[params.Player]) and 
             (ScoringInfo.seed == GAMESTATE:GetStageSeed())) then 
-            SN2Scoring.PrepareScoringInfo()
+            SN2Scoring.PrepareScoringInfo(IsStarterMode())
             ScoringInfo.seed = GAMESTATE:GetStageSeed() 
         end
         local stage = GAMESTATE:IsCourseMode() and GAMESTATE:GetCourseSongIndex() + 1 or nil
