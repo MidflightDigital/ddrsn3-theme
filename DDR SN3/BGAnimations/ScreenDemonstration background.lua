@@ -23,25 +23,23 @@ t.OnCommand = setVisibility
 t.CurrentSongChangedMessageCommand = setVisibility
 
 --Set a table for possible dancers
-local vids = {
-	"baby-lon",
-	"alice",
-	"disco",
-	"emi",
-	"jenny",
-	"rage",
-	"yuni",
-};
+local vids = Characters.GetAllCharacterNames();
 
 --Chooses one of the dancers
-local choose = math.random(0,7);
+local choose = math.random(1,#vids);
 
 --Sets the Dancer to be loaded
 local charName = vids[choose]
 
---Loads The Video
-t[#t+1] = LoadActor("/SNCharacters/"..charName.."/DancerVideos/"..charName.."_1")..{
-	InitCommand=cmd(draworder,1;Center;zoomto,SCREEN_WIDTH+38,SCREEN_HEIGHT+38;);	
-};
+local danceVid = Characters.GetDancerVideo(charName)
+
+if danceVid then
+    --Loads The Video
+    t[#t+1] = LoadActor(danceVid)..{
+	   InitCommand=cmd(draworder,1;Center;zoomto,SCREEN_WIDTH+38,SCREEN_HEIGHT+38;);	
+    };
+else
+    --hell if i know
+end
 
 return t;
