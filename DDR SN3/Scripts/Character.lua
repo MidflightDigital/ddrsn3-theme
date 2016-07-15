@@ -210,8 +210,8 @@ function OptionRowCharacters()
         Name="Characters",
         LayoutType = "ShowAllInRow",
         SelectType = "SelectOne",
-        OneChoiceForAllPlayers = "false",
-        ExportOnChange = "false",
+        OneChoiceForAllPlayers = false,
+        ExportOnChange = false,
         Choices = choiceList,
         LoadSelections = function(self, list, pn)
             local pn = ToEnumShortString(pn)
