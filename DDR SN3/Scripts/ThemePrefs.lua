@@ -39,6 +39,19 @@ function InitUserPrefs()
 	setenv("ScreenFilterP1",0)
 	setenv("ScreenFilterP2",0)
 end
+--[[
+function OptionRowCharSel()
+	local t = {
+		Name="CharacterSel"
+		LayoutType = "ShowAllInRow"
+		SelectTyle = "SelectOne",
+		OneChoiceForAllPlayers = false,
+		ExportOnChange = false,
+		Choices = { THEME:GetString('OptionNames','Off'), 'Alice', 'Baby-Lon', 'Disco', 'Emi', 'Jenny', 'Rage', 'Yuni', },
+		LoadSelections = function(self, list, pn)
+			local pName= ToEnumShortString(pn)
+			local 
+--]]
 function OptionRowScreenFilter()
 	--we use integers equivalent to the alpha value multiplied by 10
 	--to work around float precision issues
@@ -50,7 +63,7 @@ function OptionRowScreenFilter()
 		SelectType = "SelectOne",
 		OneChoiceForAllPlayers = false,
 		ExportOnChange = false,
-		Choices = { THEME:GetString('OptionNames','Off'),
+		Choices = { THEME:GetString('OptionNames','Off'), 
 			THEME:GetString('OptionTitles', 'FilterDark'),
 			THEME:GetString('OptionTitles', 'FilterDarker'),
 			THEME:GetString('OptionTitles', 'FilterDarkest'),
@@ -58,7 +71,7 @@ function OptionRowScreenFilter()
 		LoadSelections = function(self, list, pn)
 			local pName = ToEnumShortString(pn)
 			local filterValue = getenv("ScreenFilter"..pName)
-
+			
 			if filterValue ~= nil then
 				local val = alphaToChoice[filterValue] or 1
 				list[val] = true
@@ -86,7 +99,7 @@ end
 
 function ReadOrCreateScreenFilterValueForPlayer(PlayerUID, MyValue)
 	local FilterFile = RageFileUtil:CreateRageFile()
-	if FilterFile:Open("Save/ScreenFilter/"..PlayerUID..".txt",1) then
+	if FilterFile:Open("Save/ScreenFilter/"..PlayerUID..".txt",1) then 
 		local str = FilterFile:Read();
 		MyValue =tonumber(str);
 	else
@@ -100,7 +113,7 @@ end
 
 function SaveScreenFilterValueForPlayer( PlayerUID, MyValue)
 	-- local FilterFile = RageFileUtil:CreateRageFile();
-	-- if FilterFile:Open("Save/ScreenFilter/"..PlayerUID..".txt",1) then
+	-- if FilterFile:Open("Save/ScreenFilter/"..PlayerUID..".txt",1) then 
 		-- local str = FilterFile:Read();
 		-- MyValue = tonumber(str);
 	-- else
@@ -108,7 +121,7 @@ function SaveScreenFilterValueForPlayer( PlayerUID, MyValue)
 		-- FilterFile:Write("0");
 	-- end
 	-- FilterFile:Close();
-
+	
 	local FilterFile2 = RageFileUtil:CreateRageFile();
 	FilterFile2:Open("Save/ScreenFilter/"..PlayerUID..".txt",2);
 	FilterFile2:Write(tostring(MyValue));
@@ -130,15 +143,15 @@ function OptionRowScreenFilterUseFile()
 			local filterValue = 0;
 			local pf = PROFILEMAN:GetProfile(pn);
 			local PlayerUID = "";
-
-			if pf then
-				PlayerUID = pf:GetGUID()
+			
+			if pf then 
+				PlayerUID = pf:GetGUID()  
 				filterValue = ReadOrCreateScreenFilterValueForPlayer(PlayerUID,filterValue);
 			else
 				PlayerUID = "UnknownPlayerUID"
 				filterValue = 0;
 			end
-
+			
 			if filterValue ~= nil then
 				local val = scale(tonumber(filterValue),0,1,1,#list )
 				list[val] = true
@@ -153,13 +166,13 @@ function OptionRowScreenFilterUseFile()
 			local found = false
 			local PlayerUID = "";
 			local pf = PROFILEMAN:GetProfile(pn);
-
-			if pf then
-				PlayerUID = pf:GetGUID()
+			
+			if pf then 
+				PlayerUID = pf:GetGUID()  
 			else
 				PlayerUID = "UnknownPlayerUID"
 			end
-
+			
 			for i=1,#list do
 				if not found then
 					if list[i] == true then

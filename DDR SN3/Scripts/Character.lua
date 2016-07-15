@@ -98,7 +98,7 @@ end
 
 function Characters.GetConfig(name, forceRecheck)
     if (characterConfigs[name]~=nil and (not forceRecheck)) then
-        return (characterConfigs[name]~=false)
+        return (characterConfigs[name]~=false) 
             and characterConfigs[name]
             or nil
     else
@@ -174,7 +174,7 @@ end
 
 --Returns a dancer video or nothing if none exist.
 function Characters.GetDancerVideo(name)
-    local potentialVideos = {}
+    local potentialVideos = {} 
     local charPath = c.GetPath(name)
     if charPath then
         charPath = charPath .. "DancerVideos/"
@@ -210,7 +210,7 @@ function OptionRowCharacters()
         Name="Characters",
         LayoutType = "ShowAllInRow",
         SelectType = "SelectOne",
-        OneChoiceForAllPlayers = false,
+        OneChoiceForAllPlayers = "false",
         ExportOnChange = "false",
         Choices = choiceList,
         LoadSelections = function(self, list, pn)
@@ -254,7 +254,7 @@ end
 
 -- (c) 2016 John Walstrom
 -- All rights reserved.
---
+-- 
 -- Permission is hereby granted, free of charge, to any person obtaining a
 -- copy of this software and associated documentation files (the
 -- "Software"), to deal in the Software without restriction, including
@@ -264,7 +264,7 @@ end
 -- copyright notice(s) and this permission notice appear in all copies of
 -- the Software and that both the above copyright notice(s) and this
 -- permission notice appear in supporting documentation.
---
+-- 
 -- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
 -- OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 -- MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
