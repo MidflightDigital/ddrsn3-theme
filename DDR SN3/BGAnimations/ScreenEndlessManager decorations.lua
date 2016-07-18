@@ -24,18 +24,22 @@ local pastStageStats = STATSMAN:GetPlayedStageStats(1)
         end
     end
 
+local continuing = true
 if pastStageStats then
     if pastStageStats:AllFailed() then
-        PREFSMAN:SetPreference("ComboContinuesBetweenSongs", endlessState.startingCC)
+        PREFSMAN:SetPreference("ComboContinuesBetweenSongs", false)
+        continuing = false
         targetScreen = "ScreenTitleMenu"
     end
 end
 
---get and set up the next song
-local nextUp = endlessState.choiceDeck()
+if continuing then
+    --get and set up the next song
+    local nextUp = endlessState.choiceDeck()
 
-GAMESTATE:SetCurrentSong(nextUp[1])
-GAMESTATE:SetCurrentSteps(GAMESTATE:GetMasterPlayerNumber(), nextUp[2])
+    GAMESTATE:SetCurrentSong(nextUp[1])
+    GAMESTATE:SetCurrentSteps(GAMESTATE:GetMasterPlayerNumber(), nextUp[2])
+end
 
 --if this is a break stage, the input callback will continue for us instead
 if not breaking then

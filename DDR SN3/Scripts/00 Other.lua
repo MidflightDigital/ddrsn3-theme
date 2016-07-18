@@ -242,7 +242,7 @@ function MakeDeck(source)
 	FindKeys()
 	return function()
 		if next(keys) == nil then FindKeys() end
-		return source[table.remove(keys, math.random(1,#keys))]
+		return source[table.remove(keys, ((#keys == 1) and 1 or math.random(1,#keys)))]
 	end
 end
 
