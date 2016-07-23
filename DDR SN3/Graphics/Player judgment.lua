@@ -16,9 +16,9 @@ local JudgeCmds = {
 local StJudgeCmds = {
 	TapNoteScore_W1 = THEME:GetMetric( "Judgment", "JudgmentW1Command" );
 	TapNoteScore_W2 = THEME:GetMetric( "Judgment", "JudgmentW1Command" );
-	TapNoteScore_W3 = THEME:GetMetric( "Judgment", "JudgmentW3Command" );
-	TapNoteScore_W4 = THEME:GetMetric( "Judgment", "JudgmentW3Command" );
-	TapNoteScore_W5 = THEME:GetMetric( "Judgment", "JudgmentMissCommand" );
+	TapNoteScore_W3 = THEME:GetMetric( "Judgment", "JudgmentW1Command" );
+	TapNoteScore_W4 = THEME:GetMetric( "Judgment", "JudgmentW4Command" );
+	TapNoteScore_W5 = THEME:GetMetric( "Judgment", "JudgmentW4Command" );
 	TapNoteScore_Miss = THEME:GetMetric( "Judgment", "JudgmentMissCommand" );
 };
 
@@ -36,9 +36,9 @@ local TNSFrames = {
 local StTNSFrames = {
 	TapNoteScore_W1 = 0;
 	TapNoteScore_W2 = 0;
-	TapNoteScore_W3 = 1;
+	TapNoteScore_W3 = 0;
 	TapNoteScore_W4 = 1;
-	TapNoteScore_W5 = 3;
+	TapNoteScore_W5 = 1;
 	TapNoteScore_Miss = 3;	
 };
 
