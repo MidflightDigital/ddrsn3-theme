@@ -2,14 +2,17 @@ local t = Def.ActorFrame {
 	LoadActor(("../../cleared"))..{
 		StartTransitioningCommand=cmd(play);
 	};
+	LoadActor(("../cheer"))..{
+		StartTransitioningCommand=cmd(play);
+	};
 	---- DOOR OPEN > CLOSE  CLOSE > OPEN
 	LoadActor(THEME:GetPathB("","Door1"))..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;CenterY;halign,1);
-		OnCommand=cmd(sleep,1.3;linear,0.75;x,SCREEN_CENTER_X+51);
+		OnCommand=cmd(sleep,1.3;linear,1;x,SCREEN_CENTER_X+51;sleep,4.7);
 	};
 	LoadActor(THEME:GetPathB("","Door2"))..{
 		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;CenterY;halign,0);
-		OnCommand=cmd(sleep,1.3;linear,0.75;x,SCREEN_CENTER_X-51);
+		OnCommand=cmd(sleep,1.3;linear,1;x,SCREEN_CENTER_X-51;sleep,4.7);
 	};
 };
 
@@ -38,7 +41,7 @@ t[#t+1] = Def.ActorFrame{
 			zoomy(0):zoomx(4):diffusealpha(0)
 		else
 			self:diffusealpha(0)
-		end;	
+		end;
 	end;
 	};
 };

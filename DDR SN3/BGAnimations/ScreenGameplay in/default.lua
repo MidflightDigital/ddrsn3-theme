@@ -23,11 +23,61 @@ t[#t+1] =Def.ActorFrame{
 	LoadActor(THEME:GetPathB("","doors open"));
 };
 
+if not GAMESTATE:IsCourseMode() then
+--song jacket--
+t[#t+1] = Def.ActorFrame {
+	OnCommand=cmd(playcommand,'Set';CenterX;y,SCREEN_CENTER_Y-130;accelerate,0.099;zoomy,0);
+	Def.Sprite {
+		SetCommand=function(self)
+		local song = GAMESTATE:GetCurrentSong();
+			if song:HasBanner() then
+				self:LoadFromSongBanner(GAMESTATE:GetCurrentSong());
+				self:setsize(256,80);
+			else
+				self:Load(THEME:GetPathG("","Common fallback banner"));
+				self:setsize(256,80);
+			end;
+		end;
+	};
+};
+else
+t[#t+1] = LoadActor("../ScreenStageInformation in/CourseDisplay");
+end;
+
+t[#t+1] = Def.ActorFrame {
+	InitCommand=function(self)
+		self:y(SCREEN_CENTER_Y-124);
+	end;
+	LoadActor(THEME:GetPathG("","ScreenEvaluation bannerframe (doubleres)"))..{
+		InitCommand=cmd(CenterX);
+		OnCommand=cmd(accelerate,0.099;zoomy,0);
+	};
+};
+
+t[#t+1] = Def.Sprite {
+	Texture="../ScreenStageInformation in/rayo 1x2.png",
+		InitCommand=function(self)
+			self:Center()
+			self:SetAllStateDelays(0.082)
+		end;
+		OnCommand=cmd(accelerate,0.198;glowshift;diffusealpha,0);
+};
+
+t[#t+1] = LoadActor("../ScreenStageInformation in/bottom_stage")..{
+	InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-27);
+	OnCommand=cmd(accelerate,0.198;addy,54);
+};
+
+t[#t+1] = LoadActor("../ScreenStageInformation in/top_stage")..{
+	InitCommand=cmd(CenterX;y,SCREEN_TOP+52);
+	OnCommand=cmd(accelerate,0.198;addy,-104);
+};
+
 t[#t+1] = Def.ActorFrame {
 	Def.Sprite{
 	InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
 	OnCommand=function(self)
-		if GAMESTATE:GetPlayMode() == 'PlayMode_Regular' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle' or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then 
+		if GAMESTATE:GetPlayMode() == 'PlayMode_Regular' or GAMESTATE:GetPlayMode() == 'PlayMode_Battle' or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
 			self:Load(THEME:GetPathG("ScreenStageInformation", "Stage " .. ToEnumShortString(sStage) ));
 		elseif GAMESTATE:GetPlayMode() == 'PlayMode_Oni' then
 			self:Load(THEME:GetPathG("ScreenStageInformation", "Stage oni"));
@@ -36,8 +86,8 @@ t[#t+1] = Def.ActorFrame {
 		elseif (GAMESTATE:Env()).EndlessState then
 			self:Load(THEME:GetPathG("ScreenStageInformation", "Stage endless"));
 		end;
-	self:sleep(0.484)
-	:linear(0.198):diffusealpha(0);
+	self:sleep(0.1)
+	:linear(0.1):glowshift():diffusealpha(0);
 	end;
 	};
 };

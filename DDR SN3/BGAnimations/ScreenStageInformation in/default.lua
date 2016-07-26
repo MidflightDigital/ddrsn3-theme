@@ -23,10 +23,10 @@ t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)
 		self:sleep(3.01);
 	end;
-	
+
 	---- DOOR OPEN > CLOSE  CLOSE > OPEN
 	LoadActor(THEME:GetPathB("","doors close"));
-	LoadActor(("../failed"))..{
+	LoadActor(("DONK"))..{
 		OnCommand=cmd(queuecommand,("Play"));
 		PlayCommand=cmd(play;);
 	};
@@ -38,7 +38,7 @@ t[#t+1] = Def.ActorFrame {
 if not GAMESTATE:IsCourseMode() then
 --song jacket--
 t[#t+1] = Def.ActorFrame {
-	OnCommand=cmd(playcommand,'Set';CenterX;y,SCREEN_CENTER_Y-130;zoomy,0;sleep,0.099;sleep,0.396;linear,0.099;zoomy,1);
+	OnCommand=cmd(playcommand,'Set';CenterX;y,SCREEN_CENTER_Y-130;zoomy,0;sleep,0.099;sleep,0.396;linear,0.2;zoomy,1);
 	Def.Sprite {
 		SetCommand=function(self)
 		local song = GAMESTATE:GetCurrentSong();
@@ -62,7 +62,7 @@ t[#t+1] = Def.ActorFrame {
 	end;
 	LoadActor(THEME:GetPathG("","ScreenEvaluation bannerframe (doubleres)"))..{
 		InitCommand=cmd(CenterX);
-		OnCommand=cmd(zoomy,0;sleep,0.099;sleep,0.396;linear,0.099;zoomy,1;sleep,2);
+		OnCommand=cmd(zoomy,0;sleep,0.099;sleep,0.396;linear,0.2;zoomy,1;sleep,2);
 	};
 };
 
@@ -78,12 +78,12 @@ t[#t+1] = LoadActor("StageDisplay");
 
 t[#t+1] = LoadActor("bottom_stage")..{
 	InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-27);
-	OnCommand=cmd(addy,54;sleep,0.396;linear,0.198;addy,-54);
+	OnCommand=cmd(addy,54;sleep,0.396;linear,0.2;addy,-54);
 };
 
 t[#t+1] = LoadActor("top_stage")..{
 	InitCommand=cmd(CenterX;y,SCREEN_TOP+52);
-	OnCommand=cmd(addy,-104;sleep,0.396;linear,0.198;addy,104);
+	OnCommand=cmd(addy,-104;sleep,0.396;linear,0.2;addy,104);
 };
 
 
