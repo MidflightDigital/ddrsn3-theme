@@ -46,6 +46,7 @@ local env = GAMESTATE:Env();
 local starterMode = env.StarterMode == true;
 local activeFrames = starterMode and StTNSFrames or TNSFrames;
 local activeCmds = starterMode and StJudgeCmds or JudgeCmds;
+local showEarlyLate = SN3Debug
 
 local t = Def.ActorFrame {};
 t[#t+1] = Def.ActorFrame {
