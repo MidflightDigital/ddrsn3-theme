@@ -12,6 +12,7 @@ function IsStarterMode()
 	return nil
 end
 
+--right now this function doesn't do anything useful
 function MinimumTNSForCombo()
-	return IsStarterMode() and 'TapNoteScore_W4' or 'TapNoteScore_W3'
+	return 'TapNoteScore_W3'
 end
