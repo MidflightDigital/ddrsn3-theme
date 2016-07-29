@@ -7,6 +7,19 @@ local t = Def.ActorFrame{};
 if (charP1Name ~= "") then
     local charP1Color = (Characters.GetConfig(charP1Name)).color
 --Player 1--
+if GAMESTATE:GetCurrentStyle():GetName() == "versus" then
+  t[#t+1] = Def.ActorFrame{
+    InitCommand=function(self)
+      self:x(SCREEN_CENTER_X);
+      self:y(SCREEN_CENTER_Y);
+      self:zoomy(-1);
+      self:zoomx(-1);
+    end;
+    LoadActor("toasty_maskP2 Versus")..{
+      OnCommand=cmd(blend,Blend.NoEffect;zwrite,1;clearzbuffer,true;);
+    };
+  };
+end;
 	t[#t+1] = Def.ActorFrame {
 		InitCommand=function(self)
 			if GAMESTATE:GetCurrentStyle():GetName() == "single" then
@@ -16,6 +29,7 @@ if (charP1Name ~= "") then
 				self:x(SCREEN_CENTER_X);
 				self:y(SCREEN_CENTER_Y-120);
 			end;
+    self:ztest(1);
 		end;
 		ComboChangedMessageCommand=function(self, params)
 		if params.Player ~= 'PlayerNumber_P1' then return end
@@ -61,7 +75,7 @@ if (charP1Name ~= "") then
 			:diffusealpha(1):linear(1):addy(-10)
 			:linear(0.1):addy(-4)
 			:diffusealpha(0):sleep(0.1):addy(18)
-			end;		
+			end;
 		};
 		LoadActor("../_Toasty/toasty_circles")..{
 			InitCommand=function(s) s:visible(false):diffuse(unpack(charP1Color)) end,
