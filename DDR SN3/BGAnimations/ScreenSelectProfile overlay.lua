@@ -628,7 +628,7 @@ local t = Def.ActorFrame {
 		Def.ActorFrame {
 			Name = 'P1Frame';
 			InitCommand=cmd(x,SCREEN_CENTER_X-160;y,SCREEN_CENTER_Y+20;zoom,2);
-			OnCommand=cmd();
+			OnCommand=cmd(sleep,8);
 			OffCommand=cmd();
 			PlayerJoinedMessageCommand=function(self,param)
 				if param.Player == PLAYER_1 then
@@ -640,7 +640,7 @@ local t = Def.ActorFrame {
 		Def.ActorFrame {
 			Name = 'P2Frame';
 			InitCommand=cmd(x,SCREEN_CENTER_X+160;y,SCREEN_CENTER_Y+20;zoom,2;);
-			OnCommand=cmd();
+			OnCommand=cmd(sleep,8);
 			OffCommand=cmd();
 			PlayerJoinedMessageCommand=function(self,param)
 				if param.Player == PLAYER_2 then
@@ -653,10 +653,13 @@ local t = Def.ActorFrame {
 		LoadActor( THEME:GetPathS("Common","start") )..{
 			StartButtonMessageCommand=cmd(play);
 		};
+    LoadActor( THEME:GetPathS("","Profile_start") )..{
+			StartButtonMessageCommand=cmd(play);
+		};
 		LoadActor( THEME:GetPathS("Common","cancel") )..{
 			BackButtonMessageCommand=cmd(play);
 		};
-		LoadActor( THEME:GetPathS("ScreenOptions","change") )..{
+		LoadActor( THEME:GetPathS("","Profile_Move") )..{
 			DirectionButtonMessageCommand=cmd(play);
 		};
 	};

@@ -22,16 +22,18 @@ t[#t+1] = Def.ActorFrame{
 };
 end;
 
-if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
-t[#t+1] = Def.ActorFrame{
-		LoadActor("P1 Toast.lua");
-};
-
-end;
-if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
-t[#t+1] = Def.ActorFrame{
-		LoadActor("P2 Toast.lua");
-};
+--toasty loader
+if not GAMESTATE:GetCurrentStyle():GetStyleType() == "StyleType_OnePlayerTwoSides" then
+  if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
+    t[#t+1] = Def.ActorFrame{
+		    LoadActor("P1 Toast.lua");
+    };
+  end;
+  if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
+    t[#t+1] = Def.ActorFrame{
+		    LoadActor("P2 Toast.lua");
+    };
+  end;
 end;
 
 return t;

@@ -18,7 +18,7 @@ function SelectMusicOrCourse()
 end
 
 Branch.Init = function() return "ScreenInit" end
-	
+
 Branch.AfterInit = function()
 	if GAMESTATE:GetCoinMode() == 'CoinMode_Home' then
 		return Branch.TitleMenu()
@@ -48,14 +48,6 @@ Branch.StartGame = function()
 		return "ScreenHowToInstallSongs"
 	end
 	if PROFILEMAN:GetNumLocalProfiles() >=1 then
-		return "ScreenSelectProfile"
-	else
-		return "ScreenCaution"
-	end
-end
-
-Branch.Profile = function()
-	if PROFILEMAN:GetNumLocalProfiles() >= 1 then
 		return "ScreenSelectProfile"
 	else
 		return "ScreenCaution"
@@ -127,7 +119,7 @@ Branch.AfterEvaluation = function()
 end
 
 Branch.AfterSummary = "ScreenProfileSaveSummary"
-	
+
 Branch.Network = function()
 	return IsNetConnected() and "ScreenTitleMenu" or "ScreenTitleMenu"
 end

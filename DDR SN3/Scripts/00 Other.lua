@@ -1,3 +1,34 @@
+function JudgmentTransformCommand( self, params )
+	local x = 0
+	local y = -76
+	-- ���o�[�X����Y���ݒ��A�Z���^�[�����{
+	if params.bReverse then y = 67 end
+	-- This makes no sense and wasn't even being used due to misspelling.
+	-- if bCentered then y = y * 2 end
+	self:x( x )
+	self:y( y )
+end
+
+-- �R���{�ݒ�
+function ComboTransformCommand( self, params )
+	local x = 0
+	local y = 38
+	if params.bReverse then y = -23 end
+
+	--[[
+	if params.bCentered then
+		if params.bReverse then
+			y = y - 30
+		else
+			y = y + 40
+		end
+	end
+	--]]
+	self:x( x )
+	self:y( y )
+end
+
+
 --This comes in handy in a number of places
 function GetOrCreateChild(tab, field, kind)
     kind = kind or 'table'
@@ -24,7 +55,7 @@ if SN3Debug then
 	print("SN3 debug mode enabled.")
 end
 
-function TextBannerAfterSet(self,param) 
+function TextBannerAfterSet(self,param)
 	local Title=self:GetChild("Title")
 	local Subtitle=self:GetChild("Subtitle")
 	local Artist=self:GetChild("Artist")
@@ -225,7 +256,7 @@ end
 --MakeDeck(source)
 --Takes a table and returns a deck based on that table.
 --A deck is a function that, when it is called, returns a random value from
---a table. It will go through every entry in the table before repeating. 
+--a table. It will go through every entry in the table before repeating.
 function MakeDeck(source)
 	assert(source, "MakeDeck: you need to pass in a table")
 	if not next(source) then
@@ -247,7 +278,7 @@ function MakeDeck(source)
 end
 
 function EnableStarterGameplayJunk()
-	assert(GAMESTATE and GAMESTATE:Env(), 
+	assert(GAMESTATE and GAMESTATE:Env(),
 		"Wherever you are calling EnableStarterGameplayJunk, you can't do it there!")
 	local env = GAMESTATE:Env()
 	env.StarterMode = true

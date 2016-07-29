@@ -47,6 +47,16 @@ local t = Def.ActorFrame {
 			Name="LabelNormal";
 			OnCommand = THEME:GetMetric("Combo", "LabelOnCommand");
 		};
+	LoadActor(THEME:GetPathG("Combo","100Milestone")) .. {
+		Name="OneHundredMilestone";
+		InitCommand=cmd(visible,true);
+		FiftyMilestoneCommand=cmd(playcommand,"Milestone");
+	};
+	LoadActor(THEME:GetPathG("Combo","1000Milestone")) .. {
+		Name="OneThousandMilestone";
+		InitCommand=cmd(visible,true);
+		ToastyAchievedMessageCommand=cmd(playcommand,"Milestone");
+	};
 	};
 	InitCommand = function(self)
 		c = self:GetChildren();
@@ -62,7 +72,18 @@ local t = Def.ActorFrame {
 		cf.LabelNormal:visible(false);
 	end;
 	ComboCommand=function(self, param)
-		local iCombo = param.Combo;
+		if param.Misses then
+			cf.NumberW1:visible(false);
+			cf.NumberW2:visible(false);
+			cf.NumberW3:visible(false);
+			cf.NumberNormal:visible(false);
+			cf.LabelW1:visible(false);
+			cf.LabelW2:visible(false);
+			cf.LabelW3:visible(false);
+			cf.LabelNormal:visible(false);
+			return;
+		end
+		local iCombo = param.Misses or param.Combo;
 		if not iCombo or iCombo < ShowComboAt then
 			cf.NumberW1:visible(false);
 			cf.NumberW2:visible(false);
@@ -96,7 +117,7 @@ local t = Def.ActorFrame {
 			cf.NumberW2:visible(false);
 			cf.NumberW3:visible(false);
 			cf.NumberNormal:visible(false);
-			
+
 			cf.LabelW1:visible(true);
 			cf.LabelW2:visible(false);
 			cf.LabelW3:visible(false);
@@ -106,7 +127,7 @@ local t = Def.ActorFrame {
 			cf.NumberW2:visible(true);
 			cf.NumberW3:visible(false);
 			cf.NumberNormal:visible(false);
-			
+
 			cf.LabelW1:visible(false);
 			cf.LabelW2:visible(true);
 			cf.LabelW3:visible(false);
@@ -116,7 +137,7 @@ local t = Def.ActorFrame {
 			cf.NumberW2:visible(false);
 			cf.NumberW3:visible(true);
 			cf.NumberNormal:visible(false);
-			
+
 			cf.LabelW1:visible(false);
 			cf.LabelW2:visible(false);
 			cf.LabelW3:visible(true);
@@ -126,7 +147,7 @@ local t = Def.ActorFrame {
 			cf.NumberW2:visible(false);
 			cf.NumberW3:visible(false);
 			cf.NumberNormal:visible(true);
-			
+
 			cf.LabelW1:visible(false);
 			cf.LabelW2:visible(false);
 			cf.LabelW3:visible(false);
@@ -136,7 +157,7 @@ local t = Def.ActorFrame {
 			cf.NumberW2:visible(false);
 			cf.NumberW3:visible(false);
 			cf.NumberNormal:visible(true);
-			
+
 			cf.LabelW1:visible(false);
 			cf.LabelW2:visible(false);
 			cf.LabelW3:visible(false);
