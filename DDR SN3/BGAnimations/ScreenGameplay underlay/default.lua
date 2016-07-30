@@ -23,7 +23,7 @@ t[#t+1] = Def.ActorFrame{
 end;
 
 --toasty loader
-if not GAMESTATE:GetCurrentStyle():GetStyleType() == "StyleType_OnePlayerTwoSides" then
+if GAMESTATE:GetCurrentStyle():GetStyleType() ~= "StyleType_OnePlayerTwoSides" then
   if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
     t[#t+1] = Def.ActorFrame{
 		    LoadActor("P1 Toast.lua");
