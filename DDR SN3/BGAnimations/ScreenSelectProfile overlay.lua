@@ -42,6 +42,9 @@ function LoadCard(cColor,cColor2,Player,IsJoinFrame)
 		};
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","CardBG02") ) .. {
 			InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(3);
+        end;
 				(cmd(shadowlength,0;zoomy,0;diffuse,cColor2))(self);
 			end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;zoomy,1;);
@@ -70,33 +73,76 @@ function LoadCard(cColor,cColor2,Player,IsJoinFrame)
 				end
 			end;
 		};
-		LoadFont("_futura std medium 20px") .. {
-		InitCommand=cmd(x,15;y,-95;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("#03ff03");strokecolor,color("#001f00");maxwidth,320);
+    LoadActor( THEME:GetPathG("ScreenSelectProfile","CardBG04") ) .. {
+			InitCommand=function(self)
+				if Player==PLAYER_2 then
+					self:x(3);
+				end
+			  (cmd(shadowlength,0;y,65;zoomy,0;diffuse,cColor))(self);
+			end;
+      OnCommand=function(self)
+        if IsJoinFrame then
+          (cmd(sleep,0.8;linear,0.3;zoomy,0;))(self);
+        else
+          (cmd(sleep,0.8;linear,0.3;zoomy,1;))(self);
+        end;
+      end;
+			OffCommand=function(self)
+				if IsJoinFrame then
+					(cmd(sleep,0.5;linear,0.2;zoomy,0.100;diffusealpha,0))(self);
+				else
+					(cmd(linear,0.2;zoomy,0.100;diffusealpha,0))(self);
+				end
+			end;
+		};
+		LoadFont("_handelgothic bt 20px") .. {
+		InitCommand=cmd(x,10;y,-94;zoom,0;diffuse,color("#03ff03");diffusetopedge,color("#02b102");diffusealpha,0.8;maxwidth,320);
 		OnCommand=function(self)
 			if Player== PLAYER_1 then
 				self:settext("PLAYER:1");
 			else
 				self:settext("PLAYER:2");
-				self:x(-15);
+				self:x(-7);
 			end
-			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.40;zoomx,0.60))(self);
+			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.40;zoomx,0.80))(self);
 		end;
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
 
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","LvWord") ) .. {
-			InitCommand=cmd(shadowlength,0;zoom,0;y,46;x,18;diffuse,cColor2);
+      InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(23);
+        elseif Player==PLAYER_1 then
+          self:x(18)
+        end;
+				(cmd(shadowlength,0;zoom,0;y,46;diffuse,cColor2))(self);
+			end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;zoom,0.5;);
 			OffCommand=cmd(linear,0.02;zoom,0.100;diffusealpha,0);
 		};
 
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","DancerNameWord") ) .. {
-			InitCommand=cmd(shadowlength,0;zoom,0;y,-82.5;x,-34.5;diffuse,cColor2;);
+      InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(-31.5);
+        elseif Player==PLAYER_1 then
+          self:x(-34.5)
+        end;
+				(cmd(shadowlength,0;zoom,0;y,-82.5;diffuse,cColor2))(self);
+			end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;zoom,0.4;);
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
 		};
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","RankWord") ) .. {
-			InitCommand=cmd(shadowlength,0;zoom,0;y,-58;x,-34.5;diffuse,cColor2;);
+      InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(-31.5);
+        elseif Player==PLAYER_1 then
+          self:x(-34.5)
+        end;
+				(cmd(shadowlength,0;zoom,0;y,-58;diffuse,cColor2))(self);
+      end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;zoom,0.4;);
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
 		};
@@ -213,7 +259,12 @@ function LoadPlayerStuff(Player)
 		InitCommand=cmd(y,5);
 
 		LoadActor( THEME:GetPathG("ScreenDataSaveSummary","MyGrooveRadarBackP1") )..{
-			InitCommand=cmd(zoom,0.4;y,-2.5);
+      InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(3);
+        end;
+				(cmd(zoom,0.4;y,-2.5))(self);
+      end;
 			OnCommand=cmd(diffusealpha,0;sleep,0.9;linear,0.2;diffusealpha,1);
 			OffCommand=cmd(linear,0.01;zoom,0;diffusealpha,0);
 		};
@@ -239,35 +290,52 @@ function LoadPlayerStuff(Player)
 	--�U���d��-----------------
 	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		Name = 'SelectedProfileText';
-		InitCommand=cmd(y,-71;zoom,0.6;shadowlength,1;diffuse,color("1,1,1,0");strokecolor,Color("Outline");maxwidth,400);
+    InitCommand=function(self)
+      if Player==PLAYER_2 then
+        self:x(3);
+      end;
+      (cmd(y,-71;zoom,0.6;shadowlength,1;diffuse,color("1,1,1,0");strokecolor,Color("Outline");maxwidth,400))(self);
+    end;
 		OnCommand=cmd(sleep,0.8;linear,0.5;diffusealpha,1);
 		OffCommand=cmd(stoptweening;linear,0.01;zoomy,0;diffusealpha,0);
 	};
 
-	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
+	t[#t+1] = LoadFont("_enjoysongnumber") .. {
 		Name = 'SelectedProfileLevel';
-		InitCommand=cmd(valign,1;x,55;y,52;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("0.1,1,0.1,1");strokecolor,Color("Outline");maxwidth,50);
-		OnCommand=cmd(sleep,0.7;linear,0.05;diffusealpha,1;zoom,0.6);
-		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
-	};
-
-	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
-		Name = 'selectedTotalCaloriesBurned';
-		InitCommand=cmd(x,33.5;y,60;zoom,0;diffuse,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,350);
-		OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.3);
+    InitCommand=function(self)
+      if Player==PLAYER_2 then
+        self:x(58);
+      else
+        self:x(55)
+      end;
+      (cmd(valign,1;halign,1;y,50;zoom,0;strokecolor,color("#000000");maxwidth,50))(self);
+    end;
+		OnCommand=cmd(sleep,0.7;linear,0.05;diffusealpha,1;zoom,0.3);
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
 
 	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		Name = 'selectSongsPlayed';
-		InitCommand=cmd(x,25;y,-56;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,0.1,1");strokecolor,Color("Outline");maxwidth,150);
+    InitCommand=function(self)
+      if Player==PLAYER_2 then
+        self:x(28);
+      else
+        self:x(25)
+      end;
+      (cmd(y,-56;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,0.1,1");strokecolor,Color("Outline");maxwidth,150))(self);
+    end;
 		OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.3;zoomx,0.4;);
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
 
 	t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
 		Name = 'selectRank';
-		InitCommand=cmd(y,-46;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,350);
+    InitCommand=function(self)
+      if Player==PLAYER_2 then
+        self:x(3);
+      end;
+      (cmd(y,-46;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,350))(self);
+    end;
 		OnCommand=function(self)
 			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.5;zoomx,0.5))(self);
 		end;
@@ -277,7 +345,14 @@ function LoadPlayerStuff(Player)
 
 	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","LvBar") ) .. {
 			Name = 'selectLvBarBack';
-			InitCommand=cmd(diffusealpha,0;y,46;x,-2;zoomx,0.5;halign,1);
+      InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(1);
+        else
+          self:x(-2)
+        end;
+        (cmd(diffusealpha,0;y,46;zoomx,0.5;halign,1))(self);
+      end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;diffusealpha,1;diffuse,color("0.4,0.4,0.4,1"));
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
 
@@ -285,21 +360,18 @@ function LoadPlayerStuff(Player)
 
 	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","LvBar") ) .. {
 			Name = 'selectLvBar';
-			InitCommand=cmd(diffusealpha,0;y,46;x,-2;zoomx,0.5;halign,1);
+      InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(1);
+        else
+          self:x(-2)
+        end;
+        (cmd(diffusealpha,0;y,46;zoomx,0.5;halign,1))(self);
+      end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;diffusealpha,1;);
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
 
 		};
-
-	t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
-		Name = 'selectTotalCalWord';
-		InitCommand=cmd(x,-26;y,60;zoom,0;diffuse,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,320);
-		OnCommand=function(self)
-			self:settext("Calories burned today:");
-			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.3))(self);
-		end;
-		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
-	};
 
 	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		Name = 'selectPlayerUID';
@@ -309,7 +381,7 @@ function LoadPlayerStuff(Player)
 	if (Player == PLAYER_1) then
 		t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile", "GrooveRadar" ),1,0.2,0.2,0.2,0.5,PLAYER_1,'single')..{
 			Name = "GVRD1S";
-			InitCommand=cmd(x,0;y,5;zoom,0.56;diffusealpha,0;diffuse,PlayerColor(PLAYER_1));
+      InitCommand=cmd(x,0;y,5;zoom,0.56;diffusealpha,0;diffuse,PlayerColor(PLAYER_1));
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;);
 			OffCommand=cmd(linear,0.05;diffusealpha,0);
 		};
@@ -349,37 +421,37 @@ function LoadPlayerStuff(Player)
 	else
 		t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile", "GrooveRadar" ),1,0.2,0.2,0.2,0.5,PLAYER_2,'single')..{
 			Name = "GVRD2S";
-			InitCommand=cmd(x,0;y,5;zoom,0.56;diffusealpha,0;diffuse,PlayerColor(PLAYER_1));
+			InitCommand=cmd(x,3;y,5;zoom,0.56;diffusealpha,0;diffuse,PlayerColor(PLAYER_2));
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;);
 			OffCommand=cmd(linear,0.05;diffusealpha,0);
 		};
 		t[#t+1]=LoadFont("_russell square 16px") .. {
 			Name = 'GVRD2Value_S1';
-			InitCommand=cmd(horizalign,right;x,20+8.5;y,-25;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
+			InitCommand=cmd(horizalign,right;x,23+8.5;y,-25;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
 		t[#t+1]=LoadFont("_russell square 16px") .. {
 			Name = 'GVRD2Value_S2';
-			InitCommand=cmd(horizalign,right;x,-56+8.5;y,-6;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
+			InitCommand=cmd(horizalign,right;x,-53+8.5;y,-6;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
 		t[#t+1]=LoadFont("_russell square 16px") .. {
 			Name = 'GVRD2Value_S3';
-			InitCommand=cmd(horizalign,right;x,-50+8.5;y,32;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
+			InitCommand=cmd(horizalign,right;x,-47+8.5;y,32;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
 		t[#t+1]=LoadFont("_russell square 16px") .. {
 			Name = 'GVRD2Value_S4';
-			InitCommand=cmd(horizalign,right;x,50+8.5;y,32;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
+			InitCommand=cmd(horizalign,right;x,53+8.5;y,32;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
 		t[#t+1]=LoadFont("_russell square 16px") .. {
 			Name = 'GVRD2Value_S5';
-			InitCommand=cmd(horizalign,right;x,50+8.5;y,-6;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
+			InitCommand=cmd(horizalign,right;x,53+8.5;y,-6;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,PlayerColor(PLAYER_1);strokecolor,Color("Outline");maxwidth,220);
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
@@ -400,8 +472,6 @@ function UpdateInternal3(self, Player)
 	local smallframe = frame:GetChild('SmallFrame');
 	local bigframe = frame:GetChild('BigFrame');
 	local selLevel = frame:GetChild('SelectedProfileLevel');
-	local selTotalCalWord = frame:GetChild('selectTotalCalWord');
-	local selTotalCaloriesBurned = frame:GetChild('selectedTotalCaloriesBurned');
 	local selectRank = frame:GetChild('selectRank');
 	local selectPlayerUID = frame:GetChild('selectPlayerUID');
 	local selSongsPlayed = frame:GetChild('selectSongsPlayed');
@@ -428,8 +498,6 @@ function UpdateInternal3(self, Player)
 			seltext:visible(true);
 			scroller:visible(true);
 			selLevel:visible(true);
-			selTotalCalWord:visible(true);
-			selTotalCaloriesBurned:visible(true);
 			selectRank:visible(true);
 			selSongsPlayed:visible(false);
 			selLvBarBack:visible(true);
@@ -466,7 +534,6 @@ function UpdateInternal3(self, Player)
 				scroller:SetDestinationItem(ind-1);
 				seltext:settext(ProfileInfoCache[ind].DisplayName);
 				selLevel:settext(math.ceil(math.sqrt(ProfileInfoCache[ind].TotalCaloriesBurned) ));
-				selTotalCaloriesBurned:settext(math.ceil(ProfileInfoCache[ind].CaloriesBurnedToday)..' kCals.');
 				selSongsPlayed:settext(tostring(math.ceil(ProfileInfoCache[ind].NumTotalSongsPlayed)));
 				selLvBar:cropright(1-pcnt);
 
@@ -514,7 +581,6 @@ function UpdateInternal3(self, Player)
 					seltext:settext('No profile');
 					selectPlayerUID:settext('------------');
 					selLevel:settext('No level info');
-					selTotalCaloriesBurned:settext('No Played Songs Info');
 					selectRank:settext('???');
 					selSongsPlayed:visible(false);
 					selLvBarBack:visible(true);
@@ -543,8 +609,6 @@ function UpdateInternal3(self, Player)
 		smallframe:visible(false);
 		bigframe:visible(false);
 		selLevel:visible(false);
-		selTotalCalWord:visible(false);
-		selTotalCaloriesBurned:visible(false);
 		selectRank:visible(false);
 		selSongsPlayed:visible(false);
 		selLvBarBack:visible(false);
@@ -653,7 +717,7 @@ local t = Def.ActorFrame {
 		LoadActor( THEME:GetPathS("Common","start") )..{
 			StartButtonMessageCommand=cmd(play);
 		};
-    LoadActor( THEME:GetPathS("","Profile_start") )..{
+		LoadActor( THEME:GetPathS("","Profile_start") )..{
 			StartButtonMessageCommand=cmd(play);
 		};
 		LoadActor( THEME:GetPathS("Common","cancel") )..{

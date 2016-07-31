@@ -455,16 +455,19 @@ x[#x+1] = Def.ActorFrame {
 end
 
 x[#x+1] = Def.ActorFrame {
-	LoadActor( THEME:GetPathS("ScreenSelectProfile","in") )..{
-			StartTransitioningCommand=cmd(play);
+	LoadActor( THEME:GetPathS("","Profile_in") )..{
+		StartTransitioningCommand=cmd(play);
 	};
 	LoadActor( THEME:GetPathS("Common","start") )..{
+		StartButtonMessageCommand=cmd(play);
+	};
+	LoadActor( THEME:GetPathS("","Profile_start") )..{
 		StartButtonMessageCommand=cmd(play);
 	};
 	LoadActor( THEME:GetPathS("Common","cancel") )..{
 		BackButtonMessageCommand=cmd(play);
 	};
-	LoadActor( THEME:GetPathS("ScreenOptions","change") )..{
+	LoadActor( THEME:GetPathS("","Profile_Move") )..{
 		DirectionButtonMessageCommand=cmd(play);
 	};
 };
