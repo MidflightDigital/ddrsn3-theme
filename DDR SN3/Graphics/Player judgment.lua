@@ -71,7 +71,7 @@ t[#t+1] = Def.ActorFrame {
 		
 		local iTapNoteOffset = param.TapNoteOffset;
 		
-		if iFrame == 1 and iTapNoteOffset > 0 then
+		if (starterMode) and (iFrame == 1 and iTapNoteOffset > 0) then
 			iFrame = 2;
 		end;
 		
