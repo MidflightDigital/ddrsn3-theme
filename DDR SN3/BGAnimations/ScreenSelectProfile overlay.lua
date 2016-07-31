@@ -78,13 +78,13 @@ function LoadCard(cColor,cColor2,Player,IsJoinFrame)
 				if Player==PLAYER_2 then
 					self:x(3);
 				end
-			  (cmd(shadowlength,0;y,65;zoomy,0;diffuse,cColor))(self);
+			  (cmd(shadowlength,0;y,65;zoomy,0;zoomx,0.5;diffuse,cColor))(self);
 			end;
       OnCommand=function(self)
         if IsJoinFrame then
-          (cmd(sleep,0.8;linear,0.3;zoomy,0;))(self);
+          (cmd(sleep,0.8;linear,0.3;zoomy,0))(self);
         else
-          (cmd(sleep,0.8;linear,0.3;zoomy,1;))(self);
+          (cmd(sleep,0.8;linear,0.3;zoomy,0.5))(self);
         end;
       end;
 			OffCommand=function(self)
@@ -125,9 +125,9 @@ function LoadCard(cColor,cColor2,Player,IsJoinFrame)
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","DancerNameWord") ) .. {
       InitCommand=function(self)
         if Player==PLAYER_2 then
-          self:x(-31.5);
+          self:x(-20);
         elseif Player==PLAYER_1 then
-          self:x(-34.5)
+          self:x(-23)
         end;
 				(cmd(shadowlength,0;zoom,0;y,-82.5;diffuse,cColor2))(self);
 			end;
@@ -137,11 +137,11 @@ function LoadCard(cColor,cColor2,Player,IsJoinFrame)
 		LoadActor( THEME:GetPathG("ScreenSelectProfile","RankWord") ) .. {
       InitCommand=function(self)
         if Player==PLAYER_2 then
-          self:x(-31.5);
+          self:x(-35);
         elseif Player==PLAYER_1 then
-          self:x(-34.5)
+          self:x(-38)
         end;
-				(cmd(shadowlength,0;zoom,0;y,-58;diffuse,cColor2))(self);
+				(cmd(shadowlength,0;zoom,0;y,-40;diffuse,cColor2))(self);
       end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;zoom,0.4;);
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
@@ -334,7 +334,7 @@ function LoadPlayerStuff(Player)
       if Player==PLAYER_2 then
         self:x(3);
       end;
-      (cmd(y,-46;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,350))(self);
+      (cmd(y,-54;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,350))(self);
     end;
 		OnCommand=function(self)
 			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.5;zoomx,0.5))(self);

@@ -86,8 +86,8 @@ t[#t+1] = Def.ActorFrame {
 		elseif (GAMESTATE:Env()).EndlessState then
 			self:Load(THEME:GetPathG("ScreenStageInformation", "Stage endless"));
 		end;
-	self:sleep(0.1)
-	:linear(0.1):glowshift():diffusealpha(0);
+	self:sleep(0.8)
+	:linear(0.1):diffusealpha(0);
 	end;
 	};
 };

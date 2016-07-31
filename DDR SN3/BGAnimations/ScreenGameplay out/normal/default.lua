@@ -37,7 +37,7 @@ t[#t+1] = Def.ActorFrame{
 			self:diffusealpha(0):sleep(0.5):
 			zoomy(0):zoomx(4):linear(0.198):
 			diffusealpha(1):zoomy(1):zoomx(1):
-			sleep(2.604):linear(0.132):
+			sleep(4.7):linear(0.132):
 			zoomy(0):zoomx(4):diffusealpha(0)
 		else
 			self:diffusealpha(0)
