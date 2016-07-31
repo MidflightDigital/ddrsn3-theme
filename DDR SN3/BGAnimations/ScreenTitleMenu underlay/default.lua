@@ -1,3 +1,11 @@
+--if Endless mode didn't get a chance to clean up after itself properly,
+--ComboContinuesBetweenSongs will still be set. IMO it's not commonly used enough
+--that just forcing it off will be a problem. Maybe it could be a theme pref.
+if PREFSMAN:GetPreference("ComboContinuesBetweenSongs") then
+	print("ComboContinuesBetweenSongs was disabled.")
+	PREFSMAN:SetPreference("ComboContinuesBetweenSongs", false)
+end
+
 local counter = 0;
 local t = Def.ActorFrame{};
 if GAMESTATE:GetCoinMode() == 'CoinMode_Home' then

@@ -1,5 +1,6 @@
 local c;
 local cf;
+local cfInv;
 local player = Var "Player";
 local ShowComboAt = THEME:GetMetric("Combo", "ShowComboAt");
 local Pulse = THEME:GetMetric("Combo", "PulseCommand");
@@ -11,6 +12,24 @@ local NumberMaxZoomAt = THEME:GetMetric("Combo", "NumberMaxZoomAt");
 
 local LabelMinZoom = THEME:GetMetric("Combo", "LabelMinZoom");
 local LabelMaxZoom = THEME:GetMetric("Combo", "LabelMaxZoom");
+
+--you can pass nil to this function, it acts the same as passing nothing
+--however, i think that passing nil makes the intent clearer -tertu
+local function cfShowOnly(...)
+	local cfMembersToShow = {...}
+
+	--build an inverse version of the argument table to speed up lookup
+	local cfMTSInv = {}
+	for _, name in pairs(cfMembersToShow) do
+		cfMTSInv[name] = true
+	end
+
+	for name, a in pairs(cf) do
+		--"if the name of this actor was passed, make it visible, otherwise
+		--hide it"
+		a:visible(cfMTSInv[name] == true)
+	end
+end
 
 local t = Def.ActorFrame {
 	Def.ActorFrame {
@@ -62,44 +81,18 @@ local t = Def.ActorFrame {
 		c = self:GetChildren();
 		cf = c.ComboFrame:GetChildren();
 		-- Inclu
-		cf.NumberW1:visible(false);
-		cf.NumberW2:visible(false);
-		cf.NumberW3:visible(false);
-		cf.NumberNormal:visible(false);
-		cf.LabelW1:visible(false);
-		cf.LabelW2:visible(false);
-		cf.LabelW3:visible(false);
-		cf.LabelNormal:visible(false);
+		cfShowOnly(nil);
 	end;
 	ComboCommand=function(self, param)
 		if param.Misses then
-			cf.NumberW1:visible(false);
-			cf.NumberW2:visible(false);
-			cf.NumberW3:visible(false);
-			cf.NumberNormal:visible(false);
-			cf.LabelW1:visible(false);
-			cf.LabelW2:visible(false);
-			cf.LabelW3:visible(false);
-			cf.LabelNormal:visible(false);
+			cfShowOnly(nil);
 			return;
 		end
 		local iCombo = param.Misses or param.Combo;
 		if not iCombo or iCombo < ShowComboAt then
-			cf.NumberW1:visible(false);
-			cf.NumberW2:visible(false);
-			cf.NumberW3:visible(false);
-			cf.NumberNormal:visible(false);
-			cf.LabelW1:visible(false);
-			cf.LabelW2:visible(false);
-			cf.LabelW3:visible(false);
-			cf.LabelNormal:visible(false);
+			cfShowOnly(nil);
 			return;
 		end
-
-		cf.LabelW1:visible(false);
-		cf.LabelW2:visible(false);
-		cf.LabelW3:visible(false);
-		cf.LabelNormal:visible(true);
 
 		param.Zoom = scale( iCombo, 0, NumberMaxZoomAt, NumberMinZoom, NumberMaxZoom );
 		param.Zoom = clamp( param.Zoom, NumberMinZoom, NumberMaxZoom );
@@ -113,55 +106,15 @@ local t = Def.ActorFrame {
 		cf.NumberNormal:settext( string.format("%i", iCombo) );
 		-- FullCombo Rewards
 		if param.FullComboW1 then
-			cf.NumberW1:visible(true);
-			cf.NumberW2:visible(false);
-			cf.NumberW3:visible(false);
-			cf.NumberNormal:visible(false);
-
-			cf.LabelW1:visible(true);
-			cf.LabelW2:visible(false);
-			cf.LabelW3:visible(false);
-			cf.LabelNormal:visible(false);
+			cfShowOnly('NumberW1', 'LabelW1');
 		elseif param.FullComboW2 then
-			cf.NumberW1:visible(false);
-			cf.NumberW2:visible(true);
-			cf.NumberW3:visible(false);
-			cf.NumberNormal:visible(false);
-
-			cf.LabelW1:visible(false);
-			cf.LabelW2:visible(true);
-			cf.LabelW3:visible(false);
-			cf.LabelNormal:visible(false);
+			cfShowOnly('NumberW2', 'LabelW2');
 		elseif param.FullComboW3 then
-			cf.NumberW1:visible(false);
-			cf.NumberW2:visible(false);
-			cf.NumberW3:visible(true);
-			cf.NumberNormal:visible(false);
-
-			cf.LabelW1:visible(false);
-			cf.LabelW2:visible(false);
-			cf.LabelW3:visible(true);
-			cf.LabelNormal:visible(false);
+			cfShowOnly('NumberW3', 'LabelW3');
 		elseif param.Combo then
-			cf.NumberW1:visible(false);
-			cf.NumberW2:visible(false);
-			cf.NumberW3:visible(false);
-			cf.NumberNormal:visible(true);
-
-			cf.LabelW1:visible(false);
-			cf.LabelW2:visible(false);
-			cf.LabelW3:visible(false);
-			cf.LabelNormal:visible(true);
+			cfShowOnly('NumberNormal', 'LabelNormal');
 		else
-			cf.NumberW1:visible(false);
-			cf.NumberW2:visible(false);
-			cf.NumberW3:visible(false);
-			cf.NumberNormal:visible(true);
-
-			cf.LabelW1:visible(false);
-			cf.LabelW2:visible(false);
-			cf.LabelW3:visible(false);
-			cf.LabelNormal:visible(true);
+			cfShowOnly('NumberNormal', 'LabelNormal');
 		end
 		-- Pulse
 		Pulse( cf.NumberW1, param );
