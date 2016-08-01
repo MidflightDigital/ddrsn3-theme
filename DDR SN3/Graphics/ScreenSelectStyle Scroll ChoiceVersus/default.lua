@@ -18,7 +18,7 @@ local t = Def.ActorFrame{
 			end;
 		end;
 		GainFocusCommand=cmd(visible,true;bounceend,0.2;zoom,1);
-		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0;visible,false);
+		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0;visible,false);
 		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
 	LoadActor("../dancerP2")..{
@@ -31,10 +31,10 @@ local t = Def.ActorFrame{
 			end;
 		end;
 		GainFocusCommand=function(s) s:visible(true):bounceend(0.2):zoom(1) end;
-		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0;visible,false);
+		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0;visible,false);
 		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
-	
+
 --[[	LoadActor("dancerP1")..{
 		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-197;y,SCREEN_CENTER_Y+88;);
 		GainFocusCommand=cmd(visible,true;bounceend,0.2;zoom,1);
