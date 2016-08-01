@@ -37,6 +37,7 @@ t[#t+1] = Def.ActorFrame{
 		InitCommand=function(self)
 			self:xy(100,200)
 		end;
+		OnCommand=cmd(settext,(curIndex));
 		MenuRightP1MessageCommand=cmd(settext,(curIndex));
 		MenuLeftP1MessageCommand=cmd(settext,(curIndex));
 	},
