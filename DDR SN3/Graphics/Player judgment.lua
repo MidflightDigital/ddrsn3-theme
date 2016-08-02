@@ -47,9 +47,6 @@ local starterMode = env.StarterMode == true;
 local activeFrames = starterMode and StTNSFrames or TNSFrames;
 local activeCmds = starterMode and StJudgeCmds or JudgeCmds;
 local showEarlyLate = SN3Debug
---any TNS this judgment or higher is considered "just"
---if a judgment is just, whether it was early or late is not shown
-
 
 local t = Def.ActorFrame {
 
@@ -101,7 +98,7 @@ t[#t+1] = LoadActor(THEME:GetPathG("Judgment",starterMode and "Starter" or "Norm
 if showEarlyLate then
 	t[#t+1] = LoadActor(THEME:GetPathG("Judgment","Starter")) .. {
 		Name="EarlyLate";
-		InitCommand=cmd(halign,-1;x,192;y,64;pause;visible,false);
+		InitCommand=cmd(x,80;y,48;pause;visible,false);
 		ResetCommand=cmd(finishtweening;stopeffect;visible,false);
 	};
 end
