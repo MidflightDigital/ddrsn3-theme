@@ -47,15 +47,12 @@ local starterMode = env.StarterMode == true;
 local activeFrames = starterMode and StTNSFrames or TNSFrames;
 local activeCmds = starterMode and StJudgeCmds or JudgeCmds;
 local showEarlyLate = SN3Debug
+--any TNS this judgment or higher is considered "just"
+--if a judgment is just, whether it was early or late is not shown
 
-local t = Def.ActorFrame {};
-t[#t+1] = Def.ActorFrame {
-	LoadActor(THEME:GetPathG("Judgment",starterMode and "Starter" or "Normal")) .. {
-		Name="Judgment";
-		InitCommand=cmd(pause;visible,false);
-		OnCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
-		ResetCommand=cmd(finishtweening;stopeffect;visible,false);
-	};
+
+local t = Def.ActorFrame {
+
 	
 	InitCommand = function(self)
 		c = self:GetChildren();
@@ -70,8 +67,9 @@ t[#t+1] = Def.ActorFrame {
 		if not iFrame then return end
 		
 		local iTapNoteOffset = param.TapNoteOffset;
+		local late = iTapNoteOffset and (iTapNoteOffset < 0);
 		
-		if (starterMode) and (iFrame == 1 and iTapNoteOffset > 0) then
+		if starterMode and (iFrame == 1 and late) then
 			iFrame = 2;
 		end;
 		
@@ -80,8 +78,32 @@ t[#t+1] = Def.ActorFrame {
 		c.Judgment:setstate( iFrame );
 		c.Judgment:visible( true );
 		activeCmds[param.TapNoteScore](c.Judgment);
+		if showEarlyLate then
+			---XXX: don't hardcode this
+			if param.TapNoteScore ~= 'TapNoteScore_W1' then
+				c.EarlyLate:visible(true);
+				c.EarlyLate:setstate( late and 2 or 1 );
+				activeCmds[param.TapNoteScore](c.EarlyLate);
+			else
+				c.EarlyLate:visible(false);
+			end
+		end
 	end;
 };
 
+t[#t+1] = LoadActor(THEME:GetPathG("Judgment",starterMode and "Starter" or "Normal")) .. {
+	Name="Judgment";
+	InitCommand=cmd(pause;visible,false);
+	OnCommand=THEME:GetMetric("Judgment","JudgmentOnCommand");
+	ResetCommand=cmd(finishtweening;stopeffect;visible,false);
+};
+
+if showEarlyLate then
+	t[#t+1] = LoadActor(THEME:GetPathG("Judgment","Starter")) .. {
+		Name="EarlyLate";
+		InitCommand=cmd(halign,-1;x,192;y,64;pause;visible,false);
+		ResetCommand=cmd(finishtweening;stopeffect;visible,false);
+	};
+end
 
 return t;
