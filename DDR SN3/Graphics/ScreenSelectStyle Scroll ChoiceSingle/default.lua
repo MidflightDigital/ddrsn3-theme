@@ -1,7 +1,6 @@
 local masterPlayer = ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())
 
 local t = Def.ActorFrame{
-	-- Information panel
 	LoadActor("_info")..{
 		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+11;y,SCREEN_CENTER_Y-75;);
 		OnCommand=function(s) s:addx(379):sleep(0.264):decelerate(0.264):addx(-379):decelerate(0.1):addx(11) end;
@@ -9,7 +8,6 @@ local t = Def.ActorFrame{
 		LoseFocusCommand=cmd(visible,false);
 		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
-	
 	-- Panel
 	LoadActor("_panel2")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-402;y,SCREEN_CENTER_Y+32);
@@ -25,14 +23,14 @@ local t = Def.ActorFrame{
         PadsTwoMessageCommand=function(s) s:linear(0.1):x(SCREEN_CENTER_X-112):y(SCREEN_CENTER_Y+119) end;
 		OffCommand=cmd(sleep,0.264;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
-	
+
 	-- Picture
 	LoadActor("../dancer"..masterPlayer)..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-146;y,SCREEN_CENTER_Y+108);
 		BeginCommand=cmd(playcommand,"CheckNumPlayers");
 		OnCommand=cmd(vertalign,bottom;draworder,90;diffusealpha,0;zoom,0;sleep,0.264;sleep,0.792;sleep,0.264;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1);
 		GainFocusCommand=cmd(bounceend,0.2;zoom,1);
-		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0);
+		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0);
 		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 		CheckNumPlayersCommand=function(self,param)
 			if GAMESTATE:GetNumPlayersEnabled() > 1 then
@@ -49,5 +47,24 @@ local t = Def.ActorFrame{
 		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0);
 	};
 };
+
+if SN3Debug then
+t[#t+1] = Def.ActorFrame {
+	OnCommand=function(s) s:addx(379):sleep(0.264):decelerate(0.264):addx(-379):decelerate(0.1):addx(11) end;
+	GainFocusCommand=function(s) MESSAGEMAN:Broadcast("PadsOne") s:visible(true):addx(-11):decelerate(0.1):addx(11) end;
+	LoseFocusCommand=cmd(visible,false);
+	OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
+	LoadActor("../_stylebase")..{
+		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+11;y,SCREEN_CENTER_Y-75;);
+	};
+	Def.BitmapText{
+		Font="_handelgothic bt 20px";
+		Text="One player game using the\nstandard four arrow dance mat.";
+		InitCommand=function(s)
+			s:halign(0):zoom(0.8):x(SCREEN_RIGHT-340):y(SCREEN_CENTER_Y-106);
+		end;
+	};
+};
+end;
 
 return t;
