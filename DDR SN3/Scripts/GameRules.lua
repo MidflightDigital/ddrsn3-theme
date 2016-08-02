@@ -16,3 +16,7 @@ end
 function MinimumTNSForCombo()
 	return 'TapNoteScore_W3'
 end
+
+function ShowBeatBars()
+	return SN3Debug == true
+end
