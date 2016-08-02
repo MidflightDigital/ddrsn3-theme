@@ -48,6 +48,7 @@ local t = Def.ActorFrame{
 	};
 };
 
+
 if SN3Debug then
 t[#t+1] = Def.ActorFrame {
 	OnCommand=function(s) s:addx(379):sleep(0.264):decelerate(0.264):addx(-379):decelerate(0.1):addx(11) end;
