@@ -296,3 +296,32 @@ local videoRenderers = split(",",PREFSMAN:GetPreference("VideoRenderers"))
 if videoRenderers[1] == "d3d" then
 	Warn("Direct3D mode detected. Some visual effects may not work properly.\nDo not report these problems as bugs, they are limitations of Direct3D mode.")
 end
+
+function GetProfileIDForPlayer(pn)
+    if GAMESTATE:IsHumanPlayer(pn) then
+        local profile = PROFILEMAN:GetProfile(pn)
+        if profile == PROFILEMAN:GetMachineProfile() then
+            return "!MACHINE"
+        end
+        if PROFILEMAN:ProfileWasLoadedFromMemoryCard(pn) then
+            return (pn=='PlayerNumber_P1') and "!MC0" or "!MC1"
+        end
+        if GAMESTATE:Env() then
+            local pidCache = GetOrCreateChild(GAMESTATE:Env(),"PlayerLocalIDs")
+            if pidCache[pn] then
+                return pidCache[pn]
+            end
+            --worst case scenario: we have to search all the local profiles to find it.
+            for _, id in pairs(PROFILEMAN:GetLocalProfileIDs()) do
+                if PROFILEMAN:GetLocalProfile(id) == profile then
+                    pidCache[pn] = id
+                    return id
+                end
+            end
+            --apparently this just means we're using the machine profile if this all fails.
+            pidCache[pn] = "!MACHINE"
+            return "!MACHINE"
+        end
+    end
+    return "!MACHINE"
+end

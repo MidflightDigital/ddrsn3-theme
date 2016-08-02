@@ -12,7 +12,7 @@ local function radarSet(self)
 	
 	if GAMESTATE:IsHumanPlayer(player) then
 		self:visible(true);
-		local profileID = MyGrooveRadar.GetProfileIDForPlayer(player)  --取得uid but not really
+		local profileID = GetProfileIDForPlayer(player)  --取得uid but not really
 		if not past then
 			tt = MyGrooveRadar.GetRadarDataPackaged(profileID, style)
 		else

@@ -5,7 +5,7 @@ local styleName = ((stype == 'StyleType_OnePlayerTwoSides') or (stype == 'StyleT
 		and 'double'
 		or 'single'
 for _, plr in pairs(GAMESTATE:GetEnabledPlayers()) do
-	local profileID = MyGrooveRadar.GetProfileIDForPlayer(plr)
+	local profileID = GetProfileIDForPlayer(plr)
 	MyGrooveRadar.ApplyBonuses(profileID, STATSMAN:GetCurStageStats():GetPlayerStageStats(plr), styleName)
 end
 MyGrooveRadar.SaveAllRadarData()
