@@ -3,7 +3,7 @@ local t = LoadFallbackB();
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
 
-t[#t+1] = LoadActor(THEME:GetPathG("","_footer/skip"))..{ 
+t[#t+1] = LoadActor(THEME:GetPathG("","_footer/skip"))..{
 	InitCommand=cmd(draworder,199;x,SCREEN_RIGHT-71;y,SCREEN_BOTTOM-35;);
 	OnCommand=cmd(draworder,80;halign,1;addy,54;sleep,0.2;decelerate,0.2;addy,-54);
 	OffCommand=cmd(decelerate,0.2;addy,54);
@@ -25,7 +25,7 @@ t[#t+1] = StandardDecorationFromFileOptional("SongInformation","SongInformation"
 		else
 			return
 		end
-		
+
 	end;
 	SetCommand=function(self)
 		local c = self:GetChildren();
@@ -55,19 +55,19 @@ t[#t+1] = StandardDecorationFromFileOptional("SongInformation","SongInformation"
 -- 			self:playcommand("Tick");
 		elseif GAMESTATE:GetCurrentCourse() then
 			SongOrCourse = GAMESTATE:GetCurrentCourse();
-			
+
 			c.TextTitle:settext( SongOrCourse:GetDisplayMainTitle() or nil );
 			c.TextSubtitle:settext( SongOrCourse:GetDisplaySubTitle() or nil );
 			c.TextArtist:settext( SongOrCourse:GetDisplayArtist() or nil );
-			
+
 -- 			self:playcommand("Tick");
 		else
 			SongOrCourse = nil;
-			
+
 			c.TextTitle:settext("");
 			c.TextSubtitle:settext("");
 			c.TextArtist:settext("");
-			
+
 			self:playcommand("Hide")
 		end
 	end;
@@ -110,10 +110,10 @@ t[#t+1] = LoadActor("../grade")..{
 for pn in ivalues(PlayerNumber) do
 	local MetricsName = "MachineRecord" .. PlayerNumberToString(pn);
 	t[#t+1] = LoadActor( THEME:GetPathG(Var "LoadingScreen", "MachineRecord"), pn ) .. {
-		InitCommand=function(self) 
-			self:player(pn); 
-			self:name(MetricsName); 
-			ActorUtil.LoadAllCommandsAndSetXY(self,Var "LoadingScreen"); 
+		InitCommand=function(self)
+			self:player(pn);
+			self:name(MetricsName);
+			ActorUtil.LoadAllCommandsAndSetXY(self,Var "LoadingScreen");
 		end;
 	};
 end
@@ -121,10 +121,10 @@ end
 for pn in ivalues(PlayerNumber) do
 	local MetricsName = "PersonalRecord" .. PlayerNumberToString(pn);
 	t[#t+1] = LoadActor( THEME:GetPathG(Var "LoadingScreen", "PersonalRecord"), pn ) .. {
-		InitCommand=function(self) 
-			self:player(pn); 
-			self:name(MetricsName); 
-			ActorUtil.LoadAllCommandsAndSetXY(self,Var "LoadingScreen"); 
+		InitCommand=function(self)
+			self:player(pn);
+			self:name(MetricsName);
+			ActorUtil.LoadAllCommandsAndSetXY(self,Var "LoadingScreen");
 		end;
 	};
 end
@@ -135,21 +135,21 @@ t[#t+1] = Def.ActorFrame {
 		Condition=THEME:GetMetric( Var "LoadingScreen","Summary" ) == false;
 		OnCommand=cmd(play);
 	};
-
 };
-t[#t+1] = Def.ActorFrame {
-	Condition=GAMESTATE:HasEarnedExtraStage() and not GAMESTATE:IsExtraStage() and GAMESTATE:IsExtraStage2();
-	InitCommand=cmd(draworder,105);
-	LoadActor( THEME:GetPathS("ScreenEvaluation","try Extra2" ) ) .. {
-		Condition=THEME:GetMetric( Var "LoadingScreen","Summary" ) == false;
-		OnCommand=cmd(play);
-	};
-
-};
-
 t[#t+1] = LoadActor("grade")..{
 	InitCommand=cmd(diffusealpha,1;draworder,100);
 	OffCommand=cmd(sleep,0.2;linear,0.2;diffusealpha,0);
+};
+
+t[#t+1] = Def.BitmapText{
+	Font="_handelgothic bt 20px";
+	InitCommand=cmd(x,SCREEN_LEFT+120;y,SCREEN_CENTER_Y+20);
+	OnCommand=function(s)
+	local StageNum = GAMESTATE:GetCurrentStageIndex();
+		s:diffusealpha(0)
+		:settext(string.format("%02s", StageNum).." STAGE")
+		:sleep(0.8):diffusealpha(1)
+	end;
 };
 
 return t
