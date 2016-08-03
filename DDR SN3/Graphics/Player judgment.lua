@@ -22,6 +22,8 @@ local StJudgeCmds = {
 	TapNoteScore_Miss = THEME:GetMetric( "Judgment", "JudgmentMissCommand" );
 };
 
+local BiasCmd = THEME:GetMetric("Judgment", "JudgmentBiasCommand");
+
 local TNSFrames = {
 	TapNoteScore_W1 = 0;
 	TapNoteScore_W2 = 1;
@@ -46,7 +48,7 @@ local env = GAMESTATE:Env();
 local starterMode = env.StarterMode == true;
 local activeFrames = starterMode and StTNSFrames or TNSFrames;
 local activeCmds = starterMode and StJudgeCmds or JudgeCmds;
-local showEarlyLate = SN3Debug
+local showBias = SN3Debug
 
 local t = Def.ActorFrame {
 
@@ -64,7 +66,7 @@ local t = Def.ActorFrame {
 		if not iFrame then return end
 		
 		local iTapNoteOffset = param.TapNoteOffset;
-		local late = iTapNoteOffset and (iTapNoteOffset < 0);
+		local late = iTapNoteOffset and (iTapNoteOffset > 0);
 		
 		if starterMode and (iFrame == 1 and late) then
 			iFrame = 2;
@@ -75,14 +77,14 @@ local t = Def.ActorFrame {
 		c.Judgment:setstate( iFrame );
 		c.Judgment:visible( true );
 		activeCmds[param.TapNoteScore](c.Judgment);
-		if showEarlyLate then
+		if showBias then
 			---XXX: don't hardcode this
 			if param.TapNoteScore ~= 'TapNoteScore_W1' then
-				c.EarlyLate:visible(true);
-				c.EarlyLate:setstate( late and 2 or 1 );
-				activeCmds[param.TapNoteScore](c.EarlyLate);
+				c.Bias:visible(true);
+				c.Bias:setstate( late and 2 or 1 );
+				BiasCmd(c.Bias);
 			else
-				c.EarlyLate:visible(false);
+				c.Bias:visible(false);
 			end
 		end
 	end;
@@ -95,10 +97,10 @@ t[#t+1] = LoadActor(THEME:GetPathG("Judgment",starterMode and "Starter" or "Norm
 	ResetCommand=cmd(finishtweening;stopeffect;visible,false);
 };
 
-if showEarlyLate then
+if showBias then
 	t[#t+1] = LoadActor(THEME:GetPathG("Judgment","Starter")) .. {
-		Name="EarlyLate";
-		InitCommand=cmd(x,80;y,48;pause;visible,false);
+		Name="Bias";
+		InitCommand=cmd(x,80;y,48;zoom,0.8;pause;visible,false);
 		ResetCommand=cmd(finishtweening;stopeffect;visible,false);
 	};
 end

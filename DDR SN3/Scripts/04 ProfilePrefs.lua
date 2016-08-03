@@ -7,12 +7,47 @@ filter: the screen filter darkness that should be used.
 lanes: whether lane boundaries should be shown or not.
 bias: whether the early/late indicator should be shown.
 ]]
-local profilePrefs = create_setting('ProfilePrefs','ProfilePrefs.lua',
-	{
-		guidelines = false,
-		character = "",
-		filter = 0,
-		lanes = false,
-		bias = false
-	}
-, 1, {})
+local defaultPrefs = 
+{
+	guidelines = false,
+	character = "",
+	filter = 0,
+	lanes = false,
+	bias = false
+}
+local gameSeed = nil
+local machinePrefs = DeepCopy(defaultPrefs)
+local ppSetting = create_setting('ProfilePrefs','ProfilePrefs.lua', 
+	defaultPrefs, 1, {})
+
+ProfilePrefs = {}
+
+function ProfilePrefs.Read(ident)
+	if ident == "!MACHINE" then
+		if GAMESTATE then
+			local curGameSeed = GAMESTATE:GetGameSeed()
+			if curGameSeed ~= gameSeed then
+				machinePrefs = DeepCopy(defaultPrefs)
+			end
+			return machinePrefs
+		else
+			return DeepCopy(defaultPrefs)
+		end
+	end
+	if not ppSetting:is_loaded(ident) then
+		ppSetting:load(ident)
+	end
+	return ppSetting:get_data(ident)
+end
+
+function ProfilePrefs.Save(ident)
+	if ident == "!MACHINE" then
+		--don't do anything
+		return
+	end
+	return ppSetting:set_dirty(ident)
+end
+
+function ProfilePrefs.SaveAll()
+	return ppSetting:save_all()
+end

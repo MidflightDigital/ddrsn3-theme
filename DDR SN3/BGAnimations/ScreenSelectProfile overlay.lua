@@ -544,6 +544,10 @@ function UpdateInternal3(self, Player)
 				local RadarValueTableDouble = {};
 
 				local profileID = PROFILEMAN:GetLocalProfileIDFromIndex(ind-1)
+				local prefs = ProfilePrefs.Read(profileID)
+				if SN3Debug then
+					ProfilePrefs.Save(profileID)
+				end
 
 				----------Single Radar
 				--Stream--

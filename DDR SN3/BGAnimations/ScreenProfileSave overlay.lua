@@ -9,6 +9,7 @@ for _, plr in pairs(GAMESTATE:GetEnabledPlayers()) do
 	MyGrooveRadar.ApplyBonuses(profileID, STATSMAN:GetCurStageStats():GetPlayerStageStats(plr), styleName)
 end
 MyGrooveRadar.SaveAllRadarData()
+ProfilePrefs.SaveAll()
 
 x[#x+1] = Def.Actor {
 	BeginCommand=function(self)
