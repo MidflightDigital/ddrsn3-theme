@@ -260,7 +260,7 @@ end
 function MakeDeck(source)
 	assert(source, "MakeDeck: you need to pass in a table")
 	if not next(source) then
-		Warn("MakeDeck: got empty table, returning NOTHING!!!")
+		Warn("MakeDeck: got empty table, returning nothing")
 		return nil
 	end
 	local keys = nil

@@ -3,6 +3,8 @@
 --Stripped and remodeled for DDR SN3
 local c;
 local player = Var "Player";
+local playerPrefs = ProfilePrefs.Read(GetProfileIDForPlayer(player))
+local showBias = playerPrefs.bias
 
 local JudgeCmds = {
 	TapNoteScore_W1 = THEME:GetMetric( "Judgment", "JudgmentW1Command" );
@@ -48,7 +50,6 @@ local env = GAMESTATE:Env();
 local starterMode = env.StarterMode == true;
 local activeFrames = starterMode and StTNSFrames or TNSFrames;
 local activeCmds = starterMode and StJudgeCmds or JudgeCmds;
-local showBias = SN3Debug
 
 local t = Def.ActorFrame {
 
@@ -100,7 +101,8 @@ t[#t+1] = LoadActor(THEME:GetPathG("Judgment",starterMode and "Starter" or "Norm
 if showBias then
 	t[#t+1] = LoadActor(THEME:GetPathG("Judgment","Starter")) .. {
 		Name="Bias";
-		InitCommand=cmd(x,80;y,48;zoom,0.8;pause;visible,false);
+		InitCommand=cmd(pause;visible,false);
+		OnCommand=THEME:GetMetric("Judgment","JudgmentBiasOnCommand");
 		ResetCommand=cmd(finishtweening;stopeffect;visible,false);
 	};
 end
