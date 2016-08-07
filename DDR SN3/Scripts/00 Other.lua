@@ -284,14 +284,6 @@ function EnableStarterGameplayJunk()
 	env.StarterMode = true
 end
 
---It turns out that past tertu fucked this function up.
---A fix will probably hit 5.1 but for now we're going to do this.
-function ThemeManager:GetAbsolutePath(sPath)
-	sFinPath = "/Themes/"..self:GetCurThemeName().."/"..sPath
-	assert(FILEMAN:DoesFileExist(sFinPath), "the theme element "..sPath.." is missing")
-	return sFinPath
-end
-
 local videoRenderers = split(",",PREFSMAN:GetPreference("VideoRenderers"))
 if videoRenderers[1] == "d3d" then
 	Warn("Direct3D mode detected. Some visual effects may not work properly.\nDo not report these problems as bugs, they are limitations of Direct3D mode.")

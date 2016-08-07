@@ -6,7 +6,14 @@ local styleName = ((stype == 'StyleType_OnePlayerTwoSides') or (stype == 'StyleT
 		or 'single'
 for _, plr in pairs(GAMESTATE:GetEnabledPlayers()) do
 	local profileID = GetProfileIDForPlayer(plr)
-	MyGrooveRadar.ApplyBonuses(profileID, STATSMAN:GetCurStageStats():GetPlayerStageStats(plr), styleName)
+	if profileID ~= "!MACHINE" then
+		local shortPn = ToEnumShortString(plr)
+		local pPrefs = ProfilePrefs.Read(profileID)
+		pPrefs.filter = getenv("ScreenFilter"..shortPn) or 0
+		pPrefs.character = (GAMESTATE:Env())["SNCharacter"..shortPn] or ""
+		MyGrooveRadar.ApplyBonuses(profileID, STATSMAN:GetCurStageStats():GetPlayerStageStats(plr), styleName)
+		ProfilePrefs.Save(profileID)
+	end
 end
 MyGrooveRadar.SaveAllRadarData()
 ProfilePrefs.SaveAll()
