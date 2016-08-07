@@ -3,27 +3,18 @@ local entryToPrefixMap = {
 	['character'] = "SNCharacter"
 }
 
-local function d(text)
-	if SN3Debug then
-		return print("ProfilePrefsHelpers: "..text)
-	end
-end
-
 function LoadFromProfilePrefs()
+	--note: unless you don't use the _fallback version of getenv/setenv this
+	--code does not work
 	local env = GAMESTATE:Env()
 	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-		d("processing "..pn)
 		local prefs = ProfilePrefs.Read(GetProfileIDForPlayer(pn))
 		local shortPn = ToEnumShortString(pn)
 		for sourceName, destName in pairs(entryToPrefixMap) do
 			destName = destName..shortPn
-			if env[destName] then
-				d(destName.." already present, skipping "..sourceName)
-			else
+			if not env[destName] then
 				env[destName] = prefs[sourceName]
-				d("moved "..sourceName.." to "..destName)
 			end
 		end
 	end
-	d("done")
 end 
