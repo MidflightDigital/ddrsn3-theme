@@ -3,6 +3,9 @@ local lastSeenTime = beginTime
 local minTransitionTime = 0.016
 local flickerState = false
 
+--the idea here is that if we're running at a higher framerate than
+--1/minTransitionTime to update only every minTransitionTime frames.
+--if we're running less than that, update every frame.
 local function FlickerUpdate(self, _)
     local curTime = GetTimeSinceStart()
     

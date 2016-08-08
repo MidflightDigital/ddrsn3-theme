@@ -22,7 +22,22 @@ local function CreditsText( pn )
 	return text;
 end;
 
-local t = Def.ActorFrame {}
+local function UpdateHide(self, _)
+	if GAMESTATE then
+		local env = GAMESTATE:Env()
+		if env then
+			if env.EndlessState then
+				self:visible(false)
+				return
+			end
+		end
+	end
+	self:visible(true)
+end
+
+local t = Def.ActorFrame {
+	InitCommand=function(s) s:SetUpdateFunction(UpdateHide) end
+}
 	-- Aux
 t[#t+1] = LoadActor(THEME:GetPathB("ScreenSystemLayer","aux"));
 	--Network

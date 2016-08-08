@@ -30,7 +30,7 @@ t[#t+1] = Def.Actor{
             es.scoring.handleNoteScore(params.HoldNoteScore or params.TapNoteScore,
                 GAMESTATE:GetCurrentStageIndex()+1,
                 pss:GetCurrentCombo())
-            SCREENMAN:SystemMessage(es.scoring.getScoreString())
+            --SCREENMAN:SystemMessage(es.scoring.getScoreString())
         end
     end,
 }
