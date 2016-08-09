@@ -18,7 +18,7 @@ local breaking = false
 local pastStageStats = STATSMAN:GetPlayedStageStats(1)
     if pastStageStats and false then
         local stageNum = pastStageStats:GetStageIndex()+1
-        if (endlessState.breakAfter % stageNum == 0) then
+        if (stageNum % endlessState.breakAfter == 0) then
             breaking = true
             table.insert(present,LoadActor("ScreenEndlessManager break"))
         end
@@ -26,6 +26,8 @@ local pastStageStats = STATSMAN:GetPlayedStageStats(1)
 
 local continuing = true
 if pastStageStats then
+    --we don't turn this on until the second stage so that the first stage starts with 0 combo
+    PREFSMAN:SetPreference("ComboContinuesBetweenSongs", true)
     if pastStageStats:AllFailed() then
         PREFSMAN:SetPreference("ComboContinuesBetweenSongs", false)
         continuing = false

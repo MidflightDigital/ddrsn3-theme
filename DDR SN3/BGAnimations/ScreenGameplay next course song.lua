@@ -2,7 +2,8 @@
 -- StartCommand
 -- ChangeCourseSongInMessageCommand
 -- ChangeCourseSongOutMessageCommand
--- FinishCommand
+-- FinishCommand
+
 local sStage = GAMESTATE:GetCurrentStage();
 local tRemap = {
 	Stage_1st		= 1,
@@ -42,19 +43,14 @@ return Def.ActorFrame {
 	-- song banner
 	Def.Banner{
 		Name="SongBanner";
-		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-130;scaletoclipped,256,80);
+		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-130;scaletoclipped,256,80;zoomy,0);
 		StartCommand=function(self)
 			local course = GAMESTATE:GetCurrentCourse()
 			local entry = course:GetCourseEntry(GAMESTATE:GetLoadingCourseSongIndex())
 			self:LoadFromSong(entry:GetSong())
-
-			self:zoomy(0)
-			self:sleep(0.099)
-			self:sleep(0.396)
-			self:linear(0.099)
-			self:zoomy(1)
+			self:zoomy(1);
 		end;
-		FinishCommand=cmd(sleep,2;linear,0.099;zoomy,0);
+		FinishCommand=cmd(linear,0.1;zoomy,0);
 	};
 	Def.Sprite {
 	Texture="ScreenStageInformation in/rayo 1x2.png",

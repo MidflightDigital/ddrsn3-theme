@@ -1,8 +1,33 @@
 local endless = (GAMESTATE:Env()).EndlessState ~= nil
 
+local endlessScoreDigits = 30
+
+local function BaseEndlessText(value)
+	return string.rep('0', endlessScoreDigits-#value)..value
+end
+
+local fullEndlessLength = #(commify(BaseEndlessText('')))
+
+local function EndlessDarkLength(comValue)
+	return fullEndlessLength-#comValue
+end
+
+local oldScoreString = nil
 local function EndlessScoreDisplayUpdate(self, _)
 	local eState = (GAMESTATE:Env()).EndlessState
-	self:GetChild("ScoreText"):settext(eState.scoring.getScoreString())
+	if not eState then return end
+	local curScoreString = eState.scoring.getScoreString()
+	if oldScoreString~=curScoreString then
+		oldScoreString = curScoreString
+		local sText = self:GetChild("ScoreText")
+		local commifiedBrightPart = commify(curScoreString)
+		local newText = commify(BaseEndlessText(curScoreString))
+		sText:settext(newText)
+		sText:ClearAttributes()
+		local darkLen = EndlessDarkLength(commifiedBrightPart)
+		--this color is calculated by dividing the bright text color by 2
+		sText:AddAttribute(0, {Length=darkLen, Diffuse=color "#7D8010"})
+	end
 end
 
 local t = Def.ActorFrame{
@@ -40,16 +65,16 @@ t[#t+1]=Def.ActorFrame{
 		t[#t+1]=Def.ActorFrame{
 			InitCommand=cmd(addy,24;SetUpdateFunction,EndlessScoreDisplayUpdate);
 			Def.Quad{
-				InitCommand=cmd(halign,0;x,SCREEN_LEFT;setsize,352,24;diffuse,color("#666666"));
+				InitCommand=cmd(halign,0;x,SCREEN_LEFT;setsize,542,24;diffuse,color("#666666"));
 			};
 			Def.Quad{
-				InitCommand=cmd(halign,0;x,SCREEN_LEFT;setsize,350,20;diffuse,color("0,0,0,1"));
+				InitCommand=cmd(halign,0;x,SCREEN_LEFT;setsize,540,20;diffuse,color("0,0,0,1"));
 			};
 			Def.BitmapText{
 				Font="ScoreDisplayNormal Text",
 				Name="ScoreText",
-				Text='0',
-				InitCommand=function(s) s:x(SCREEN_LEFT+340):halign(1):diffuse(color "#F9FF20") end
+				Text='',
+				InitCommand=function(s) s:x(SCREEN_LEFT+530):halign(1):diffuse(color "#F9FF20") end
 			};
 		};
 	end
@@ -69,16 +94,16 @@ t[#t+1]=Def.ActorFrame{
 		t[#t+1]=Def.ActorFrame{
 			InitCommand=cmd(addy,24;SetUpdateFunction,EndlessScoreDisplayUpdate);
 			Def.Quad{
-				InitCommand=cmd(halign,1;x,SCREEN_RIGHT;setsize,352,24;diffuse,color("#666666"));
+				InitCommand=cmd(halign,1;x,SCREEN_RIGHT;setsize,542,24;diffuse,color("#666666"));
 			};
 			Def.Quad{
-				InitCommand=cmd(halign,1;x,SCREEN_RIGHT;setsize,350,20;diffuse,color("0,0,0,1"));
+				InitCommand=cmd(halign,1;x,SCREEN_RIGHT;setsize,540,20;diffuse,color("0,0,0,1"));
 			};
 			Def.BitmapText{
 				Font="ScoreDisplayNormal Text",
 				Name="ScoreText",
 				Text='0',
-				InitCommand=function(s) s:x(SCREEN_RIGHT-340):halign(0):diffuse(color "#F9FF20") end
+				InitCommand=function(s) s:x(SCREEN_RIGHT-530):halign(0):diffuse(color "#F9FF20") end
 			};
 		};
 	end

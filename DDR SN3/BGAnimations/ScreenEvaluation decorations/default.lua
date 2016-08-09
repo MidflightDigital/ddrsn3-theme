@@ -147,7 +147,7 @@ t[#t+1] = Def.BitmapText{
 	OnCommand=function(s)
 	local StageNum = GAMESTATE:GetCurrentStageIndex();
 		s:diffusealpha(0)
-		:settext(string.format("%02s", StageNum).." STAGE")
+		:settext(string.format("%02d", StageNum).." STAGE")
 		:sleep(0.8):diffusealpha(1)
 	end;
 };

@@ -80,7 +80,8 @@ local t = Def.ActorFrame {
 		activeCmds[param.TapNoteScore](c.Judgment);
 		if showBias then
 			---XXX: don't hardcode this
-			if param.TapNoteScore ~= 'TapNoteScore_W1' then
+			if param.TapNoteScore ~= 'TapNoteScore_W1' and
+				param.TapNoteScore ~= 'TapNoteScore_Miss' then
 				c.Bias:visible(true);
 				c.Bias:setstate( late and 2 or 1 );
 				BiasCmd(c.Bias);

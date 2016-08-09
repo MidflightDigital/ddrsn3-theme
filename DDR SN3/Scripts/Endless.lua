@@ -3,6 +3,7 @@
 EndlessScoring = {}
 
 local levelLookup = {3, 6, 8, 10}
+setmetatable(levelLookup, {__index=function() return 10 end})
 
 local MAX_SCORE = bn.Int(string.rep('9',30))
 function EndlessScoring.Create(level)
@@ -79,11 +80,11 @@ local levelToRange = {
     {5,7},
     {7,9},
     {1,11},
-    {9,11}
+    {7,11}
 }
 
 function Endless.CreateState(stepsType, endlessLevel, breakStages)
-    assert((breakStages > 0) and stepsType and (endlessLevel >= 1) and (endlessLevel <= 5))
+    assert((breakStages > 0) and stepsType and (endlessLevel >= 1) and (endlessLevel <= 6))
     local minLevel, maxLevel = unpack(levelToRange[endlessLevel])
     return {scoring=EndlessScoring.Create(endlessLevel), 
         choiceDeck = MakeDeck(Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)),

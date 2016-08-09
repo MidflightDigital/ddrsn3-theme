@@ -35,22 +35,24 @@ local function UpdateHide(self, _)
 	self:visible(true)
 end
 
-local t = Def.ActorFrame {
-	InitCommand=function(s) s:SetUpdateFunction(UpdateHide) end
-}
+local t = Def.ActorFrame {}
+
+local nd = Def.ActorFrame{ InitCommand=function(s) s:SetUpdateFunction(UpdateHide) end }
+t[#t+1] = nd
+
 	-- Aux
-t[#t+1] = LoadActor(THEME:GetPathB("ScreenSystemLayer","aux"));
+nd[#nd+1] = LoadActor(THEME:GetPathB("ScreenSystemLayer","aux"));
 	--Network
-t[#t+1] = StandardDecorationFromFileOptional("NetworkStatus","NetworkStatus");
+nd[#nd+1] = StandardDecorationFromFileOptional("NetworkStatus","NetworkStatus");
 	-- Credits
-t[#t+1] = Def.ActorFrame {
+nd[#nd+1] = Def.ActorFrame {
  	CreditsText( PLAYER_1 );
  	CreditsText( PLAYER_2 );
 };
 	-- Text
 t[#t+1] = Def.ActorFrame {
 	Def.Quad {
-		InitCommand=cmd(diffuse,color("0,0,0,1"));
+		InitCommand=cmd(diffuse,color("0,0,0,0"));
 		OnCommand=cmd(finishtweening;diffusealpha,0.85;);
 		OffCommand=cmd(sleep,3;linear,0.5;diffusealpha,0;);
 	};
