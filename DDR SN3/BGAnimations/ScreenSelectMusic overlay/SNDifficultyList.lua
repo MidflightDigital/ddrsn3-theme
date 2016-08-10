@@ -49,6 +49,13 @@ local difficultiesToDraw = {
     'Difficulty_Challenge'
 }
 
+if IsStarterMode() then
+    difficultiesToDraw = {
+        'Difficulty_Beginner',
+        'Difficulty_Easy'
+    }
+end
+
 local invDifficultiesToDraw = {}
 for k, v in pairs(difficultiesToDraw) do
     invDifficultiesToDraw[v] = k

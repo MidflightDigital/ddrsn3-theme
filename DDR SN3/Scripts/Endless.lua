@@ -80,7 +80,7 @@ local levelToRange = {
     {5,7},
     {7,9},
     {1,11},
-    {7,11}
+    {9,11}
 }
 
 function Endless.CreateState(stepsType, endlessLevel, breakStages)
