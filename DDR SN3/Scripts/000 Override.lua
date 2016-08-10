@@ -1,8 +1,10 @@
 --It turns out that past tertu fucked this function up.
 --A fix will probably hit 5.1 but for now we're going to do this.
-function ThemeManager:GetAbsolutePath(sPath)
+function ThemeManager:GetAbsolutePath(sPath, optional)
 	sFinPath = "/Themes/"..self:GetCurThemeName().."/"..sPath
-	assert(FILEMAN:DoesFileExist(sFinPath), "the theme element "..sPath.." is missing")
+	if not optional then
+		assert(FILEMAN:DoesFileExist(sFinPath), "the theme element "..sPath.." is missing")
+	end
 	return sFinPath
 end
 

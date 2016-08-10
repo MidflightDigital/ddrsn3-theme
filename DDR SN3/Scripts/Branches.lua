@@ -7,13 +7,21 @@ function SMOnlineScreen()
 	return "ScreenNetRoom"
 end
 
+function CorrectSSM()
+	if IsStarterMode() then
+		return "ScreenSelectMusicStarter"
+	else
+		return "ScreenSelectMusic"
+	end
+end
+
 function SelectMusicOrCourse()
 	if IsNetSMOnline() then
 		return "ScreenNetSelectMusic"
 	elseif GAMESTATE:IsCourseMode() then
 		return "ScreenSelectCourse"
 	else
-		return "ScreenSelectMusic"
+		return CorrectSSM()
 	end
 end
 
@@ -69,11 +77,11 @@ Branch.BackOutOfPlayerOptions = function()
 end
 
 Branch.InstructionsNormal = function()
-	return PREFSMAN:GetPreference("ShowInstructions") and "ScreenInstructions" or "ScreenSelectMusic"
+	return PREFSMAN:GetPreference("ShowInstructions") and "ScreenInstructions" or CorrectSSM()
 end
 
 Branch.AfterInstructions = function()
-	return GAMESTATE:IsCourseMode() and "ScreenSelectCourse" or "ScreenSelectMusic"
+	return GAMESTATE:IsCourseMode() and "ScreenSelectCourse" or CorrectSSM()
 end
 
 Branch.GameplayScreen = function()
