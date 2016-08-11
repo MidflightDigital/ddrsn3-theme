@@ -34,8 +34,12 @@ function AssembleStarter()
 	--sort all the groups and collect their names, then sort that too
 	local groupNames = {}
 	for groupName, group in pairs(set) do
-		table.sort(group)
-		table.insert(groupNames, groupName)
+		if next(group) == nil then
+			set[groupName] = nil
+		else
+			table.sort(group)
+			table.insert(groupNames, groupName)
+		end
 	end
 	table.sort(groupNames)
 	--then, let's make a representation of our eventual file in memory.
@@ -60,6 +64,5 @@ function EnableStarterGameplayJunk()
 		"Wherever you are calling EnableStarterGameplayJunk, you can't do it there!")
 	local env = GAMESTATE:Env()
 	env.StarterMode = true
-	AssembleStarter()
 	SONGMAN:SetPreferredSongs("Starter")
 end
