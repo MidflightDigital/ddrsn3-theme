@@ -13,4 +13,3 @@ return Def.ActorFrame{
 		OffCommand=cmd(sleep,10.165;linear,0.165;diffusealpha,0)
 	};
 };
-	
