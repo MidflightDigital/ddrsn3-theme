@@ -1,7 +1,25 @@
 local beginTime = GetTimeSinceStart()
 local lastSeenTime = beginTime
-local minTransitionTime = 0.016
+local minTransitionTime = 1/60
 local flickerState = false
+local FlickerLog = nil
+local FlickerPrint = nil
+if SN3Debug then
+    local flickerRecord = {}
+    FlickerLog = function()
+        table.insert(flickerRecord, true)
+    end
+    local oldDiff = 0
+    FlickerPrint = function()
+        local diff = math.floor(lastSeenTime-beginTime)
+        if (diff % 5 == 0) and (diff ~= oldDiff) then
+            oldDiff = diff
+            SCREENMAN:SystemMessage("flicker debug: flickered avg "..tostring((#flickerRecord)/5).."Hz")
+            flickerRecord = {}
+        end
+    end
+end
+
 
 --the idea here is that if we're running at a higher framerate than
 --1/minTransitionTime to update only every minTransitionTime frames.
@@ -9,7 +27,9 @@ local flickerState = false
 local function FlickerUpdate(self, _)
     local curTime = GetTimeSinceStart()
     
-    if (curTime - lastSeenTime) >= minTransitionTime then 
+    if (curTime - lastSeenTime) >= minTransitionTime
+        or DISPLAY:GetCumFPS() <= 75 then
+        if FlickerLog then FlickerLog() end 
         flickerState = not flickerState
     end
     
@@ -17,7 +37,8 @@ local function FlickerUpdate(self, _)
         item:visible((GAMESTATE:GetPlayerState(pn):GetHealthState() == 'HealthState_Hot')
             and flickerState)
     end
-    
+ 
+    if FlickerPrint then FlickerPrint() end   
     lastSeenTime = curTime
 end
 
