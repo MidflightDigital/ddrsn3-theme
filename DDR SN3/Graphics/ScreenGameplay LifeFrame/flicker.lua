@@ -1,6 +1,5 @@
 local beginTime = GetTimeSinceStart()
 local lastSeenTime = beginTime
-local minTransitionTime = 1/60
 local flickerState = false
 local FlickerLog = nil
 local FlickerPrint = nil
@@ -20,26 +19,26 @@ if SN3Debug then
     end
 end
 
+local targetDelta = 1/60
+local function CalculateFlickerFrames(delta)
+    return math.max(1, math.round(delta*targetDelta))
+end
 
---the idea here is that if we're running at a higher framerate than
---1/minTransitionTime to update only every minTransitionTime frames.
---if we're running less than that, update every frame.
+local fCounter = 0
 local function FlickerUpdate(self, _)
-    local curTime = GetTimeSinceStart()
-    
-    if (curTime - lastSeenTime) >= minTransitionTime
-        or DISPLAY:GetCumFPS() <= 75 then
-        if FlickerLog then FlickerLog() end 
-        flickerState = not flickerState
-    end
+    lastSeenTime = GetTimeSinceStart()
+    if FlickerPrint then FlickerPrint() end
+    if fCounter >0 then fCounter = fCounter-1 return end
+
+    if FlickerLog then FlickerLog() end 
+    flickerState = not flickerState
     
     for pn, item in pairs(self:GetChildren()) do
         item:visible((GAMESTATE:GetPlayerState(pn):GetHealthState() == 'HealthState_Hot')
             and flickerState)
     end
- 
-    if FlickerPrint then FlickerPrint() end   
-    lastSeenTime = curTime
+   
+    fCounter = CalculateFlickerFrames(1/DISPLAY:GetCumFPS())-1
 end
 
 local host = Def.ActorFrame{
