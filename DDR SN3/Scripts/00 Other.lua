@@ -310,3 +310,12 @@ function GetProfileIDForPlayer(pn)
     end
     return "!MACHINE"
 end
+
+--this gets the course song number or stage index, +1 as appropriate
+function GameState:GetAppropriateStageNum()
+	if self:IsCourseMode() then
+		return self:GetCourseSongIndex() + 1
+	else
+		return self:GetCurrentStageIndex() + 1
+	end
+end

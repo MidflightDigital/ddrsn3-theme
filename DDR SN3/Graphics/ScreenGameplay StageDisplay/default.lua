@@ -12,9 +12,9 @@ if (GAMESTATE:Env()).EndlessState or GAMESTATE:IsCourseMode() then
 		Text="",
 		InitCommand=function(self) self:zoom(0.7) end,
 		SetCommand=function(self, _)
-			self:settext(tostring(STATSMAN:GetCurStageStats():GetStageIndex()+1))
+			self:settext(tostring(GAMESTATE:GetAppropriateStageNum()))
 		end,
-		CurrentSongChangedMessageCommand=function(s) s:queuecommand("Set") end
+		DoneLoadingNextSongMessageCommand=function(s) s:queuecommand("Set") end
 	}
 else
 	for s in ivalues(Stage) do
