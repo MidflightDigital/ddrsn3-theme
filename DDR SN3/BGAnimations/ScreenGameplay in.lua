@@ -41,7 +41,7 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 else
-t[#t+1] = LoadActor("../ScreenStageInformation in/CourseDisplay");
+t[#t+1] = LoadActor("ScreenStageInformation in/CourseDisplay");
 end;
 
 t[#t+1] = Def.ActorFrame {
@@ -55,7 +55,7 @@ t[#t+1] = Def.ActorFrame {
 };
 
 t[#t+1] = Def.Sprite {
-	Texture="../ScreenStageInformation in/rayo 1x2.png",
+	Texture="ScreenStageInformation in/rayo 1x2.png",
 		InitCommand=function(self)
 			self:Center()
 			self:SetAllStateDelays(0.082)
@@ -63,12 +63,12 @@ t[#t+1] = Def.Sprite {
 		OnCommand=cmd(accelerate,0.198;glowshift;diffusealpha,0);
 };
 
-t[#t+1] = LoadActor("../ScreenStageInformation in/bottom_stage")..{
+t[#t+1] = LoadActor("ScreenStageInformation in/bottom_stage")..{
 	InitCommand=cmd(CenterX;y,SCREEN_BOTTOM-27);
 	OnCommand=cmd(accelerate,0.198;addy,54);
 };
 
-t[#t+1] = LoadActor("../ScreenStageInformation in/top_stage")..{
+t[#t+1] = LoadActor("ScreenStageInformation in/top_stage")..{
 	InitCommand=cmd(CenterX;y,SCREEN_TOP+52);
 	OnCommand=cmd(accelerate,0.198;addy,-104);
 };

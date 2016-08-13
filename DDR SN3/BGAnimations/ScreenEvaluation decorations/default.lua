@@ -141,17 +141,34 @@ t[#t+1] = LoadActor("grade")..{
 	OffCommand=cmd(sleep,0.2;linear,0.2;diffusealpha,0);
 };
 
+local stageXPos = {
+	P1 = -200,
+	P2 = 200
+}
+
 if GAMESTATE:IsCourseMode() then
-	t[#t+1] = Def.BitmapText{
-		Font="_handelgothic bt 20px";
-		InitCommand=cmd(x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y+20);
-		OnCommand=function(s)
-		local StageNum = SCREENMAN:GetTopScreen():GetStageStats():GetStageIndex();
-			s:diffusealpha(0)
-			:settext(string.format("%02d", StageNum).." STAGE")
-			:sleep(0.8):diffusealpha(1)
-		end;
-	};
+	local function FindText(pss)
+		SCREENMAN:SystemMessage("big ol wiener")
+		if pss:GetFailed() then
+			SCREENMAN:SystemMessage("aaah")
+			return string.format("%02d STAGE",pss:GetSongsPassed())
+		else
+			return "CLEAR"
+		end
+	end
+	for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
+		local shortPn = ToEnumShortString(pn)
+		t[#t+1] = Def.BitmapText{
+			Font="_handelgothic bt 20px";
+			InitCommand=cmd(x,stageXPos[shortPn];y,SCREEN_CENTER_Y+20);
+			OnCommand=function(s)
+				SCREENMAN:SystemMessage("wakey wakey")
+				s:diffusealpha(0)
+				:settext(FindText(STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)))
+				:sleep(0.8):diffusealpha(1)
+			end;
+		};
+	end
 end
 
 return t
