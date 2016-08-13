@@ -23,15 +23,15 @@ t[#t+1] =Def.ActorFrame{
 	LoadActor(THEME:GetPathB("","doors open"));
 };
 
-if not GAMESTATE:IsCourseMode() then
+
 --song jacket--
 t[#t+1] = Def.ActorFrame {
 	OnCommand=cmd(playcommand,'Set';CenterX;y,SCREEN_CENTER_Y-130;accelerate,0.099;zoomy,0);
 	Def.Sprite {
 		SetCommand=function(self)
-		local song = GAMESTATE:GetCurrentSong();
-			if song:HasBanner() then
-				self:LoadFromSongBanner(GAMESTATE:GetCurrentSong());
+			local entity = GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSong()
+			if entity:HasBanner() then
+				self:Load(entity:GetBannerPath());
 				self:setsize(256,80);
 			else
 				self:Load(THEME:GetPathG("","Common fallback banner"));
@@ -40,9 +40,6 @@ t[#t+1] = Def.ActorFrame {
 		end;
 	};
 };
-else
-t[#t+1] = LoadActor("ScreenStageInformation in/CourseDisplay");
-end;
 
 t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)

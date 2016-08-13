@@ -148,9 +148,7 @@ local stageXPos = {
 
 if GAMESTATE:IsCourseMode() then
 	local function FindText(pss)
-		SCREENMAN:SystemMessage("big ol wiener")
 		if pss:GetFailed() then
-			SCREENMAN:SystemMessage("aaah")
 			return string.format("%02d STAGE",pss:GetSongsPassed())
 		else
 			return "CLEAR"
@@ -160,13 +158,13 @@ if GAMESTATE:IsCourseMode() then
 		local shortPn = ToEnumShortString(pn)
 		t[#t+1] = Def.BitmapText{
 			Font="_handelgothic bt 20px";
-			InitCommand=cmd(x,stageXPos[shortPn];y,SCREEN_CENTER_Y+20);
+			InitCommand=cmd(x,SCREEN_CENTER_X+stageXPos[shortPn];y,SCREEN_CENTER_Y+20);
 			OnCommand=function(s)
-				SCREENMAN:SystemMessage("wakey wakey")
 				s:diffusealpha(0)
 				:settext(FindText(STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)))
 				:sleep(0.8):diffusealpha(1)
 			end;
+			OffCommand=function(s) s:linear(1):diffusealpha(0) end;
 		};
 	end
 end
