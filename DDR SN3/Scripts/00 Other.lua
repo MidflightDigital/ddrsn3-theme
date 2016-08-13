@@ -277,13 +277,6 @@ function MakeDeck(source)
 	end
 end
 
-function EnableStarterGameplayJunk()
-	assert(GAMESTATE and GAMESTATE:Env(),
-		"Wherever you are calling EnableStarterGameplayJunk, you can't do it there!")
-	local env = GAMESTATE:Env()
-	env.StarterMode = true
-end
-
 local videoRenderers = split(",",PREFSMAN:GetPreference("VideoRenderers"))
 if videoRenderers[1] == "d3d" then
 	Warn("Direct3D mode detected. Some visual effects may not work properly.\nDo not report these problems as bugs, they are limitations of Direct3D mode.")

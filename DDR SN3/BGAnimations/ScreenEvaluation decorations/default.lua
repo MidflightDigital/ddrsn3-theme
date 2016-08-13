@@ -141,15 +141,17 @@ t[#t+1] = LoadActor("grade")..{
 	OffCommand=cmd(sleep,0.2;linear,0.2;diffusealpha,0);
 };
 
-t[#t+1] = Def.BitmapText{
-	Font="_handelgothic bt 20px";
-	InitCommand=cmd(x,SCREEN_LEFT+120;y,SCREEN_CENTER_Y+20);
-	OnCommand=function(s)
-	local StageNum = GAMESTATE:GetCurrentStageIndex();
-		s:diffusealpha(0)
-		:settext(string.format("%02d", StageNum).." STAGE")
-		:sleep(0.8):diffusealpha(1)
-	end;
-};
+if GAMESTATE:IsCourseMode() then
+	t[#t+1] = Def.BitmapText{
+		Font="_handelgothic bt 20px";
+		InitCommand=cmd(x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y+20);
+		OnCommand=function(s)
+		local StageNum = SCREENMAN:GetTopScreen():GetStageStats():GetStageIndex();
+			s:diffusealpha(0)
+			:settext(string.format("%02d", StageNum).." STAGE")
+			:sleep(0.8):diffusealpha(1)
+		end;
+	};
+end
 
 return t

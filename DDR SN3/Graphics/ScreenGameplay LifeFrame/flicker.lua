@@ -20,8 +20,8 @@ if SN3Debug then
 end
 
 local targetDelta = 1/60
-local function CalculateFlickerFrames(delta)
-    return math.max(1, math.round(delta*targetDelta))
+local function CalculateFlickerWaitFrames(delta)
+    return math.max(1, math.round(delta*targetDelta))-1
 end
 
 local fCounter = 0
@@ -38,7 +38,7 @@ local function FlickerUpdate(self, _)
             and flickerState)
     end
    
-    fCounter = CalculateFlickerFrames(1/DISPLAY:GetCumFPS())-1
+    fCounter = CalculateFlickerWaitFrames(1/DISPLAY:GetCumFPS())
 end
 
 local host = Def.ActorFrame{
