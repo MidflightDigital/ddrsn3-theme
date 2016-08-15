@@ -16,24 +16,10 @@ LoadActor("../ScreenSelectMusic NewSong")..{
 		end
 	end;
 };
-Def.Sprite{
-	InitCommand=cmd(x,-154;visible,SCREENMAN:GetTopScreen() ~= "ScreenNetRoom");
-	SetMessageCommand=function(self,params)
-	local song = params.Song;
-	local pssp1 = STATSMAN:GetCurStageStats(params.Song):GetPlayerStageStats("PlayerNumber_P1")
-	local staw1 = STATSMAN:GetCurStageStats(params.Song):GetPlayerStageStats("PlayerNumber_P1"):GetStageAward();
-	local pssp2 = STATSMAN:GetCurStageStats(params.Song):GetPlayerStageStats("PlayerNumber_P2")
-		if song then
-			if not PROFILEMAN:IsSongNew(params.Song) then
-			self:Load(THEME:GetPathG("MusicWheelItem Song","NormalPart/score"));
-			self:diffuse(color("#00f0ff"));
-			self:diffusealpha(1);
-			self:draworder(1);
-			else
-			self:diffusealpha(0);
-			end;
-		end;
-	end;
 };
-};
+
+for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
+	table.insert(t, WheelLight(pn, true))
+end
+
 return t;

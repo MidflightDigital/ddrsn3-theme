@@ -14,75 +14,9 @@ local xPosPlayer = {
 	
 --lights
 if SCREENMAN:GetTopScreen() ~= "ScreenNetRoom" then
-for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-	t[#t+1] = Def.ActorFrame{
-	--P1 Light--
-		Def.Sprite{
-    	Texture=THEME:GetPathG("MusicWheelItem Song","NormalPart/score");
-    	InitCommand=function(s)
-			local short = ToEnumShortString(pn)
-			if GAMESTATE:GetNumPlayersEnabled() == 2 then
-				s:x(xPosPlayer[short]):zoomx(0.5):diffuse(color(PColor[short]))
-			else
-				s:x(-155):diffuse(color(PColor[short]))
-			end;
-		end;
-		CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentTrailP1ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
-		CurrentTrailP2ChangedMessageCommand=cmd(playcommand,"Set");
-    	SetCommand=function(self,params)
-			local short = ToEnumShortString(pn)
-			local SongOrCourse, StepsOrTrail;
-			if GAMESTATE:IsCourseMode() then
-				SongOrCourse = GAMESTATE:GetCurrentCourse();
-				StepsOrTrail = GAMESTATE:GetCurrentTrail(pn);
-			else
-				SongOrCourse = GAMESTATE:GetCurrentSong();
-				StepsOrTrail = GAMESTATE:GetCurrentSteps(pn);
-			end;
-			if SongOrCourse and StepsOrTrail then
-				local st = StepsOrTrail:GetStepsType();
-				local diff = StepsOrTrail:GetDifficulty();
-				local courseType = GAMESTATE:IsCourseMode() and SongOrCourse:GetCourseType() or nil;
-	
-				if PROFILEMAN:IsPersistentProfile(pn) then
-					-- player profile
-					profile = PROFILEMAN:GetProfile(pn);
-				else
-				-- machine profile
-					profile = PROFILEMAN:GetMachineProfile();
-				end;
-				
-				scorelist = profile:GetHighScoreList(SongOrCourse,StepsOrTrail);
-				assert(scorelist);
-				local scores = scorelist:GetHighScores();
-				local grade;
-				if scores[1] then
-					grade = scores[1]:GetGrade();
-					assert(grade);
-					if scores[1]:GetScore()>1 then
-						if grade=="Grade_Failed" then
-							self:visible(false);
-						else
-							self:visible(true);
-							self:diffuse(color(PColor[short]));
-						end;
-				else
-					self:visible(false);
-				end;
-			else
-				self:visible(false);
-			end;
-		else
-			self:visible(false);
-		end;
+	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+		table.insert(t, WheelLight(pn))
 	end;
-	};
-};
-end;
 end;
 
 --score underlay
