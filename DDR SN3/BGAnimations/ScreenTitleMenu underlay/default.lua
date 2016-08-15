@@ -31,7 +31,7 @@ t[#t+1] = Def.ActorFrame {
 		InitCommand=cmd(x,SCREEN_LEFT-92;y,SCREEN_CENTER_Y-50);
 		OnCommand=cmd();
 		TitleSelectionMessageCommand=function(self, params)
-			path = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_ScreenTitleMenu image "..string.lower(params.Choice).." (doubleres)"..".png"
+			path = "/Themes/"..THEME:GetCurThemeName().."/Graphics/_TitleImages/"..string.lower(params.Choice).." (doubleres)"..".png"
 			self:finishtweening():x(SCREEN_LEFT+182)
 			if heardBefore then
 				self:accelerate(0.05);

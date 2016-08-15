@@ -8,7 +8,7 @@ local t = Def.ActorFrame{
 	};
 
 	-- Picture
-	LoadActor("../dancerP1")..{
+	LoadActor("../_Style/dancerP1")..{
 		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-210;y,SCREEN_CENTER_Y+74;);
 		OnCommand=function(self)
 			if GAMESTATE:IsHumanPlayer(PLAYER_2) then
@@ -21,7 +21,7 @@ local t = Def.ActorFrame{
 		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0;visible,false);
 		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
-	LoadActor("../dancerP2")..{
+	LoadActor("../_Style/dancerP2")..{
 		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-110;y,SCREEN_CENTER_Y+115;);
 		OnCommand=function(self)
 			if GAMESTATE:IsHumanPlayer(PLAYER_2) then
@@ -34,26 +34,12 @@ local t = Def.ActorFrame{
 		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0;visible,false);
 		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
-
---[[	LoadActor("dancerP1")..{
-		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-197;y,SCREEN_CENTER_Y+88;);
-		GainFocusCommand=cmd(visible,true;bounceend,0.2;zoom,1);
-		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0;visible,false);
-		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
-	};
-	LoadActor("dancerP2")..{
-		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-87;y,SCREEN_CENTER_Y+128;);
-		GainFocusCommand=cmd(visible,true;bounceend,0.2;zoom,1);
-		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0;visible,false);
-		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
-	};
---]]
 		--style
-	LoadActor("style")..{
+	LoadActor("../_Style/style2")..{
 		InitCommand=cmd(x,SCREEN_LEFT+120;y,SCREEN_CENTER_Y+183);
 		OffCommand=cmd(bouncebegin,0.264;zoom,0);
 		GainFocusCommand=cmd(bounceend,0.2;zoom,1);
-		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0);
+		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0);
 	};
 };
 

@@ -10,7 +10,7 @@ local t = Def.ActorFrame{
 		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
 	-- Picture
-	LoadActor("../dancer"..masterPlayer)..{
+	LoadActor("../_Style/dancer"..masterPlayer)..{
 		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-164;y,SCREEN_CENTER_Y+92;);
 		BeginCommand=cmd(playcommand,"CheckNumPlayers");
 		GainFocusCommand=cmd(visible,true;bounceend,0.2;zoom,1);
@@ -23,11 +23,11 @@ local t = Def.ActorFrame{
 		end;
 	};
 		--style
-	LoadActor("style")..{
+	LoadActor("../_Style/style2")..{
 		InitCommand=cmd(x,SCREEN_LEFT+120;y,SCREEN_CENTER_Y+183);
 		OffCommand=cmd(bouncebegin,0.264;zoom,0);
 		GainFocusCommand=cmd(bounceend,0.2;zoom,1);
-		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0);
+		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0);
 	};
 };
 

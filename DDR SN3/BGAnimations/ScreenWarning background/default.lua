@@ -5,7 +5,7 @@ local t = Def.ActorFrame{
 };
 t[#t+1] = Def.ActorFrame {
 	InitCommand=cmd(Center;blend,Blend.Add;;);
-	LoadActor(THEME:GetPathB("","ScreenLogo background/titleback"))..{
+	LoadActor(THEME:GetPathB("","ScreenLogo background/bg"))..{
 		OnCommand=cmd(diffusealpha,1;sleep,5;linear,0.165;diffusealpha,0);
 	};
 	Def.Quad{

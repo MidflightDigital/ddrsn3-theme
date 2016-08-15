@@ -8,7 +8,7 @@ local p = {
 	pink = color("1,0,1,0.812"),
 	cyan = color("0,1,1,0.812")
 }
-local colorPatterns = 
+local colorPatterns =
 {
 	--first pattern block: YRPBCG with different start indices
 	{[0]=p.yellow, p.red, p.pink, p.blue, p.cyan, p.green},
@@ -22,9 +22,9 @@ t[#t+1] = Def.ActorFrame {
 		self:fov(120);
 	end;
 	Def.ActorFrame{
-		LoadActor(THEME:GetPathB("ScreenLogo","background/back"))..{
+		LoadActor(THEME:GetPathB("","_shared/back"))..{
 			InitCommand=cmd(FullScreen);
-		--My god you are amazing kenp.	
+		--My god you are amazing kenp.
 		OnCommand=function(self)
 		local seed = math.random(1,13);
 			--seed breakdown:
@@ -40,8 +40,8 @@ t[#t+1] = Def.ActorFrame {
 					curPatternIdx = seed - 2
 				end
 				self:diffuse(colorPatterns[curPattern][curPatternIdx])
-				self:queuecommand("Animate")			
-			else 
+				self:queuecommand("Animate")
+			else
 				self:rainbow();
 				self:effectperiod(120);
 			end;
@@ -57,7 +57,7 @@ t[#t+1] = Def.ActorFrame {
 	};
 	Def.ActorFrame{
 	InitCommand=cmd(Center;blend,Blend.Add;;diffusealpha,0.6);
-		LoadActor(THEME:GetPathB("","ScreenLogo background/stars"))..{
+		LoadActor(THEME:GetPathB("","_shared/stars"))..{
 			InitCommand=cmd(diffusealpha,0.3;fadetop,0.5;fadebottom,0.5);
 			OnCommand=function(self)
 				local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
@@ -66,20 +66,20 @@ t[#t+1] = Def.ActorFrame {
 				self:texcoordvelocity(-0.02,0);
 			end;
 		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/flash"))..{
+		LoadActor(THEME:GetPathB("","_shared/flash"))..{
 			InitCommand=cmd(y,-50;x,-200;diffusealpha,0.5);
 			OnCommand=cmd(spin;effectmagnitude,0,0,50);
 		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/left flash"))..{
+		LoadActor(THEME:GetPathB("","_shared/left flash"))..{
 			OnCommand=cmd(diffusealpha,0;sleep,4;accelerate,0.2;diffusealpha,1;sleep,0.5;linear,1;diffusealpha,0;queuecommand,'On');
 		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/right flash"))..{
+		LoadActor(THEME:GetPathB("","_shared/right flash"))..{
 			OnCommand=cmd(diffusealpha,0;sleep,2;accelerate,0.2;diffusealpha,1;sleep,0.5;linear,1;diffusealpha,0;sleep,2;queuecommand,'On');
 		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/round grid"))..{
+		LoadActor(THEME:GetPathB("","_shared/round grid"))..{
 			InitCommand=cmd(diffusealpha,0.5);
 		};
-		LoadActor(THEME:GetPathB("","ScreenLogo background/middle flash"))..{
+		LoadActor(THEME:GetPathB("","_shared/middle flash"))..{
 			InitCommand=cmd(y,-240;CenterX;zoomx,SCREEN_WIDTH;fadetop,0.5;fadebottom,0.5);
 			OnCommand=cmd(diffusealpha,0;blend,Blend.Add;;linear,2;diffusealpha,0.55;addy,SCREEN_HEIGHT;queuecommand,"Queue");
 			QueueCommand=cmd(diffusealpha,0;addy,-SCREEN_HEIGHT;sleep,4;queuecommand,"On");

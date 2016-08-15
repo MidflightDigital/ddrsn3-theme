@@ -1,6 +1,6 @@
 local t = Def.ActorFrame{
 	InitCommand=cmd(Center;blend,Blend.Add;;);
-	LoadActor(THEME:GetPathB("","ScreenLogo background/titleback"))..{
+	LoadActor(THEME:GetPathB("","ScreenLogo background/bg"))..{
 		OnCommand=cmd(diffusealpha,1;sleep,2;linear,0.165;diffusealpha,0);
 	};
 	Def.Quad{

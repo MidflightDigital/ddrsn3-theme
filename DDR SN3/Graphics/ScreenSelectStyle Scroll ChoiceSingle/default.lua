@@ -9,14 +9,14 @@ local t = Def.ActorFrame{
 		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 	};
 	-- Panel
-	LoadActor("_panel2")..{
+	LoadActor("../_Style/_panel2")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-402;y,SCREEN_CENTER_Y+32);
         OnCommand=cmd(zoom,0;diffusealpha,0;sleep,0.264;sleep,0.792;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1);
 		PadsOneMessageCommand=function(s) s:linear(0.1):x(SCREEN_CENTER_X-627):y(SCREEN_CENTER_Y-17) lastPad2=1 end;
 		PadsTwoMessageCommand=function(s) s:linear(0.1):x(SCREEN_CENTER_X-207):y(SCREEN_CENTER_Y+71) lastPad2=2 end;
 		OffCommand=cmd(sleep,0.264;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
-	LoadActor("_panel (doubleres)")..{
+	LoadActor("../_Style/_panel (doubleres)")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-112;y,SCREEN_CENTER_Y+119;);
 		OnCommand=cmd(zoom,0;diffusealpha,0;sleep,0.264;sleep,0.792;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1);
         PadsOneMessageCommand=function(s) s:linear(0.1):x(SCREEN_CENTER_X-142):y(SCREEN_CENTER_Y+109) end;
@@ -25,7 +25,7 @@ local t = Def.ActorFrame{
 	};
 
 	-- Picture
-	LoadActor("../dancer"..masterPlayer)..{
+	LoadActor("../_Style/dancer"..masterPlayer)..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-146;y,SCREEN_CENTER_Y+108);
 		BeginCommand=cmd(playcommand,"CheckNumPlayers");
 		OnCommand=cmd(vertalign,bottom;draworder,90;diffusealpha,0;zoom,0;sleep,0.264;sleep,0.792;sleep,0.264;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1);
@@ -39,33 +39,13 @@ local t = Def.ActorFrame{
 		end;
 	};
 	--style
-	LoadActor("style")..{
+	LoadActor("../_Style/style1")..{
 		InitCommand=cmd(x,SCREEN_LEFT+120;y,SCREEN_CENTER_Y+183);
 		OnCommand=cmd(zoom,0;sleep,0.264;bounceend,0.264;zoom,1);
 		OffCommand=cmd(bouncebegin,0.264;zoom,0);
 		GainFocusCommand=cmd(bounceend,0.2;zoom,1);
-		LoseFocusCommand=cmd(bouncebegin,0.2;zoom,0);
+		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0);
 	};
 };
-
-
-if SN3Debug then
-t[#t+1] = Def.ActorFrame {
-	OnCommand=function(s) s:addx(379):sleep(0.264):decelerate(0.264):addx(-379):decelerate(0.1):addx(11) end;
-	GainFocusCommand=function(s) MESSAGEMAN:Broadcast("PadsOne") s:visible(true):addx(-11):decelerate(0.1):addx(11) end;
-	LoseFocusCommand=cmd(visible,false);
-	OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
-	LoadActor("../_stylebase")..{
-		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+11;y,SCREEN_CENTER_Y-75;);
-	};
-	Def.BitmapText{
-		Font="_handelgothic bt 20px";
-		Text="One player game using the\nstandard four arrow dance mat.";
-		InitCommand=function(s)
-			s:halign(0):zoom(0.8):x(SCREEN_RIGHT-340):y(SCREEN_CENTER_Y-106);
-		end;
-	};
-};
-end;
 
 return t;
