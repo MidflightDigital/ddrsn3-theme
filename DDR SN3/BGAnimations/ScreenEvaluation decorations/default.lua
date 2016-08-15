@@ -142,8 +142,8 @@ t[#t+1] = LoadActor("grade")..{
 };
 
 local stageXPos = {
-	P1 = -200,
-	P2 = 200
+	P1 = -280,
+	P2 = 280
 }
 
 if GAMESTATE:IsCourseMode() then
@@ -160,8 +160,11 @@ if GAMESTATE:IsCourseMode() then
 			Font="_handelgothic bt 20px";
 			InitCommand=cmd(x,SCREEN_CENTER_X+stageXPos[shortPn];y,SCREEN_CENTER_Y+20);
 			OnCommand=function(s)
+				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
+				local darkLength = (#(tostring(pss:GetSongsPassed()))) == 1 and 1 or 0 
 				s:diffusealpha(0)
-				:settext(FindText(STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)))
+				:settext(FindText(pss))
+				:AddAttribute(0,{Length=darkLength, Diffuse=color "#777777"})
 				:sleep(0.8):diffusealpha(1)
 			end;
 			OffCommand=function(s) s:linear(1):diffusealpha(0) end;

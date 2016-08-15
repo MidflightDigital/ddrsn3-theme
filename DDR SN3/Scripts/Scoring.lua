@@ -85,7 +85,7 @@ function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn,ddrARules)
         if exact then
             return currentScore
         end
-        local rawScore = 10 * math.floor(currentScore / 10)
+        local rawScore = 10 * math.round(currentScore / 10)
         --this serves two functions: you can't get 1,000,000
         --in A mode, and also all A-mode scores end in 9
         if ddrARules and (rawScore > 0) then
