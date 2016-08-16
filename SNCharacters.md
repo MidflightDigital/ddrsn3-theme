@@ -41,4 +41,4 @@ Returns a table containg all potential character names (that is, directory names
 ### GetAllCharacterNames() ###
 Returns a table containing all valid character names, again sorted in alphabetical order.
 
-_Note:_ OptionRowCharacters() uses the GameState environment variables `SNCharacterP1` and `SNCharacterP2` to store SNCharacter settings. This may not be appropriate for your theme.
+_Note:_ OptionRowCharacters() is not described because it is considered part of the SuperNOVA 3 theme and is not designed to be used in other themes without modification.
