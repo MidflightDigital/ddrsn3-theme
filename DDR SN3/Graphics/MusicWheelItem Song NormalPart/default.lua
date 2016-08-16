@@ -18,7 +18,7 @@ LoadActor("../ScreenSelectMusic NewSong")..{
 };
 };
 
-for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
+for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	table.insert(t, WheelLight(pn, true))
 end
 

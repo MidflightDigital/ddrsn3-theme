@@ -66,6 +66,11 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
+if (not GAMESTATE:IsCourseMode()) and GAMESTATE:GetCurrentSong() then
+	local cdImage = GAMESTATE:GetCurrentSong():GetCDImagePath()
+	SCREENMAN:SystemMessage(cdImage)
+end
+
 t[#t+1] = Def.Sprite {
 	Texture="rayo 1x2.png",
 		InitCommand=function(self)

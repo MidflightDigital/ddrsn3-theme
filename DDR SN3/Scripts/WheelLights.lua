@@ -9,49 +9,58 @@ P2 = -153
 };
 
 
-local function GetSetCommand(pn)
+local function GetSetCommand(pn, itemMode)
+	local setItem = nil;
 	return function(self, params)
 		local short = ToEnumShortString(pn);
 		local SongOrCourse, StepsOrTrail;
+		local prof = PROFILEMAN:GetProfile(pn)
 
-		if params and params.Song then
-			SongOrCourse = params.Song;
-		elseif params and params.Course then
-			SongOrCourse = params.Course;
-		else 
-			if GAMESTATE:IsCourseMode() then
-				SongOrCourse = GAMESTATE:GetCurrentCourse();
-				StepsOrTrail = GAMESTATE:GetCurrentTrail(pn);
-			else
-				SongOrCourse = GAMESTATE:GetCurrentSong();
-				StepsOrTrail = GAMESTATE:GetCurrentSteps(pn);
+		if itemMode then
+			if params then
+				if params and (params.Course or params.Song) then
+					setItem = params.Course or params.Song;
+				else
+					return;
+				end;
 			end;
+			SongOrCourse = setItem;
+		else
+			SongOrCourse = GAMESTATE:GetCurrentCourse() or GAMESTATE:GetCurrentSong();
 		end;
 
-		if SongOrCourse and StepsOrTrail then
-			local st = StepsOrTrail:GetStepsType();
-			local diff = StepsOrTrail:GetDifficulty();
-			local courseType = GAMESTATE:IsCourseMode() and SongOrCourse:GetCourseType() or nil;
-
-			if PROFILEMAN:IsPersistentProfile(pn) then
-				-- player profile
-				profile = PROFILEMAN:GetProfile(pn);
+		if SongOrCourse then
+			local sType = GAMESTATE:GetCurrentStyle():GetStepsType();
+			local usingCourse = lua.CheckType("Course", SongOrCourse);
+			if usingCourse then
+				local cTrail = GAMESTATE:GetCurrentTrail(pn);
+				if cTrail then
+					local cDiff = GAMESTATE:GetCurrentTrail(pn):GetDifficulty();
+					for _, trail in pairs(SongOrCourse:GetAllTrails()) do
+						if (trail:GetStepsType() == sType) and
+							(trail:GetDifficulty() == cDiff) then
+							StepsOrTrail = trail;
+							break;
+						end;
+					end;
+				end;
 			else
-				-- machine profile
-				profile = PROFILEMAN:GetMachineProfile();
+				local cSteps = GAMESTATE:GetCurrentSteps(pn);
+				if cSteps then
+					local sDiff = cSteps:GetDifficulty();
+					StepsOrTrail = SongOrCourse:GetOneSteps(sType, sDiff);
+				end;
 			end;
-		
-			scorelist = profile:GetHighScoreList(SongOrCourse,StepsOrTrail);
-			local scores = scorelist:GetHighScores();
-			local grade;
-			if scores[1] then
-				grade = scores[1]:GetGrade();
-				assert(grade);
-				if scores[1]:GetScore()>1 then
-					if grade~="Grade_Failed" then
-						self:visible(true);
-						self:diffuse(color(PColor[short]));
-						return;
+
+			if StepsOrTrail then
+				local hsList = prof:GetHighScoreListIfExists(SongOrCourse, StepsOrTrail);
+				if hsList then
+					local hScores = hsList:GetHighScores();
+					if #hScores >= 1 then
+						if (hScores[1]):GetGrade() ~= 'Grade_Failed' then
+							self:visible(true);
+							return;
+						end;
 					end;
 				end;
 			end;
@@ -60,13 +69,14 @@ local function GetSetCommand(pn)
 	end;
 end;
 
-function WheelLight(pn, manual)
-	--manual mode means that the WheelLight won't run its own Set command.
-	--the only place it's used, something else runs its Set command. 
-	local function MsgResponse(s)
-		if not manual then
-			s:playcommand "Set"
+function WheelLight(pn, itemMode)
+	local function Response(s)
+		if not itemMode then
+			s:playcommand("Set", params);
 		end
+	end
+	local function AlwaysResponse(s, params)
+		s:playcommand("Set", params);
 	end
 
 	return Def.Sprite{
@@ -80,12 +90,12 @@ function WheelLight(pn, manual)
 				s:x(-155)
 			end;
 		end;
-		CurrentSongChangedMessageCommand=MsgResponse;
-		CurrentCourseChangedMessageCommand=MsgResponse;
-		CurrentStepsP1ChangedMessageCommand=MsgResponse;
-		CurrentTrailP1ChangedMessageCommand=MsgResponse;
-		CurrentStepsP2ChangedMessageCommand=MsgResponse;
-		CurrentTrailP2ChangedMessageCommand=MsgResponse;
-		SetCommand=GetSetCommand(pn);
+		CurrentSongChangedMessageCommand=Response;
+		CurrentCourseChangedMessageCommand=Response;
+		CurrentStepsP1ChangedMessageCommand=AlwaysResponse;
+		CurrentTrailP1ChangedMessageCommand=AlwaysResponse;
+		CurrentStepsP2ChangedMessageCommand=AlwaysResponse;
+		CurrentTrailP2ChangedMessageCommand=AlwaysResponse;
+		SetCommand=GetSetCommand(pn, itemMode);
 	}
 end
