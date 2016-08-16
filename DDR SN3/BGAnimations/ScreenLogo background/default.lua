@@ -1,13 +1,9 @@
 local counter = 0;
-local t = Def.ActorFrame{
-};
+local t = Def.ActorFrame{};
 
 t[#t+1] = Def.ActorFrame {
-	InitCommand=function(self)
-		self:fov(120);
-	end;
 	Def.ActorFrame{
-	InitCommand=cmd(Center;);
+	InitCommand=cmd(Center);
 		LoadActor("bg");
 	};
 	Def.ActorFrame{
