@@ -51,6 +51,13 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
+t[#t+1] = LoadActor("ScreenStageInformation in/cd")..{
+	PostInitCommand=function(s) s:x(SCREEN_CENTER_X)
+		:y(SCREEN_CENTER_Y+SCREEN_CENTER_Y*0.4)
+	end,
+	OnCommand=function(s) s:accelerate(0.05):zoomx(0):accelerate(0.05):zoomy(0) end	
+};
+
 t[#t+1] = Def.Sprite {
 	Texture="ScreenStageInformation in/rayo 1x2.png",
 		InitCommand=function(self)

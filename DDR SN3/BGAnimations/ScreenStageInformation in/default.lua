@@ -66,10 +66,12 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
-if (not GAMESTATE:IsCourseMode()) and GAMESTATE:GetCurrentSong() then
-	local cdImage = GAMESTATE:GetCurrentSong():GetCDImagePath()
-	SCREENMAN:SystemMessage(cdImage)
-end
+t[#t+1] = LoadActor("cd")..{
+	PostInitCommand=function(s) s:zoomx(0.01):zoomy(0.01):x(SCREEN_CENTER_X)
+		:y(SCREEN_CENTER_Y+SCREEN_CENTER_Y*0.4)
+	end,
+	OnCommand=function(s) s:accelerate(0.05):zoomx(1):accelerate(0.05):zoomy(1) end	
+};
 
 t[#t+1] = Def.Sprite {
 	Texture="rayo 1x2.png",
