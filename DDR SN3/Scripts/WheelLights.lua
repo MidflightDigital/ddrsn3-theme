@@ -75,8 +75,16 @@ function WheelLight(pn, itemMode)
 			s:playcommand("Set", params);
 		end
 	end
-	local function AlwaysResponse(s, params)
-		s:playcommand("Set", params);
+	local function P1Response(s, params)
+		print("P1Response")
+		if pn == 'PlayerNumber_P1' then
+			s:playcommand("Set", params);
+		end
+	end
+	local function P2Response(s, params)
+		if pn == 'PlayerNumber_P2' then
+			s:playcommand("Set", params);
+		end
 	end
 
 	return Def.Sprite{
@@ -89,13 +97,14 @@ function WheelLight(pn, itemMode)
 			else
 				s:x(-155)
 			end;
+			s:visible(false);
 		end;
 		CurrentSongChangedMessageCommand=Response;
 		CurrentCourseChangedMessageCommand=Response;
-		CurrentStepsP1ChangedMessageCommand=AlwaysResponse;
-		CurrentTrailP1ChangedMessageCommand=AlwaysResponse;
-		CurrentStepsP2ChangedMessageCommand=AlwaysResponse;
-		CurrentTrailP2ChangedMessageCommand=AlwaysResponse;
+		CurrentStepsP1ChangedMessageCommand=P1Response;
+		CurrentTrailP1ChangedMessageCommand=P1Response;
+		CurrentStepsP2ChangedMessageCommand=P2Response;
+		CurrentTrailP2ChangedMessageCommand=P2Response;
 		SetCommand=GetSetCommand(pn, itemMode);
 	}
 end
