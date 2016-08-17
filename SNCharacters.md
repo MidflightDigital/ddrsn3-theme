@@ -10,7 +10,7 @@ Character.lua as included in this version of the theme can work with version 1 S
 ### Configuration (config.lua) ###
 config.lua is a file that returns a table containing at least two fields, version and color. Both must exist for the character to be considered valid.
 
-config.lua is run in an empty environment, any attempt to use Lua functions defined outside that file will fail, including StepMania built-in functions.
+config.lua is run in an empty environment. Any attempt to use Lua functions defined outside that file will fail, including StepMania built-in functions.
 
 version must be 1, or else the character will be considered invalid.
 color is a StepMania color. It can be either a table of 4 elements or a string. If it is a string, it will be processed by color() during the loading process.
@@ -30,7 +30,15 @@ Character.lua exposes a table called Characters, which contains various function
 Attempts to get the path to a character with the given name. Returns nil if it can't be found. It does not validate names, so just getting a path back from this function doesn't mean that there actually is a character there.
 
 ### Validate(string name, boolean forceRecheck) ###
-Basically, checks if there is a valid character with the given name. Returns true if successful and false if not. If forceRecheck is not true, answers are cached and will not reflect any changes to the character since the last recheck.
+Checks if there is a valid character with the given name. Returns true if successful and false if not. If forceRecheck is not true, answers are cached and will not reflect any changes to the character since the last recheck.
 
 ### GetConfig(string name, boolean forceRecheck) ###
 Returns the configuration data for the character, or nil if there isn't any or it's invalid. forceRecheck acts identically to the way it does in Validate.
+
+### GetAllPotentialCharacterNames() ###
+Returns a table containg all potential character names (that is, directory names in /SNCharacters) sorted in alphabetical order.
+
+### GetAllCharacterNames() ###
+Returns a table containing all valid character names, again sorted in alphabetical order.
+
+_Note:_ OptionRowCharacters() is not described because it is considered part of the SuperNOVA 3 theme and is not designed to be used in other themes without modification.

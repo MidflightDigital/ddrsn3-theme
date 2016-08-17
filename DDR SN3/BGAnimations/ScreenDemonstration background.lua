@@ -44,7 +44,7 @@ if #vids > 0 then
 	   InitCommand=cmd(draworder,1;Center;zoomto,SCREEN_WIDTH+38,SCREEN_HEIGHT+38;);	
         };
     else
-        --hell if i know
+        self:visible(false);
     end
 end
 
