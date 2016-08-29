@@ -21,7 +21,7 @@ end
 
 local targetDelta = 1/60
 local function CalculateFlickerWaitFrames(delta)
-    return math.max(1, math.round(delta*targetDelta))-1
+    return math.max(1, math.round(targetDelta/delta))-1
 end
 
 local fCounter = 0
