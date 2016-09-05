@@ -62,6 +62,6 @@ function MenuNostrum(definitionPath)
 
 	return Def.Actor{
 		Name="MenuNostrum";
-		OnCommand=function(s) SCREENMAN:GetTopScreen:AddInputCallback()
+		OnCommand=function(s) SCREENMAN:GetTopScreen:AddInputCallback() end
 	}
 end
