@@ -319,3 +319,25 @@ function GameState:GetAppropriateStageNum()
 		return self:GetCurrentStageIndex() + 1
 	end
 end
+
+--Loads the file at path and runs it in the specified environment,
+--or an empty one if no environment is provided. Catches any errors that occur.
+--Returns false if the called function failed, true and anything else the function returned if it worked
+function dofile_safer(path, env)
+    env = env or {}
+    if not FILEMAN:DoesFileExist(path) then
+        --the file doesn't exist
+        return false
+    end
+    local handle = RageFileUtil.CreateRageFile()
+    handle:Open(path, 1)
+    local code = loadstring(handle:Read(), path)
+    handle:Close()
+    handle:destroy()
+    if not code then
+        --an error occurred while compiling the file
+        return false
+    end
+    setfenv(code, env)
+    return pcall(code)
+end
