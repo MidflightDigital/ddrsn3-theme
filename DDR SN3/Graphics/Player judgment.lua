@@ -4,7 +4,12 @@
 local c;
 local player = Var "Player";
 local playerPrefs = ProfilePrefs.Read(GetProfileIDForPlayer(player))
-local showBias = playerPrefs.bias
+
+local env = GAMESTATE:Env();
+local starterMode = env.StarterMode == true;
+
+--disable bias in starter mode
+local showBias = playerPrefs.bias and (not starterMode)
 
 local JudgeCmds = {
 	TapNoteScore_W1 = THEME:GetMetric( "Judgment", "JudgmentW1Command" );
@@ -46,8 +51,7 @@ local StTNSFrames = {
 	TapNoteScore_Miss = 3;	
 };
 
-local env = GAMESTATE:Env();
-local starterMode = env.StarterMode == true;
+
 local activeFrames = starterMode and StTNSFrames or TNSFrames;
 local activeCmds = starterMode and StJudgeCmds or JudgeCmds;
 

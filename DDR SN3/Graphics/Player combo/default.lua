@@ -13,6 +13,9 @@ local NumberMaxZoomAt = THEME:GetMetric("Combo", "NumberMaxZoomAt");
 local LabelMinZoom = THEME:GetMetric("Combo", "LabelMinZoom");
 local LabelMaxZoom = THEME:GetMetric("Combo", "LabelMaxZoom");
 
+local env = GAMESTATE:Env();
+local starterMode = env.StarterMode == true;
+
 --you can pass nil to this function, it acts the same as passing nothing
 --however, i think that passing nil makes the intent clearer -tertu
 local function cfShowOnly(...)
@@ -30,6 +33,18 @@ local function cfShowOnly(...)
 		a:visible(cfMTSInv[name] == true)
 	end
 end
+
+--this function causes any W1/W2/W3 combo to look like a W2 in starter
+local function remapStarter(params)
+	if starterMode then
+		if params.FullComboW1 or params.FullComboW2 or params.FullComboW3 then
+			params.FullComboW2 = true
+			params.FullComboW1 = false
+			params.FullComboW3 = false
+		end
+	end
+end
+
 
 local t = Def.ActorFrame {
 	Def.ActorFrame {
@@ -104,6 +119,7 @@ local t = Def.ActorFrame {
 		cf.NumberW2:settext( string.format("%i", iCombo) );
 		cf.NumberW3:settext( string.format("%i", iCombo) );
 		cf.NumberNormal:settext( string.format("%i", iCombo) );
+		remapStarter(param);
 		-- FullCombo Rewards
 		if param.FullComboW1 then
 			cfShowOnly('NumberW1', 'LabelW1');
