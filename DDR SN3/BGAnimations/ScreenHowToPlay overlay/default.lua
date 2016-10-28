@@ -35,12 +35,12 @@ local t = Def.ActorFrame{
 	};
 	LoadActor("feet")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
-		OnCommand=cmd(addx,-SCREEN_WIDTH;sleep,2.4;decelerate,0.3;addx,SCREEN_WIDTH;sleep,2;linear,0.3;zoomy,0);
+		OnCommand=cmd(addy,-64;croptop,1;sleep,2.4;linear,0.233;addy,64;croptop,0;sleep,1.267;linear,0.233;addy,-64;croptop,1);
 	};
 	--Pre-Step message
 	Def.ActorFrame {
-		LoadActor("taphand")..{
-			InitCommand=cmd(;rotationz,270;x,SCREEN_LEFT+400;y,SCREEN_CENTER_Y-130);
+		LoadActor("pinkhand")..{
+			InitCommand=cmd(x,SCREEN_LEFT+320;y,SCREEN_CENTER_Y-130);
 			OnCommand=cmd(bob;effectperiod,1;effectmagnitude,-20,0,0;diffusealpha,0;sleep,6;linear,0;diffusealpha,1;sleep,2;linear,0;diffusealpha,0);
 		};
 		LoadActor("tapmessage")..{
@@ -50,9 +50,9 @@ local t = Def.ActorFrame{
 	};
 -- 1st Step -- DOWN
 	Def.ActorFrame {
-		LoadActor("taphand")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X-128;y,SCREEN_CENTER_Y-60);
-			OnCommand=cmd(bob;effectperiod,1;effectmagnitude,0,20,0;diffusealpha,0;sleep,9.7;linear,0;diffusealpha,1;sleep,1.7;linear,0;diffusealpha,0);
+		LoadActor("pinkhand")..{
+			InitCommand=cmd(x,SCREEN_LEFT+260;y,SCREEN_CENTER_Y-78);
+			OnCommand=cmd(addy,120;diffusealpha,0;sleep,9.7;linear,0;diffusealpha,1;linear,0.2;addy,-120;sleep,1.7;linear,0.2;addy,120;linear,0;diffusealpha,0);
 		};
 		LoadActor("tapmessage")..{
 			InitCommand=cmd(x,SCREEN_CENTER_X-160;y,SCREEN_CENTER_Y+40);

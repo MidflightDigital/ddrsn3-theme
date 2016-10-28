@@ -3,7 +3,9 @@ local headerTextImage
 
 --this should probably be a metric
 if screenName == "ScreenSelectMusic" then
-    headerTextImage = "Music (doubleres).png"
+    headerTextImage = "MusicStd (doubleres).png"
+elseif screenName == "ScreenSelectMusicStarter" then
+    headerTextImage = "MusicStrt (doubleres).png"
 elseif string.find(screenName, "Options") then
     headerTextImage = "Options (doubleres).png"
 elseif screenName == "ScreenNetRoom" or screenName == "ScreenNetSelectMusic" or screenName == "ScreenSMOnlineLogin" then
@@ -123,6 +125,10 @@ if headerTextImage then
 				self:x(SCREEN_CENTER_X):halign(0.5);
 			elseif screenName == "ScreenDataSaveSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
+      elseif screenName == "ScreenSelectMusicStarter" then
+				self:x(SCREEN_LEFT+95):y(20):halign(0);
+      elseif screenName == "ScreenSelectMusic" then
+				self:x(SCREEN_LEFT+95):y(20):halign(0);
 			else
 				self:x(SCREEN_LEFT+95):halign(0);
 			end;

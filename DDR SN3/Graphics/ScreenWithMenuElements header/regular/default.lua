@@ -27,7 +27,7 @@ local t = Def.ActorFrame{
 				self:Load(THEME:GetPathG("","ScreenWithMenuElements header/regular/1"))
 			elseif screenName == "ScreenSelectPlayMode" then
 				self:Load(THEME:GetPathG("","ScreenWithMenuElements header/regular/2"))
-			elseif screenName == "ScreenSelectMusic" then
+			elseif screenName == "ScreenSelectMusic" or screenName == "ScreenSelectMusicStarter" then
 				self:Load(THEME:GetPathG("","ScreenWithMenuElements header/regular/3"))
 			else
 				self:Load(THEME:GetPathG("","ScreenWithMenuElements header/regular/tag"))
