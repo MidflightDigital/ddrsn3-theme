@@ -81,22 +81,22 @@ function MenuNostrum(definitionPath)
         local currentIndex = {}
         ActionFunction = function(pn, action)
             local prevIndex = currentIndex[pn]
-            local indexChanged = false
+            local indexChanged = true
             if prevIndex == nil then
                 currentIndex[pn] = 0
-                indexChanged = true
             elseif action == "next" then
                 currentIndex[pn] = currentIndex[pn] + 1
-                indexChanged = true
             elseif action == "previous" then
                 currentIndex[pn] = currentIndex[pn] - 1
-                indexChanged = true
             elseif action == "select" then
+                indexChanged = false
                 menuDef.choices[currentIndex[pn]].onSelect()
                 MESSAGEMAN:Broadcast("MNSelection",
                     {pn=pn,
                     choice = menuDef.choices[currentIndex[pn]].name}
                 )
+            else
+                indexChanged = false
             end
             if indexChanged then
                 if prevIndex then
