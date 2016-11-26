@@ -6,6 +6,8 @@ if screenName == "ScreenSelectMusic" then
     headerTextImage = "MusicStd (doubleres).png"
 elseif screenName == "ScreenSelectMusicStarter" then
     headerTextImage = "MusicStrt (doubleres).png"
+elseif screenName == "ScreenSelectMusicExtra" then
+    headerTextImage = "extra (doubleres).png"
 elseif string.find(screenName, "Options") then
     headerTextImage = "Options (doubleres).png"
 elseif screenName == "ScreenNetRoom" or screenName == "ScreenNetSelectMusic" or screenName == "ScreenSMOnlineLogin" then
@@ -50,6 +52,8 @@ elseif screenName == "ScreenEvaluationNonstop" then
 	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenNetEvaluation" then
 	headerBaseImage = "centerbase (doubleres).png"
+elseif screenName == "ScreenSelectMusicExtra" then
+	headerBaseImage = "extrabase (doubleres).png"
 else
 	headerBaseImage = "regular"
 end
@@ -85,6 +89,8 @@ local out = Def.ActorFrame{
 			elseif screenName == "ScreenDataSaveSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
 			elseif screenName == "ScreenNetEvaluation" then
+				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
+      elseif screenName == "ScreenSelectMusicExtra" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10);
 			else
 				self:x(SCREEN_LEFT):halign(0);
@@ -124,6 +130,8 @@ if headerTextImage then
 			elseif screenName == "ScreenNetEvaluation" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
 			elseif screenName == "ScreenDataSaveSummary" then
+				self:x(SCREEN_CENTER_X):halign(0.5);
+      elseif screenName == "ScreenSelectMusicExtra" then
 				self:x(SCREEN_CENTER_X):halign(0.5);
       elseif screenName == "ScreenSelectMusicStarter" then
 				self:x(SCREEN_LEFT+95):y(20):halign(0);

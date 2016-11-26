@@ -4,7 +4,7 @@
 Color = {
 -- Color Library
 -- These colors are pure swatch colors and are here purely to be used
--- on demand without having to type color("stuff") or dig through 
+-- on demand without having to type color("stuff") or dig through
 -- a palette to get the color you want.
 	Black		=	color("0,0,0,1"),
 	White		=	color("1,1,1,1"),
@@ -32,6 +32,17 @@ Color = {
 }
 
 setmetatable(Color, { __call = function(self, c) return self[c] end })
+
+group_colors = {
+	["1-Licenses"]= color("#FFFFFF"),
+	["2-KONAMI Originals"]= color("#00CC00"),
+	["3-Requests"]= color("#FFFF00"),
+	["4-Revivials"]= color("#33CCFF"),
+	["5-NOVAmix"]= color("#FF00FF"),
+	["6a-ENCORE EXTRA STAGE"]= color("#FF9933"),
+	["6b-EXTRA STAGE"]= color("#FF0000"),
+	["7-DLC"]= color("#FF9933"),
+};
 
 -- Remapped Color Module, since some themes are crazy
 -- Colors = Color;
@@ -127,16 +138,16 @@ function PlayerScoreColor( pn )
 	return color("1,1,1,1")
 end
 
-function CustomDifficultyToColor( sCustomDifficulty ) 
+function CustomDifficultyToColor( sCustomDifficulty )
 	return GameColor.Difficulty[sCustomDifficulty]
 end
 
-function CustomDifficultyToDarkColor( sCustomDifficulty ) 
+function CustomDifficultyToDarkColor( sCustomDifficulty )
 	local c = GameColor.Difficulty[sCustomDifficulty]
 	return { c[1]/2, c[2]/2, c[3]/2, c[4] }
 end
 
-function CustomDifficultyToLightColor( sCustomDifficulty ) 
+function CustomDifficultyToLightColor( sCustomDifficulty )
 	local c = GameColor.Difficulty[sCustomDifficulty]
 	return { scale(c[1],0,1,0.5,1), scale(c[2],0,1,0.5,1), scale(c[3],0,1,0.5,1), c[4] }
 end
@@ -162,3 +173,7 @@ function JudgmentLineToStrokeColor( i )
 	local c = GameColor.Judgment[i]
 	return { c[1]/2, c[2]/2, c[3]/2, c[4] }
 end
+
+function color_grp(params)
+	return group_colors[params.Song:GetGroupName()] or color("#FFFFFF")
+end;
