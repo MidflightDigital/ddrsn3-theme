@@ -18,6 +18,7 @@ if not GAMESTATE:IsCourseMode() then
 	end;
 end;
 
+
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay")
 t[#t+1] = StandardDecorationFromFile("BannerFrame","BannerFrame")

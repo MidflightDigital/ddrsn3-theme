@@ -8,8 +8,8 @@ local player = tt[8]
 local function radarSet(self)
 
 	self:SetFromValues(player,tt);
-	self:visible(true);	
-	
+	self:visible(true);
+
 	if GAMESTATE:IsHumanPlayer(player) then
 		self:visible(true);
 		local profileID = GetProfileIDForPlayer(player)  --取得uid but not really
@@ -35,7 +35,7 @@ local t = Def.ActorFrame {
 
 	Def.GrooveRadar {
 		OnCommand=function(self, params)
-			(cmd(zoom,0;sleep,0.583;decelerate,0.150;zoom,1.1))(self);
+			(cmd(zoom,0;sleep,0.583;decelerate,0.150;zoom,0.25))(self);
 			self:queuecommand('UpdateInternal2');
 		end;
 
@@ -43,10 +43,10 @@ local t = Def.ActorFrame {
 			radarSet(self);
 		end;
 		OffCommand=cmd(sleep,0.00;decelerate,0.167;zoom,0)
-		
+
 	},
-	
-	
+
+
 }
 
 return t

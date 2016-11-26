@@ -12,7 +12,7 @@ local x = Def.ActorFrame{
 
 
 function SetRank02(Rank02, minValue)
-	
+
 	if minValue >=1.98 then
 		Rank02 = "True God";
 	elseif minValue >=1.80 then
@@ -43,9 +43,9 @@ function SetRank02(Rank02, minValue)
 		Rank02 = "Beginner";
 	else
 		Rank02 = "???";
-		
+
 	end
-	
+
 	return Rank02;
 end
 
@@ -58,13 +58,13 @@ function SetRankFromRadarValue(selectRank, SingleTable, DoubleTable)
 	local doubleMax = math.max(DoubleTable[1],DoubleTable[2],DoubleTable[3],DoubleTable[4],DoubleTable[5]);
 	local singleMin = math.min(SingleTable[1],SingleTable[2],SingleTable[3],SingleTable[4],SingleTable[5]);
 	local doubleMin = math.min(DoubleTable[1],DoubleTable[2],DoubleTable[3],DoubleTable[4],DoubleTable[5]);
-	
+
 	local totalMax = math.max(SingleTable[1],SingleTable[2],SingleTable[3],SingleTable[4],SingleTable[5],
 								DoubleTable[1],DoubleTable[2],DoubleTable[3],DoubleTable[4],DoubleTable[5]);
 
 	-- local totalMin = math.min(SingleTable[1],SingleTable[2],SingleTable[3],SingleTable[4],SingleTable[5],
 								-- DoubleTable[1],DoubleTable[2],DoubleTable[3],DoubleTable[4],DoubleTable[5]);
-	
+
 	if totalMax == SingleTable[1] or totalMax==DoubleTable[1] then
 		Rank01 = "Stream";
 	elseif totalMax == SingleTable[2] or totalMax==DoubleTable[2] then
@@ -76,18 +76,18 @@ function SetRankFromRadarValue(selectRank, SingleTable, DoubleTable)
 	else
 		Rank01 = "Chaos";
 	end
-	
-	if (totalMax == SingleTable[1] or 
-		totalMax == SingleTable[2] or 
-		totalMax == SingleTable[3] or 
+
+	if (totalMax == SingleTable[1] or
+		totalMax == SingleTable[2] or
+		totalMax == SingleTable[3] or
 		totalMax == SingleTable[4] or
 		totalMax == SingleTable[5]) then
-	
+
 		Rank02 = SetRank02(Rank02,singleMin);
 	else
 		Rank02 = SetRank02(Rank02,doubleMin);
 	end
-	
+
 	if Rank02 == "???" then
 		Rank01 ="???"
 	end
@@ -100,7 +100,7 @@ end;
 
 
 function LoadPlayerStuff(Player)
-	
+
 	local t = {};
 	local pn = (Player == PLAYER_1) and 1 or 2;
 	local strpn = tostring(pn);
@@ -109,16 +109,16 @@ function LoadPlayerStuff(Player)
 		Name = 'JoinFrame';
 		--LoadCard(Color('Outline'),color('0,0,0,0'),Player,true);
 
-		
+
 		-- LoadActor( THEME:GetPathG("ScreenSelectProfile","Start") ) .. {
 			-- InitCommand=cmd(shadowlength,0);
 			-- OnCommand=cmd(diffuseshift;effectcolor1,Color('White');effectcolor2,color("#A5A6A5");playcommand,"Animate");
 			-- AnimateCommand=cmd(smooth,0.1;zoomx,1.05;smooth,0.1;zoomx,1.0;queuecommand,"Animate");
 			-- OffCommand=cmd(linear,0.1;zoomy,0;diffusealpha,0);
 		-- };
-		
+
 	};
-	
+
 	t[#t+1] = Def.ActorFrame {
 		Name = 'BigFrame';
 		LoadCard(PlayerColor(),color('1,1,1,1'),Player,true);
@@ -126,7 +126,7 @@ function LoadPlayerStuff(Player)
 	t[#t+1] = Def.ActorFrame {
 		Name = 'SmallFrame';
 		InitCommand=cmd(y,5);
-		
+
 		LoadActor( THEME:GetPathG("ScreenDataSaveSummary","MyGrooveRadarBackP1") )..{
 			InitCommand=cmd(zoom,0.4;y,-2.5;);
 			OnCommand=cmd(diffusealpha,0;sleep,0.9;linear,0.2;diffusealpha,1);
@@ -134,46 +134,60 @@ function LoadPlayerStuff(Player)
 		};
 	};
 
-	
-	
+
+
 	t[#t+1] = Def.ActorFrame {
 		Name = "EffectFrame";
 	};
-	
-	
+
+
 	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		Name = 'SelectedProfileText';
-		InitCommand=cmd(y,-71;zoom,0.6;shadowlength,1;diffuse,color("1,1,1,0");strokecolor,Color("Outline");maxwidth,400);
+    InitCommand=function(self)
+      if Player==PLAYER_2 then
+        self:x(3);
+      end;
+      (cmd(y,-71;zoom,0.6;shadowlength,1;diffuse,color("1,1,1,0");strokecolor,Color("Outline");maxwidth,400))(self);
+    end;
 		OnCommand=cmd(sleep,0.8;linear,0.5;diffusealpha,1);
 		OffCommand=cmd(stoptweening;linear,0.01;zoomy,0;diffusealpha,0);
 	};
-	
-	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
+
+	t[#t+1] = LoadFont("_enjoysongnumber") .. {
 		Name = 'SelectedProfileLevel';
-		InitCommand=cmd(valign,1;x,55;y,52;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("0.1,1,0.1,1");strokecolor,Color("Outline");maxwidth,50);
-		OnCommand=cmd(sleep,0.7;linear,0.05;diffusealpha,1;zoom,0.6);
+    InitCommand=function(self)
+      if Player==PLAYER_2 then
+        self:x(58);
+      else
+        self:x(55)
+      end;
+      (cmd(valign,1;halign,1;y,50;zoom,0;strokecolor,color("#000000");maxwidth,50))(self);
+    end;
+		OnCommand=cmd(sleep,0.7;linear,0.05;diffusealpha,1;zoom,0.3);
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
-	
+
 t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		Name = 'selectedTotalCaloriesBurned';
 		InitCommand=cmd(x,33.5;y,60;zoom,0;diffuse,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,350);
 		OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.3);
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
-	
+
 	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		Name = 'selectSongsPlayed';
-		InitCommand=cmd(x,25;y,-56;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,0.1,1");strokecolor,Color("Outline");maxwidth,150);
+    InitCommand=function(self)
+      if Player==PLAYER_2 then
+        self:x(28);
+      else
+        self:x(25)
+      end;
+      (cmd(y,-56;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,0.1,1");strokecolor,Color("Outline");maxwidth,150))(self);
+    end;
 		OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.3;zoomx,0.4;);
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
-	
-	t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
-		Name = 'selectPlayerUID';
-		InitCommand=cmd(visible,false);
-	};	
-	
+
 	t[#t+1] = Def.Sprite{
 		Name = 'selectedMostSongPlayed';
 		InitCommand=cmd(x,65;y,-32;zoom,0;scaletoclipped,40,40);
@@ -183,17 +197,29 @@ t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 
 	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","LvBar") ) .. {
 			Name = 'selectLvBarBack';
-			InitCommand=cmd(diffusealpha,0;y,46;x,-2;zoomx,0.5;halign,1);
+      InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(1);
+        else
+          self:x(-2)
+        end;
+        (cmd(diffusealpha,0;y,46;zoomx,0.5;halign,1))(self);
+      end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;diffusealpha,1;diffuse,color("0.4,0.4,0.4,1"));
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
-			
 	};
 	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","LvBar") ) .. {
 			Name = 'selectLvBar';
-			InitCommand=cmd(diffusealpha,0;y,46;x,-2;zoomx,0.5;halign,1);
+      InitCommand=function(self)
+        if Player==PLAYER_2 then
+          self:x(1);
+        else
+          self:x(-2)
+        end;
+        (cmd(diffusealpha,0;y,46;zoomx,0.5;halign,1))(self);
+      end;
 			OnCommand=cmd(sleep,0.3;linear,0.3;diffusealpha,1;);
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
-			
 		};
 
 	t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
@@ -205,31 +231,7 @@ t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		end;
 		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 	};
-t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
-		Name = 'selectRank';
-		InitCommand=cmd(y,-46;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,color("1,1,1,1");strokecolor,Color("Outline");maxwidth,350);
-		OnCommand=function(self)
-			(cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoomy,0.5;zoomx,0.5))(self);
-		end;
-		OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
-	};
-	
-	
-	--¤W¤U®Ø¬[------------
-	-- t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","CardFrameA") )..{
-		-- Name = "Frame";
-		-- InitCommand=cmd(y,0;zoomx,0);
-		-- OnCommand=cmd(linear,0.3;zoomx,1.2;linear,0.3;y,-186);
-		-- OffCommand=cmd(linear,0.3;y,0;linear,0.1;diffusealpha,0);
-		
-	-- };
-	-- t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","CardFrameA") )..{
-		-- Name = "Frame";
-		-- InitCommand=cmd(y,0;zoomx,0);
-		-- OnCommand=cmd(linear,0.3;zoomx,1.2;linear,0.3;y,186);
-		-- OffCommand=cmd(linear,0.3;y,0;linear,0.1;diffusealpha,0);
-	-- };
-	
+
 	----MyGrooveRadar
 	if (Player == PLAYER_1) then ---------------P1
 		------New MyGrooveRadar
@@ -248,7 +250,7 @@ t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
 				OffCommand=cmd(linear,0.05;diffusealpha,0);
 			};
 		end
-		
+
 		--Old My Groove Radar
 		if GAMESTATE:GetCurrentStyle():GetStepsType() == "StepsType_Dance_Single" then
 			t[#t+1] = LoadActor( THEME:GetPathG("ScreenDataSaveSummary", "GrooveRadar" ),0,0,0,0,0,1,1,PLAYER_1)..{  --00000/Style/IsPastValue ::  Single=1 Double=2 IsPastValue=0 or 1
@@ -265,7 +267,7 @@ t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
 				OffCommand=cmd(linear,0.05;diffusealpha,0);
 			};
 		end
-		
+
 	else -----------P2
 				------New MyGrooveRadar
 		if GAMESTATE:GetCurrentStyle():GetStepsType() == "StepsType_Dance_Single" then
@@ -283,9 +285,9 @@ t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
 				OffCommand=cmd(linear,0.05;diffusealpha,0);
 			};
 		end
-		
-		
-		
+
+
+
 		t[#t+1]=LoadFont("_russell square 16px") .. {
 			Name = 'GVRD2Value_N1';
 			InitCommand=cmd(horizalign,right;x,20+8.5;y,9;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,Color("Yellow");strokecolor,Color("Outline");maxwidth,220);
@@ -316,8 +318,8 @@ t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
-		
-		
+
+
 		--Old My Groove Radar
 		if GAMESTATE:GetCurrentStyle():GetStepsType() == "StepsType_Dance_Single" then
 			t[#t+1] = LoadActor( THEME:GetPathG("ScreenDataSaveSummary", "GrooveRadar" ),0,0,0,0,0,1,1,PLAYER_2)..{  --00000/Style/IsPastValue ::  Single=1 Double=2 IsPastValue=0 or 1
@@ -364,10 +366,10 @@ t[#t+1]=LoadFont("_handelgothic bt 20px") .. {
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
-		
+
 	end;
-	
-	
+
+
 
 	return t;
 end;
@@ -384,51 +386,45 @@ function UpdateInternal(self, Player)
 	local selLevel = self:GetChild('SelectedProfileLevel');
 	local selTotalCaloriesBurned = self:GetChild('selectedTotalCaloriesBurned');
 	local selectRank = self:GetChild('selectRank');
-	local selectPlayerUID = self:GetChild('selectPlayerUID');
 	local selSongsPlayed = self:GetChild('selectSongsPlayed');
 	local selLvBarBack = self:GetChild('selectLvBarBack');
 	local selLvBar = self:GetChild('selectLvBar');
 	local selPercentComplete = self:GetChild('selectPercentComplete');
 	local selTotalAttackrateWord = self:GetChild('selectTotalAttackrateWord');
-	local selPlayerUID;
 	local selGVRD = (Player == PLAYER_1) and self:GetChild('GVRD1') or self:GetChild('GVRD2');
 	local selGVRDP = (Player == PLAYER_1) and self:GetChild('GVRD1P') or self:GetChild('GVRD2P');
-	
+
 	local PcntCompleteSingle = PROFILEMAN:GetProfile(Player):GetSongsAndCoursesPercentCompleteAllDifficulties('StepsType_Dance_Single');
 				local PcntCompleteDouble = PROFILEMAN:GetProfile(Player):GetSongsAndCoursesPercentCompleteAllDifficulties('StepsType_Dance_Double');
 				--HonorName
-				
+
 				if PcntCompleteSingle>PcntCompleteDouble then
 					PcntLarger = PcntCompleteSingle;
-				else 
+				else
 					PcntLarger = PcntCompleteDouble;
 				end
 				PcntLarger = PcntLarger*100;
-				
-				
+
+
 				local Lv = (math.ceil(math.sqrt(PROFILEMAN:GetProfile(Player):GetTotalCaloriesBurned())));
 				local pcnt =((PROFILEMAN:GetProfile(Player):GetTotalCaloriesBurned())-((Lv-1)*(Lv-1))) /((Lv*Lv)-((Lv-1)*(Lv-1)));
 				local totalPcnt = (PcntCompleteSingle + PcntCompleteDouble) / 2;
-					--totalPcnt = PcntLarger;				
+					--totalPcnt = PcntLarger;
 				--local pcnt =((PROFILEMAN:GetProfile(Player):GetTotalCaloriesBurned())-((Lv-1)*(Lv-1))) /((Lv*Lv)-((Lv-1)*(Lv-1)));
 				bigframe:visible(true);
 				seltext:settext(PROFILEMAN:GetProfile(Player):GetDisplayName());
 				selLevel:settext(math.ceil(math.sqrt(PROFILEMAN:GetProfile(Player):GetTotalCaloriesBurned())) );
 				selTotalCaloriesBurned:settext((math.ceil(PROFILEMAN:GetProfile(Player):GetCaloriesBurnedToday()))..' kCals.');
 				selLvBar:cropright(1-pcnt);
-				
-				selPlayerUID = PROFILEMAN:GetProfile(Player):GetGUID();
-				
-				selectPlayerUID:settext(string.upper(string.sub(selPlayerUID,1,4).."-"..string.sub(selPlayerUID,5,8)));
 				local RadarFile = RageFileUtil:CreateRageFile()
-				
+
 				local selPlayerProf = PROFILEMAN:GetProfile(Player)
 
 				local stype = GAMESTATE:GetCurrentStyle():GetStyleType()
 				local style = ((stype == 'StyleType_OnePlayerTwoSides') or (stype == 'StyleType_TwoPlayersSharedSides'))
 					and 'double'
 					or 'single'
-				
+
 end
 
 if GAMESTATE:IsPlayerEnabled(PLAYER_1) then

@@ -24,20 +24,6 @@ local t = Def.ActorFrame{
 		OffCommand=cmd(sleep,0.264;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
 	};
 
-	-- Picture
-	LoadActor("../_Style/dancer"..masterPlayer)..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-146;y,SCREEN_CENTER_Y+108);
-		BeginCommand=cmd(playcommand,"CheckNumPlayers");
-		OnCommand=cmd(vertalign,bottom;draworder,90;diffusealpha,0;zoom,0;sleep,0.264;sleep,0.792;sleep,0.264;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1);
-		GainFocusCommand=cmd(bounceend,0.2;zoom,1);
-		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0);
-		OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,0.8;decelerate,0.066;zoom,1;accelerate,0.066;zoom,0);
-		CheckNumPlayersCommand=function(self,param)
-			if GAMESTATE:GetNumPlayersEnabled() > 1 then
-				self:visible(false)
-			end
-		end;
-	};
 	--style
 	LoadActor("../_Style/style1")..{
 		InitCommand=cmd(x,SCREEN_LEFT+120;y,SCREEN_CENTER_Y+183);
@@ -47,5 +33,29 @@ local t = Def.ActorFrame{
 		LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0);
 	};
 };
+
+if GAMESTATE:IsPlayerEnabled("PlayerNumber_P1") then
+t[#t+1] = Def.Model{
+	Materials = "../_Style/(5th) Rage/model.txt";
+	Meshes = "../_Style/(5th) Rage/model.txt";
+	Bones = "../_Style/(5th) Rage/Rest/Rest.redir";
+	InitCommand=cmd(x,SCREEN_CENTER_X-140;y,SCREEN_CENTER_Y+96;zoom,12;rotationy,-140;cullmode,'CullMode_None';);
+	OnCommand=cmd(vertalign,bottom;draworder,90;diffusealpha,0;zoom,0;sleep,0.264;sleep,0.792;sleep,0.264;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,12;accelerate,0.066;zoom,10;decelerate,0.066;zoom,12);
+	GainFocusCommand=cmd(bounceend,0.2;zoom,12);
+	LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0);
+	OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,10;decelerate,0.066;zoom,12;accelerate,0.066;zoom,0);
+};
+else
+t[#t+1] = Def.Model{
+	Materials = "../_Style/(5th) Emi/model.txt";
+	Meshes = "../_Style/(5th) Emi/model.txt";
+	Bones = "../_Style/(5th) Emi/Rest/Rest.redir";
+	InitCommand=cmd(x,SCREEN_CENTER_X-140;y,SCREEN_CENTER_Y+96;zoom,12;rotationy,-140;cullmode,'CullMode_None';);
+	OnCommand=cmd(vertalign,bottom;draworder,90;diffusealpha,0;zoom,0;sleep,0.264;sleep,0.792;sleep,0.264;sleep,0.132;diffusealpha,1;decelerate,0.066;zoom,12;accelerate,0.066;zoom,10;decelerate,0.066;zoom,12);
+	GainFocusCommand=cmd(bounceend,0.2;zoom,12);
+	LoseFocusCommand=cmd(finishtweening;bouncebegin,0.2;zoom,0);
+	OffCommand=cmd(sleep,0.132;accelerate,0.066;zoom,10;decelerate,0.066;zoom,12;accelerate,0.066;zoom,0);
+};
+end;
 
 return t;
