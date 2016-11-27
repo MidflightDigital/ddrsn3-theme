@@ -115,10 +115,11 @@ end
 Branch.AfterEvaluation = function()
 	--normal
 	if GAMESTATE:GetSmallestNumStagesLeftForAnyHumanPlayer() >= 1 then
-		if GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra1') then
-			return "ScreenSelectMusicExtra"
-		elseif GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra2') then
-			return "ScreenSelectMusicExtra"
+		--broken as hell code for extra stage music select
+		if GAMESTATE:GetCurrentStage() == "Stage_Final" then
+			if GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra1') or GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra2') then
+				return "ScreenSelectMusicExtra"
+			end
 		else
 			return "ScreenProfileSave"
 		end;

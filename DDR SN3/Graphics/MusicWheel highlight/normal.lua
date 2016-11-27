@@ -75,6 +75,8 @@ t[#t+1] = Def.ActorFrame {
 		else
 			self:diffusealpha(0)
 		end
+	else
+		self:diffusealpha(0)
 	end;
 	end;
 	};
@@ -144,6 +146,8 @@ t[#t+1] = Def.RollingNumbers{
 			self:diffusealpha(0)
 			:targetnumber(0)
 		end
+	else
+		self:diffusealpha(0)
 	end;
 	end;
 };

@@ -10,7 +10,7 @@ local t = Def.ActorFrame{
 	Texture="WheelEffect 5x4",
 		InitCommand=function(self)
 			self:draworder(100):x(SCREEN_RIGHT-238):y(SCREEN_CENTER_Y-16.5)
-			self:SetAllStateDelays(0.04)
+			self:effectclock('beatnooffset'):SetAllStateDelays(0.1)
 		end,
 		OnCommand=function(self)
 			self:addx(380):sleep(0.264):sleep(0.558):decelerate(0.231):addx(-380)
@@ -104,7 +104,7 @@ InitCommand=cmd();
 							else
 								self:LoadBackground(THEME:GetPathG("GradeDisplayEval",ToEnumShortString(topgrade)));
 								self:diffusealpha(1);
-							end;	
+							end;
 						else
 							self:diffusealpha(0);
 						end;
@@ -171,7 +171,7 @@ InitCommand=cmd();
 							else
 								self:LoadBackground(THEME:GetPathG("GradeDisplayEval",ToEnumShortString(topgrade)));
 								self:diffusealpha(1);
-							end;	
+							end;
 						else
 							self:diffusealpha(0);
 						end;
