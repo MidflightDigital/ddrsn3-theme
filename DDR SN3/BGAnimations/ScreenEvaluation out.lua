@@ -1,6 +1,6 @@
 local t = Def.ActorFrame{};
 
-if GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra1') or GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra2') then
+--[[if GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra1') or GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra2') then
   if not STATSMAN:GetCurStageStats():AllFailed() then
     t[#t+1] = Def.ActorFrame{
       LoadActor("doorsex close");
@@ -13,6 +13,11 @@ else
   		OffCommand=cmd(play);
     };
   };
-end;
-
+end;]]--
+t[#t+1] = Def.ActorFrame{
+  LoadActor("_evalOut")..{
+    OnCommand=cmd(sleep,1);
+    OffCommand=cmd(play);
+  };
+};
 return t;
