@@ -11,9 +11,9 @@ if SN3Debug then
     local oldDiff = 0
     FlickerPrint = function()
         local diff = math.floor(lastSeenTime-beginTime)
-        if (diff % 5 == 0) and (diff ~= oldDiff) then
+        if (diff % 15 == 0) and (diff ~= oldDiff) then
             oldDiff = diff
-            SCREENMAN:SystemMessage("flicker debug: flickered avg "..tostring((#flickerRecord)/5).."Hz")
+            SCREENMAN:SystemMessage("flicker debug: flickered avg "..tostring((#flickerRecord)/15).."Hz over last 15 sec")
             flickerRecord = {}
         end
     end

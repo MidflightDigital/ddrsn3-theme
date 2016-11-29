@@ -171,9 +171,10 @@ function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
     local baseScore = 1000000
     local oldStageJudgments = {}
     local oldStageHoldJudgments = {}
+    local totalOldMaxFractions = { real= 0, max=0 }
+    local lastMaxFractions = {real=0, max=0}
 
     local function ComputeScore(pss, stage, max)
-        local maxFraction = 0
         local curStageJudgments = 
             { TapNoteScore_W1 = 0, TapNoteScore_W2 = 0, TapNoteScore_W3 = 0, TapNoteScore_W4 = 0, TapNoteScore_W5 = 0, TapNoteScore_Miss = 0}
         local curStageHoldJudgments = { HoldNoteScore_Held = 0, HoldNoteScore_LetGo = 0 }
@@ -182,13 +183,17 @@ function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
         if #oldStageJudgments == stage then
             table.remove(oldStageJudgments)
             table.remove(oldStageHoldJudgments)
+        else
+            totalOldMaxFractions.real = lastMaxFractions.real
+            totalOldMaxFractions.max = lastMaxFractions.max
         end
+        --this allows us to skip a bunch of calculations that would otherwise be needed
+        local maxFraction = max and totalOldMaxFractions.max or totalOldMaxFractions.real
 
         --There isn't really a way to get stage stats for each stage in the course, unfortunately.
         --So, we have to record how many judgments we got on each stage ourselves.
         for stage, set in pairs(oldStageJudgments) do
             for tns, count in pairs(set) do
-                maxFraction = maxFraction + (count * CourseNoteMultiplier(stage, max and 'TapNoteScore_W1' or tns))
                 --eventually, the total number of judgments are added to this value, so this ends up giving the
                 --number of each judgment hit on the current stage
                 curStageJudgments[tns] = curStageJudgments[tns] - count
@@ -197,7 +202,6 @@ function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
         --Same as above, but holds this time
         for stage, set in pairs(oldStageHoldJudgments) do
             for hns, count in pairs(set) do
-                maxFraction = maxFraction + (count * CourseNoteMultiplier(stage, max and 'HoldNoteScore_Held' or hns))
                 curStageHoldJudgments[hns] = curStageHoldJudgments[hns] - count
             end
         end
@@ -218,6 +222,15 @@ function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
 
         table.insert(oldStageJudgments, curStageJudgments)
         table.insert(oldStageHoldJudgments, curStageHoldJudgments)
+
+        if max then
+            lastMaxFractions.max = maxFraction
+        else
+            if SN3Debug and (lastMaxFractions.real ~= maxFraction) then
+                SCREENMAN:SystemMessage("Current course fraction: "..maxFraction.."/"..totalSDP)
+            end
+            lastMaxFractions.real = maxFraction
+        end
 
         --all that work for this
         return (maxFraction/totalSDP)*baseScore
