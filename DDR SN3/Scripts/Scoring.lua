@@ -118,14 +118,16 @@ function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn,starterRules)
     package.AddTapScore = function() end
     package.AddHoldScore = function() end
 
-    package.GetCurrentScore = function(pss, exact)
+    package.GetCurrentScore = function(pss, stage, exact)
+        --stage is unused
         if exact then
             return ComputeScore(pss)
         end
         return 10 * math.round(ComputeScore(pss) / 10)
     end
 
-    package.GetCurrentMaxScore = function(pss)
+    package.GetCurrentMaxScore = function(pss, stage)
+        --ditto
         return ComputeScore(pss, true)
     end
 
@@ -166,34 +168,70 @@ function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
             + totalSDP
     end
     
-    local baseScore = 1000000 / totalSDP
-    local currentScore = 0
-    local currentMaxScore = 0
+    local baseScore = 1000000
+    local oldStageJudgments = {}
+    local oldStageHoldJudgments = {}
 
-    package.AddTapScore = function(tapNoteScore, stage)
-        assert(stage and stage > 0, "You NEED to pass a stage number for course scoring!")
-        if tapNoteScoresToIgnore[tapNoteScore] then
-            return
+    local function ComputeScore(pss, stage, max)
+        local maxFraction = 0
+        local curStageJudgments = 
+            { TapNoteScore_W1 = 0, TapNoteScore_W2 = 0, TapNoteScore_W3 = 0, TapNoteScore_W4 = 0, TapNoteScore_W5 = 0, TapNoteScore_Miss = 0}
+        local curStageHoldJudgments = { HoldNoteScore_Held = 0, HoldNoteScore_LetGo = 0 }
+        assert(#oldStageJudgments == #oldStageHoldJudgments, "Course ComputeScore: internal data inconsistency")
+        --XXX: Add an AtEndOfSong function or something to not have to do this
+        if #oldStageJudgments == stage then
+            table.remove(oldStageJudgments)
+            table.remove(oldStageHoldJudgments)
         end
-        currentMaxScore = currentMaxScore + baseScore*CourseNoteMultiplier(stage)
-        currentScore = currentScore + baseScore*CourseNoteMultiplier(stage, tapNoteScore)
+
+        --There isn't really a way to get stage stats for each stage in the course, unfortunately.
+        --So, we have to record how many judgments we got on each stage ourselves.
+        for stage, set in pairs(oldStageJudgments) do
+            for tns, count in pairs(set) do
+                maxFraction = maxFraction + (count * CourseNoteMultiplier(stage, max and 'TapNoteScore_W1' or tns))
+                --eventually, the total number of judgments are added to this value, so this ends up giving the
+                --number of each judgment hit on the current stage
+                curStageJudgments[tns] = curStageJudgments[tns] - count
+            end
+        end
+        --Same as above, but holds this time
+        for stage, set in pairs(oldStageHoldJudgments) do
+            for hns, count in pairs(set) do
+                maxFraction = maxFraction + (count * CourseNoteMultiplier(stage, max and 'HoldNoteScore_Held' or hns))
+                curStageHoldJudgments[hns] = curStageHoldJudgments[hns] - count
+            end
+        end
+
+        --Okay, now we can figure out what the current judgment total is for this stage
+        for tns, count in pairs(curStageJudgments) do
+            count = count + pss:GetTapNoteScores(tns)
+            assert(count >= 0, "Course ComputeScore: less than 0 "..tns)
+            maxFraction = maxFraction + (count * CourseNoteMultiplier(stage, max and 'TapNoteScore_W1' or tns))
+            curStageJudgments[tns] = count
+        end
+        for hns, count in pairs(curStageHoldJudgments) do
+            count = count + pss:GetHoldNoteScores(hns)
+            assert(count >= 0, "Course ComputeScore: less than 0 "..hns)
+            maxFraction = maxFraction + (count * CourseNoteMultiplier(stage, max and 'HoldNoteScore_Held' or hns))
+            curStageHoldJudgments[hns] = count
+        end
+
+        table.insert(oldStageJudgments, curStageJudgments)
+        table.insert(oldStageHoldJudgments, curStageHoldJudgments)
+
+        --all that work for this
+        return (maxFraction/totalSDP)*baseScore
     end
 
-    package.AddHoldScore = function(holdNoteScore, stage)
-        assert(stage and stage > 0, "You NEED to pass a stage number for course scoring!")
-        currentMaxScore = currentMaxScore + baseScore*CourseNoteMultiplier(stage)
-        currentScore = currentScore + baseScore*CourseNoteMultiplier(stage, holdNoteScore)
-    end
-
-    package.GetCurrentScore = function(_, exact)
+    package.GetCurrentScore = function(pss, stage, exact)
         if exact then
-            return currentScore
+            return ComputeScore(pss, stage)
         end
-        return math.floor(currentScore)
+        return math.floor(ComputeScore(pss, stage))
     end
 
-    package.GetCurrentMaxScore = function(_)
-        return currentMaxScore
+    package.GetCurrentMaxScore = function(pss, stage)
+        return ComputeScore(pss, stage, true)
     end
 
     return package

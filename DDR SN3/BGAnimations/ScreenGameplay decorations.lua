@@ -20,13 +20,6 @@ t[#t+1] = Def.Actor{
         if not ScoringPlayers[params.Player] then
             ScoringPlayers[params.Player] = true
         end
-        local stage = GAMESTATE:IsCourseMode() and GAMESTATE:GetCourseSongIndex() + 1 or nil
-        local info = ScoringInfo[params.Player]
-        if params.HoldNoteScore then
-            info.AddHoldScore(params.HoldNoteScore, stage)
-        else
-            info.AddTapScore(params.TapNoteScore, stage)
-        end
         local es = (GAMESTATE:Env()).EndlessState
         if es then
             es.scoring.handleNoteScore(params.HoldNoteScore or params.TapNoteScore,
@@ -40,9 +33,10 @@ t[#t+1] = Def.Actor{
 local function ScoreUpdate()
     for pn, _ in pairs(ScoringPlayers) do
         local info = ScoringInfo[pn]
+        local stage = GAMESTATE:IsCourseMode() and GAMESTATE:GetCourseSongIndex() + 1 or nil
         local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
-        pss:SetScore(info.GetCurrentScore(pss))
-        pss:SetCurMaxScore(info.GetCurrentMaxScore(pss))
+        pss:SetScore(info.GetCurrentScore(pss, stage))
+        pss:SetCurMaxScore(info.GetCurrentMaxScore(pss, stage))
     end
 end
 
