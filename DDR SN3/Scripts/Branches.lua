@@ -8,10 +8,17 @@ function SMOnlineScreen()
 end
 
 function CorrectSSM()
+	Trace "Yes, we get called"
 	if IsStarterMode() then
 		return "ScreenSelectMusicStarter"
 	else
-		return "ScreenSelectMusic"
+		local stage = GAMESTATE:GetCurrentStage()
+		Trace(stage)
+		if stage == 'Stage_Extra1' or stage == 'Stage_Extra2' then
+			return "ScreenSelectMusicExtra"
+		else
+			return "ScreenSelectMusic"
+		end
 	end
 end
 
@@ -115,14 +122,7 @@ end
 Branch.AfterEvaluation = function()
 	--normal
 	if GAMESTATE:GetSmallestNumStagesLeftForAnyHumanPlayer() >= 1 then
-		--broken as hell code for extra stage music select
-		if GAMESTATE:GetCurrentStage() == "Stage_Final" then
-			if GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra1') or GAMESTATE:GetEarnedExtraStage('EarnedExtraStage_Extra2') then
-				return "ScreenSelectMusicExtra"
-			end
-		else
-			return "ScreenProfileSave"
-		end;
+		return "ScreenProfileSave"
 	elseif GAMESTATE:GetCurrentStage() == "Stage_Extra1" then
 		if STATSMAN:GetCurStageStats():AllFailed() then
 			return "ScreenEvaluationSummary"
