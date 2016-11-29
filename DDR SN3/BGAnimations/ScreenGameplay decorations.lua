@@ -7,6 +7,8 @@ t[#t+1] = StandardDecorationFromFile("ScoreFrame","ScoreFrame")
 -- stage display (normal)
 t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay")
 
+local ScoringPlayers = {}
+
 t[#t+1] = Def.Actor{
     Name="ScoringController",
     JudgmentMessageCommand = function(_,params)
@@ -15,6 +17,9 @@ t[#t+1] = Def.Actor{
             SN2Scoring.PrepareScoringInfo(IsStarterMode())
             ScoringInfo.seed = GAMESTATE:GetStageSeed() 
         end
+        if not ScoringPlayers[params.Player] then
+            ScoringPlayers[params.Player] = true
+        end
         local stage = GAMESTATE:IsCourseMode() and GAMESTATE:GetCourseSongIndex() + 1 or nil
         local info = ScoringInfo[params.Player]
         if params.HoldNoteScore then
@@ -22,9 +27,6 @@ t[#t+1] = Def.Actor{
         else
             info.AddTapScore(params.TapNoteScore, stage)
         end
-        local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(params.Player)
-        pss:SetScore(info.GetCurrentScore())
-        pss:SetCurMaxScore(info.GetCurrentMaxScore())
         local es = (GAMESTATE:Env()).EndlessState
         if es then
             es.scoring.handleNoteScore(params.HoldNoteScore or params.TapNoteScore,
@@ -33,6 +35,20 @@ t[#t+1] = Def.Actor{
             --SCREENMAN:SystemMessage(es.scoring.getScoreString())
         end
     end,
+}
+
+local function ScoreUpdate()
+    for pn, _ in pairs(ScoringPlayers) do
+        local info = ScoringInfo[pn]
+        local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
+        pss:SetScore(info.GetCurrentScore(pss))
+        pss:SetCurMaxScore(info.GetCurrentMaxScore(pss))
+    end
+end
+
+t[#t+1] = Def.ActorFrame{
+    Name = "ScoringController2",
+    InitCommand = function(s) s:SetUpdateFunction(ScoreUpdate) end
 }
 
 t[#t+1] = LoadActor( THEME:GetPathB("","optionicon_P1") ) .. {

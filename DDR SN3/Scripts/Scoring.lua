@@ -11,12 +11,50 @@ ScoringInfo = {
     seed = nil
 }
 
-local tapNoteScoresToIgnore = {
-    TapNoteScore_None = true,
-    TapNoteScore_CheckpointHit = true,
-    TapNoteScore_CheckpointMiss = true,
-    TapNoteScore_HitMine = true,
-    TapNoteScore_AvoidMine = true
+--The multiplier tables have to be filled in completely.
+--However, the deduction ones do not.
+local normalScoringRules = 
+{
+    normal = 
+    {
+        multipliers =
+        {
+            TapNoteScore_W1 = 1,
+            TapNoteScore_W2 = 1,
+            TapNoteScore_W3 = 0.5,
+            TapNoteScore_W4 = 0,
+            TapNoteScore_W5 = 0,
+            TapNoteScore_Miss = 0
+        },
+        deductions =
+        {
+            TapNoteScore_W2 = 10,
+            TapNoteScore_W3 = 10
+        }
+    },
+    starter = 
+    {
+        multipliers =
+        {
+            TapNoteScore_W1 = 1,
+            TapNoteScore_W2 = 1,
+            TapNoteScore_W3 = 1,
+            TapNoteScore_W4 = 0.5,
+            TapNoteScore_W5 = 0.5,
+            TapNoteScore_Miss = 0
+        },
+        deductions = {}
+    }    
+}
+
+local maxQuasiMultipliers = 
+{
+    TapNoteScore_W1 = 1,
+    TapNoteScore_W2 = 1,
+    TapNoteScore_W3 = 1,
+    TapNoteScore_W4 = 1,
+    TapNoteScore_W5 = 1,
+    TapNoteScore_Miss = 1
 }
 
 function SN2Scoring.PrepareScoringInfo(starterRules)
@@ -48,56 +86,47 @@ function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn,starterRules)
     local package = {}
     local radar = stepsObject:GetRadarValues(pn)
     local maxScore = starterRules and 100000 or 1000000
-    local baseScore = maxScore/(radar:GetValue('RadarCategory_TapsAndHolds')+radar:GetValue('RadarCategory_Holds')+radar:GetValue('RadarCategory_Rolls'))
-    local currentScore = 0
-    local currentMaxScore = 0
-    local scoresCounter = 0
+    local objectCount = radar:GetValue('RadarCategory_TapsAndHolds')+radar:GetValue('RadarCategory_Holds')+radar:GetValue('RadarCategory_Rolls')
+    local scoringRuleSet = starterRules and normalScoringRules.starter or normalScoringRules.normal
 
-    package.AddTapScore = function(tapNoteScore)
-        if tapNoteScoresToIgnore[tapNoteScore] then
-            return
-        end
-        currentMaxScore = currentMaxScore + baseScore
-        if not starterRules then
-            if tapNoteScore == 'TapNoteScore_W1' then
-                currentScore = currentScore + baseScore
-            elseif tapNoteScore == 'TapNoteScore_W2' then
-                currentScore = currentScore + (baseScore - 10)
-            elseif tapNoteScore == 'TapNoteScore_W3' then
-                currentScore = currentScore + (baseScore/2 - 10)
-            end
+    local function ComputeScore(pss, max)
+        local maxFraction = 0
+        local totalDeductions = 0
+        local tnsMultipliers, hnsMultipliers, deductions
+        if max then
+            tnsMultipliers = maxQuasiMultipliers
+            hnsMultipliers = {HoldNoteScore_Held = 1, HoldNoteScore_LetGo = 1}
+            deductions = {}
         else
-            if tapNoteScore == 'TapNoteScore_W1'
-                or tapNoteScore == 'TapNoteScore_W2'
-                or tapNoteScore == 'TapNoteScore_w3'
-            then
-                currentScore = currentScore + baseScore
-            elseif tapNoteScore == 'TapNoteScore_W4'
-                or tapNoteScore == 'TapNoteScore_W5'
-            then
-                currentScore = currentScore + (baseScore*0.6 - 10)
-            end
+            tnsMultipliers = scoringRuleSet.multipliers
+            hnsMultipliers = {HoldNoteScore_Held = 1}
+            deductions = scoringRuleSet.deductions
         end
-        scoresCounter = scoresCounter + 1
+        local scoreCount
+        for tns, multiplier in pairs(tnsMultipliers) do
+            scoreCount = pss:GetTapNoteScores(tns)
+            maxFraction = maxFraction + (scoreCount * multiplier)
+            totalDeductions = totalDeductions + (scoreCount * (deductions[tns] or 0))
+        end
+        for hns, multiplier in pairs(hnsMultipliers) do
+            scoreCount = pss:GetHoldNoteScores(hns)
+            maxFraction = maxFraction + (scoreCount * multiplier)
+        end
+        return ((maxFraction/objectCount) * maxScore) - totalDeductions
     end
 
-    package.AddHoldScore = function(holdNoteScore)
-        currentMaxScore = currentMaxScore + baseScore
-        if holdNoteScore == 'HoldNoteScore_Held' then
-            currentScore = currentScore + baseScore
-        end
-    end
+    package.AddTapScore = function() end
+    package.AddHoldScore = function() end
 
-    package.GetCurrentScore = function(exact)
-        SCREENMAN:SystemMessage("total: "..radar:GetValue('RadarCategory_TapsAndHolds')+radar:GetValue('RadarCategory_Holds')+radar:GetValue('RadarCategory_Rolls').."now: "..scoresCounter)
+    package.GetCurrentScore = function(pss, exact)
         if exact then
-            return currentScore
+            return ComputeScore(pss)
         end
-        return 10 * math.round(currentScore / 10)
+        return 10 * math.round(ComputeScore(pss) / 10)
     end
 
-    package.GetCurrentMaxScore = function()
-        return currentMaxScore
+    package.GetCurrentMaxScore = function(pss)
+        return ComputeScore(pss, true)
     end
 
     return package
@@ -156,21 +185,21 @@ function SN2Scoring.MakeCourseScoringFunctions(trailObject,pn)
         currentScore = currentScore + baseScore*CourseNoteMultiplier(stage, holdNoteScore)
     end
 
-    package.GetCurrentScore = function(exact)
+    package.GetCurrentScore = function(_, exact)
         if exact then
             return currentScore
         end
         return math.floor(currentScore)
     end
 
-    package.GetCurrentMaxScore = function()
+    package.GetCurrentMaxScore = function(_)
         return currentMaxScore
     end
 
     return package
 end
 
--- (c) 2015-2016 John Walstrom, "Inorizushi"
+-- (c) 2015-2017 John Walstrom, "Inorizushi"
 -- All rights reserved.
 -- 
 -- Permission is hereby granted, free of charge, to any person obtaining a
