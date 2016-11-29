@@ -19,7 +19,7 @@ local tapNoteScoresToIgnore = {
     TapNoteScore_AvoidMine = true
 }
 
-function SN2Scoring.PrepareScoringInfo(ddrARules)
+function SN2Scoring.PrepareScoringInfo(starterRules)
     if GAMESTATE then
         local stageSeed = GAMESTATE:GetStageSeed()
         --if the seed hasn't changed, we're in the same game so we don't want
@@ -36,7 +36,7 @@ function SN2Scoring.PrepareScoringInfo(ddrARules)
         for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
             local data = dataFetcher(GAMESTATE,pn)
             if data then
-                ScoringInfo[pn] = maker(data,pn,ddrARules)
+                ScoringInfo[pn] = maker(data,pn,starterRules)
             end
         end
     end
@@ -44,34 +44,41 @@ end
 
 --Normal scoring
 
-function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn,ddrARules)
+function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn,starterRules)
     local package = {}
     local radar = stepsObject:GetRadarValues(pn)
-    local baseScore = 1000000/(radar:GetValue('RadarCategory_TapsAndHolds')+radar:GetValue('RadarCategory_Holds')+radar:GetValue('RadarCategory_Rolls'))
+    local maxScore = starterRules and 100000 or 1000000
+    local baseScore = maxScore/(radar:GetValue('RadarCategory_TapsAndHolds')+radar:GetValue('RadarCategory_Holds')+radar:GetValue('RadarCategory_Rolls'))
     local currentScore = 0
     local currentMaxScore = 0
+    local scoresCounter = 0
 
     package.AddTapScore = function(tapNoteScore)
         if tapNoteScoresToIgnore[tapNoteScore] then
             return
         end
         currentMaxScore = currentMaxScore + baseScore
-        if tapNoteScore == 'TapNoteScore_W1' then
-            currentScore = currentScore + baseScore
-        elseif tapNoteScore == 'TapNoteScore_W2' then
-            currentScore = currentScore + (baseScore - 10)
-        end
-        if not ddrARules then
-            if tapNoteScore == 'TapNoteScore_W3' then
-                currentScore = currentScore + (baseScore / 2 - 10)
+        if not starterRules then
+            if tapNoteScore == 'TapNoteScore_W1' then
+                currentScore = currentScore + baseScore
+            elseif tapNoteScore == 'TapNoteScore_W2' then
+                currentScore = currentScore + (baseScore - 10)
+            elseif tapNoteScore == 'TapNoteScore_W3' then
+                currentScore = currentScore + (baseScore/2 - 10)
             end
         else
-            if tapNoteScore == 'TapNoteScore_W3' then
-                currentScore = currentScore + (baseScore * 0.6 - 10)
-            elseif tapNoteScore == 'TapNoteScore_W4' then
-                currentScore = currentScore + (baseScore * 0.2 - 10)
+            if tapNoteScore == 'TapNoteScore_W1'
+                or tapNoteScore == 'TapNoteScore_W2'
+                or tapNoteScore == 'TapNoteScore_w3'
+            then
+                currentScore = currentScore + baseScore
+            elseif tapNoteScore == 'TapNoteScore_W4'
+                or tapNoteScore == 'TapNoteScore_W5'
+            then
+                currentScore = currentScore + (baseScore*0.6 - 10)
             end
         end
+        scoresCounter = scoresCounter + 1
     end
 
     package.AddHoldScore = function(holdNoteScore)
@@ -82,16 +89,11 @@ function SN2Scoring.MakeNormalScoringFunctions(stepsObject,pn,ddrARules)
     end
 
     package.GetCurrentScore = function(exact)
+        SCREENMAN:SystemMessage("total: "..radar:GetValue('RadarCategory_TapsAndHolds')+radar:GetValue('RadarCategory_Holds')+radar:GetValue('RadarCategory_Rolls').."now: "..scoresCounter)
         if exact then
             return currentScore
         end
-        local rawScore = 10 * math.round(currentScore / 10)
-        --this serves two functions: you can't get 1,000,000
-        --in A mode, and also all A-mode scores end in 9
-        if ddrARules and (rawScore > 0) then
-            rawScore = rawScore - 1
-        end
-        return rawScore
+        return 10 * math.round(currentScore / 10)
     end
 
     package.GetCurrentMaxScore = function()
