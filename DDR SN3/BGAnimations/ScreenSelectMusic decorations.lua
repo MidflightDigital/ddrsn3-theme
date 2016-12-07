@@ -1,5 +1,7 @@
 local t = LoadFallbackB();
 
+LoadActor("_doors")
+
 if not GAMESTATE:IsCourseMode() then
 	local function GenerateModIconRow(pn)
 		local MetricsName = "ModIcons" .. ToEnumShortString(pn);
