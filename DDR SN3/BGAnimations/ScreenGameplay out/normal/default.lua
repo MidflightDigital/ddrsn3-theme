@@ -1,10 +1,8 @@
-local t = Def.ActorFrame {
+--[[local t = Def.ActorFrame {
 	LoadActor(("../../cleared"))..{
 		StartTransitioningCommand=cmd(play);
 	};
-	LoadActor(("../cheer"))..{
-		StartTransitioningCommand=cmd(play);
-	};
+
 	---- DOOR OPEN > CLOSE  CLOSE > OPEN
 	LoadActor(THEME:GetPathB("","Door1"))..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;CenterY;halign,1);
@@ -14,7 +12,13 @@ local t = Def.ActorFrame {
 		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;CenterY;halign,0);
 		OnCommand=cmd(sleep,1.3;linear,1;x,SCREEN_CENTER_X-51;sleep,4.7);
 	};
+};]]
+
+local t = LoadActor(THEME:GetPathB("","_doors"), "door", 1.3, true )
+t[#t+1] = LoadActor(("../cheer"))..{
+	StartTransitioningCommand=cmd(play);
 };
+
 
 if not (GAMESTATE:Env()).EndlessState then
 	t[#t+1] = Def.ActorFrame{
