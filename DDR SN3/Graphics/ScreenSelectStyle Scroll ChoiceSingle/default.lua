@@ -1,13 +1,6 @@
 local masterPlayer = ToEnumShortString(GAMESTATE:GetMasterPlayerNumber())
 
 local t = Def.ActorFrame{
-	LoadActor("_info")..{
-		InitCommand=cmd(halign,1;x,SCREEN_RIGHT+11;y,SCREEN_CENTER_Y-75;);
-		OnCommand=function(s) s:addx(379):sleep(0.264):decelerate(0.264):addx(-379):decelerate(0.1):addx(11) end;
-		GainFocusCommand=function(s) MESSAGEMAN:Broadcast("PadsOne") s:visible(true):addx(-11):decelerate(0.1):addx(11) end;
-		LoseFocusCommand=cmd(visible,false);
-		OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
-	};
 	-- Panel
 	LoadActor("../_Style/_panel2")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-402;y,SCREEN_CENTER_Y+32);

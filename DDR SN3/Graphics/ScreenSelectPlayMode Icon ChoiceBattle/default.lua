@@ -11,7 +11,7 @@ t[#t+1] = Def.ActorFrame {
 				self:Load(THEME:GetPathG("ScreenSelectPlayMode Icon","ChoiceBattle/vs"));
 			end;
 		end;
-		GainFocusCommand=cmd(visible,true;addx,-11;decelerate,0.1;addx,11);
+		GainFocusCommand=function(s) MESSAGEMAN:Broadcast("PlayBattle") s:visible(true):addx(-11):decelerate(0.1):addx(11) end,
 		LoseFocusCommand=cmd(visible,false);
 		OffCommand=cmd(linear,0.133;addx,SCREEN_WIDTH);
 	};
