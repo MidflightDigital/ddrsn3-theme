@@ -1,5 +1,9 @@
 -- SSC Color Module and Library
-
+ColorGR = {
+	PLAYER_1 = color("0,0.9,1,0.5"),
+	PLAYER_2 = color("1,0,0.9,0.5"),
+}
+-- O
 -- Original Color Module.
 Color = {
 -- Color Library

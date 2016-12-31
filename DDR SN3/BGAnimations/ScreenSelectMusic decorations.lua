@@ -24,9 +24,38 @@ t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay")
 t[#t+1] = StandardDecorationFromFile("BannerFrame","BannerFrame")
 t[#t+1] = StandardDecorationFromFileOptional("BPMDisplay","BPMDisplay")
 t[#t+1] = StandardDecorationFromFileOptional("SortDisplay","SortDisplay")
-
-t[#t+1] = StandardDecorationFromFileOptional("GrooveRadar","GrooveRadar")
-
+t[#t+1] = Def.ActorFrame{
+	OnCommand=cmd(draworder,99;diffusealpha,0;addx,-400;sleep,0.1;linear,0.52;diffusealpha,0;addx,400;sleep,0.3;diffusealpha,0.75);
+	CurrentSongChangedMessageCommand=function(self)
+		local Song=GAMESTATE:GetCurrentSong()
+			if not Song then
+				self:diffusealpha(0)
+			else
+				self:diffusealpha(0.75)
+			end;
+		end;
+	OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
+	create_ddr_groove_radar("P1_radar", RadarPosX(), SCREEN_CENTER_Y+16,
+		PLAYER_1, 60, color("1,1,1,0.75"),
+		{ColorGR.PLAYER_1, ColorGR.PLAYER_1, ColorGR.PLAYER_1, ColorGR.PLAYER_1, ColorGR.PLAYER_1},
+		"accelerate", .25)
+};
+t[#t+1] = Def.ActorFrame{
+	OnCommand=cmd(draworder,99;diffusealpha,0;addx,-400;sleep,0.1;linear,0.52;diffusealpha,0;addx,400;sleep,0.3;diffusealpha,1);
+	CurrentSongChangedMessageCommand=function(self)
+		local Song=GAMESTATE:GetCurrentSong()
+			if not Song then
+				self:diffusealpha(0)
+			else
+				self:diffusealpha(0.75)
+			end;
+		end;
+	OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
+	create_ddr_groove_radar("P2_radar", RadarPosX(), SCREEN_CENTER_Y+16,
+		PLAYER_2, 60, color("1,1,1,0.75"),
+		{ColorGR.PLAYER_2, ColorGR.PLAYER_2, ColorGR.PLAYER_2, ColorGR.PLAYER_2, ColorGR.PLAYER_2},
+		"accelerate", .25)
+};
 -- song options text (e.g. 1.5xmusic)
 t[#t+1] = StandardDecorationFromFileOptional("SongOptions","SongOptions")
 
