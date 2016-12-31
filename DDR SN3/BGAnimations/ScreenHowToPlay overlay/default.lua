@@ -1,5 +1,4 @@
 -- ScreenHowToPlay Overlay
-
 -- The math.floor(10000*aspect) trick is used to circumvent float precision problems.
 local aspectRatioSuffix = {
 	[math.floor(10000*4/3)] = " 4_3",
@@ -39,52 +38,26 @@ local t = Def.ActorFrame{
 	};
 	-- let the messages begin
 	Def.ActorFrame {
+		InitCommand=cmd(x,SCREEN_CENTER_X-146;y,SCREEN_CENTER_Y+37);
 		LoadActor("text_up")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+146;y,SCREEN_CENTER_Y+47);
-			ShowCommand=cmd(zoomy,0;sleep,5.8;decelerate,0.3;zoomy,1;sleep,2;zoomy,0);
-			OnCommand=cmd(queuecommand,"Show");
+			OnCommand=cmd(zoomy,0;sleep,10;decelerate,0.3;zoomy,1;sleep,3.3;zoomy,0);
 		};
 		LoadActor("text_jump")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+146;y,SCREEN_CENTER_Y+47);
-			ShowCommand=cmd(zoomy,0;sleep,12.166;decelerate,0.3;zoomy,1;sleep,2;zoomy,0);
-			OnCommand=cmd(queuecommand,"Show");
+			OnCommand=cmd(zoomy,0;sleep,16.4;decelerate,0.3;zoomy,1;sleep,3.3;zoomy,0);
 		};
-		LoadActor("bluehand")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+50;y,SCREEN_CENTER_Y+2);
-			ShowCommand=cmd(rotationz,-90;addy,999;sleep,4;addy,-999;accelerate,0.266;addx,-80;sleep,0.8;addy,999);
-			OnCommand=cmd(queuecommand,"Show");
+		--Freeze 1
+		LoadActor("text_jump")..{
+			OnCommand=cmd(zoomy,0;sleep,22.6;decelerate,0.3;zoomy,1;sleep,2;zoomy,0);
 		};
-		LoadActor("bluehand")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+122;y,SCREEN_CENTER_Y+84);
-			ShowCommand=cmd(rotationz,-90;addy,999;sleep,10.433;addy,-999;accelerate,0.266;addx,-80;sleep,0.8;addy,999);
-			OnCommand=cmd(queuecommand,"Show");
-		};
-		LoadActor("pinkhand")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+240;y,SCREEN_CENTER_Y-34);
-			ShowCommand=cmd(addy,999;sleep,5.5;addy,-999;linear,0.067;addy,-36;sleep,2.366;linear,0.167;addy,44;sleep,0;addy,999);
-			OnCommand=cmd(queuecommand,"Show");
-		};
-		LoadActor("bluehand")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+246;y,SCREEN_CENTER_Y-34);
-			ShowCommand=cmd(addy,999;sleep,11.933;addy,-999;linear,0.067;addy,-36;sleep,2.366;linear,0.167;addy,44;sleep,0;addy,999);
-			OnCommand=cmd(queuecommand,"Show");
-		};
-		LoadActor("bluehand")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+108;y,SCREEN_CENTER_Y-34);
-			ShowCommand=cmd(zoomx,-1;addy,999;sleep,11.933;addy,-999;linear,0.067;addy,-36;sleep,2.366;linear,0.167;addy,44;sleep,0;addy,999);
-			OnCommand=cmd(queuecommand,"Show");
-		};
-		LoadActor("greenhand")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+174;y,SCREEN_CENTER_Y-28);
-			ShowCommand=cmd(diffusealpha,0;sleep,17.366;diffusealpha,1;linear,0.198;y,SCREEN_CENTER_Y-120;bob;effectperiod,0.5;effectmagnitude,0,15,0);
-			OnCommand=cmd(queuecommand,"Show");
+		--Freeze 2
+		LoadActor("text_jump")..{
+			OnCommand=cmd(zoomy,0;sleep,27.4;decelerate,0.3;zoomy,1;sleep,2;zoomy,0);
 		};
 		LoadActor("text_gameover")..{
-			InitCommand=cmd(x,SCREEN_CENTER_X+146;y,SCREEN_CENTER_Y+47);
-			ShowCommand=cmd(zoomy,0;sleep,18.666;decelerate,0.3;zoomy,1);
-			OnCommand=cmd(queuecommand,"Show");
+			OnCommand=cmd(zoomy,0;sleep,32;decelerate,0.3;zoomy,1;);
 		};
-
+	};
+	Def.ActorFrame{
 	};
 };
 t[#t+1] = LoadActor(THEME:GetPathG("ScreenGameplay","LifeFrame/"..lifeFrame))..{

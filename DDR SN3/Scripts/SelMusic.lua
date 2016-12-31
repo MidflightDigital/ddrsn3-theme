@@ -108,7 +108,7 @@ end
 
 function BPMMeterPosX()
   if ThemePrefs.Get("XStyledMusicSelect") == "Wide Style" then
-    PosX = SCREEN_LEFT+238.5
+    PosX = SCREEN_LEFT+283.5
   else
     PosX = SCREEN_CENTER_X-36.5
   end

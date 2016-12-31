@@ -336,3 +336,7 @@ function dofile_safer(path, env)
     setfenv(code, env)
     return pcall(code)
 end
+
+-- GetCharAnimPath(sPath)
+-- Easier access to Characters folder (taken from ScreenHowToPlay.cpp)
+function GetCharAnimPath(sPath) return "/Characters/"..sPath end
