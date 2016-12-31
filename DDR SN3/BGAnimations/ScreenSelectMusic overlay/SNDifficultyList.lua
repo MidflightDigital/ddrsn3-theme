@@ -104,7 +104,7 @@ local function Update(self, _)
     end
 end
 
-local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_LEFT+120,SCREEN_CENTER_Y+90):hibernate(1.25):SetUpdateFunction(Update) end,
+local ret = Def.ActorFrame{InitCommand=function(self) self:xy(DiffPosX(),SCREEN_CENTER_Y+90):hibernate(1.25):SetUpdateFunction(Update) end,
     OffCommand=function(self) self:sleep(0.5):visible(false) end}
 
 local function IndicatorUpdate(self, pn)
@@ -146,7 +146,7 @@ do
             Texture=PlayerLabelName(pn),
             InitCommand=function(self) SetXFromPlayerNumber(self:visible(false), pn) end,
             SNDLUpdateMessageCommand=function(self) return IndicatorUpdate(self, pn) end,
-            PlayerJoinedMessageCommand=function(self,p) 
+            PlayerJoinedMessageCommand=function(self,p)
                 if p.Player==pn then self:Load(ResolveRelativePath(PlayerLabelName(pn),1)) end
             end
         })
@@ -169,7 +169,7 @@ for idx, diff in pairs(difficultiesToDraw) do
                 local song = GAMESTATE:GetCurrentSong()
                 if song then
                     if AnyPlayerThisDiff(diff) then
-                        self:diffuse(DiffToColor(diff))                        
+                        self:diffuse(DiffToColor(diff))
                     elseif song:HasStepsTypeAndDifficulty(GAMESTATE:GetCurrentStyle():GetStepsType(), diff) then
                         self:diffuse{1,1,1,1}
                     else

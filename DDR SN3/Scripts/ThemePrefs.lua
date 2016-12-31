@@ -6,6 +6,12 @@ local Prefs =
 		Choices = { "ON", "OFF" },
 		Values = { true, false }
 	},
+	XStyledMusicSelect =
+	{
+		Default = "Wide Style",
+		Choices = { "X Style", "Wide Style" },
+		Values = { "X Style", "Wide Style" }
+	},
 }
 
 ThemePrefs.InitAll(Prefs)

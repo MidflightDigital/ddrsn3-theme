@@ -2,22 +2,9 @@ local t = Def.ActorFrame{
 	LoadActor("SNDifficultyList.lua");
 	LoadActor("bpmmeter.lua");
 	LoadActor("labels")..{
-		InitCommand=cmd(x,SCREEN_LEFT+149;y,SCREEN_CENTER_Y+7);
+		InitCommand=cmd(x,RadarPosX();y,SCREEN_CENTER_Y+7);
 		OnCommand=cmd(draworder,2;diffusealpha,0;addx,-400;sleep,0.1;linear,0.52;diffusealpha,0;addx,400;sleep,0.3;diffusealpha,1);
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
-	};
-	Def.Sprite {
-	Texture="WheelEffect 5x4",
-		InitCommand=function(self)
-			self:draworder(100):x(SCREEN_RIGHT-238):y(SCREEN_CENTER_Y-16.5)
-			self:effectclock('beatnooffset'):SetAllStateDelays(0.1)
-		end,
-		OnCommand=function(self)
-			self:addx(380):sleep(0.264):sleep(0.558):decelerate(0.231):addx(-380)
-		end,
-		OffCommand=function(self)
-			self:accelerate(0.396):addx(380)
-		end
 	};
 	LoadActor(THEME:GetPathG("","_footer/confirm"))..{
 		InitCommand=cmd(x,SCREEN_RIGHT-71;y,SCREEN_BOTTOM-32);
@@ -40,12 +27,12 @@ local t = Def.ActorFrame{
 		OffCommand=cmd(decelerate,0.2;addy,54);
 	};
 	LoadActor( THEME:GetPathB("","optionicon_P1") ) .. {
-		InitCommand=cmd(player,PLAYER_1;x,SCREEN_LEFT+109;y,SCREEN_CENTER_Y+201;draworder,1);
+		InitCommand=cmd(player,PLAYER_1;x,ModP1PosX();y,SCREEN_CENTER_Y+201;draworder,1);
 		OnCommand=cmd(addx,-400;sleep,0.264;decelerate,0.52;addx,400);
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 	};
 	LoadActor( THEME:GetPathB("","optionicon_P2") ) .. {
-		InitCommand=cmd(player,PLAYER_2;x,SCREEN_LEFT+300;y,SCREEN_CENTER_Y+201;draworder,1);
+		InitCommand=cmd(player,PLAYER_2;x,ModP2PosX();y,SCREEN_CENTER_Y+201;draworder,1);
 		OnCommand=cmd(addx,-400;sleep,0.264;decelerate,0.52;addx,400);
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 	};
@@ -55,7 +42,7 @@ local t = Def.ActorFrame{
 t[#t+1] = Def.ActorFrame {
 InitCommand=cmd();
 	Def.Quad{
-	InitCommand=cmd(zoom,0.25;shadowlength,1;x,SCREEN_RIGHT-40;y,SCREEN_CENTER_Y-38;horizalign,center;draworder,2);
+	InitCommand=cmd(zoom,0.25;shadowlength,1;x,GradesPosX();y,SCREEN_CENTER_Y-38;horizalign,center;draworder,2);
 	OnCommand=cmd(zoom,0;sleep,1;bouncebegin,0.15;zoom,0.25);
 	OffCommand=cmd(bouncebegin,0.15;zoom,0);
 		BeginCommand=cmd(playcommand,"Set");
@@ -122,7 +109,7 @@ InitCommand=cmd();
 	};
 --p2
 	Def.Quad{
-	InitCommand=cmd(zoom,0.25;shadowlength,1;x,SCREEN_RIGHT-40;y,SCREEN_CENTER_Y+5;horizalign,center;draworder,2);
+	InitCommand=cmd(zoom,0.25;shadowlength,1;x,GradesPosX();y,SCREEN_CENTER_Y+5;horizalign,center;draworder,2);
 	OnCommand=cmd(zoom,0;sleep,1;bouncebegin,0.15;zoom,0.25);
 	OffCommand=cmd(bouncebegin,0.15;zoom,0);
 		BeginCommand=cmd(playcommand,"Set");

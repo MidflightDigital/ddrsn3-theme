@@ -153,4 +153,12 @@ t[#t+1] = Def.RollingNumbers{
 };
 end;
 
+t[#t+1] = Def.Sprite {
+Texture="WheelEffect 5x4",
+	InitCommand=function(self)
+		self:draworder(100):x(-73)
+		self:effectclock('beatnooffset'):SetAllStateDelays(0.1)
+	end,
+};
+
 return t;
