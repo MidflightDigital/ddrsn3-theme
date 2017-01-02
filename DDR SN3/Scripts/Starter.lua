@@ -59,6 +59,12 @@ function AssembleStarter()
 	fHandle:destroy()
 end
 
+if not FILEMAN:DoesFileExist(THEME:GetAbsolutePath("Other/SongManager Starter.txt", true)) then
+	print("Creating initial starter songlist...")
+	AssembleStarter()
+	print("Done.")
+end
+
 function EnableStarterGameplayJunk()
 	assert(GAMESTATE and GAMESTATE:Env(),
 		"Wherever you are calling EnableStarterGameplayJunk, you can't do it there!")
