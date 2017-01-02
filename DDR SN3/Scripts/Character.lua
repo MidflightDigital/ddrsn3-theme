@@ -7,7 +7,7 @@ local rootPath = "/SNCharacters/"
 
 --Returns the base path for a character or none if that character doesn't exist.
 function Characters.GetPath(name)
-    if (not string) or (string == "") then
+    if (not name) or (name == "") then
         return nil
     end
     if string.find(name, "/") then
