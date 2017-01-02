@@ -3,12 +3,6 @@ local t = LoadFallbackB();
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
 
-t[#t+1] = LoadActor(THEME:GetPathG("","_footer/skip"))..{
-	InitCommand=cmd(draworder,199;x,SCREEN_RIGHT-71;y,SCREEN_BOTTOM-35;);
-	OnCommand=cmd(draworder,80;halign,1;addy,54;sleep,0.2;decelerate,0.2;addy,-54);
-	OffCommand=cmd(decelerate,0.2;addy,54);
-}
-
 if not GAMESTATE:IsCourseMode() then
 t[#t+1] = Def.Quad{
 	InitCommand=cmd(setsize,SCREEN_WIDTH,48;diffuse,color("0,0,0,1");fadeleft,0.75;faderight,0.75;x,SCREEN_CENTER_X;y,SCREEN_BOTTOM-80;zoomx,0;zoomy,1;diffusealpha,0.8;sleep,0.000;);
@@ -161,7 +155,7 @@ if GAMESTATE:IsCourseMode() then
 			InitCommand=cmd(x,SCREEN_CENTER_X+stageXPos[shortPn];y,SCREEN_CENTER_Y+20);
 			OnCommand=function(s)
 				local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
-				local darkLength = (#(tostring(pss:GetSongsPassed()))) == 1 and 1 or 0 
+				local darkLength = (#(tostring(pss:GetSongsPassed()))) == 1 and 1 or 0
 				s:diffusealpha(0)
 				:settext(FindText(pss))
 				:AddAttribute(0,{Length=darkLength, Diffuse=color "#777777"})
