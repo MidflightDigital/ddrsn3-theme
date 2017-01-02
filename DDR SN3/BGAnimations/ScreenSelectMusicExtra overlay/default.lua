@@ -1,7 +1,4 @@
-local t = Def.ActorFrame {
-	LoadActor("../ScreenSelectMusic overlay/SNDifficultyList.lua");
-};
-
+local t = Def.ActorFrame{}
 --Common Objects
 t[#t+1] = Def.ActorFrame {
 	InitCommand=cmd(x,SCREEN_RIGHT-166;y,SCREEN_CENTER_Y-20);

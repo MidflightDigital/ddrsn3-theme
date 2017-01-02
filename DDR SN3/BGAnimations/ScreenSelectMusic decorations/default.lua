@@ -31,7 +31,7 @@ t[#t+1] = Def.ActorFrame{
 		end;
 	OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 	create_ddr_groove_radar("P1_radar", RadarPosX(), SCREEN_CENTER_Y+16,
-		PLAYER_1, 60, color("1,1,1,0.75"),
+		PLAYER_1, 60, color("1,1,1,0.25"),
 		{ColorGR.PLAYER_1, ColorGR.PLAYER_1, ColorGR.PLAYER_1, ColorGR.PLAYER_1, ColorGR.PLAYER_1},
 		"accelerate", .25)
 };
@@ -48,7 +48,7 @@ t[#t+1] = Def.ActorFrame{
 		end;
 	OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 	create_ddr_groove_radar("P2_radar", RadarPosX(), SCREEN_CENTER_Y+16,
-		PLAYER_2, 60, color("1,1,1,0.75"),
+		PLAYER_2, 60, color("1,1,1,0.25"),
 		{ColorGR.PLAYER_2, ColorGR.PLAYER_2, ColorGR.PLAYER_2, ColorGR.PLAYER_2, ColorGR.PLAYER_2},
 		"accelerate", .25)
 };

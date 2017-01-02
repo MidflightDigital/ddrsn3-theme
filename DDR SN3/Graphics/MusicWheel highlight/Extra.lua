@@ -12,11 +12,7 @@ local xPosPlayer = {
 };
 
 --lights
-if SCREENMAN:GetTopScreen() ~= "ScreenNetRoom" then
-	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-		table.insert(t, WheelLightEX(pn))
-	end;
-end;
+--ex wheel lights aren't necessary here and look weird
 
 --score underlay
 if GAMESTATE:GetCoinMode() == 'CoinMode_Home' and SCREENMAN:GetTopScreen() ~= "ScreenNetRoom" then

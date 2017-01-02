@@ -1,17 +1,17 @@
 local Prefs =
 {
-	AutoSetStyle =
-	{
-		Default = false,
-		Choices = { "ON", "OFF" },
-		Values = { true, false }
-	},
 	XStyledMusicSelect =
 	{
 		Default = "Wide Style",
 		Choices = { "X Style", "Wide Style" },
 		Values = { "X Style", "Wide Style" }
 	},
+	EndlessLevel =
+	{
+		Default = "Lv. 2",
+		Choices = { "Lv. 1", "Lv. 2", "Lv. 3", "Lv. 4", "All", "Lv. 5" },
+		Values = {1, 2, 3, 4, 5, 6}
+	}
 }
 
 ThemePrefs.InitAll(Prefs)

@@ -10,12 +10,4 @@ t[#t+1] = Def.ActorFrame{
   };
 };
 
-t[#t+1] = Def.ActorFrame {
-	LoadActor("../ScreenSelectMusic underlay/difficultylist")..{
-		InitCommand=cmd(x,SCREEN_LEFT+163;y,SCREEN_CENTER_Y+141);
-		OnCommand=cmd(draworder,1;cropright,1;sleep,0.264;sleep,0.6;linear,0.4;cropright,0);
-		OffCommand=cmd(sleep,0.033;accelerate,0.363;x,-237);
-	};
-};
-
 return t;
