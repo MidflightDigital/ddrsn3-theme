@@ -35,7 +35,12 @@ local function ScoreUpdate()
         local info = ScoringInfo[pn]
         local stage = GAMESTATE:IsCourseMode() and GAMESTATE:GetCourseSongIndex() + 1 or nil
         local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
-        pss:SetScore(info.GetCurrentScore(pss, stage))
+        local score = info.GetCurrentScore(pss, stage)
+        pss:SetScore(score)
+        local scoreDisplay = SCREENMAN:GetTopScreen():GetChild("Score"..ToEnumShortString(pn))
+        if scoreDisplay then
+            scoreDisplay:GetChild("Text"):targetnumber(score)
+        end
         pss:SetCurMaxScore(info.GetCurrentMaxScore(pss, stage))
     end
 end
