@@ -6,7 +6,7 @@ local stream = "hot"
 
 local t = Def.ActorFrame {};
 
-t[#t+1] = Def.ActorFrame{	
+t[#t+1] = Def.ActorFrame{
 -- Battery full line
 	LoadActor(THEME:GetPathG("","StreamDisplay " .. stream ))..{
 		InitCommand=function(self)
@@ -52,7 +52,7 @@ t[#t+1] = Def.ActorFrame{
 			self:linear(0.33);
 			self:diffusetopedge(color("#707171"));
 			self:diffusebottomedge(color("#404040"));
-		end;	
+		end;
 	};
 };
 return t;
