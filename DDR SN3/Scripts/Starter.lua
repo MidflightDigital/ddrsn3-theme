@@ -13,6 +13,7 @@ function IsStarterMode()
 end
 
 local outputPath = THEME:GetAbsolutePath("Other/SongManager Starter.txt", true)
+print(outputPath)
 local isolatePattern = "/([^/]+)/?$" --in English, "everything after the last forward slash unless there is a terminator"
 local combineFormat = "%s/%s"
 function AssembleStarter()
@@ -31,6 +32,7 @@ function AssembleStarter()
 				string.format(combineFormat, groupName, shortSongDir))
 		end
 	end
+	print("starter: "..#set)
 	--sort all the groups and collect their names, then sort that too
 	local groupNames = {}
 	for groupName, group in pairs(set) do
@@ -59,16 +61,21 @@ function AssembleStarter()
 	fHandle:destroy()
 end
 
-if not FILEMAN:DoesFileExist(THEME:GetAbsolutePath("Other/SongManager Starter.txt", true)) then
-	print("Creating initial starter songlist...")
-	AssembleStarter()
-	print("Done.")
-end
-
 function EnableStarterGameplayJunk()
 	assert(GAMESTATE and GAMESTATE:Env(),
 		"Wherever you are calling EnableStarterGameplayJunk, you can't do it there!")
 	local env = GAMESTATE:Env()
 	env.StarterMode = true
 	SONGMAN:SetPreferredSongs("Starter")
+end
+
+--if we've never made the file before, it complains
+--this is enough to make it not complain
+if not FILEMAN:DoesFileExist(outputPath) then
+	local fHandle = RageFileUtil.CreateRageFile()
+	fHandle:Open(outputPath, 10)
+	fHandle:Write("\n")
+	fHandle:Close()
+	fHandle:destroy()
+	assert(FILEMAN:DoesFileExist(outputPath), "creating placeholder Starter preferred sort file failed")
 end
