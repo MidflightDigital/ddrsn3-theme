@@ -1,4 +1,4 @@
-DDR SN3/PSDs/
+DDR SN3/PSDs
 SNCharacters/alice/DancerVideos/Alice_1.avi
 SNCharacters/baby-lon/DancerVideos/Baby-Lon_1.mp4
 SNCharacters/disco/DancerVideos/Disco_1.avi
@@ -10,3 +10,4 @@ SNCharacters/rage/DancerVideos/Rage_1.avi
 SNCharacters/yuni/DancerVideos/Yuni_1.avi
 DDR SN3/debug.txt
 DDR SN3/Other/SongManager Starter.txt
+*.old
