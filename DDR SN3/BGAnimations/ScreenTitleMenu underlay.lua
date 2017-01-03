@@ -18,6 +18,6 @@ t[#t+1] = Def.ActorFrame{
       print("setlife:"..tostring(Player.SetLife));
     end
   end
-end
+};
 
 return t;
