@@ -31,7 +31,7 @@ if pastStageStats then
     if pastStageStats:AllFailed() then
         PREFSMAN:SetPreference("ComboContinuesBetweenSongs", false)
         continuing = false
-        targetScreen = "ScreenTitleMenu"
+        targetScreen = "ScreenGameOver"
     end
 end
 

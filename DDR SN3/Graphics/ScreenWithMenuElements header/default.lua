@@ -16,7 +16,9 @@ elseif screenName == "ScreenMapControllers" then
 	headerTextImage = "Options (doubleres).png"
 elseif screenName == "ScreenSelectStyle" then
     headerTextImage = "Style (doubleres).png"
-elseif screenName == "ScreenSelectPlayMode" or screenName == "ScreenSelectPlayCourseMode" then
+elseif screenName == "ScreenSelectPlayMode" 
+	or screenName == "ScreenSelectPlayCourseMode" 
+	or screenName == "ScreenSelectPlayModeMulti" then
     headerTextImage = "Mode (doubleres).png"
 elseif screenName == "ScreenSelectCourse" then
     headerTextImage = "Course (doubleres).png"

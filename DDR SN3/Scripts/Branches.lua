@@ -170,3 +170,10 @@ Branch.Ending = function()
 	-- otherwise, show music scroll.
 	return STATSMAN:GetBestFinalGrade() <= 'Grade_Tier03' and "ScreenCredits" or "ScreenMusicScroll"
 end
+
+Branch.AfterProfileLoad = function()
+	if GAMESTATE:GetNumPlayersEnabled() > 1 then
+		return "ScreenSelectPlayModeMulti"
+	end
+	return "ScreenSelectPlayMode"
+end

@@ -22,6 +22,7 @@ t[#t+1] = Def.Actor{
         end
         local es = (GAMESTATE:Env()).EndlessState
         if es then
+            local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(params.Player)
             es.scoring.handleNoteScore(params.HoldNoteScore or params.TapNoteScore,
                 GAMESTATE:GetCurrentStageIndex()+1,
                 pss:GetCurrentCombo())

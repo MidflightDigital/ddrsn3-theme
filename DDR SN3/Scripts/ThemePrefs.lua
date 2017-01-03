@@ -8,7 +8,7 @@ local Prefs =
 	},
 	EndlessLevel =
 	{
-		Default = "Lv. 2",
+		Default = 1,
 		Choices = { "Lv. 1", "Lv. 2", "Lv. 3", "Lv. 4", "All", "Lv. 5" },
 		Values = {1, 2, 3, 4, 5, 6}
 	}
