@@ -6,7 +6,7 @@ if not (imagePrefix	and speed and (isClose~=nil)) then
 end
 local coordinates = {
 	left = {starting=isClose and SCREEN_CENTER_X-SCREEN_WIDTH or SCREEN_CENTER_X+6, ending=isClose and SCREEN_CENTER_X+6 or SCREEN_CENTER_X-SCREEN_WIDTH },
-	right = {starting=isClose and SCREEN_CENTER_X+SCREEN_WIDTH or SCREEN_CENTER_X-16, ending=isClose and SCREEN_CENTER_X-16 or SCREEN_CENTER_X+SCREEN_WIDTH }
+	right = {starting=isClose and SCREEN_CENTER_X+SCREEN_WIDTH or SCREEN_CENTER_X-18, ending=isClose and SCREEN_CENTER_X-18 or SCREEN_CENTER_X+SCREEN_WIDTH }
 }
 local t = Def.ActorFrame {
 	---- DOOR OPEN > CLOSE  CLOSE > OPEN
