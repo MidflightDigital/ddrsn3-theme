@@ -9,7 +9,7 @@ function WideSSM()
   return ThemePrefs.Get("XStyledMusicSelect") == "Wide Style"
 end 
 
-local SelectMusicXPositions = 
+SelectMusicXPositions = 
 {
   Style = {SCREEN_LEFT+33, SCREEN_CENTER_X-282},
   Diff = {SCREEN_LEFT+120, SCREEN_CENTER_X-200},
@@ -33,6 +33,15 @@ local SelectMusicXPositions =
 
 for name, entry in pairs(SelectMusicXPositions) do
   _G[name.."PosX"] = function()
+    return WideSSM() and entry[1] or entry[2]
+  end
+end
+
+function RadarPosX()
+  if Var "LoadingScreen" == "ScreenSelectMusicExtra" then
+    return SCREEN_LEFT + 139
+  else
+    local entry = SelectMusicXPositions.Radar
     return WideSSM() and entry[1] or entry[2]
   end
 end

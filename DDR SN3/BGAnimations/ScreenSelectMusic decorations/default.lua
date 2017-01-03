@@ -1,7 +1,10 @@
 local t = LoadFallbackB();
+local extra = Var "LoadingScreen" == "ScreenSelectMusicExtra"
 
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
-t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay")
+if not extra then
+	t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay")
+end
 t[#t+1] = StandardDecorationFromFile("BannerFrame","BannerFrame")
 t[#t+1] = StandardDecorationFromFileOptional("BPMDisplay","BPMDisplay")
 t[#t+1] = StandardDecorationFromFileOptional("SortDisplay","SortDisplay")
@@ -14,6 +17,12 @@ t[#t+1] = Def.ActorFrame{
 	LoadActor("SNDifficultyList.lua");
 	LoadActor("bpmmeter.lua");
 };
+
+--AWFUL LAST SECOND HACK PLEASE REMOVE
+if extra then
+	local last_entry = t[#t]
+	table.remove(last_entry)
+else
 
 -------------------------------------------------------------------------------------------------------------------
 -- Groove Radars
@@ -53,6 +62,7 @@ t[#t+1] = Def.ActorFrame{
 		"accelerate", .25)
 };
 
+
 t[#t+1] = Def.ActorFrame{
 	LoadActor("radar lights (doubleres)")..{
 		InitCommand=cmd(xy,RadarPosX(),SCREEN_CENTER_Y+7;diffuseshift;effectcolor1,color("1,1,1,0.75");effectcolor2,color("1,1,1,0.25");effectclock,'beatnooffset');
@@ -65,7 +75,7 @@ t[#t+1] = Def.ActorFrame{
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 	};
 };
-
+end
 -------------------------------------------------------------------------------------------------------------------
 -- Mod Icons
 -------------------------------------------------------------------------------------------------------------------
