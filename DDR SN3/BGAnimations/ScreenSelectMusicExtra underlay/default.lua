@@ -6,7 +6,7 @@ t[#t+1] = Def.ActorFrame{
     OnCommand=cmd(spin;effectmagnitude,0,0,50);
   };
   Def.Quad{
-    InitCommand=cmd(xy,SCREEN_RIGHT-166,SCREEN_CENTER_Y-20;setsize,300,SCREEN_HEIGHT;diffuse,color("0,0,0,1");skewx,1);
+    InitCommand=cmd(xy,SCREEN_RIGHT-166,SCREEN_CENTER_Y-20;setsize,300,SCREEN_HEIGHT;diffuse,color("0,0,0,0.9");skewx,1);
   };
 };
 

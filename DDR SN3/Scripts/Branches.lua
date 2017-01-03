@@ -168,11 +168,12 @@ Branch.Ending = function()
 	end
 	-- best final grade better than AA: show the credits.
 	-- otherwise, show music scroll.
-	return STATSMAN:GetBestFinalGrade() <= 'Grade_Tier03' and "ScreenCredits" or "ScreenMusicScroll"
+	return (STATSMAN:GetBestFinalGrade() <= 'Grade_Tier03' and SN3Debug) and "ScreenCredits" or "ScreenMusicScroll"
 end
 
 Branch.AfterProfileLoad = function()
-	if GAMESTATE:GetNumPlayersEnabled() > 1 then
+	if GAMESTATE:GetNumPlayersEnabled() > 1 
+		or (not Player.SetLife) then
 		return "ScreenSelectPlayModeMulti"
 	end
 	return "ScreenSelectPlayMode"
