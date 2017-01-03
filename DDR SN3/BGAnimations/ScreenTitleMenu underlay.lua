@@ -12,4 +12,12 @@ local t = Def.ActorFrame{
   end;
 };
 
+t[#t+1] = Def.ActorFrame{
+  OnCommand=function(self)
+    if SN3Debug then
+      print("setlife:"..tostring(Player.SetLife));
+    end
+  end
+end
+
 return t;
