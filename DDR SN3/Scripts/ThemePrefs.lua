@@ -11,18 +11,6 @@ local Prefs =
 		Default = 1,
 		Choices = { "Lv. 1", "Lv. 2", "Lv. 3", "Lv. 4", "All", "Lv. 5" },
 		Values = {1, 2, 3, 4, 5, 6}
-	},
-	MenuBG =
-	{
-		Default = "SuperNOVA 3",
-		Choices = { "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3" },
-		Values = { "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3" }
-	},
-	MenuMusic =
-	{
-		Default = "SuperNOVA 3",
-		Choices = { "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3" },
-		Values = { "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3" }
 	}
 }
 
