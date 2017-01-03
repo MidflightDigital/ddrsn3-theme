@@ -12,3 +12,7 @@ for _, path in pairs(badFiles) do
         return
     end
 end
+
+if (not Player.SetLife) or true then
+	Warn("Your version of StepMania ("..ProductVersion()..") does not support a feature that is required by Endless Mode.\nEndless Mode will be disabled until you upgrade to StepMania 5.0.11 or a later 5.0.x release.")
+end

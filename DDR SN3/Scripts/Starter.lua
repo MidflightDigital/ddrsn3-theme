@@ -13,7 +13,6 @@ function IsStarterMode()
 end
 
 local outputPath = THEME:GetAbsolutePath("Other/SongManager Starter.txt", true)
-print(outputPath)
 local isolatePattern = "/([^/]+)/?$" --in English, "everything after the last forward slash unless there is a terminator"
 local combineFormat = "%s/%s"
 function AssembleStarter()
