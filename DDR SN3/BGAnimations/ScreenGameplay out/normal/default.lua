@@ -14,8 +14,11 @@
 	};
 };]]
 
-local t = LoadActor(THEME:GetPathB("","_doors"), "door", 1.3, true )
+local t = LoadActor(THEME:GetPathB("","_doors"), "door", 1.5, true )
 t[#t+1] = LoadActor(("../cheer"))..{
+	StartTransitioningCommand=cmd(play);
+};
+t[#t+1] = LoadActor(("../../cleared"))..{
 	StartTransitioningCommand=cmd(play);
 };
 

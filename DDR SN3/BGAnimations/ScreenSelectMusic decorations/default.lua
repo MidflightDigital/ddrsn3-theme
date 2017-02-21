@@ -76,21 +76,6 @@ t[#t+1] = Def.ActorFrame{
 	};
 };
 end
--------------------------------------------------------------------------------------------------------------------
--- Mod Icons
--------------------------------------------------------------------------------------------------------------------
-t[#t+1] = Def.ActorFrame{
-	LoadActor( THEME:GetPathB("","optionicon_P1") ) .. {
-		InitCommand=cmd(player,PLAYER_1;x,ModP1PosX();y,SCREEN_CENTER_Y+201;draworder,1);
-		OnCommand=cmd(addx,-400;sleep,0.264;decelerate,0.52;addx,400);
-		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
-	};
-	LoadActor( THEME:GetPathB("","optionicon_P2") ) .. {
-		InitCommand=cmd(player,PLAYER_2;x,ModP2PosX();y,SCREEN_CENTER_Y+201;draworder,1);
-		OnCommand=cmd(addx,-400;sleep,0.264;decelerate,0.52;addx,400);
-		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
-	};
-};
 
 -- song options text (e.g. 1.5xmusic)
 t[#t+1] = StandardDecorationFromFileOptional("SongOptions","SongOptions")
