@@ -12,6 +12,12 @@ local Prefs =
 		Choices = { "Lv. 1", "Lv. 2", "Lv. 3", "Lv. 4", "All", "Lv. 5" },
 		Values = {1, 2, 3, 4, 5, 6}
 	},
+	JudgmentHeight = 
+	{
+		Default = "Standard",
+		Choices = {"Standard", "Old"},
+		Values = {"Standard", "Old"}
+	},
 	MenuBG =
 	{
 		Default = "SuperNOVA 3",
@@ -101,4 +107,16 @@ function OptionRowScreenFilter()
 	};
 	setmetatable(t, t)
 	return t
+end
+local judgmentTransformYs = {
+	Standard={normal=-76, reverse=67},
+	Old={normal=-30, reverse=30}
+}
+setmetatable(judgmentTransformYs, {__index=function(this, _) return this.Standard end})
+
+function JudgmentTransformCommand( self, params )
+	self:x( 0 )
+	self:y( judgmentTransformYs
+		[ThemePrefs.Get("JudgmentHeight")]
+		[params.bReverse and "reverse" or "normal"] )
 end
