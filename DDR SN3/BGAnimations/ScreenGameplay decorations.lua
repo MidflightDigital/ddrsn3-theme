@@ -12,10 +12,10 @@ local ScoringPlayers = {}
 t[#t+1] = Def.Actor{
     Name="ScoringController",
     JudgmentMessageCommand = function(_,params)
-        if not (( ScoringInfo[params.Player]) and 
-            (ScoringInfo.seed == GAMESTATE:GetStageSeed())) then 
+        if not (( ScoringInfo[params.Player]) and
+            (ScoringInfo.seed == GAMESTATE:GetStageSeed())) then
             SN2Scoring.PrepareScoringInfo(IsStarterMode())
-            ScoringInfo.seed = GAMESTATE:GetStageSeed() 
+            ScoringInfo.seed = GAMESTATE:GetStageSeed()
         end
         if not ScoringPlayers[params.Player] then
             ScoringPlayers[params.Player] = true
