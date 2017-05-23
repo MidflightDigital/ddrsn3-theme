@@ -6,13 +6,19 @@ local Prefs =
 		Choices = { "X Style", "Wide Style" },
 		Values = { "X Style", "Wide Style" }
 	},
+	XDifficultyList =
+	{
+		Default = "SN Style",
+		Choices = { "X Style", "SN Style"},
+		Values = { "X Style", "SN Style"}
+	},
 	EndlessLevel =
 	{
 		Default = 1,
 		Choices = { "Lv. 1", "Lv. 2", "Lv. 3", "Lv. 4", "All", "Lv. 5" },
 		Values = {1, 2, 3, 4, 5, 6}
 	},
-	JudgmentHeight = 
+	JudgmentHeight =
 	{
 		Default = "Standard",
 		Choices = {"Standard", "Old"},

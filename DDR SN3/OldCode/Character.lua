@@ -1,19 +1,7 @@
---SNCharacters v1.1 (13 March 2017)
---version 2 characters added and supported.
---GetAssetPath added to abstract differences away a bit.
---GetPathIfValid added to make it so that...
---most functions won't operate on an invalid character now.
 Characters = {}
 local c = Characters
 
---each line corresponds to a version.
---v1 represents characters as used in SN2 and X.
---v2 represents characters as used in X2 on.
-local requiredFiles =
-{
-	{"combo.png", "combo100.png"},
-	{"comboA.png", "comboB.png", "combo100.png"}
-}
+local requiredFiles = {"combo.png", "combo100.png"}
 
 local rootPath = "/SNCharacters/"
 
@@ -45,16 +33,9 @@ local function ValidateAndProcessConfig(loadedCfg)
     if (loadedCfg.version < 1) then
         return false, "invalid version field"
     end
-    if (loadedCfg.version ~= math.floor(loadedCfg.version)) then
-    	return false, "version is not an integer"
-    end
-    if (loadedCfg.version > 2) then
+    if (loadedCfg.version > 1) then
         return false, "version too new"
     end
-		local versionNum = loadedCfg.version
-		if (versionNum == 1) or (versionNum == 2) then
-			loadedCfg.version = versionNum
-		end
     local colorDef = loadedCfg.color
     local colorType = type(colorDef)
     if not ((colorType=="string") or (colorType == "table")) then
@@ -122,9 +103,8 @@ local function ValidateInternal(name)
     local charPath = c.GetPath(name)
     if charPath then
         --presumably we want to recheck the config every time we actually run
-        local config = c.GetConfig(name, true)
-        if config then
-            for fileName in ivalues(requiredFiles[config.version]) do
+        if c.GetConfig(name, true) then
+            for fileName in ivalues(requiredFiles) do
                 if not FILEMAN:DoesFileExist(charPath..fileName) then
                     return false
                 end
@@ -150,11 +130,6 @@ ClearValidateCache = function() characterValidity = {} end
 end
 --!!end Characters.Validate!!
 
-function Characters.GetPathIfValid(name)
-	if c.Validate(name) then
-		return c.GetPath(name)
-	end
-end
 
 --Returns a table with every character name in it, unvalidated.
 function Characters.GetAllPotentialCharacterNames()
@@ -177,7 +152,7 @@ end
 --Returns a dancer video or nothing if none exist.
 function Characters.GetDancerVideo(name)
     local potentialVideos = {}
-    local charPath = c.GetPathIfValid(name)
+    local charPath = c.GetPath(name)
     if charPath then
         charPath = charPath .. "DancerVideos/"
         local listing = FILEMAN:GetDirListing(charPath, false, true)
@@ -197,28 +172,7 @@ function Characters.GetDancerVideo(name)
     end
 end
 
-do
-	local missingAssetFallbacks = {
-		["combo.png"] = "comboA.png",
-		["comboA.png"] = "combo.png",
-		["comboB.png"] = "combo.png"
-	}
-	function Characters.GetAssetPath(name, asset)
-		local charPath = c.GetPathIfValid(name)
-		if charPath then
-			local targetName = charPath..asset
-			if FILEMAN:DoesFileExist(targetName) then
-				return targetName
-			end
-			--try a fallback
-			targetName = charPath..missingAssetFallbacks[asset]
-			if FILEMAN:DoesFileExist(targetName) then
-				return targetName
-			end
-		end
-	end
-end
---!!end Characters.GetAssetPath()
+
 
 --an OptionRow, because we need a way to pick this stuff somehow
 
@@ -275,7 +229,7 @@ if SN3Debug then
     Trace("valid characters: "..table.concat(c.GetAllCharacterNames(), " "))
 end
 
--- (c) 2016-2017 John Walstrom, "Inorizushi"
+-- (c) 2016 John Walstrom
 -- All rights reserved.
 --
 -- Permission is hereby granted, free of charge, to any person obtaining a
