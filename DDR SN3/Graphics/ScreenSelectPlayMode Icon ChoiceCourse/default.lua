@@ -1,11 +1,25 @@
 local t = Def.ActorFrame{
+	GainFocusCommand=function(self) MESSAGEMAN:Broadcast("PlayCourse") end;
 	-- Information panel
-	LoadActor("info")..{
-		InitCommand=cmd(halign,0;x,WideScale(SCREEN_LEFT,SCREEN_LEFT+80);y,SCREEN_BOTTOM-80);
-		GainFocusCommand=function(s) MESSAGEMAN:Broadcast("PlayCourse") s:visible(true):addx(-11):decelerate(0.1):addx(11) end,
-		LoseFocusCommand=cmd(visible,false);
-		OffCommand=cmd(linear,0.133;addx,SCREEN_WIDTH);
+	LoadActor("../_PlayMode/back");
+	LoadActor("color")..{
+		OnCommand=cmd(diffuse,color("0.5,0.5,0.5,1"));
+		GainFocusCommand=cmd(diffuse,color("#00ff1e"));
+		LoseFocusCommand=cmd(diffuse,color("0.5,0.5,0.5,1"));
 	};
+	LoadActor("../_PlayMode/title back (doubleres)")..{
+		OnCommand=cmd(diffuse,color("1,1,1,1"));
+		GainFocusCommand=cmd(diffuseshift;effectcolor1,color("#00ff1e");effectcolor2,color("#008803");effectperiod,0.25);
+		LoseFocusCommand=cmd(stopeffect;diffuse,color("1,1,1,1"));
+	};
+	LoadActor("../_PlayMode/midoutline (doubleres)")..{
+		InitCommand=cmd(y,15);
+		OnCommand=cmd(diffuse,color("#00ff1e");diffusealpha,0;zoom,0);
+		GainFocusCommand=cmd(diffuseshift;effectcolor1,color("#00ff1e");effectcolor2,color("#008803");effectperiod,0.25;
+			diffusealpha,0;zoom,0.5;linear,0.4;diffusealpha,1;zoom,0.9;linear,0.4;diffusealpha,0;zoom,1;sleep,1;queuecommand,"GainFocus");
+		LoseFocusCommand=cmd(stopeffect;finishtweening;diffusealpha,0;zoom,0);
+	};
+	LoadActor("text");
 };
 
 return t;

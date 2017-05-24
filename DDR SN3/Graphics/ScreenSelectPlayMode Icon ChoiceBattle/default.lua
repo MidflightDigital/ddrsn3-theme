@@ -1,31 +1,33 @@
-local t = Def.ActorFrame{};
-
-t[#t+1] = Def.ActorFrame {
-	-- Information panel
-	Def.Sprite{
-		InitCommand=cmd(halign,0;x,WideScale(SCREEN_LEFT,SCREEN_LEFT+80);y,SCREEN_BOTTOM-80);
-		OnCommand=function(self)
-			if GAMESTATE:GetNumPlayersEnabled() ~= 2 then
-				self:Load(THEME:GetPathG("ScreenSelectPlayMode Icon","ChoiceBattle/cpu"));
-			else
-				self:Load(THEME:GetPathG("ScreenSelectPlayMode Icon","ChoiceBattle/vs"));
-			end;
+local t = Def.ActorFrame{
+	GainFocusCommand=function(self) MESSAGEMAN:Broadcast("PlayBattle");
+		if GAMESTATE:GetNumPlayersEnabled() ~= 2 then
+		 	self:queuecommand("CPU")
+		else
+			self:queuecommand("versus")
 		end;
-		GainFocusCommand=function(s) MESSAGEMAN:Broadcast("PlayBattle") s:visible(true):addx(-11):decelerate(0.1):addx(11) end,
-		LoseFocusCommand=cmd(visible,false);
-		OffCommand=cmd(linear,0.133;addx,SCREEN_WIDTH);
+	end;
+	CPUCommand=function(self) MESSAGEMAN:Broadcast("PlayBattleCPU") end,
+	versusCommand=function(self) MESSAGEMAN:Broadcast("PlayBattleVersus") end,
+	-- Information panel
+	LoadActor("../_PlayMode/back");
+	LoadActor("color")..{
+		OnCommand=cmd(diffuse,color("0.5,0.5,0.5,1"));
+		GainFocusCommand=cmd(diffuse,color("#00ff1e"));
+		LoseFocusCommand=cmd(diffuse,color("0.5,0.5,0.5,1"));
 	};
-};
-
-if GAMESTATE:GetNumPlayersEnabled() ~= 2 then
-t[#t+1] = Def.ActorFrame {
-	LoadActor("tip")..{
-		InitCommand=cmd(x,WideScale(SCREEN_CENTER_X+20,SCREEN_CENTER_X-5);y,SCREEN_BOTTOM-80;);
-		GainFocusCommand=cmd(zoomx,0;zoomy,0;visible,true;linear,0.05;zoomx,1;sleep,0.2;linear,0.1;zoomy,1;glowshift;effectcolor1,color("1,1,1,0.2");effectcolor2,color("0,0,0,0");effectperiod,1);
-		LoseFocusCommand=cmd(visible,false);
-		OffCommand=cmd(linear,0.133;addx,SCREEN_WIDTH);
+	LoadActor("../_PlayMode/title back (doubleres)")..{
+		OnCommand=cmd(diffuse,color("1,1,1,1"));
+		GainFocusCommand=cmd(diffuseshift;effectcolor1,color("#00ff1e");effectcolor2,color("#008803");effectperiod,0.25);
+		LoseFocusCommand=cmd(stopeffect;diffuse,color("1,1,1,1"));
 	};
+	LoadActor("../_PlayMode/midoutline (doubleres)")..{
+		InitCommand=cmd(y,15);
+		OnCommand=cmd(diffuse,color("#00ff1e");diffusealpha,0;zoom,0);
+		GainFocusCommand=cmd(diffuseshift;effectcolor1,color("#00ff1e");effectcolor2,color("#008803");effectperiod,0.25;
+			diffusealpha,0;zoom,0.5;linear,0.4;diffusealpha,1;zoom,0.9;linear,0.4;diffusealpha,0;zoom,1;sleep,1;queuecommand,"GainFocus");
+		LoseFocusCommand=cmd(stopeffect;finishtweening;diffusealpha,0;zoom,0);
+	};
+	LoadActor("text");
 };
-end;
 
 return t;

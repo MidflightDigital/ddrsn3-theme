@@ -8,6 +8,8 @@ elseif ThemePrefs.Get("MenuMusic") == "SuperNOVA 3" then
   Music = "_sn3 (loop).ogg"
 elseif ThemePrefs.Get("MenuMusic") == "EXTREME" then
   Music = "_extreme (loop).ogg"
+elseif ThemePrefs.Get("MenuMusic") == "IIDX SIRIUS" then
+  Music = "_SIRIUS MENU (loop).ogg"
 end;
 
 return THEME:GetPathS("",Music);

@@ -27,22 +27,21 @@ return Def.ActorFrame {
 	};
 	LoadActor("Door1")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;CenterY;halign,1);
-		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+51);
-		FinishCommand=cmd(sleep,1;linear,0.198;x,SCREEN_CENTER_X-SCREEN_WIDTH);
+		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+6);
+		FinishCommand=cmd(sleep,2;linear,0.198;x,SCREEN_CENTER_X-SCREEN_WIDTH);
 	};
 	LoadActor("Door2")..{
 		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;CenterY;halign,0);
-		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X-51);
-		FinishCommand=cmd(sleep,1;linear,0.198;x,SCREEN_CENTER_X+SCREEN_WIDTH);
+		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X-18);
+		FinishCommand=cmd(sleep,2;linear,0.198;x,SCREEN_CENTER_X+SCREEN_WIDTH);
 	};
 	-- song banner
-	Def.Banner{
-		Name="SongBanner";
+	Def.Sprite{
 		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-130;scaletoclipped,256,80);
+		BeforeLoadingNextCourseSongMessageCommand=function(self)
+			self:LoadFromSongBanner( SCREENMAN:GetTopScreen():GetNextCourseSong() )
+		end;
 		StartCommand=function(self)
-			local course = GAMESTATE:GetCurrentCourse()
-			local entry = course:GetCourseEntry(GAMESTATE:GetLoadingCourseSongIndex())
-			self:LoadFromSong(entry:GetSong())
 			self:zoomy(0):sleep(0.099):sleep(0.396):linear(0.099):zoomy(1)
 		end;
 		FinishCommand=cmd(sleep,2;linear,0.099;zoomy,0);
@@ -59,21 +58,33 @@ return Def.ActorFrame {
 			self:SetAllStateDelays(0.082)
 		end;
 		ChangeCourseSongInMessageCommand=cmd(diffusealpha,0;sleep,0.396;diffusealpha,1);
-		FinishCommand=cmd(sleep,1;diffusealpha,0);
-	};
-	LoadActor( THEME:GetPathG("ScreenStageInformation", "Stage " .. ToEnumShortString(sStage) ) ) .. {
-		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
-		ChangeCourseSongInMessageCommand=cmd(diffusealpha,0;sleep,0.396;diffusealpha,1);
-		FinishCommand=cmd(sleep,1;diffusealpha,0);
+		FinishCommand=cmd(sleep,2;diffusealpha,0);
 	};
 	LoadActor("ScreenStageInformation in/bottom_stage")..{
 		InitCommand=cmd(CenterX;y,SCREEN_BOTTOM+27);
 		ChangeCourseSongInMessageCommand=cmd(finishtweening;sleep,0.396;linear,0.198;addy,-54);
-		FinishCommand=cmd(sleep,1;linear,0.198;addy,54);
+		FinishCommand=cmd(sleep,2;linear,0.198;addy,54);
 	};
 	LoadActor("ScreenStageInformation in/top_stage")..{
 		InitCommand=cmd(CenterX;y,SCREEN_TOP-52);
 		ChangeCourseSongInMessageCommand=cmd(finishtweening;sleep,0.396;linear,0.198;addy,104);
-		FinishCommand=cmd(sleep,1;linear,0.198;addy,-104);
+		FinishCommand=cmd(sleep,2;linear,0.198;addy,-104);
+	};
+	LoadActor( THEME:GetPathG("ScreenStageInformation", "Stage " .. ToEnumShortString(sStage) ) ) .. {
+		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
+		ChangeCourseSongInMessageCommand=cmd(diffusealpha,0;sleep,0.396;diffusealpha,1);
+		FinishCommand=cmd(sleep,2;diffusealpha,0);
+	};
+	-- Ready
+	LoadActor(THEME:GetPathB("ScreenGameplay","ready/ready")) .. {
+		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0);
+		ChangeCourseSongInMessageCommand=cmd(diffusealpha,0;);
+		FinishCommand = cmd(sleep,2.2;diffusealpha,0;zoomx,4;zoomy,0;accelerate,0.09;zoomx,1;zoomy,1;diffusealpha,1;sleep,1;accelerate,0.132;zoomx,4;zoomy,0;diffusealpha,0);
+	};
+	--go 
+	LoadActor(THEME:GetPathB("ScreenGameplay","go/go")) .. {
+		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0);
+		ChangeCourseSongInMessageCommand=cmd(diffusealpha,0;);
+		FinishCommand = cmd(sleep,3.5;diffusealpha,0;zoomx,4;zoomy,0;accelerate,0.132;zoomx,1;zoomy,1;diffusealpha,1;sleep,1;accelerate,0.132;zoomx,4;zoomy,0;diffusealpha,0);
 	};
 };

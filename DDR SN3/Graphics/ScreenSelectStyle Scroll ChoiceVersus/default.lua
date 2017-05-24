@@ -4,7 +4,7 @@ local t = Def.ActorFrame{
 		Materials = "../_Style/(5th) Rage/model.txt";
 		Meshes = "../_Style/(5th) Rage/model.txt";
 		Bones = "../_Style/(5th) Rage/Rest/Rest.redir";
-		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-210;y,SCREEN_CENTER_Y+74;zoom,12;rotationy,-140;cullmode,'CullMode_None';);
+		InitCommand=cmd(vertalign,bottom;x,SCREEN_CENTER_X-210;y,SCREEN_CENTER_Y+74;zoom,12;rotationy,-140;cullmode,'CullMode_Front';);
 		OnCommand=function(self)
 			if GAMESTATE:IsHumanPlayer(PLAYER_2) then
 				self:draworder(90):diffusealpha(0):zoom(0):sleep(0.264):sleep(0.792):sleep(0.264):sleep(0.132):diffusealpha(1):decelerate(0.066):zoom(12):accelerate(0.066):zoom(10):decelerate(0.066):zoom(12);
