@@ -25,16 +25,7 @@ return Def.ActorFrame {
 		ChangeCourseSongInMessageCommand=cmd(queuecommand,("Play"));
 		PlayCommand=cmd(play;);
 	};
-	LoadActor("Door1")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X-SCREEN_WIDTH;CenterY;halign,1);
-		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X+6);
-		FinishCommand=cmd(sleep,2;linear,0.198;x,SCREEN_CENTER_X-SCREEN_WIDTH);
-	};
-	LoadActor("Door2")..{
-		InitCommand=cmd(x,SCREEN_CENTER_X+SCREEN_WIDTH;CenterY;halign,0);
-		ChangeCourseSongInMessageCommand=cmd(linear,0.198;x,SCREEN_CENTER_X-18);
-		FinishCommand=cmd(sleep,2;linear,0.198;x,SCREEN_CENTER_X+SCREEN_WIDTH);
-	};
+	LoadActor(THEME:GetPathB("","_doors"), "_newer door", 0.2, true );
 	-- song banner
 	Def.Sprite{
 		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-130;scaletoclipped,256,80);
@@ -81,7 +72,7 @@ return Def.ActorFrame {
 		ChangeCourseSongInMessageCommand=cmd(diffusealpha,0;);
 		FinishCommand = cmd(sleep,2.2;diffusealpha,0;zoomx,4;zoomy,0;accelerate,0.09;zoomx,1;zoomy,1;diffusealpha,1;sleep,1;accelerate,0.132;zoomx,4;zoomy,0;diffusealpha,0);
 	};
-	--go 
+	--go
 	LoadActor(THEME:GetPathB("ScreenGameplay","go/go")) .. {
 		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y;diffusealpha,0);
 		ChangeCourseSongInMessageCommand=cmd(diffusealpha,0;);

@@ -27,14 +27,14 @@ local Prefs =
 	MenuBG =
 	{
 		Default = "SuperNOVA 3",
-		Choices = { "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS" },
-		Values = { "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS" }
+		Choices = { "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "SuperNOVA 3 v2", "IIDX SIRIUS" },
+		Values = { "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "SuperNOVA 3 v2", "IIDX SIRIUS" }
 	},
 	MenuMusic =
 	{
 		Default = "SuperNOVA 3",
-		Choices = { "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS" },
-		Values = { "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS" }
+		Choices = { "DDRMAX", "DDRMAX 2", "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS" },
+		Values = { "DDRMAX", "DDRMAX 2", "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS" }
 	}
 }
 

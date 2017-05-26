@@ -8,6 +8,8 @@ elseif ThemePrefs.Get("MenuBG") == "SuperNOVA 2" then
   BG = "SN2"
 elseif ThemePrefs.Get("MenuBG") == "SuperNOVA 3" then
   BG = "SN3"
+elseif ThemePrefs.Get("MenuBG") == "SuperNOVA 3 v2" then
+  BG = "SN3V2"
 elseif ThemePrefs.Get("MenuBG") == "IIDX SIRIUS" then
   BG = "SIRIUS"
 end;
