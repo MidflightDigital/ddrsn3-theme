@@ -135,7 +135,7 @@ t[#t+1] = Def.RollingNumbers{
 		local scores = scorelist:GetHighScores();
 		if scores[1] then
 			if ThemePrefs.Get "ConvertHighScores" and (not GAMESTATE:IsCourseMode()) then
-				topscore = SN2Scoring.GetSN2ScoreFromHighScore(StepsOrTrail, scores[1])
+				topscore = 10*math.round(SN2Scoring.GetSN2ScoreFromHighScore(StepsOrTrail, scores[1])/10)
 			else
 				topscore = scores[1]:GetScore()
 			end
