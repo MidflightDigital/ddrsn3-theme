@@ -35,6 +35,12 @@ local Prefs =
 		Default = "SuperNOVA 3",
 		Choices = { "DDRMAX", "DDRMAX 2", "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS" },
 		Values = { "DDRMAX", "DDRMAX 2", "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS" }
+	},
+	ConvertHighScores =
+	{
+		Default = false,
+		Choices = {"No", "Yes"},
+		Values = {false, true}
 	}
 }
 

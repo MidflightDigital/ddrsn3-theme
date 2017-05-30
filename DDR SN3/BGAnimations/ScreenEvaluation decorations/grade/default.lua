@@ -21,21 +21,23 @@ for _, player in pairs(GAMESTATE:GetEnabledPlayers()) do
     local worstTns = revTns.TapNoteScore_Miss
     for idx=bestTns, worstTns, -1 do
         local curTns = TapNoteScore[idx]
-        if tnsToColor[curTns] and pss:FullComboOfScore(curTns) then
-            table.insert(actors,Def.ActorFrame{
-                LoadActor("ring")..{
-                    InitCommand=function(self) self:diffuse(tnsToColor[curTns]):x(playerXPositions[player]):y(SCREEN_CENTER_Y-100):zoom(0) end;
-                    OnCommand=function(self) self:linear(0.2):zoom(0.65):spin():effectmagnitude(0,0,-170) end;
-                    OffCommand=function(self) self:linear(0.2):zoom(0) end
-                },
-                LoadActor("lines")..{
-                    InitCommand=function(self) self:diffuse(tnsToColor[curTns]):x(playerXPositions[player]):y(SCREEN_CENTER_Y-100):zoom(0) end;
-                    OnCommand=function(self) self:linear(0.2):zoom(1):spin():effectmagnitude(0,0,-170) end;
-                    OffCommand=function(self) self:linear(0.2):zoom(0) end
-                }
-            })
-            break
-        end
+        if tnsToColor[curTns] then
+            if pss:FullComboOfScore(curTns) then
+                table.insert(actors,Def.ActorFrame{
+                    LoadActor("ring")..{
+                        InitCommand=function(self) self:diffuse(tnsToColor[curTns]):x(playerXPositions[player]):y(SCREEN_CENTER_Y-100):zoom(0) end;
+                        OnCommand=function(self) self:linear(0.2):zoom(0.65):spin():effectmagnitude(0,0,-170) end;
+                        OffCommand=function(self) self:linear(0.2):zoom(0) end
+                    },
+                    LoadActor("lines")..{
+                        InitCommand=function(self) self:diffuse(tnsToColor[curTns]):x(playerXPositions[player]):y(SCREEN_CENTER_Y-100):zoom(0) end;
+                        OnCommand=function(self) self:linear(0.2):zoom(1):spin():effectmagnitude(0,0,-170) end;
+                        OffCommand=function(self) self:linear(0.2):zoom(0) end
+                    }
+                })
+                break
+            end
+        else break end
     end
 end
 
