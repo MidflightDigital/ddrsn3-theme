@@ -239,13 +239,13 @@ for idx, diff in pairs(difficultiesToDraw) do
     					if steps then
     						local meter = steps:GetMeter()
     						if AnyPlayerThisDiff(diff) then
-                if meter > 10 then
-                  self:diffuse(color("1,0,0,1"))
-                else
-    							self:diffuse(DiffToColor(diff))
+                                if meter > 10 then
+                                    self:diffuse(color("1,0,0,1"))
+                                else
+    							   self:diffuse(DiffToColor(diff))
+                                end
     							self:targetnumber(meter)
     							self:Load("RollingNumbersMeter")
-                end;
     						elseif song:HasStepsTypeAndDifficulty(GAMESTATE:GetCurrentStyle():GetStepsType(), diff) then
     							self:diffuse{1,1,1,1}
     							self:targetnumber(meter)
