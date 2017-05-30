@@ -90,3 +90,7 @@ function Endless.CreateState(stepsType, endlessLevel, breakStages)
         choiceDeck = MakeDeck(Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)),
         breakAfter=breakStages}
 end
+
+function EndlessLockedMessage()
+    return SCREENMAN:SystemMessage(THEME:GetString("ScreenSelectPlayMode", "EndlessLocked"))
+end
