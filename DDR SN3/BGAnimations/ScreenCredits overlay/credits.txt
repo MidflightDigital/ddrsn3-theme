@@ -1,0 +1,35 @@
+Format: the first line is ignored. One blank line starts a new section, two a new page. Don't pre-add tabs. There's an equals system.
+Project Managers
+HypnoticMarten77=marten
+Dreamland200=dream
+
+Graphics Team
+Inorizushi=inori
+=marten
+SilverDragon754
+
+
+Stepping Team
+=dream
+=marten
+CuzcoBlocko
+darkanine=dark
+Dancefreak
+JunkoXXX
+Nezemarth
+Silverhawke
+Tartachus
+VocaloidFandom
+Kowalski
+Quick Man=quick
+
+
+Song Team
+=quick
+DJ Vortivask
+Oni-91
+=dark
+
+Theming Team
+=inori
+tertu
