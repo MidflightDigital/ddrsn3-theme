@@ -1,3 +1,4 @@
+SOUND:DimMusic(1,math.huge)
 local t = LoadFallbackB();
 t[#t+1] = StandardDecorationFromFileOptional("Header","Header");
 t[#t+1] = StandardDecorationFromFileOptional("Footer","Footer");
