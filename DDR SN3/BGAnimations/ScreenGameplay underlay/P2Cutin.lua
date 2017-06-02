@@ -19,7 +19,7 @@ t[#t+1] = Def.ActorFrame{
     if CurCombo == 0 then 
     	return
     elseif CurCombo == math.floor(tapsAndHolds/2) 
-    	or CurCombo == math.floor(tapsAndHolds*0.9)
+    	or CurCombo == math.floor(tapsAndHolds*0.9) then
       self:queuecommand("PopupB")
       self:queuecommand("Popup")
     elseif CurCombo % 100 == 0 then
