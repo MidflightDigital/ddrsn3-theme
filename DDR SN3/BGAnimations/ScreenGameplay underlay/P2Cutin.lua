@@ -13,29 +13,21 @@ if (charP2Name ~= "") then
 t[#t+1] = Def.ActorFrame{
   ComboChangedMessageCommand=function(self, params)
     if params.Player ~= 'PlayerNumber_P2' then return end
+    local tapsAndHolds = GAMESTATE:GetCurrentSteps(params.Player):GetRadarValues()
+    	:GetValue('RadarCategory_TapsAndHolds')
     local CurCombo = params.PlayerStageStats:GetCurrentCombo()
-    if CurCombo == 25 then
+    if CurCombo == 0 then 
+    	return
+    elseif CurCombo == math.floor(tapsAndHolds/2) 
+    	or CurCombo == math.floor(tapsAndHolds*0.9)
       self:queuecommand("PopupB")
       self:queuecommand("Popup")
-    elseif CurCombo == 50 then
-      self:queuecommand("PopupA")
-      self:queuecommand("Popup")
-    elseif CurCombo == 100 then
+    elseif CurCombo % 100 == 0 then
       self:queuecommand("PopupC")
       self:queuecommand("Popup")
-    elseif CurCombo == 150 then
+    elseif CurCombo == 20 or (CurCombo % 50 == 0) then
       self:queuecommand("PopupA")
       self:queuecommand("Popup")
-    elseif (CurCombo % 100) == 0 and CurCombo ~= 0 then
-      self:queuecommand("PopupA")
-      self:queuecommand("Popup")
-    elseif (CurCombo % 25) == 0 and CurCombo ~= 0 and CurCombo < 100 then
-      self:queuecommand("PopupB")
-      self:queuecommand("Popup")
-    elseif (CurCombo % 50) == 0 and CurCombo ~= 0 then
-      self:queuecommand("PopupC")
-      self:queuecommand("Popup")
-    elseif CurCombo == 0 then return
     end;
   end;
 
