@@ -13,12 +13,12 @@ if (charP2Name ~= "") then
 t[#t+1] = Def.ActorFrame{
   ComboChangedMessageCommand=function(self, params)
     if params.Player ~= 'PlayerNumber_P2' then return end
-    local tapsAndHolds = GAMESTATE:GetCurrentSteps(params.Player):GetRadarValues()
+    local tapsAndHolds = GAMESTATE:GetCurrentSteps(params.Player):GetRadarValues(params.Player)
     	:GetValue('RadarCategory_TapsAndHolds')
     local CurCombo = params.PlayerStageStats:GetCurrentCombo()
-    if CurCombo == 0 then 
+    if CurCombo == 0 then
     	return
-    elseif CurCombo == math.floor(tapsAndHolds/2) 
+    elseif CurCombo == math.floor(tapsAndHolds/2)
     	or CurCombo == math.floor(tapsAndHolds*0.9) then
       self:queuecommand("PopupB")
       self:queuecommand("Popup")
