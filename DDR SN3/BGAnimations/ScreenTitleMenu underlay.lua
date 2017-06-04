@@ -11,6 +11,17 @@ local t = Def.ActorFrame{
   end;
 };
 
+--update the select music redir here...
+local f = RageFileUtil.CreateRageFile()
+local worked = f:Open(THEME:GetCurrentThemeDirectory().."/Sounds/ScreenSelectMusic music (loop).redir", 10)
+if worked then
+  f:Write(GetMenuMusicPath("common",true))
+  f:Close()
+elseif SN3Debug then
+  SCREENMAN:SystemMessage("Couldn't open select music redir")
+end
+f:destroy()
+
 t[#t+1] = Def.ActorFrame{
   OnCommand=function(self)
     if SN3Debug then

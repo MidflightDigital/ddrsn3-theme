@@ -29,12 +29,12 @@ do
 			setmetatable(child, {__index=music.common})
 		end
 	end
-	function GetMenuMusicPath(type)
+	function GetMenuMusicPath(type, relative)
 		local possibles = music[type] 
 			or error("GetMenuMusicPath: unknown menu music type "..type, 2)
 		local selection = ThemePrefs.Get("MenuMusic")
 		local file = possibles[selection]
 			or error("GetMenuMusicPath: no menu music defined for selection"..selection, 2)
-		return THEME:GetPathS("", file)
+		return relative and file or THEME:GetPathS("", file)
 	end
 end
