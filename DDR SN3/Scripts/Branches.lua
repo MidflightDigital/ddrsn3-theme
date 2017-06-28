@@ -172,9 +172,5 @@ Branch.Ending = function()
 end
 
 Branch.AfterProfileLoad = function()
-	if GAMESTATE:GetNumPlayersEnabled() > 1 
-		or (not Player.SetLife) then
-		return "ScreenSelectPlayModeMulti"
-	end
 	return "ScreenSelectPlayMode"
 end
