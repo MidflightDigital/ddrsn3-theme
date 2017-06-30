@@ -13,6 +13,8 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
+if ThemePrefs.Get("LightMode") then return t end
+
 t[#t+1] = Def.ActorFrame{
 	LoadActor(THEME:GetPathB("","_shared/IIDX 17/wakusei/wakka 1"))..{
 		InitCommand=cmd(queuecommand,"Anim");

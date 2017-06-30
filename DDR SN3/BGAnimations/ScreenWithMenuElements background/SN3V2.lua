@@ -77,6 +77,9 @@ t[#t+1] = Def.ActorFrame {
 		};
 	};
 };
+
+if ThemePrefs.Get("LightMode") then return t end
+
 t[#t+1] = Def.ActorFrame{
 	InitCommand=function(self)
 		self:fov(120);

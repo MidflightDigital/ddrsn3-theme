@@ -1,3 +1,5 @@
+if ThemePrefs.Get("LightMode") then return {Class="Actor"} end
+
 local beginTime = GetTimeSinceStart()
 local lastSeenTime = beginTime
 local flickerState = false

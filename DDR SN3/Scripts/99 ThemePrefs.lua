@@ -41,6 +41,12 @@ local Prefs =
 		Default = false,
 		Choices = {"No", "Yes"},
 		Values = {false, true}
+	},
+	LightMode =
+	{
+		Default = false,
+		Choices = {"No", "Yes"},
+		Values = {false, true}
 	}
 }
 

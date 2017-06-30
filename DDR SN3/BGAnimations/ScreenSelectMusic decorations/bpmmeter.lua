@@ -1,3 +1,5 @@
+if ThemePrefs.Get("LightMode") then return {Class="Actor"} end
+
 --Explanation of these values:
 --The game seems to treat every BPM below about 100 and above about 270 exactly the same.
 --115 is about the lowest BPM where there will always be showing bar pieces.
@@ -5,6 +7,7 @@
 --155 is simply 270-115, the spread between 0 and 1. - tertu
 
 --13/86 was chosen because it's roughly the height of two bar pieces -tertu
+
 local twiddleDistance = 13/86
 
 local function CalculateBaseForBPM(bpm)
