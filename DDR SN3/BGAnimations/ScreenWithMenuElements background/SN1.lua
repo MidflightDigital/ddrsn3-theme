@@ -75,6 +75,7 @@ t[#t+1] = Def.ActorFrame{
 			LoadActor(THEME:GetPathB("","_shared/SN1/SuperNovaBall (DoubleFaced).txt"))..{
 				InitCommand=cmd(diffuse,color("0.6,0.6,0.6,1");spin;effectmagnitude,10,100,10;);
 			};
+			Condition=not ThemePrefs.Get("LightMode");
 		};
 	};
 	Def.ActorFrame{
@@ -84,6 +85,7 @@ t[#t+1] = Def.ActorFrame{
 		LoadActor(THEME:GetPathB("","_shared/SN1/SuperNOVALine.txt"))..{
 			InitCommand=cmd(diffuse,color("0.4,0.4,0.4,1");Center;rotationx,200;rotationz,-90;rotationy,60;zoom,12;spin;effectmagnitude,-100,-100,-100);
 		};
+		Condition=not ThemePrefs.Get("LightMode");
 	};
 };
 

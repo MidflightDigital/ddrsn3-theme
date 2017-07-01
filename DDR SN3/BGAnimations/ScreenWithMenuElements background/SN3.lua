@@ -84,6 +84,7 @@ t[#t+1] = Def.ActorFrame {
 			OnCommand=cmd(diffusealpha,0;blend,Blend.Add;;linear,2;diffusealpha,0.55;addy,SCREEN_HEIGHT;queuecommand,"Queue");
 			QueueCommand=cmd(diffusealpha,0;addy,-SCREEN_HEIGHT;sleep,4;queuecommand,"On");
 		};
+		Condition=not ThemePrefs.Get("LightMode");
 	};
 	Def.ActorFrame{
 		InitCommand=cmd(Center;zoom,1.5;diffuse,color("1,1,1,1"));
@@ -103,6 +104,7 @@ t[#t+1] = Def.ActorFrame {
 		LoadActor("inner rim")..{
 			InitCommand=cmd(spin;effectmagnitude,0,0,30);
 		};
+		Condition=not ThemePrefs.Get("LightMode");
 	};
 };
 
