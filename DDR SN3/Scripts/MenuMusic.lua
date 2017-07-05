@@ -9,6 +9,8 @@ do
 			["IIDX SIRIUS"] = "_SIRIUS MENU (loop).ogg";
 			["DDRMAX 2"] = "_MAX2 (loop).ogg";
 			["DDRMAX"] = "_MAX (loop).ogg";
+			["aston crowe"] = "_crowe (loop).ogg";
+			["dj vortivask"] = "_vortivask (loop).ogg";
 		};
 		mode = {
 			["IIDX SIRIUS"] = "_SIRIUS MODE (loop).ogg";
@@ -21,6 +23,8 @@ do
 			["IIDX SIRIUS"] = "_SIRIUS PROFILE (loop).ogg";
 			["DDRMAX 2"] = "_SN3 PROFILE (loop).ogg";
 			["DDRMAX"] = "_SN3 PROFILE (loop).ogg";
+			["aston crowe"] = "_crowe (loop).ogg";
+			["dj vortivask"] = "_vortivask (loop).ogg";
 		};
 	}
 	--thanks to this code
