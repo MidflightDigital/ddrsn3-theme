@@ -16,6 +16,8 @@ local LabelMaxZoom = THEME:GetMetric("Combo", "LabelMaxZoom");
 local env = GAMESTATE:Env();
 local starterMode = env.StarterMode == true;
 
+local arcadeColoring = ThemePrefs.Get("ArcadeColorMode"); 
+
 --you can pass nil to this function, it acts the same as passing nothing
 --however, i think that passing nil makes the intent clearer -tertu
 local function cfShowOnly(...)
@@ -45,6 +47,37 @@ local function remapStarter(params)
 	end
 end
 
+local tns_reverse = Enum.Reverse(TapNoteScore)
+local function worstJudgeClear()
+	if (ScoringInfo and ScoringInfo.seed == GAMESTATE:GetStageSeed()) then
+		local wj = ScoringInfo.worstJudge[player]
+		if tns_reverse[wj] < tns_reverse['TapNoteScore_W3'] then
+			ScoringInfo.worstJudge[player] = nil
+			wj = nil
+		end
+		return wj
+	end
+end
+
+local decideColor 
+do
+	local tnsToParam = {
+		TapNoteScore_W1 = "FullComboW1",
+		TapNoteScore_W2 = "FullComboW2",
+		TapNoteScore_W3 = "FullComboW3"
+	}
+	decideColor = function(tns, params)
+		if not arcadeColoring then
+			return params[tnsToParam[tns]] or false
+		else
+			if ScoringInfo and ScoringInfo.seed == GAMESTATE:GetStageSeed() then
+				return tns == ScoringInfo.worstJudge[player]
+			end
+			return false
+		end
+	end
+	
+end
 
 local t = Def.ActorFrame {
 	Def.ActorFrame {
@@ -99,6 +132,7 @@ local t = Def.ActorFrame {
 		cfShowOnly(nil);
 	end;
 	ComboCommand=function(self, param)
+		worstJudgeClear()
 		if param.Misses then
 			cfShowOnly(nil);
 			return;
@@ -121,11 +155,11 @@ local t = Def.ActorFrame {
 		cf.NumberNormal:settext( string.format("%i", iCombo) );
 		remapStarter(param);
 		-- FullCombo Rewards
-		if param.FullComboW1 then
+		if decideColor('TapNoteScore_W1', param) then
 			cfShowOnly('NumberW1', 'LabelW1');
-		elseif param.FullComboW2 then
+		elseif decideColor('TapNoteScore_W2', param) then
 			cfShowOnly('NumberW2', 'LabelW2');
-		elseif param.FullComboW3 then
+		elseif decideColor('TapNoteScore_W3', param) then
 			cfShowOnly('NumberW3', 'LabelW3');
 		elseif param.Combo then
 			cfShowOnly('NumberNormal', 'LabelNormal');
