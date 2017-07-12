@@ -18,8 +18,8 @@ t[#t+1] = Def.ActorFrame {
 
 t[#t+1] = Def.ActorFrame{
 	InitCommand=cmd(x,SCREEN_LEFT+160;y,SCREEN_CENTER_Y-80);
-	OnCommand=cmd(addx,-200,decelerate,0.5;addx,200);
-	OffCommand=cmd(sleep,0.2;accelerate,0.5;addx,-200);
+	OnCommand=cmd(addx,-500;sleep,0.264;decelerate,0.52;addx,500;sleep,0.1;linear,0);
+	OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-500);
 	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
 	LoadActor("BannerFrame");
 	Def.Banner{

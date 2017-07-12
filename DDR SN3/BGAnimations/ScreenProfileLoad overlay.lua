@@ -8,4 +8,8 @@ x[#x+1] = Def.Actor {
 	LoadCommand=function() SCREENMAN:GetTopScreen():Continue(); end;
 };
 
+x[#x+1] = Def.Quad{
+	InitCommand=cmd(FullScreen;diffuse,Color("Black"));
+};
+
 return x;

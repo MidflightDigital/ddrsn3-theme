@@ -20,7 +20,7 @@ local t = Def.ActorFrame {
 				end
 			end;
 			StartCommand=function(s) s:queuecommand("On") end;
-			FinishCommand=function(s) s:queuecommand("Off") end;
+			FinishCommand=function(s) s:sleep(2):queuecommand("Off") end;
 		};
 	};
 	Def.ActorFrame{
@@ -33,7 +33,7 @@ local t = Def.ActorFrame {
 				end
 			end;
 			StartCommand=function(s) s:queuecommand("On") end;
-			FinishCommand=function(s) s:queuecommand("Off") end;
+			FinishCommand=function(s) s:sleep(2):queuecommand("Off") end;
 		};
 	};
 };

@@ -26,7 +26,6 @@ return Def.ActorFrame {
 		PlayCommand=cmd(play;);
 	};
 	LoadActor(THEME:GetPathB("","_doors"), "_newer door", 0.2, true, true );
-	-- song banner
 	Def.Sprite{
 		InitCommand=cmd(CenterX;y,SCREEN_CENTER_Y-130;scaletoclipped,256,80);
 		BeforeLoadingNextCourseSongMessageCommand=function(self)

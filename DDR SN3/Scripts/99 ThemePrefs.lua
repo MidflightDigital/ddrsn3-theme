@@ -62,7 +62,7 @@ function OptionRowScreenFilter()
 		LayoutType = "ShowAllInRow",
 		SelectType = "SelectOne",
 		OneChoiceForAllPlayers = false,
-		ExportOnChange = false,
+		ExportOnChange = true,
 		Choices = { THEME:GetString('OptionNames','Off'),
 			THEME:GetString('OptionTitles', 'FilterDark'),
 			THEME:GetString('OptionTitles', 'FilterDarker'),

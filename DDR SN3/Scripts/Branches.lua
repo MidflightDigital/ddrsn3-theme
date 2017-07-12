@@ -172,5 +172,5 @@ Branch.Ending = function()
 end
 
 Branch.AfterProfileLoad = function()
-	return "ScreenSelectPlayMode"
+	return "ScreenSelectStyle"
 end

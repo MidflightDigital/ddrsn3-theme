@@ -2,7 +2,11 @@
 local player = Var "Player"
 local curLives = nil
 local lastLives = nil
-local stream = "hot"
+
+local stream = "normal"
+
+if GAMESTATE:PlayerIsUsingModifier(player, '4 lives') then stream = "hot" end
+if GAMESTATE:PlayerIsUsingModifier(player, '3 lives') or GAMESTATE:PlayerIsUsingModifier(player, '2 lives') then stream = "normal" end
 
 local t = Def.ActorFrame {};
 

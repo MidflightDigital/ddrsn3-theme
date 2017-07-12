@@ -70,7 +70,7 @@ t[#t+1] = LoadActor("cd")..{
 	PostInitCommand=function(s) s:zoomx(0.01):zoomy(0.01):x(SCREEN_CENTER_X)
 		:y(SCREEN_CENTER_Y+SCREEN_CENTER_Y*0.4)
 	end,
-	OnCommand=function(s) s:accelerate(0.05):zoomx(1):accelerate(0.05):zoomy(1) end	
+	OnCommand=function(s) s:accelerate(0.05):zoomx(1):accelerate(0.05):zoomy(1) end
 };
 
 t[#t+1] = Def.Sprite {
@@ -93,5 +93,16 @@ t[#t+1] = LoadActor("top_stage")..{
 	OnCommand=cmd(addy,-104;sleep,0.396;linear,0.2;addy,104);
 };
 
+for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+	t[#t+1] = Def.Actor{
+		OnCommand=function(self)
+			if GAMESTATE:IsExtraStage() then
+				GAMESTATE:ApplyStageModifiers(pn,"battery,4 lives,failimmediatecontinue")
+			elseif GAMESTATE:IsExtraStage2() then
+				GAMESTATE:ApplyStageModifiers(pn,"battery,1 lives,failimmediatecontinue")
+			end;
+		end;
+	};
+end;
 
 return t
