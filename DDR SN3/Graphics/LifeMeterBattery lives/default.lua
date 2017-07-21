@@ -2,7 +2,12 @@
 local player = Var "Player"
 local curLives = nil
 local lastLives = nil
-local stream = "hot"
+
+local stream = "normal"
+
+if GAMESTATE:GetPlayerState(player):GetPlayerOptions('ModsLevel_Current'):BatteryLives() >= 4 then
+	stream = "hot"
+end
 
 local t = Def.ActorFrame {};
 
@@ -15,15 +20,8 @@ t[#t+1] = Def.ActorFrame{
 			self:skewx(-0.9)
 		end;
 		LifeChangedMessageCommand=function(self,params)
-			local screen = SCREENMAN:GetTopScreen();
-			local glifemeter = screen:GetLifeMeter(player);
 			if params.LostLife and params.Player == player then
 				self:Load(THEME:GetPathG("StreamDisplay","normal"))
-				self:setsize((SCREEN_WIDTH/2.53),13)
-			elseif params.LivesLeft <= 3 and params.Player == player then
-				stream = "normal"
-				self:Load(THEME:GetPathG("StreamDisplay","normal"))
-				self:setsize((SCREEN_WIDTH/2.53),13)
 			end
 		end;
 	};
