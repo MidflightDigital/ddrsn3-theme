@@ -16,7 +16,7 @@ Despite the ini extension, the group.ini format is really an MSD-like format.
 The recommended encoding is UTF-8.
 
 Comments are supported by placing // at the beginning of the line *only*.
-No whitespace or anything else may proceed it. 
+No whitespace or anything else may precede it. 
 
 The general layout of a tag is:
 
