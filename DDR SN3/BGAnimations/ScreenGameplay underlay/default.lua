@@ -36,10 +36,12 @@ end;
   end;
 end;]]--
 
+local show_cutins = not GAMESTATE:GetCurrentSong():HasBGChanges();
+
 local style = GAMESTATE:GetCurrentStyle():GetStyleType()
 local st = GAMESTATE:GetCurrentStyle():GetStepsType();
 --toasty loader
-if GAMESTATE:IsPlayerEnabled(PLAYER_1) then
+if GAMESTATE:IsPlayerEnabled(PLAYER_1) and show_cutins then
 t[#t+1] = Def.ActorFrame{
   LoadActor("P1Cutin.lua")..{
     OnCommand=cmd(setsize,200,SCREEN_HEIGHT);
@@ -62,7 +64,7 @@ t[#t+1] = Def.ActorFrame{
     };
 };
 end;
-if GAMESTATE:IsPlayerEnabled(PLAYER_2) then
+if GAMESTATE:IsPlayerEnabled(PLAYER_2) and show_cutins then
   t[#t+1] = Def.ActorFrame{
     LoadActor("P2Cutin.lua")..{
       OnCommand=cmd(setsize,200,SCREEN_HEIGHT);
