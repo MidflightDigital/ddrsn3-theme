@@ -36,7 +36,7 @@ end;
   end;
 end;]]--
 
-local show_cutins = not GAMESTATE:GetCurrentSong():HasBGChanges();
+local show_cutins = GAMESTATE:GetCurrentSong() and (not GAMESTATE:GetCurrentSong():HasBGChanges()) or true;
 
 local style = GAMESTATE:GetCurrentStyle():GetStyleType()
 local st = GAMESTATE:GetCurrentStyle():GetStepsType();

@@ -45,7 +45,7 @@ local function ScoreUpdate()
         local score = info.GetCurrentScore(pss, stage)
         pss:SetScore(score)
         local scoreDisplay = SCREENMAN:GetTopScreen():GetChild("Score"..ToEnumShortString(pn))
-        if scoreDisplay then
+        if scoreDisplay and scoreDisplay:GetChild("Text") then
             scoreDisplay:GetChild("Text"):targetnumber(score)
         end
         pss:SetCurMaxScore(info.GetCurrentMaxScore(pss, stage))
