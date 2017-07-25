@@ -36,22 +36,14 @@ local function cfShowOnly(...)
 	end
 end
 
---this function causes any W1/W2/W3 combo to look like a W2 in starter
-local function remapStarter(params)
-	if starterMode then
-		if params.FullComboW1 or params.FullComboW2 or params.FullComboW3 then
-			params.FullComboW2 = true
-			params.FullComboW1 = false
-			params.FullComboW3 = false
-		end
-	end
-end
-
 local tns_reverse = Enum.Reverse(TapNoteScore)
 local function worstJudgeClear()
-	if (ScoringInfo and ScoringInfo.seed == GAMESTATE:GetStageSeed()) then
+	if (ScoringInfo and ScoringInfo.worstJudge) then
 		local wj = ScoringInfo.worstJudge[player]
-		if tns_reverse[wj] < tns_reverse['TapNoteScore_W3'] then
+		if not wj then return end --don't need to do anything
+		if (ScoringInfo.seed ~= GAMESTATE:GetStageSeed()) or 
+			(tns_reverse[wj] < tns_reverse['TapNoteScore_W3']) 
+		then
 			ScoringInfo.worstJudge[player] = nil
 			wj = nil
 		end
@@ -66,17 +58,29 @@ do
 		TapNoteScore_W2 = "FullComboW2",
 		TapNoteScore_W3 = "FullComboW3"
 	}
+
 	decideColor = function(tns, params)
-		if not arcadeColoring then
-			return params[tnsToParam[tns]] or false
-		else
-			if ScoringInfo and ScoringInfo.seed == GAMESTATE:GetStageSeed() then
-				return tns == ScoringInfo.worstJudge[player]
+		if starterMode then
+			if tns == "FullComboW2" then
+				if arcadeColoring then
+					return ScoringInfo ~= nil 
+						and ScoringInfo.worstJudge ~= nil 
+						and ScoringInfo.worstJudge[player] ~= nil
+				end
+				--not arcade coloring
+				return params.FullComboW1
+					or params.FullComboW2
+					or params.FullComboW3
 			end
-			return false
+		elseif not arcadeColoring then
+			return params[tnsToParam[tns]] or false
+		elseif ScoringInfo and ScoringInfo.worstJudge then 
+			return tns == ScoringInfo.worstJudge[player]
 		end
+		--failsafe
+		return false
 	end
-	
+
 end
 
 local t = Def.ActorFrame {
@@ -153,7 +157,7 @@ local t = Def.ActorFrame {
 		cf.NumberW2:settext( string.format("%i", iCombo) );
 		cf.NumberW3:settext( string.format("%i", iCombo) );
 		cf.NumberNormal:settext( string.format("%i", iCombo) );
-		remapStarter(param);
+
 		-- FullCombo Rewards
 		if decideColor('TapNoteScore_W1', param) then
 			cfShowOnly('NumberW1', 'LabelW1');

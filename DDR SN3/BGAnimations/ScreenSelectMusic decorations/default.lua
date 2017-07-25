@@ -40,6 +40,7 @@ if ThemePrefs.Get("LightMode") == false then
 		LoadActor("gauge back")..{
 			InitCommand=cmd(x,BPMMeterPosX();y,SCREEN_CENTER_Y-140);
 			OnCommand=cmd(addx,-500;sleep,0.264;decelerate,0.52;addx,500;sleep,0.1;linear,0);
+			OffCommand=cmd(sleep,0.033;accelerate,0.363;addx,-500);
 		};
 	};
 end;
