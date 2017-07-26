@@ -8,7 +8,6 @@ function SMOnlineScreen()
 end
 
 function CorrectSSM()
-	Trace "Yes, we get called"
 	if IsStarterMode() then
 		return "ScreenSelectMusicStarter"
 	else
@@ -59,6 +58,7 @@ Branch.TitleMenu = function()
 end
 
 Branch.StartGame = function()
+	-- XXX: we don't theme this screen
 	if SONGMAN:GetNumSongs() == 0 and SONGMAN:GetNumAdditionalSongs() == 0 then
 		return "ScreenHowToInstallSongs"
 	end
@@ -141,7 +141,7 @@ end
 Branch.AfterSummary = "ScreenProfileSaveSummary"
 
 Branch.Network = function()
-	return IsNetConnected() and "ScreenTitleMenu" or "ScreenTitleMenu"
+	return "ScreenTitleMenu"
 end
 
 Branch.AfterSaveSummary = function()
@@ -153,11 +153,7 @@ Branch.AfterSaveSummary = function()
 end
 
 Branch.AfterDataSaveSummary = function()
-	if GAMESTATE:AnyPlayerHasRankingFeats() then
-		return "ScreenDataSaveSummaryEnd"
-	else
-		return "ScreenDataSaveSummaryEnd"
-	end
+	return "ScreenDataSaveSummaryEnd"
 end
 
 
@@ -167,10 +163,12 @@ Branch.Ending = function()
 		return SelectMusicOrCourse()
 	end
 	local going = Grade:Compare(STATSMAN:GetBestFinalGrade(), 'Grade_Tier03') <= 0
-	SCREENMAN:SystemMessage(tostring(Grade:Compare(STATSMAN:GetBestFinalGrade(), 'Grade_Tier03')))
 	-- best final grade better than AA: show the credits.
 	-- otherwise, show music scroll.
-	return (going and SN3Debug) and "ScreenCredits" or "ScreenMusicScroll"
+
+	--enable this line once credits are complete
+	--return going and "ScreenCredits" or "ScreenMusicScroll"
+	return "ScreenMusicScroll"
 end
 
 Branch.AfterProfileLoad = function()
