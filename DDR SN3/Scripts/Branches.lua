@@ -166,9 +166,11 @@ Branch.Ending = function()
 	if GAMESTATE:IsEventMode() then
 		return SelectMusicOrCourse()
 	end
+	local going = Grade:Compare(STATSMAN:GetBestFinalGrade(), 'Grade_Tier03') <= 0
+	SCREENMAN:SystemMessage(tostring(Grade:Compare(STATSMAN:GetBestFinalGrade(), 'Grade_Tier03')))
 	-- best final grade better than AA: show the credits.
 	-- otherwise, show music scroll.
-	return (STATSMAN:GetBestFinalGrade() <= 'Grade_Tier03' and SN3Debug) and "ScreenCredits" or "ScreenMusicScroll"
+	return (going and SN3Debug) and "ScreenCredits" or "ScreenMusicScroll"
 end
 
 Branch.AfterProfileLoad = function()
