@@ -38,7 +38,7 @@ return Def.ActorFrame{
 		NumItemsToDraw=numItems;
 		InitCommand=cmd(x,SCREEN_LEFT+52;y,SCREEN_BOTTOM-88);
 		BeginCommand=function(self)
-			SCREENMAN:GetTopScreen():PostScreenMessage( 'SM_MenuTimer', (secondsPerItem * (#scrollerChildren + paddingBefore + paddingAfter)) );
+			SCREENMAN:GetTopScreen():PostScreenMessage( 'SM_MenuTimer', math.min(30,(secondsPerItem * (#scrollerChildren + paddingBefore + paddingAfter))) );
 		end;
 		OnCommand=cmd(ScrollWithPadding,paddingBefore,paddingAfter);
 		TransformFunction=function(self,offset,itemIndex,numItems)
