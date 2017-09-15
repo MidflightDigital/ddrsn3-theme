@@ -39,8 +39,9 @@ t[#t+1] = Def.ActorFrame{
 			if Song then
 				self:y(-6.4):zoom(0.64)
 				self:settext(Song:GetDisplayFullTitle());
-				local color_grp= group_colors[Song:GetGroupName()] or "FFFFFF"
-				self:diffuse(color(color_grp));
+				--local color_grp= group_colors[Song:GetGroupName()] or "FFFFFF"
+				--self:diffuse(color(color_grp));
+				self:diffuse(SongAttributes.GetMenuColor(Song))
 			elseif Course then
 				self:settext(Course:GetDisplayFullTitle());
 			end
@@ -59,8 +60,9 @@ t[#t+1] = Def.ActorFrame{
 			if Song then
 				self:visible(true);
 				self:settext(Song:GetDisplayArtist());
-				local color_grp= group_colors[Song:GetGroupName()] or "FFFFFF"
-				self:diffuse(color(color_grp));
+				--local color_grp= group_colors[Song:GetGroupName()] or "FFFFFF"
+				--self:diffuse(color(color_grp));
+				self:diffuse(SongAttributes.GetMenuColor(Song))
 			end
 		end;
 	};

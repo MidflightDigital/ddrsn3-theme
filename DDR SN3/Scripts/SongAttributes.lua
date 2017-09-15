@@ -36,7 +36,7 @@ end
 
 local function song_specific_dir(song)
     local parts = split_and_trim("/", song:GetSongDir())
-    return parts[#parts]
+    return parts[#parts-1]
 end
 
 --actually converts the text into a table
@@ -63,6 +63,7 @@ local function get_or_prepare(group)
     if data_map[group] then return data_map[group] end
     local path = group_name_to_path(group)
     assert(path, "can't find data for this group")
+	path = path.."/group.ini"
     local result = {}
     if FILEMAN:DoesFileExist(path) then
         local f = RageFileUtil.CreateRageFile()
@@ -95,7 +96,7 @@ local function parse_rgba(text)
 end
 
 local function parse_list(text)
-    return {split_and_trim("|", text)}
+    return split_and_trim("|", text)
 end
 
 -- more involved functions
@@ -108,10 +109,10 @@ local function internal_menucolor(group)
         return group_data.menucolor
     end
     if (not group_data.menucolor) or next(group_data.menucolor) == nil then
-        group_data.menucolor = {["/\\default"]={1,1,1,0}, ["/\\valid"]=true}
+        group_data.menucolor = {["/\\default"]={1,1,1,1}, ["/\\valid"]=true}
         return group_data.menucolor
     end
-    local new_menucolor = {["/\\valid"]=true, ["/\\default"]={1,1,1,0}}
+    local new_menucolor = {["/\\valid"]=true, ["/\\default"]={1,1,1,1}}
     for _, data in pairs(group_data.menucolor) do
         local temp_storage = parse_rgba(data)
         if temp_storage then
@@ -123,12 +124,27 @@ local function internal_menucolor(group)
             local provisional_color = parse_rgba(temp_storage[1])
             if provisional_color then
                 for i=2,#temp_storage do
-                    new_menucolor[tolower(temp_storage[i])] = provisional_color
+                    new_menucolor[string.lower(temp_storage[i])] = provisional_color
                 end
             end
         end
     end
     group_data.menucolor = new_menucolor
+	
+	--debug dumping code, may come in handy later
+	--[[local function printout(tbl)
+		print('{')
+		for k,v in pairs(tbl) do
+			if type(v) == 'table' then
+				print(tostring(k)..'='); printout(v)
+			else
+				print(tostring(k)..'='..tostring(v))
+			end
+		end
+		print('}')
+	end
+	printout(new_menucolor)]]
+
     return new_menucolor
 end
 
@@ -136,5 +152,5 @@ end
 function SongAttributes.GetMenuColor(song)
     local group = song:GetGroupName()
     local mc_data = internal_menucolor(group)
-    return mc_data[tolower(song_specific_dir())] or mc_data["/\\default"]
+    return mc_data[string.lower(song_specific_dir(song))] or mc_data["/\\default"]
 end
