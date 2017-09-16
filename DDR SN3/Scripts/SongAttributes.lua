@@ -11,6 +11,18 @@ SongAttributes = {}
 
 local data_map = {}
 
+local function printout(tbl)
+		print('{')
+		for k,v in pairs(tbl) do
+			if type(v) == 'table' then
+				print(tostring(k)..'='); printout(v)
+			else
+				print(tostring(k)..'='..tostring(v))
+			end
+		end
+		print('}')
+end
+
 --these functions deal with loading
 
 --specifically, group name to group.ini path
@@ -36,7 +48,7 @@ end
 
 local function song_specific_dir(song)
     local parts = split_and_trim("/", song:GetSongDir())
-    return parts[#parts-1]
+    return string.lower(parts[#parts-1])
 end
 
 --actually converts the text into a table
@@ -56,7 +68,7 @@ local function parse(text)
         output[tag:lower()] = split_and_trim(":",content)
     end
 
-    return output
+	return output
 end
 
 local function get_or_prepare(group)
@@ -95,6 +107,19 @@ local function parse_rgba(text)
     return nil
 end
 
+local parse_metertype
+do
+	local conversion = {
+		ddr = '_MeterType_DDR',
+		['ddr x'] = '_MeterType_DDRX',
+		itg = '_MeterType_ITG',
+		pump = '_MeterType_Pump'
+	}
+	parse_metertype = function(text)
+		return conversion[text] or nil
+	end
+end
+
 local function parse_list(text)
     return split_and_trim("|", text)
 end
@@ -102,55 +127,61 @@ end
 -- more involved functions
 
 --/\default and /\valid are chosen because they are impossible song dir names on any platform
-
-local function internal_menucolor(group)
-    local group_data = get_or_prepare(group)
-    if type(group_data.menucolor) == "table" and group_data.menucolor["/\\valid"] then
-        return group_data.menucolor
+local function read_overrides(group_data, key, parse_function, default)
+    if type(group_data[key]) == "table" and group_data[key]["/\\valid"] then
+        return group_data[key]
     end
     if (not group_data.menucolor) or next(group_data.menucolor) == nil then
-        group_data.menucolor = {["/\\default"]={1,1,1,1}, ["/\\valid"]=true}
-        return group_data.menucolor
+        group_data[key] = {["/\\default"]=default, ["/\\valid"]=true}
+        return group_data[key]
     end
-    local new_menucolor = {["/\\valid"]=true, ["/\\default"]={1,1,1,1}}
-    for _, data in pairs(group_data.menucolor) do
-        local temp_storage = parse_rgba(data)
+    local new_section = {["/\\valid"]=true, ["/\\default"]=default}
+    for _, data in pairs(group_data[key]) do
+        local temp_storage = parse_function(data)
         if temp_storage then
-            new_menucolor["/\\default"] = temp_storage
+            new_section["/\\default"] = temp_storage
         end
         temp_storage = parse_list(data)
         if #temp_storage >= 2 then
-            --there must be at least a color and a song
-            local provisional_color = parse_rgba(temp_storage[1])
-            if provisional_color then
+            --there must be at least an item and a song
+            local provisional_item = parse_function(temp_storage[1])
+            if provisional_item then
                 for i=2,#temp_storage do
-                    new_menucolor[string.lower(temp_storage[i])] = provisional_color
+                    new_section[string.lower(temp_storage[i])] = provisional_item
                 end
             end
         end
     end
-    group_data.menucolor = new_menucolor
-	
-	--debug dumping code, may come in handy later
-	--[[local function printout(tbl)
-		print('{')
-		for k,v in pairs(tbl) do
-			if type(v) == 'table' then
-				print(tostring(k)..'='); printout(v)
-			else
-				print(tostring(k)..'='..tostring(v))
-			end
-		end
-		print('}')
-	end
-	printout(new_menucolor)]]
+    group_data[key] = new_section
 
-    return new_menucolor
+
+    return new_section
+end
+
+local function internal_groupname(group)
+	local group_data = {pcall(get_or_prepare, group)}
+	if group_data[1] == true then
+		local name = group_data[2].name
+		if type(name) == "table" and type(name[1])=="string" and name[1]:gsub("%s","")~="" then
+			return name[1]
+		end
+	end
+	return group
 end
 
 
 function SongAttributes.GetMenuColor(song)
     local group = song:GetGroupName()
-    local mc_data = internal_menucolor(group)
-    return mc_data[string.lower(song_specific_dir(song))] or mc_data["/\\default"]
+    local mc_data = read_overrides(get_or_prepare(group),'menucolor',parse_rgba,{1,1,1,1})
+    return mc_data[song_specific_dir(song)] or mc_data["/\\default"]
+end
+
+function SongAttributes.GetMeterType(song)
+	local group = song:GetGroupName()
+	local mt_data = read_overrides(get_or_prepare(group), 'metertype', parse_metertype, '_MeterType_Default')
+	return mt_data[song_specific_dir(song)] or mt_data["/\\default"]
+end
+
+function SongAttributes.GetGroupName(group)
+	return internal_groupname(group)
 end

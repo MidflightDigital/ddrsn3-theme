@@ -56,7 +56,7 @@ local t = Def.ActorFrame {
 		SetMessageCommand=function(self, param)
 		local group = param.Text;
 		local groupname = group_names[group];
-			self:settext(group);
+			self:settext(groupname or SongAttributes.GetGroupName(group));
 		local color_grp= group_colors[group] or "FFFFFF"
 			self:diffuse(color(color_grp));
 		end;
