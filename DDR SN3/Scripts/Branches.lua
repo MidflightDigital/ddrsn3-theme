@@ -174,3 +174,32 @@ end
 Branch.AfterProfileLoad = function()
 	return "ScreenSelectStyle"
 end
+
+Branch.AfterProfileSave = function()
+	if GAMESTATE:IsEventMode() then
+		return SelectMusicOrCourse()
+	elseif STATSMAN:GetCurStageStats():AllFailed() then
+		return "ScreenGameOver"
+	elseif GAMESTATE:IsExtraStage() or GAMESTATE:IsExtraStage() then
+		--Part of the score-based Extra Stage hack.
+		--Doing anything except failing a song will earn ES, so we decide if it was actually earned.
+		local stats = STATSMAN:GetPlayedStageStats(1)
+		local actuallyQualified = false
+		for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
+			actuallyQualified = actuallyQualified or stats:GetPlayerStageStats(pn):GetScore() >= 950000
+		end
+		if actuallyQualified then
+			return SelectMusicOrCourse()
+		else
+			return "ScreenEvaluationSummary"
+		end
+	elseif GAMESTATE:GetSmallestNumStagesLeftForAnyHumanPlayer() == 0 then
+		if not GAMESTATE:IsCourseMode() then
+			return "ScreenEvaluationSummary"
+		else
+			return "ScreenGameOver"
+		end
+	else
+		return SelectMusicOrCourse()
+	end
+end
