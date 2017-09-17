@@ -158,18 +158,6 @@ local function read_overrides(group_data, key, parse_function, default)
     return new_section
 end
 
-local function internal_groupname(group)
-	local group_data = {pcall(get_or_prepare, group)}
-	if group_data[1] == true then
-		local name = group_data[2].name
-		if type(name) == "table" and type(name[1])=="string" and name[1]:gsub("%s","")~="" then
-			return name[1]
-		end
-	end
-	return group
-end
-
-
 function SongAttributes.GetMenuColor(song)
     local group = song:GetGroupName()
     local mc_data = read_overrides(get_or_prepare(group),'menucolor',parse_rgba,{1,1,1,1})
@@ -183,5 +171,26 @@ function SongAttributes.GetMeterType(song)
 end
 
 function SongAttributes.GetGroupName(group)
-	return internal_groupname(group)
+	local group_data = {pcall(get_or_prepare, group)}
+	if group_data[1] == true then
+		local name = group_data[2].name
+		if type(name) == "table" and name[1] then
+			return name[1]
+		end
+	end
+	return group
+end
+
+function SongAttributes.GetGroupColor(group)
+	local group_data = {pcall(get_or_prepare, group)}
+	if group_data[1] == true then
+		local name = group_data[2].groupcolor
+		if type(name) == "table" and name[1] then
+			local color = parse_rgba(name[1])
+			if color then 
+				return color 
+			end
+		end
+	end
+	return {1,1,1,1}
 end

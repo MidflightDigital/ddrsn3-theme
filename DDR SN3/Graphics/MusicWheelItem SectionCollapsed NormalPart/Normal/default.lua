@@ -1,12 +1,12 @@
 local group_colors = {
-	["1-Licenses"]= "#FFFFFF",
-	["2-KONAMI Originals"]= "#00CC00",
-	["3-Requests"]= "#FFFF00",
-	["4-Revivials"]= "#33CCFF",
-	["5-NOVAmix"]= "#FF00FF",
-	["6a-ENCORE EXTRA STAGE"]= "#FF9933",
-	["6b-EXTRA STAGE"]= "#FF0000",
-	["7-DLC"]= "#FF9933",
+	["1-Licenses"]= color "#FFFFFF",
+	["2-KONAMI Originals"]= color "#00CC00",
+	["3-Requests"]= color "#FFFF00",
+	["4-Revivials"]= color "#33CCFF",
+	["5-NOVAmix"]= color "#FF00FF",
+	["6a-ENCORE EXTRA STAGE"]= color "#FF9933",
+	["6b-EXTRA STAGE"]= color "#FF0000",
+	["7-DLC"]= color "#FF9933",
 };
 
 local group_names = {
@@ -24,8 +24,8 @@ local t = Def.ActorFrame {
 	LoadActor("../../_section inner")..{
 		SetMessageCommand=function(self, param)
 			local group = param.Text;
-			local color_grp = group_colors[group] or "FFFFFF"
-			self:diffuse(color(color_grp));
+			local color_grp= group_colors[group] or SongAttributes.GetGroupColor(group);
+			self:diffuse(color_grp);
 		end;
 	};
 	LoadActor("../../_section outer");
@@ -40,8 +40,8 @@ t[#t+1] = Def.ActorFrame{
 		local group = param.Text;
 		local groupname = group_names[group];
 			self:settext(groupname or SongAttributes.GetGroupName(group));
-		local color_grp= group_colors[group] or "FFFFFF"
-			self:diffuse(color(color_grp));
+		local color_grp= group_colors[group] or SongAttributes.GetGroupColor(group);
+			self:diffuse(color_grp);
 		end;
 	};
 };
