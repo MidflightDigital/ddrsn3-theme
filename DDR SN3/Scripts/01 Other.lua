@@ -329,3 +329,42 @@ end
 -- GetCharAnimPath(sPath)
 -- Easier access to Characters folder (taken from ScreenHowToPlay.cpp)
 function GetCharAnimPath(sPath) return "/Characters/"..sPath end
+
+--GhostCopy(source)
+--Returns an unwritable virtual copy of a table
+function GhostCopy(source)
+    local ghost_cache = setmetatable({}, {__mode="k"})
+    return setmetatable({}, {
+        __metatable = {__ghost=true},
+        __newindex = function()
+            error("tried to write to a ghost table", 2)
+        end,
+        __index = function(me, key)
+            if ghost_cache[key] then return ghost_cache[key] end
+            local result = source[key]
+            if type(result) == "table" then
+            	local mt = getmetatable(result)
+            	if type(mt) ~= "table" or (not mt.__ghost) then
+                	result = GhostCopy(result)
+                end
+                ghost_cache[key] = result
+            end
+            return result
+        end
+    })
+end
+
+
+function BitmapText:settextfmt(fmt, ...)
+	return self:settext(string.format(fmt, ...))
+end
+        
+function Actor:GetContainingScreen()
+    if self.ScreenType then
+        return self
+    elseif self:GetParent() then
+        return self:GetParent():GetContainingScreen()
+    else
+        return nil
+    end
+end
