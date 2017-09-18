@@ -23,8 +23,11 @@ t[#t+1] = Def.Actor{
 			ScoringInfo.worstJudge = {}
 		end
 		local wj = ScoringInfo.worstJudge[params.Player]
-		if (not wj) or tns_reverse[params.TapNoteScore] < tns_reverse[wj] then
-			ScoringInfo.worstJudge[params.Player] = params.TapNoteScore
+		if tns_reverse[params.TapNoteScore] <= tns_reverse['TapNoteScore_W1'] and
+			tns_reverse[params.TapNoteScore] >= tns_reverse['TapNoteScore_Miss'] then
+			if (not wj) or tns_reverse[params.TapNoteScore] < tns_reverse[wj] then
+				ScoringInfo.worstJudge[params.Player] = params.TapNoteScore
+			end
 		end
         local es = (GAMESTATE:Env()).EndlessState
         if es then

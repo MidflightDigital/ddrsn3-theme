@@ -180,7 +180,7 @@ Branch.AfterProfileSave = function()
 		return SelectMusicOrCourse()
 	elseif STATSMAN:GetCurStageStats():AllFailed() then
 		return "ScreenGameOver"
-	elseif GAMESTATE:IsExtraStage() or GAMESTATE:IsExtraStage() then
+	elseif GAMESTATE:IsExtraStage() or GAMESTATE:IsExtraStage2() then
 		--Part of the score-based Extra Stage hack.
 		--Doing anything except failing a song will earn ES, so we decide if it was actually earned.
 		local stats = STATSMAN:GetPlayedStageStats(1)
@@ -188,6 +188,7 @@ Branch.AfterProfileSave = function()
 		for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
 			actuallyQualified = actuallyQualified or stats:GetPlayerStageStats(pn):GetScore() >= 950000
 		end
+		SCREENMAN:SystemMessage(STATSMAN:GetStagesPlayed())
 		if actuallyQualified then
 			return SelectMusicOrCourse()
 		else

@@ -358,3 +358,13 @@ end
 function BitmapText:settextfmt(fmt, ...)
 	return self:settext(string.format(fmt, ...))
 end
+        
+function Actor:GetContainingScreen()
+    if self.ScreenType then
+        return self
+    elseif self:GetParent() then
+        return self:GetParent():GetContainingScreen()
+    else
+        return nil
+    end
+end
