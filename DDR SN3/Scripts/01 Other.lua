@@ -359,12 +359,33 @@ function BitmapText:settextfmt(fmt, ...)
 	return self:settext(string.format(fmt, ...))
 end
         
-function Actor:GetContainingScreen()
-    if self.ScreenType then
-        return self
-    elseif self:GetParent() then
-        return self:GetParent():GetContainingScreen()
-    else
-        return nil
+--why did i write this code
+do
+    local cache = {}
+    --this makes cache a weak table.
+    --if any actor in the cache is garbage collected by Lua, it is removed.
+    setmetatable(cache, {__mode="kv"})
+    local function internal(self, starting)
+        starting = starting or self
+        if cache[self] ~= nil then
+            --then for this actor no need to go through this process
+            cache[starting] = cache[self]
+            return cache[self]~=false and cache[self] or nil
+        elseif self.ScreenType then
+            --both roads end here
+            cache[self] = self
+            cache[starting] = self
+            return self
+        elseif self:GetParent() then
+            return internal(self:GetParent(), starting)
+        else
+            --nil is indistinguishable from nothing, so use false instead
+            cache[self] = false
+            cache[starting] = false
+            return nil
+        end
+    end
+    function Actor:GetContainingScreen()
+        return internal(self)
     end
 end
