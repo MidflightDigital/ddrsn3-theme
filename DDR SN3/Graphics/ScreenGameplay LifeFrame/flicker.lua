@@ -20,16 +20,12 @@ if SN3Debug then
 end
 
 local targetDelta = 1/60
-local function CalculateFlickerWaitFrames(delta)
-    return math.max(1, math.round(targetDelta/delta))-1
-end
 
-local fCounter = 0
+local timer = GetUpdateTimer(targetDelta)
 local function FlickerUpdate(self, _)
     lastSeenTime = GetTimeSinceStart()
     if FlickerPrint then FlickerPrint() end
-    if fCounter >0 then fCounter = fCounter-1 return end
-
+    if not timer() then return end
     if FlickerLog then FlickerLog() end 
     flickerState = not flickerState
     
@@ -38,7 +34,6 @@ local function FlickerUpdate(self, _)
             and flickerState)
     end
    
-    fCounter = CalculateFlickerWaitFrames(1/DISPLAY:GetCumFPS())
 end
 
 local host = Def.ActorFrame{
