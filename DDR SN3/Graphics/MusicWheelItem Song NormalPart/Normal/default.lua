@@ -12,7 +12,8 @@ local group_colors = {
 local t = Def.ActorFrame {
 	LoadActor("Backing");
 --new song
-	LoadActor("../../ScreenSelectMusic NewSong")..{
+Def.Sprite{
+	Texture="new 2x1 (doubleres).png";
 		InitCommand=cmd(x,-138;y,-25;finishtweening;draworder,1;visible,SCREENMAN:GetTopScreen() ~= "ScreenNetRoom");
 		OnCommand=cmd(diffusealpha,0;sleep,1;diffusealpha,1);
 		SetCommand=function(self,param)

@@ -38,7 +38,7 @@ if normal then
 if ThemePrefs.Get("LightMode") == false then
 	t[#t+1] = Def.ActorFrame{
 		LoadActor("gauge back")..{
-			InitCommand=cmd(x,BPMMeterPosX();y,SCREEN_CENTER_Y-140);
+			InitCommand=cmd(x,BPMMeterPosX();y,SCREEN_CENTER_Y-124);
 			OnCommand=cmd(addx,-500;sleep,0.264;decelerate,0.52;addx,500;sleep,0.1;linear,0);
 			OffCommand=cmd(sleep,0.033;accelerate,0.363;addx,-500);
 		};

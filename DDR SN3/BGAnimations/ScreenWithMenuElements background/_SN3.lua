@@ -86,65 +86,25 @@ t[#t+1] = Def.ActorFrame {
 		};
 		Condition=not ThemePrefs.Get("LightMode");
 	};
-};
-
-t[#t+1] = Def.ActorFrame{
-	InitCommand=function(self)
-		self:fov(120);
-		self:Center()
-	end;
 	Def.ActorFrame{
-		InitCommand=cmd(zbuffer,true;z,-500;blend,Blend.Add);
-		Def.ActorFrame{
-			InitCommand=cmd(rotationx,12;rotationz,22);
-			LoadActor(THEME:GetPathB("","_shared/SN3/SuperNovaFogBall.txt"))..{
-				InitCommand=cmd(diffusealpha,0.25;blend,Blend.Add;zoom,20;spin;effectmagnitude,0,80,0);
-			};
-			LoadActor(THEME:GetPathB("","_shared/SN3/2ndSuperNovaFogBall.txt"))..{
-				InitCommand=cmd(diffusealpha,0.25;blend,Blend.Add;zoom,20;spin;effectmagnitude,0,-80,0);
-			};
+		InitCommand=cmd(Center;zoom,1.5;diffuse,color("1,1,1,1"));
+		LoadActor("ball");
+		LoadActor("shine")..{
+			InitCommand=cmd(diffuse,color("0.5,0.5,0.5,0.5"));
 		};
-		LoadActor(THEME:GetPathB("","_shared/IIDX 17/wakusei/ring.png"))..{
-			InitCommand=cmd(queuecommand,"Anim");
-			AnimCommand=cmd(blend,Blend.Add;diffusealpha,0.5;rotationx,75;rotationy,-60;zoom,2.2;spin;effectmagnitude,0,0,75);
+		LoadActor("inside circle rim")..{
+			InitCommand=cmd(spin;effectmagnitude,0,0,5);
 		};
-		LoadActor(THEME:GetPathB("","_shared/IIDX 17/wakusei/ring.png"))..{
-			InitCommand=cmd(queuecommand,"Anim");
-			AnimCommand=cmd(blend,Blend.Add;diffusealpha,0.5;rotationx,85;rotationy,-15;zoom,2.2;spin,effectmagnitude,0,0,75);
+		LoadActor("outer rim")..{
+			InitCommand=cmd(spin;effectmagnitude,5,10,20);
 		};
-		LoadActor(THEME:GetPathB("","_shared/IIDX 17/wakusei/ring 2.png"))..{
-			InitCommand=cmd(queuecommand,"Anim");
-			AnimCommand=cmd(blend,Blend.Add;diffusealpha,1;rotationx,83;rotationy,10;zoom,2.2;spin,effctmagnitude,0,0,-75);
+		LoadActor("middle rim")..{
+			InitCommand=cmd(spin;effectmagnitude,-35,20,-50);
+		};
+		LoadActor("inner rim")..{
+			InitCommand=cmd(spin;effectmagnitude,0,0,30);
 		};
 		Condition=not ThemePrefs.Get("LightMode");
-	};
-};
-
-t[#t+1] = Def.ActorFrame{
-	InitCommand=function(self)
-		self:fov(120);
-	end;
-	LoadActor(THEME:GetPathB("","_shared/IIDX 17/wakusei/meter 1 (stretch).png"))..{
-		InitCommand=cmd(x,SCREEN_LEFT-120;CenterY;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT);
-		OnCommand=function(self)
-			local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
-			local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
-			self:customtexturerect(0,0,w*0.5,h*0.5);
-			self:rotationz(90)
-			self:texcoordvelocity(0.2,0);
-			self:blend(Blend.Add);
-		end;
-	};
-	LoadActor(THEME:GetPathB("","_shared/IIDX 17/wakusei/meter 1 (stretch).png"))..{
-		InitCommand=cmd(x,SCREEN_RIGHT-240;CenterY;zoomtowidth,SCREEN_WIDTH;zoomtoheight,SCREEN_HEIGHT);
-		OnCommand=function(self)
-			local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
-			local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
-			self:customtexturerect(0,0,w*0.5,h*0.5);
-			self:rotationz(90)
-			self:texcoordvelocity(-0.2,0);
-			self:blend(Blend.Add);
-		end;
 	};
 };
 
