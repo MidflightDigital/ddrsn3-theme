@@ -32,13 +32,13 @@ Def.Sprite{
 t[#t+1] = Def.ActorFrame{
 	--Title/Subtitle
 	Def.BitmapText{
-		Font="_russell square 16px";
+		Font="_itc avant garde gothic lt Bold 16px";
 		InitCommand=cmd(halign,0;x,-140;maxwidth,300/0.8;wrapwidthpixels,2^24);
 		SetMessageCommand=function(self, param)
 			local Song = param.Song;
 			local Course = param.Course;
 			if Song then
-				self:y(-6.4):zoom(0.64)
+				self:y(-6.4):zoom(0.75)
 				self:settext(Song:GetDisplayFullTitle());
 				--local color_grp= group_colors[Song:GetGroupName()] or "FFFFFF"
 				--self:diffuse(color(color_grp));
@@ -50,8 +50,8 @@ t[#t+1] = Def.ActorFrame{
 	};
 	--Artist
 	Def.BitmapText{
-		Font="_russell square 16px";
-		InitCommand=cmd(halign,0;xy,-140,7;maxwidth,300/0.6;zoom,0.48;wrapwidthpixels,2^24);
+		Font="_itc avant garde gothic lt Bold 16px";
+		InitCommand=cmd(halign,0;xy,-140,7;maxwidth,300/0.6;zoom,0.6;wrapwidthpixels,2^24);
 		CurrentSongChangedMessageCommand=cmd(queuecommand,"Set");
 		CurrentCourseChangedMessageCommand=cmd(queuecommand,"Set");
 		ChangedLanguageDisplayMessageCommand=cmd(queuecommand,"Set");

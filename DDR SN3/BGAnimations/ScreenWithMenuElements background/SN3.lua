@@ -90,13 +90,13 @@ t[#t+1] = Def.ActorFrame {
 
 t[#t+1] = Def.ActorFrame{
 	InitCommand=function(self)
-		self:fov(120);
 		self:Center()
+		self:zoom(0.4)
 	end;
 	Def.ActorFrame{
-		InitCommand=cmd(zbuffer,true;z,-500;blend,Blend.Add);
+		InitCommand=cmd(zbuffer,true;z,-1000;blend,Blend.Add;);
 		Def.ActorFrame{
-			InitCommand=cmd(rotationx,12;rotationz,22);
+			InitCommand=cmd(rotationx,12;rotationz,22;spin;effectmagnitude,5,18,25);
 			LoadActor(THEME:GetPathB("","_shared/SN3/SuperNovaFogBall.txt"))..{
 				InitCommand=cmd(diffusealpha,0.25;blend,Blend.Add;zoom,20;spin;effectmagnitude,0,80,0);
 			};
@@ -114,7 +114,7 @@ t[#t+1] = Def.ActorFrame{
 		};
 		LoadActor(THEME:GetPathB("","_shared/IIDX 17/wakusei/ring 2.png"))..{
 			InitCommand=cmd(queuecommand,"Anim");
-			AnimCommand=cmd(blend,Blend.Add;diffusealpha,1;rotationx,83;rotationy,10;zoom,2.2;spin,effctmagnitude,0,0,-75);
+			AnimCommand=cmd(blend,Blend.Add;diffusealpha,1;rotationx,83;rotationy,10;zoom,2.2;spin,effectmagnitude,0,0,-75);
 		};
 		Condition=not ThemePrefs.Get("LightMode");
 	};

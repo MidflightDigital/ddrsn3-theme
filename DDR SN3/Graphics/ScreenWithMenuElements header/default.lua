@@ -62,7 +62,7 @@ elseif screenName == "ScreenNetEvaluation" then
 elseif screenName == "ScreenSelectMusicExtra" then
 	headerBaseImage = "extrabase (doubleres).png"
 else
-	headerBaseImage = "new (doubleres).png"
+	headerBaseImage = "regular/default.lua"
 end
 
 local function UpdateAni(self)
