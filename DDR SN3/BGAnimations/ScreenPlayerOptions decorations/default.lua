@@ -32,6 +32,7 @@ if GAMESTATE:IsHumanPlayer(PLAYER_1) then
   t[#t+1] = LoadFont("Common Normal")..{
     InitCommand=cmd(x,SCREEN_CENTER_X-280;y,SCREEN_CENTER_Y+132;zoom,0.55;wrapwidthpixels,494;horizalign,left;valign,0;strokecolor,Color("Black"));
     OnCommand=cmd(queuecommand,"SetP1";addx,-SCREEN_WIDTH;sleep,0.5;accelerate,0.5;addx,SCREEN_WIDTH);
+		OffCommand=cmd(sleep,0.2;accelerate,0.5;addx,SCREEN_WIDTH);
     SetP1Command=function(self)
       local screen = SCREENMAN:GetTopScreen();
       if screen then
@@ -47,8 +48,9 @@ end;
 
 if GAMESTATE:IsHumanPlayer(PLAYER_2) then
   t[#t+1] = LoadFont("Common Normal")..{
-    InitCommand=cmd(x,(SCREEN_CENTER_X*1.425)-104;y,SCREEN_BOTTOM-50;settext,"";);
-    OnCommand=cmd(settext,"";);
+    InitCommand=cmd(x,SCREEN_CENTER_X+10;y,SCREEN_CENTER_Y+132;zoom,0.55;wrapwidthpixels,494;horizalign,left;valign,0;strokecolor,Color("Black"));
+    OnCommand=cmd(queuecommand,"SetP2";addx,-SCREEN_WIDTH;sleep,0.5;accelerate,0.5;addx,SCREEN_WIDTH);
+		OffCommand=cmd(sleep,0.2;accelerate,0.5;addx,SCREEN_WIDTH);
     SetP2Command=function(self)
       local screen = SCREENMAN:GetTopScreen();
       if screen then
