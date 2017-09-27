@@ -33,7 +33,7 @@ t[#t+1] = Def.ActorFrame{
 	--Title/Subtitle
 	Def.BitmapText{
 		Font="_itc avant garde gothic lt Bold 16px";
-		InitCommand=cmd(halign,0;x,-140;maxwidth,300/0.8;wrapwidthpixels,2^24);
+		InitCommand=cmd(halign,0;x,-140;maxwidth,250/0.8;wrapwidthpixels,2^24);
 		SetMessageCommand=function(self, param)
 			local Song = param.Song;
 			local Course = param.Course;

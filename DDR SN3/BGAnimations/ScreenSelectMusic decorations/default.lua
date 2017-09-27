@@ -89,12 +89,12 @@ t[#t+1] = Def.ActorFrame{
 
 t[#t+1] = Def.ActorFrame{
 	LoadActor("radar lights (doubleres)")..{
-		InitCommand=cmd(xy,RadarPosX(),SCREEN_CENTER_Y+7;diffuseshift;effectcolor1,color("1,1,1,0.75");effectcolor2,color("1,1,1,0.25");effectclock,'beatnooffset');
+		InitCommand=cmd(xy,RadarPosX()+5,SCREEN_CENTER_Y+7;diffuseshift;effectcolor1,color("1,1,1,0.75");effectcolor2,color("1,1,1,0.25");effectclock,'beatnooffset');
 		OnCommand=cmd(zoomy,0;addx,-400;sleep,0.264;linear,0.2;zoomy,0.3;addx,400;linear,0.2;zoomy,1);
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 	};
 	LoadActor("labels")..{
-		InitCommand=cmd(x,RadarPosX();y,SCREEN_CENTER_Y+7);
+		InitCommand=cmd(x,RadarPosX()+5;y,SCREEN_CENTER_Y+7);
 		OnCommand=cmd(diffusealpha,0;addx,-400;sleep,0.1;linear,0.52;diffusealpha,0;addx,400;sleep,0.3;diffusealpha,1);
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 	};
