@@ -91,65 +91,29 @@ local t = Def.ActorFrame {
 			end
 		end;
 	};
-  -- ScreenFilter Explanation P1
-	LoadFont("common normal")..{
-		Name="ScreenFilterExplanationP1";
-		InitCommand=cmd(x,SCREEN_CENTER_X-200;y,SCREEN_CENTER_Y+135;zoom,0.53;horizalign,left;diffuse,color("#ffffff");visible,false);
-		PlayerChangedFocusMessageCommand=function(self,params)
-			local curIndex = MenuState[PLAYER_1].CurIndex
-			if curIndex == (11 - bMinusCurIndex2) then
-				self:visible(true)
-			else
-				self:visible(false)
-			end
-		end;
-	};
-	-- ScreenFilter Explanation P2
-	LoadFont("common normal")..{
-		Name="ScreenFilterExplanationP2";
-		InitCommand=cmd(x,SCREEN_CENTER_X+200;y,SCREEN_CENTER_Y+135;zoom,0.53;horizalign,right;diffuse,color("#ffffff");visible,false);
-		PlayerChangedFocusMessageCommand=function(self,params)
-			local curIndex = MenuState[PLAYER_2].CurIndex
-			if curIndex == (11 - bMinusCurIndex2) then
-				self:visible(true)
-			else
-				self:visible(false)
-			end
-		end;
-	};
 };
 
 local function Update(self)
   local SFIconP1 = self:GetChild("ScreenFilterIconP1");
-	local SFExplanationP1 = self:GetChild("ScreenFilterExplanationP1");
   local LoadScreenFilterP1 = getenv("ScreenFilterP1")
 
 	local SFIconP2 = self:GetChild("ScreenFilterIconP2");
-	local SFExplanationP2 = self:GetChild("ScreenFilterExplanationP2");
   local LoadScreenFilterP2 = getenv("ScreenFilterP2")
 
 	-- Set From Graphics/ScreenOptions more
 	if getenv("PlayerOptionExitP1") then
-		MenuState[PLAYER_1].CurIndex = 16 - bMinusCurIndex
+		MenuState[PLAYER_1].CurIndex = 14 - bMinusCurIndex
 		SFIconP1:visible(false);
-		SFExplanationP1:visible(false);
-		EvaIconP1:visible(false);
-		EvaIconExplanationP1:visible(false);
 	end;
 	if getenv("PlayerOptionExitP2") then
-		MenuState[PLAYER_2].CurIndex = 16 - bMinusCurIndex
+		MenuState[PLAYER_2].CurIndex = 14 - bMinusCurIndex
 		SFIconP2:visible(false);
-		SFExplanationP2:visible(false);
-		EvaIconP2:visible(false);
-		EvaIconExplanationP2:visible(false);
 	end;
   --screenfilter
 
 	if LoadScreenFilterP1 ~= 0 then
-		SFExplanationP1:settext(THEME:GetString("ScreenPlayerOptions","ScreenFilterOn"));
 	else
 		SFIconP1:Load( THEME:GetPathB("ScreenPlayerOptions","overlay/ScreenFilterIcon_Off") );
-		SFExplanationP1:settext(THEME:GetString("ScreenPlayerOptions","ScreenFilterOff"));
 	end;
 	if LoadScreenFilterP1 == 3 then
 		SFIconP1:Load( THEME:GetPathB("ScreenPlayerOptions","overlay/ScreenFilterIcon_Dark1") );
@@ -160,10 +124,8 @@ local function Update(self)
 	end;
 
 	if LoadScreenFilterP2 ~= 0 then
-		SFExplanationP2:settext(THEME:GetString("ScreenPlayerOptions","ScreenFilterOn"));
 	else
 		SFIconP2:Load( THEME:GetPathB("ScreenPlayerOptions","overlay/ScreenFilterIcon_Off") );
-		SFExplanationP2:settext(THEME:GetString("ScreenPlayerOptions","ScreenFilterOff"));
 	end;
 	if LoadScreenFilterP2 == 3 then
 		SFIconP2:Load( THEME:GetPathB("ScreenPlayerOptions","overlay/ScreenFilterIcon_Dark1") );

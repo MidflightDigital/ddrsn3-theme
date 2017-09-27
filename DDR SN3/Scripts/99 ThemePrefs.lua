@@ -48,7 +48,7 @@ local Prefs =
 		Choices = {"No", "Yes"},
 		Values = {false, true}
 	},
-	ArcadeColorMode = 
+	ArcadeColorMode =
 	{
 		Default = true,
 		Choices = {"Arcade Style", "Wii Style"},
