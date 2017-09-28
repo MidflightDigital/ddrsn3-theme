@@ -18,6 +18,17 @@ local t = Def.ActorFrame{
       end;
     end;
   };
+  LoadActor("rightglow")..{
+    OnCommand=function(self)
+      if screenName == "ScreenSelectProfile" or screenName == "ScreenDataSaveSummary" then
+        self:cropleft(1)
+      else
+        self:x(SCREEN_RIGHT):halign(1):cropleft(1):sleep(1):queuecommand("Animate"):draworder(100);
+      end;
+    end;
+		AnimateCommand=cmd(decelerate,0.1;cropright,0;cropleft,1;decelerate,0.8;cropleft,0;sleep,0.5;decelerate,0.8;cropright,1;sleep,0.5;queuecommand,"Animate");
+		OffCommand=cmd(finishtweening);
+	};
 };
 
 if screenName == "ScreenSelectStyle" or screenName == "ScreenSelectPlayMode" then

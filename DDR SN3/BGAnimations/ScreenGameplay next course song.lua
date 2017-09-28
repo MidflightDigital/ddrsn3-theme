@@ -60,7 +60,7 @@ return Def.ActorFrame {
 		ChangeCourseSongInMessageCommand=cmd(finishtweening;sleep,0.396;linear,0.198;addy,104);
 		FinishCommand=cmd(sleep,2;linear,0.198;addy,-104);
 	};
-	LoadActor( THEME:GetPathG("ScreenStageInformation", "Stage " .. ToEnumShortString(sStage) ) ) .. {
+	LoadActor( THEME:GetPathG("_Stages/ScreenStageInformation", "Stage " .. ToEnumShortString(sStage) ) ) .. {
 		InitCommand=cmd(x,SCREEN_CENTER_X;y,SCREEN_CENTER_Y);
 		ChangeCourseSongInMessageCommand=cmd(diffusealpha,0;sleep,0.396;diffusealpha,1);
 		FinishCommand=cmd(sleep,2;diffusealpha,0);
