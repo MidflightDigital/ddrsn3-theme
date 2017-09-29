@@ -12,6 +12,7 @@ local c = Characters
 local requiredFiles =
 {
 	{"combo.png", "combo100.png"},
+	{"comboA.png", "comboB.png", "combo100.png"},
 	{"comboA.png", "comboB.png", "combo100.png"}
 }
 
@@ -48,11 +49,11 @@ local function ValidateAndProcessConfig(loadedCfg)
     if (loadedCfg.version ~= math.floor(loadedCfg.version)) then
     	return false, "version is not an integer"
     end
-    if (loadedCfg.version > 2) then
+    if (loadedCfg.version > 3) then
         return false, "version too new"
     end
 		local versionNum = loadedCfg.version
-		if (versionNum == 1) or (versionNum == 2) then
+		if (versionNum == 1) or (versionNum == 2) or (versionNum == 3) then
 			loadedCfg.version = versionNum
 		end
     local colorDef = loadedCfg.color
