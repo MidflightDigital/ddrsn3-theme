@@ -69,14 +69,18 @@ Def.Sprite {
   InitCommand=function(self)
     self:MaskDest();
     self:diffusealpha(0);
-    self:scaletoclipped(200,480)
+    if charP2Ver <= 2 then
+      self:setsize(200,480)
+    else
+      self:scaletoclipped(200,480)
+    end;
     if style == "StyleType_TwoPlayersTwoSides" or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
       self:y(50)
     end
     self:Load(charP2ComboA)
   end;
   PopupACommand=function(self)
-    if charP2Ver == 1 then
+    if charP2Ver <= 2 then
 		 self:finishtweening();
 		 self:y(44);
 		 self:sleep(0.1);
@@ -86,7 +90,7 @@ Def.Sprite {
 		 self:y(26);
 		 self:linear(0.1);
 		 self:diffusealpha(0);
-   elseif charP2Ver == 2 then
+   elseif charP2Ver == 3 then
       self:finishtweening();
   		self:addy(13);
   		self:sleep(0.1);
@@ -113,7 +117,11 @@ Def.Sprite {
   InitCommand=function(self)
     self:MaskDest();
     self:diffusealpha(0);
-    self:scaletoclipped(200,480)
+    if charP2Ver <= 2 then
+      self:setsize(200,480)
+    else
+      self:scaletoclipped(200,480)
+    end;
     if style == "StyleType_TwoPlayersTwoSides" or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
       self:y(50)
     end
@@ -121,7 +129,7 @@ Def.Sprite {
   end;
   ----------- use for every 50hit  ex 50 150 250 350 comb etc..
 	PopupBCommand=function(self)
-    if charP2Ver == 1 then
+    if charP2Ver <= 2 then
 		 self:finishtweening();
 		 self:y(44);
 		 self:sleep(0.1);
@@ -131,7 +139,7 @@ Def.Sprite {
 		 self:y(26);
 		 self:linear(0.1);
 		 self:diffusealpha(0);
-   elseif charP2Ver == 2 then
+   elseif charP2Ver == 3 then
       self:finishtweening();
   		self:addy(13);
   		self:sleep(0.1);
@@ -158,7 +166,11 @@ Def.Sprite {
   InitCommand=function(self)
     self:MaskDest();
     self:diffusealpha(0);
-    self:scaletoclipped(200,480)
+    if charP2Ver <= 2 then
+      self:setsize(200,480)
+    else
+      self:scaletoclipped(200,480)
+    end;
     if style == "StyleType_TwoPlayersTwoSides" or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
       self:y(50)
     end

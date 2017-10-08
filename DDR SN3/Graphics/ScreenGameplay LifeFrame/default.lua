@@ -35,12 +35,12 @@ if GAMESTATE:GetPlayMode() == "PlayMode_Rave" then
 end
 
 local xPosPlayer = {
-    P1 = -(SCREEN_WIDTH/6.7), 
+    P1 = -(SCREEN_WIDTH/6.7),
     P2 = (SCREEN_WIDTH/6.7)
 }
 
 local xPosPlayerRave = {
-	P1 = -(640/6.7), 
+	P1 = -(640/6.7),
     P2 = (640/6.7)
 };
 
@@ -176,6 +176,6 @@ t[#t+1] = LoadActor("danger 2x1")..{
 			end;
 		end;
 };
-	
+
 
 return t

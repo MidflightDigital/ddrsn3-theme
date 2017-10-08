@@ -358,3 +358,52 @@ end
 function BitmapText:settextfmt(fmt, ...)
 	return self:settext(string.format(fmt, ...))
 end
+        
+--why did i write this code
+do
+    local cache = {}
+    --this makes cache a weak table.
+    --if any actor in the cache is garbage collected by Lua, it is removed.
+    setmetatable(cache, {__mode="kv"})
+    local function internal(self, starting)
+        starting = starting or self
+        if cache[self] ~= nil then
+            --then for this actor no need to go through this process
+            cache[starting] = cache[self]
+            return cache[self]~=false and cache[self] or nil
+        elseif self.ScreenType then
+            --both roads end here
+            cache[self] = self
+            cache[starting] = self
+            return self
+        elseif self:GetParent() then
+            return internal(self:GetParent(), starting)
+        else
+            --nil is indistinguishable from nothing, so use false instead
+            cache[self] = false
+            cache[starting] = false
+            return nil
+        end
+    end
+    function Actor:GetContainingScreen()
+        return internal(self)
+    end
+end
+
+--stuff for doing update functions that i love so -tertu
+function CalculateWaitFrames(targetDelta, delta)
+    return math.max(1, math.round(targetDelta/delta))-1
+end
+        
+--returns a function that returns true if the function should run this update
+function GetUpdateTimer(targetDelta)
+    local frameCounter = 0
+    return function()
+        if frameCounter == 0 then
+            frameCounter = CalculateWaitFrames(targetDelta, 1/DISPLAY:GetCumFPS())
+            return true
+        end
+        frameCounter = frameCounter - 1
+        return false
+    end
+end

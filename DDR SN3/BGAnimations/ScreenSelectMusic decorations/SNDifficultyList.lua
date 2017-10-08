@@ -164,7 +164,7 @@ for idx, diff in pairs(difficultiesToDraw) do
         Def.Sprite{
             Name = "Label",
             Texture = "SNDifficultyList labels 1x5 (doubleres).png",
-            InitCommand = function(self) self:setstate(idx-1):SetAllStateDelays(math.huge):x(labelPos):diffuse{0.5,0.5,0.5,1} end,
+            InitCommand = function(self) self:setstate(idx-1):SetAllStateDelays(math.huge):x(labelPos):diffuse{0.5,0.5,0.5,1}:zoom(0.9) end,
             SNDLUpdateMessageCommand=function(self)
                 local song = GAMESTATE:GetCurrentSong()
                 if song then

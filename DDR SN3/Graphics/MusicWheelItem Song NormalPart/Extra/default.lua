@@ -16,8 +16,9 @@ local t = Def.ActorFrame {
 		SetCommand=function(self, param)
 			local Song = param.Song;
 			if Song then
-				local color_grp= group_colors[Song:GetGroupName()] or "FFFFFF"
-				self:diffuse(color(color_grp));
+				--local color_grp= group_colors[Song:GetGroupName()] or "FFFFFF"
+				--self:diffuse(color(color_grp));
+				self:diffuse(SongAttributes.GetMenuColor(Song))
 			end;
 		end;
 	};

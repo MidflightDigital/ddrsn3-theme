@@ -16,6 +16,9 @@ end
 
 local ScreenSelectMusic
 
+local targetDelta = 1/60
+local timer = GetUpdateTimer(targetDelta) 
+
 local function UpdateBPMGauge(self)
 	if not ScreenSelectMusic then
 		local top = SCREENMAN:GetTopScreen()
@@ -25,6 +28,7 @@ local function UpdateBPMGauge(self)
 	end
 	local gauge = self:GetChild("bpm gauge bright")
 	assert(gauge, "UpdateBPMGauge: Can't find the bright part of the BPM gauge.")
+	if not timer() then return end
 	if GAMESTATE then
 		local song = GAMESTATE:GetCurrentSong()
 		if song then
@@ -46,7 +50,7 @@ local function UpdateBPMGauge(self)
 			else
 				if gauge:GetTweenTimeLeft()==0 then
 					--This song has a random display BPM: shoot the indicator all the way up and down rapidly
-					--I use a command because it's really difficult to do timed things in UpdateFunctions
+					--I use a command because it's less code to do
 					gauge:playcommand("Random")
 				end
 			end
@@ -63,7 +67,7 @@ local t = Def.ActorFrame{
 	Name="bpm gauge bright",
 	Texture="newgauge",
 		InitCommand=function(self)
-			self:hibernate(1.25):x(BPMMeterPosX()):y(SCREEN_CENTER_Y-138):visible(false)
+			self:hibernate(1.25):x(BPMMeterPosX()):y(SCREEN_CENTER_Y-122):visible(false)
 		end,
 		OnCommand=function(self)
 			self:sleep(0.264):visible(true)

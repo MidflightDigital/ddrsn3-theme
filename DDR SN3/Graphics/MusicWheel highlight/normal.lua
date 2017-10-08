@@ -221,6 +221,10 @@ t[#t+1] = Def.Quad{
 						if scores[1]:GetScore()==1000000 and topgrade=="Grade_Tier07" then
 							self:Load(THEME:GetPathG("GradeDisplayEval","Tier01"));
 							self:diffusealpha(1);
+						elseif topgrade=="Grade_Tier07" or topgrade=="Grade_Failed" then
+							self:diffusealpha(0);
+						elseif topgrade >= "Grade_Tier08" then
+							self:diffusealpha(0);
 						else
 							self:Load(THEME:GetPathG("GradeDisplayEval",ToEnumShortString(topgrade)));
 							self:diffusealpha(1);
