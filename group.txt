@@ -1,7 +1,7 @@
 ﻿group.ini support in DDR SuperNOVA 3
 ------------------------------------
 
-To allow for greater flexibility when structuring songs, DDR SuperNOVA 3 r7 and later have partial support for waiei's group.ini format.
+To allow for greater flexibility when structuring songs, DDR SuperNOVA 3 r7 and later have partial support for A.C.'s group.ini format.
 
 It is defined here: http://sm.waiei.net/other/group.html (Japanese)
 This file is principally based on a Google "translation" of that page, augmented and corrected by checking:
@@ -81,7 +81,7 @@ This includes all songs listed:
 If this statement is present, lyric animations will act like they did in 3.9.
 If it is anything other than Old (likely not case sensitive) it will have no effect.
 
-*"standard" here means tags that waiei documents at that page. No theme supports every group.ini tag.
+*"standard" here means tags that A.C. documents at that page. No theme supports every group.ini tag.
 
 Any unsupported or nonstandard tag is ignored by the theme.
 Avoid using nonstandard tags where possible, some can cause problems.
