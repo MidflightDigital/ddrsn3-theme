@@ -131,7 +131,7 @@ local function read_overrides(group_data, key, parse_function, default)
     if type(group_data[key]) == "table" and group_data[key]["/\\valid"] then
         return group_data[key]
     end
-    if (not group_data.menucolor) or next(group_data.menucolor) == nil then
+    if (not group_data[key]) or next(group_data[key]) == nil then
         group_data[key] = {["/\\default"]=default, ["/\\valid"]=true}
         return group_data[key]
     end
