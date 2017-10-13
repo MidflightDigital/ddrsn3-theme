@@ -33,7 +33,10 @@ end
 
 local function AnyPlayerThisDiff(diff)
     for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-        if GetCurrentSteps(pn):GetDifficulty()==diff then return true end
+        local curSteps = GetCurrentSteps(pn)
+        if curSteps and curSteps:GetDifficulty()==diff then 
+            return true 
+        end
     end
     return false
 end
