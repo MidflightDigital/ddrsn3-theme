@@ -94,6 +94,11 @@ end
 local ret = Def.ActorFrame{InitCommand=function(self) self:xy(DiffPosX(),SCREEN_CENTER_Y+90):hibernate(1.25) end,
     OffCommand=function(self) self:sleep(0.5):visible(false) end}
 
+local function AddMessageReceivers(that, handler)
+    local reciever = function(self, params) 
+    end
+end
+
 ret.CurrentSongChangedMessageCommand = function() MESSAGEMAN:Broadcast("SNDLUpdate", {SongChanged=true, StepsChanged=true}) end
 for _, pn in pairs(PlayerNumber) do
     pn = ToEnumShortString(pn)
@@ -220,9 +225,9 @@ for idx, diff in pairs(difficultiesToDraw) do
                 end
             end,
         },
-        Def.RollingNumbers {
+        Def.BitmapText {
     			Font="_handelgothic bt 20px";
-    			InitCommand=function(self) self:x(tickPos-80):Load("RollingNumbersMeter"):diffuse{0.5,0.5,0.5,1}:zoom(0.75) end,
+    			InitCommand=function(self) self:x(tickPos-80):diffuse{0.5,0.5,0.5,1}:zoom(0.75) end,
     			SNDLUpdateMessageCommand=function(self, params)
     				local song = GAMESTATE:GetCurrentSong()
     				if song then
@@ -231,26 +236,20 @@ for idx, diff in pairs(difficultiesToDraw) do
     						local meter = steps:GetMeter()
     						if AnyPlayerThisDiff(diff) then
                                 if meter > 10 then
-                                    self:diffuse(color("1,0,0,1"))
+                                    self:diffuse{1,0,0,1}
                                 else
     							   self:diffuse(DiffToColor(diff))
                                 end
-    							self:targetnumber(meter)
-    							self:Load("RollingNumbersMeter")
+    							self:settext(tostring(meter))
     						elseif song:HasStepsTypeAndDifficulty(GAMESTATE:GetCurrentStyle():GetStepsType(), diff) then
     							self:diffuse{1,1,1,1}
-    							self:targetnumber(meter)
-    							self:Load("RollingNumbersMeter")
+    							self:settext(tostring(meter))
     						end
     					else
-    						self:diffuse{0.5,0.5,0.5,0}
-    						self:targetnumber(0)
-    						self:Load("RollingNumbersMeterNoDiff")
+                            self:settext ""
     					end
     				else
-    					self:diffuse{0.5,0.5,0.5,0}
-    					self:targetnumber(0)
-    					self:Load("RollingNumbersMeterNoDiff")
+                        self:settext ""
     				end
     			end
     		}

@@ -182,7 +182,7 @@ for idx, diff in pairs(difficultiesToDraw) do
                     local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
                     if steps then
                         local meter = steps:GetMeter()
-                        if meter > 10 then
+                        if meter > 10 and glowFeet then
                             self:cropright(0):glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
                         else
                             self:stopeffect():cropright(1-meter/10)
