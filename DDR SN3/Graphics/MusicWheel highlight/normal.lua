@@ -92,7 +92,7 @@ local yPosPlayer = {
 
 --Player Scores
 for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-t[#t+1] = Def.RollingNumbers{
+t[#t+1] = Def.BitmapText{
 	Font="ScreenSelectMusic score",
 	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
 	CurrentCourseChangedMessageCommand=cmd(playcommand,"Set");
@@ -104,7 +104,6 @@ t[#t+1] = Def.RollingNumbers{
 		local short = ToEnumShortString(pn)
 		self:x(40):y(yPosPlayer[short])
 		:diffusealpha(0)
-		:Load("RollingNumbersMusic")
 	end;
 	OnCommand=cmd(queuecommand,"Set");
 	SetCommand= function(self)
@@ -144,11 +143,14 @@ t[#t+1] = Def.RollingNumbers{
 		end;
 		assert(topscore)
 		if topscore ~= 0 then
-			self:diffusealpha(1)
-			:targetnumber(topscore)
+			self:ClearAttributes():diffusealpha(1)
+			local attr = GetLeadingAttribute(topscore, 7, {0.5,0.5,0.5,1})
+			if attr then
+				self:AddAttribute(0, attr)
+			end
+			self:settext(string.format("%07d",tostring(math.floor(topscore))))
 		else
 			self:diffusealpha(0)
-			:targetnumber(0)
 		end
 	else
 		self:diffusealpha(0)
