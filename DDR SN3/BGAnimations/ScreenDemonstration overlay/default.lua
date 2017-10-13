@@ -32,7 +32,7 @@ t[#t+1] = Def.ActorFrame{
 	};
 };
 --songinfo--
-t[#t+1] = LoadFont("_russell square 16px")..{
+t[#t+1] = LoadFont("TextBanner text")..{
 	InitCommand=cmd(halign,1;x,SCREEN_RIGHT-112;y,SCREEN_BOTTOM-65;zoom,0.9;draworder,50);
 	CurrentSongChangedMessageCommand=function(self)
 		local song = GAMESTATE:GetCurrentSong();
@@ -45,7 +45,7 @@ t[#t+1] = LoadFont("_russell square 16px")..{
 	end;
 };
 --artist--
-t[#t+1] = LoadFont("_russell square 16px")..{
+t[#t+1] = LoadFont("TextBanner text")..{
 	InitCommand=cmd(halign,1;x,SCREEN_RIGHT-112;y,SCREEN_BOTTOM-50;zoom,0.8;draworder,50);
 	CurrentSongChangedMessageCommand=function(self)
 		local song = GAMESTATE:GetCurrentSong();

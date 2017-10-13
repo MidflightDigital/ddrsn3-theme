@@ -33,7 +33,10 @@ end
 
 local function AnyPlayerThisDiff(diff)
     for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-        if GetCurrentSteps(pn):GetDifficulty()==diff then return true end
+        local curSteps = GetCurrentSteps(pn)
+        if curSteps and curSteps:GetDifficulty()==diff then 
+            return true 
+        end
     end
     return false
 end
@@ -88,26 +91,14 @@ local function SetXFromPlayerNumber(that, pn)
     end
 end
 
-local function Update(self, _)
-    if GAMESTATE then
-        local song = GAMESTATE:GetCurrentSong()
-        local steps = {}
-        local anyStepsChanged = false
-        for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-            steps[pn] = GetCurrentSteps(pn)
-            if steps[pn] ~= lastSteps[pn] then anyStepsChanged = true break end
-        end
-        local songChanged = song~=lastSong
-        if songChanged or anyStepsChanged then
-            MESSAGEMAN:Broadcast("SNDLUpdate", {SongChanged=songChanged, StepsChanged=anyStepsChanged})
-        end
-        lastSong = song
-        lastSteps = steps
-    end
-end
-
-local ret = Def.ActorFrame{InitCommand=function(self) self:xy(DiffPosX(),SCREEN_CENTER_Y+90):hibernate(1.25):SetUpdateFunction(Update) end,
+local ret = Def.ActorFrame{InitCommand=function(self) self:xy(DiffPosX(),SCREEN_CENTER_Y+90):hibernate(1.25) end,
     OffCommand=function(self) self:sleep(0.5):visible(false) end}
+
+ret.CurrentSongChangedMessageCommand = function() MESSAGEMAN:Broadcast("SNDLUpdate", {SongChanged=true, StepsChanged=true}) end
+for _, pn in pairs(PlayerNumber) do
+    pn = ToEnumShortString(pn)
+    ret["CurrentSteps"..pn.."ChangedMessageCommand"] = function() MESSAGEMAN:Broadcast("SNDLUpdate", {SongChanged=false, StepsChanged=true}) end
+end
 
 local function IndicatorUpdate(self, pn)
     if not GAMESTATE:IsPlayerEnabled(pn) then return end

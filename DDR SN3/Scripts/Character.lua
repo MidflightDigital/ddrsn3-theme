@@ -137,6 +137,9 @@ local function ValidateInternal(name)
 end
 
 function Characters.Validate(name, forceRecheck)
+    if not name then
+        return nil
+    end
     if (characterValidity[name]~=nil and (not forceRecheck)) then
         return characterValidity[name]
     else
@@ -152,7 +155,7 @@ end
 --!!end Characters.Validate!!
 
 function Characters.GetPathIfValid(name)
-	if c.Validate(name) then
+	if name and c.Validate(name) then
 		return c.GetPath(name)
 	end
 end
