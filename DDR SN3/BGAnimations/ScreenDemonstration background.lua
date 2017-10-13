@@ -16,9 +16,12 @@ local function setVisibility(self)
             end
         end
     end
-    local bg = SCREENMAN:GetTopScreen():GetChild("SongBackground")
-    if bg then
-        bg:visible(not shouldShowBGScripts);
+    local screen = SCREENMAN:GetTopScreen()
+    if screen then
+        local bg = screen:GetChild("SongBackground")
+        if bg then
+            bg:visible(not shouldShowBGScripts);
+        end
     end
     self:visible(shouldShowBGScripts);
 end
@@ -35,11 +38,7 @@ if #vids > 0 then
     repeat
         --Chooses one of the dancers
         local choose = table.remove(vids,(#vids == 1) and 1 or math.random(1,#vids))
-
-        --Sets the Dancer to be loaded
-        local charName = vids[choose]
-
-        danceVid = Characters.GetDancerVideo(charName)
+        danceVid = Characters.GetDancerVideo(choose)
     until (danceVid ~= nil) or (#vids == 0)
 
     if danceVid then
