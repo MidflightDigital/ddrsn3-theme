@@ -12,25 +12,14 @@ t[#t+1] = StandardDecorationFromFileOptional("BPMDisplay","BPMDisplay")
 t[#t+1] = StandardDecorationFromFileOptional("SortDisplay","SortDisplay")
 
 if normal or extra then
-if ThemePrefs.Get("XDifficultyList") == "SN Style" then
 	t[#t+1] = Def.ActorFrame{
-		LoadActor("difficultylist")..{
+		LoadActor("diffback")..{
 			InitCommand=cmd(x,DiffBGPosX();y,SCREEN_CENTER_Y+141;visible,GAMESTATE:IsCourseMode() == false);
 			OnCommand=cmd(draworder,1;cropright,1;sleep,0.264;sleep,0.6;linear,0.4;cropright,0);
 			OffCommand=cmd(sleep,0.033;accelerate,0.363;x,-237);
 		};
-		LoadActor("SNDifficultyList.lua");
+		LoadActor("DDRDifficultyList.lua");
 	};
-elseif ThemePrefs.Get("XDifficultyList") == "X Style" then
-	t[#t+1] = Def.ActorFrame{
-		LoadActor("Xdiffback")..{
-			InitCommand=cmd(x,DiffBGPosX();y,SCREEN_CENTER_Y+141;visible,GAMESTATE:IsCourseMode() == false);
-			OnCommand=cmd(draworder,1;cropright,1;sleep,0.264;sleep,0.6;linear,0.4;cropright,0);
-			OffCommand=cmd(sleep,0.033;accelerate,0.363;x,-237);
-		};
-		LoadActor("XDifficultyList.lua");
-	};
-end;
 end;
 
 if normal then

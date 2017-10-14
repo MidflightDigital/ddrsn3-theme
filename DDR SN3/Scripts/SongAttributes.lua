@@ -116,7 +116,7 @@ do
 		pump = '_MeterType_Pump'
 	}
 	parse_metertype = function(text)
-		return conversion[text] or nil
+		return conversion[string.lower(text)] or nil
 	end
 end
 
