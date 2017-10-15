@@ -54,6 +54,12 @@ local Prefs =
 		Choices = {"Arcade Style", "Wii Style"},
 		Values = {true, false}
 	},
+	FakeGrades = 
+	{
+		Default = false,
+		Choices = {"No", "Yes"},
+		Values = {false, true}
+	},
 }
 
 ThemePrefs.InitAll(Prefs)

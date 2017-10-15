@@ -102,7 +102,6 @@ local function AddMessageReceivers(that, handler)
         local song = GAMESTATE:GetCurrentSong()
         if song then
             local mt = SongAttributes.GetMeterType(song)
-            SCREENMAN:SystemMessage(mt)
             if mt ~= '_MeterType_Default' then
                 local songXMode = mt ~= '_MeterType_DDR'
                 lastXMode = songXMode

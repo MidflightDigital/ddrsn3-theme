@@ -130,10 +130,14 @@ t[#t+1] = Def.ActorFrame {
 		OnCommand=cmd(play);
 	};
 };
-t[#t+1] = LoadActor("grade")..{
+t[#t+1] = LoadActor("fc_rings")..{
 	InitCommand=cmd(diffusealpha,1;draworder,100);
 	OffCommand=cmd(sleep,0.2;linear,0.2;diffusealpha,0);
 };
+
+for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+	t[#t+1] = LoadActor("grade", pn)
+end
 
 local stageXPos = {
 	P1 = -280,

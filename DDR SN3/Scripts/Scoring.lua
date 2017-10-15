@@ -3,8 +3,7 @@ This includes a few modules that all have to do with scoring and grading.
 SN2Scoring and OldScoring are independent modules.
 SN2Grading partially depends on SN2Scoring.
 All information used is from http://aaronin.jp/ddrssystem.html. The
-information used for SN2 was written by Aaron C., but the information
-for 2nd has no attributed author.
+information used for SN2 was written by Aaron C.
 ]]
 
 --SN2Scoring
@@ -67,6 +66,7 @@ local maxQuasiMultipliers =
 --Given a thing which has functions hnsFuncName and tnsFuncName that take one
 --argument and return the number of TNSes or HNSes there are in that thing,
 --pack that information into something useful.
+--This is a pretty bad function description, so just see how it's used.
 local function GetScoreDataFromThing(thing, tnsFuncName, hnsFuncName)
     local output = {}
     --how class function lookup works internally in Lua
@@ -304,22 +304,23 @@ SN2Grading = {}
 --Edit is technically the "highest difficulty"
 local grade_table = {
     Difficulty_Edit = {
-        Grade_Tier01 = 990000, --AAA
-        Grade_Tier02 = 950000, --AA
-        Grade_Tier03 = 900000, --A
-        Grade_Tier04 = 800000, --B
-        Grade_Tier05 = 700000, --C
-        Grade_Tier06 = 0, --D
+        Grade_Tier01 = 1000000, --AAA+
+        Grade_Tier02 = 990000, --AAA
+        Grade_Tier03 = 950000, --AA
+        Grade_Tier04 = 900000, --A
+        Grade_Tier05 = 800000, --B
+        Grade_Tier06 = 700000, --C
+        Grade_Tier07 = 0 --D
     },
     Difficulty_Medium = {
-        Grade_Tier03 = 850000,
-        Grade_Tier04 = 750000,
-        Grade_Tier05 = 600000
+        Grade_Tier04 = 850000,
+        Grade_Tier05 = 750000,
+        Grade_Tier06 = 600000
     },
     Difficulty_Easy = {
-        Grade_Tier03 = 800000,
-        Grade_Tier04 = 700000,
-        Grade_Tier05 = 500000
+        Grade_Tier04 = 800000,
+        Grade_Tier05 = 700000,
+        Grade_Tier06 = 500000
     }
 }
 --i'm too lazy to fill this out in full, so this does it for me
