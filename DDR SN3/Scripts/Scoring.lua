@@ -348,6 +348,7 @@ function SN2Grading.ScoreToGrade(score, difficulty)
     for grade, min_score in pairs(tiers) do
         if score >= min_score and min_score >= best then
             output = grade
+            best = min_score
         end
     end
     return output
