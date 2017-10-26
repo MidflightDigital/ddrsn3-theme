@@ -35,14 +35,11 @@ t[#t+1] = Def.ActorFrame{
     	return
     elseif CurCombo == math.floor(tapsAndHolds/2)
     	or CurCombo == math.floor(tapsAndHolds*0.9) then
-      self:queuecommand("PopupB")
-      self:queuecommand("Popup")
+      self:playcommand("Popup", {type='B'})
     elseif CurCombo % 100 == 0 then
-      self:queuecommand("PopupC")
-      self:queuecommand("Popup")
+      self:playcommand("Popup", {type='C'})
     elseif CurCombo == 20 or (CurCombo % 50 == 0) then
-      self:queuecommand("PopupA")
-      self:queuecommand("Popup")
+      self:playcommand("Popup", {type='A'})
     end;
   end;
 
@@ -92,125 +89,39 @@ Def.Sprite {
     if style == "StyleType_TwoPlayersTwoSides" or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
       self:y(versus_y)
     end
+    --this forces StepMania to have these all in memory so gameplay doesn't freeze up
     self:Load(charComboA)
-  end;
-  PopupACommand=function(self)
-    if charVer <= 2 then
-		 self:finishtweening();
-		 self:y(44);
-		 self:sleep(0.1);
-		 self:linear(0.1);
-		 self:diffusealpha(1);
-		 self:linear(1);
-		 self:y(26);
-		 self:linear(0.1);
-		 self:diffusealpha(0);
-   elseif charVer == 3 then
-      self:finishtweening();
-  		self:addy(13);
-  		self:sleep(0.1);
-  		self:linear(0.1);
-  		self:diffusealpha(1);
-  		self:linear(1);
-  		self:addy(-13);
-  		self:linear(0.1);
-  		self:diffusealpha(0);
-    end;
-	end;
-	PopupBCommand=function(self)
-		self:finishtweening();
-		self:diffusealpha(0);
-	end;
-	PopupCCommand=function(self)
-		self:finishtweening();
-		self:diffusealpha(0);
-	end;
-};
-----------------------------------------------------
---Character B (normal combo sprite)
-Def.Sprite {
-  InitCommand=function(self)
-    self:MaskDest();
-    self:diffusealpha(0);
-    if charVer <= 2 then
-      self:setsize(200,480)
-    else
-      self:scaletoclipped(200,480)
-    end;
-    if style == "StyleType_TwoPlayersTwoSides" or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
-      self:y(versus_y)
-    end
     self:Load(charComboB)
-  end;
-  ----------- use for every 50hit  ex 50 150 250 350 comb etc..
-	PopupBCommand=function(self)
-    if charVer <=2 then
-		 self:finishtweening();
-		 self:y(44);
-		 self:sleep(0.1);
-		 self:linear(0.1);
-		 self:diffusealpha(1);
-		 self:linear(1);
-		 self:y(26);
-		 self:linear(0.1);
-		 self:diffusealpha(0);
-   elseif charVer == 3 then
-      self:finishtweening();
-  		self:addy(13);
-  		self:sleep(0.1);
-  		self:linear(0.1);
-  		self:diffusealpha(1);
-  		self:linear(1);
-  		self:addy(-13);
-  		self:linear(0.1);
-  		self:diffusealpha(0);
-    end;
-	end;
-	PopupACommand=function(self)
-		self:finishtweening();
-		self:diffusealpha(0);
-	end;
-	PopupCCommand=function(self)
-		self:finishtweening();
-		self:diffusealpha(0);
-	end;
-};
-----------------------------------------------------
---Character C (100 combo sprite)
-Def.Sprite {
-  InitCommand=function(self)
-    self:MaskDest();
-    self:diffusealpha(0);
-    if charVer <= 2 then
-      self:setsize(200,480)
-    else
-      self:scaletoclipped(200,480)
-    end;
-    if style == "StyleType_TwoPlayersTwoSides" or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
-      self:y(versus_y)
-    end
     self:Load(charCombo100)
   end;
-  PopupCCommand=function(self)
-		self:finishtweening();
-		self:addy(13);
-		self:sleep(0.1);
-		self:linear(0.1);
-		self:diffusealpha(1);
-	 -- self:diffusebottomedge(CutInColor());
-		self:linear(1);
-		self:addy(-13);
-		self:linear(0.1);
-		self:diffusealpha(0);
-	end;
-	PopupACommand=function(self)
-		self:finishtweening();
-		self:diffusealpha(0);
-	end;
-	PopupBCommand=function(self)
-		self:finishtweening();
-		self:diffusealpha(0);
-	end;
+  PopupCommand=function(self, params)
+  	if params.type == 'A' then
+  		self:Load(charComboA)
+  	elseif params.type == 'B' then
+  		self:Load(charComboB)
+  	elseif params.type == 'C' then
+  		self:Load(charCombo100)
+  	else
+  		error("Cutin: unknown Popup type "..tostring(type))
+  	end
+    self:finishtweening();
+    if charVer ~= 3 then
+    	self:y(44);
+	else
+  		self:addy(13);
+  	end
+  	self:sleep(0.1);
+  	self:linear(0.1);
+  	self:diffusealpha(1);
+  	self:linear(1);
+  	if charVer ~=3 then
+  		self:y(26)
+  	else
+  		self:addy(-13);
+  	end
+  	self:linear(0.1);
+  	self:diffusealpha(0);
+end;
 };
 
 -- Light

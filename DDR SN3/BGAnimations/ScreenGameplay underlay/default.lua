@@ -46,6 +46,7 @@ local x_table = {
 }
 --toasty loader
 if show_cutins then
+--use ipairs here because i think it expects P1 is loaded before P2
 for _, pn in ipairs(GAMESTATE:GetEnabledPlayers()) do
 t[#t+1] = Def.ActorFrame{
   LoadActor("Cutin.lua", pn)..{
