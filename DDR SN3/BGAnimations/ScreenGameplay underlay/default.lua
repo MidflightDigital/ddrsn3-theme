@@ -40,10 +40,15 @@ local show_cutins = GAMESTATE:GetCurrentSong() and (not GAMESTATE:GetCurrentSong
 
 local style = GAMESTATE:GetCurrentStyle():GetStyleType()
 local st = GAMESTATE:GetCurrentStyle():GetStepsType();
+local x_table = {
+  PlayerNumber_P1 = {SCREEN_CENTER_X-340, SCREEN_RIGHT-180},
+  PlayerNumber_P2 = {SCREEN_CENTER_X+340, SCREEN_LEFT+180}
+}
 --toasty loader
-if GAMESTATE:IsPlayerEnabled(PLAYER_1) and show_cutins then
+if show_cutins then
+for _, pn in ipairs(GAMESTATE:GetEnabledPlayers()) do
 t[#t+1] = Def.ActorFrame{
-  LoadActor("P1Cutin.lua")..{
+  LoadActor("Cutin.lua", pn)..{
     OnCommand=cmd(setsize,200,SCREEN_HEIGHT);
     InitCommand=function(self)
       self:CenterY()
@@ -54,38 +59,16 @@ t[#t+1] = Def.ActorFrame{
             if GetScreenAspectRatio() < 1.7 then
 							self:visible(false);
 						else
-							self:x(SCREEN_CENTER_X-340);
+							self:x(x_table[pn][1]);
 						end;
           end;
         else
-          self:x(SCREEN_RIGHT-180);
+          self:x(x_table[pn][2]);
         end;
       end;
     };
 };
 end;
-if GAMESTATE:IsPlayerEnabled(PLAYER_2) and show_cutins then
-  t[#t+1] = Def.ActorFrame{
-    LoadActor("P2Cutin.lua")..{
-      OnCommand=cmd(setsize,200,SCREEN_HEIGHT);
-      InitCommand=function(self)
-        self:CenterY()
-          if style == "StyleType_TwoPlayersTwoSides" or GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
-    				self:x(SCREEN_CENTER_X);
-          elseif IsUsingCenter1Player then
-            if st == "StepsType_Dance_Double" then
-              if GetScreenAspectRatio() < 1.7 then
-  							self:visible(false);
-  						else
-  							self:x(SCREEN_CENTER_X+340);
-  						end;
-            end;
-          else
-            self:x(SCREEN_LEFT+180);
-          end;
-        end;
-      };
-  };
 end;
 
 return t;
