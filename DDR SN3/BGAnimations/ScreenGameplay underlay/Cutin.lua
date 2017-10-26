@@ -6,7 +6,7 @@ local style = GAMESTATE:GetCurrentStyle():GetStyleType();
 
 local maskfile = 
 {
-	P1 = maskfile,
+	P1 = THEME:GetPathB("ScreenGameplay", "underlay/Cutin/_Mask_down"),
 	P2 = THEME:GetPathB("ScreenGameplay", "underlay/Cutin/_Mask_up")
 }
 maskfile = maskfile[short_pn]
