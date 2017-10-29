@@ -57,7 +57,6 @@ t[#t+1] = Def.ActorFrame {
 			self:addx(-274):queuecommand("TitleSelectionPart2")
 		end;
 		TitleSelectionPart2Command=function(self)
-			print(choice)
 			if titleImages[choice] then
 				self:Load(titleImages[choice])
 			end;
