@@ -26,12 +26,12 @@ for _, player in pairs(GAMESTATE:GetEnabledPlayers()) do
                 table.insert(actors,Def.ActorFrame{
                     LoadActor("ring")..{
                         InitCommand=function(self) self:diffuse(tnsToColor[curTns]):x(playerXPositions[player]):y(SCREEN_CENTER_Y-100):zoom(0) end;
-                        OnCommand=function(self) self:linear(0.2):zoom(0.65):spin():effectmagnitude(0,0,-170) end;
+                        OnCommand=function(self) self:linear(0.2):zoom(0.5):spin():effectmagnitude(0,0,-170) end;
                         OffCommand=function(self) self:linear(0.2):zoom(0) end
                     },
                     LoadActor("lines")..{
                         InitCommand=function(self) self:diffuse(tnsToColor[curTns]):x(playerXPositions[player]):y(SCREEN_CENTER_Y-100):zoom(0) end;
-                        OnCommand=function(self) self:linear(0.2):zoom(1):spin():effectmagnitude(0,0,-170) end;
+                        OnCommand=function(self) self:linear(0.2):zoom(0.6):spin():effectmagnitude(0,0,-170) end;
                         OffCommand=function(self) self:linear(0.2):zoom(0) end
                     }
                 })
