@@ -5,7 +5,9 @@ local badFiles = {
 "/Scripts/99 waiei.lua",
 "/Scripts/ThemePrefs.lua",
 "/Scripts/00 aaaOverride.lua",
-"/Scripts/00 settings_system.lua"
+"/Scripts/00 settings_system.lua",
+"/BGAnimations/ScreenGameplay underlay/P1Cutin.lua",
+"/BGAnimations/ScreenGameplay underlay/P2Cutin.lua"
 }
 
 for _, path in pairs(badFiles) do
