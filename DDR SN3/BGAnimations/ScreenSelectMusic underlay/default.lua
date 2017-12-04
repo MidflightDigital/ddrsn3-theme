@@ -1,5 +1,12 @@
 local t = Def.ActorFrame {};
-
+function IsRDG()
+	if GAMESTATE then
+		local env = GAMESTATE:Env()
+		if GAMESTATE:Env() then
+			return false
+		end
+	end
+end
 local factors = {201, 167, 135, 104, 75, 47, 21, -3, -28, -53, -79, -107, -136, -167, -199}
 
 for i=1,15 do

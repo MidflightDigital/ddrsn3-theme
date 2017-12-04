@@ -1,4 +1,14 @@
 local t = Def.ActorFrame{}
+
+function IsRDG()
+	if GAMESTATE then
+		local env = GAMESTATE:Env()
+		if GAMESTATE:Env() then
+			return true
+		end
+	end
+end
+
 --Common Objects
 t[#t+1] = Def.ActorFrame{
 	LoadFont("_handelgothic bt 40px")..{

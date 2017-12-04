@@ -21,58 +21,36 @@ t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)
 		self:fov(120);
 	end;
-	Def.ActorFrame{
-		LoadActor("bg")..{
-			InitCommand=cmd(FullScreen);
-		--My god you are amazing kenp.
-		OnCommand=function(self)
-		local seed = math.random(1,13);
-			--seed breakdown:
-			--8-13: pattern 1, increasing start color
-			--2-7: pattern 2, increasing start color
-			--1: rainbow
-			if seed > 1 then
-				if seed > 7 then
-					curPattern = 1
-					curPatternIdx = seed - 8
-				else
-					curPattern = 2
-					curPatternIdx = seed - 2
-				end
-				self:diffuse(colorPatterns[curPattern][curPatternIdx])
-				self:queuecommand("Animate")
-			else
-				self:rainbow();
-				self:effectperiod(120);
-			end;
+	LoadActor("tunnel")..{
+		InitCommand=cmd(FullScreen);
+	};
+	Def.Quad{
+		InitCommand=function(self)
+			self:diffuse(color("1,0,0,0.4"))
+			self:queuecommand("Animate")
+			self:FullScreen()
 		end;
 		AnimateCommand = function(s)
-			--bump the current color to the next color in the pattern
-			curPatternIdx = (curPatternIdx + 1) % #(colorPatterns[curPattern])
-			s:linear(20)
-			:diffuse(colorPatterns[curPattern][curPatternIdx])
-			:queuecommand("Animate")
+			s:diffusealpha(0):sleep(0.5):accelerate(0.2):diffusealpha(0.4):sleep(0.5):accelerate(0.2):diffusealpha(0):queuecommand("Animate")
 		end;
 	};
-	};
 	Def.ActorFrame{
-	InitCommand=cmd(x,SCREEN_LEFT+120;CenterY;blend,Blend.Add;;diffusealpha,0.6);
 		LoadActor(THEME:GetPathB("","_shared/stars"))..{
-			InitCommand=cmd(diffusealpha,0.3;fadetop,0.5;fadebottom,0.5);
+			InitCommand=cmd(x,SCREEN_LEFT+120;diffusealpha,0.3;fadetop,0.5;fadebottom,0.5;faderight,0.283;rotationy,-45);
 			OnCommand=function(self)
 				local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
 				local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
 				self:customtexturerect(0,0,w*0.5,h*0.5);
-				self:texcoordvelocity(-0.02,0);
+				self:texcoordvelocity(1,0);
 			end;
 		};
 		LoadActor(THEME:GetPathB("","_shared/stars"))..{
-			InitCommand=cmd(diffusealpha,0.3;fadetop,0.5;fadebottom,0.5);
+			InitCommand=cmd(x,SCREEN_RIGHT-120;diffusealpha,0.3;fadetop,0.5;fadebottom,0.5;fadeleft,0.283;rotationy,45);
 			OnCommand=function(self)
 				local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
 				local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
 				self:customtexturerect(0,0,w*0.5,h*0.5);
-				self:texcoordvelocity(-0.03,0);
+				self:texcoordvelocity(-1,0);
 			end;
 		};
 	};
