@@ -8,6 +8,8 @@ elseif screenName == "ScreenSelectMusicStarter" then
     headerTextImage = "MusicStrt (doubleres).png"
 elseif screenName == "ScreenSelectMusicExtra" then
     headerTextImage = "extra (doubleres).png"
+  elseif screenName == "ScreenSelectMusicRD" then
+      headerTextImage = "_MusicRCD (doubleres).png"
 
 elseif string.find(screenName, "Options") then
     headerTextImage = "Options (doubleres).png"
@@ -59,6 +61,8 @@ elseif screenName == "ScreenEvaluationNonstop" then
 	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenNetEvaluation" then
 	headerBaseImage = "centerbase (doubleres).png"
+elseif screenName == "ScreenSelectMusicRD" then
+	headerBaseImage = "RDbase (doubleres).png"
 elseif screenName == "ScreenSelectMusicExtra" then
 	headerBaseImage = "extrabase (doubleres).png"
 else
@@ -144,6 +148,8 @@ if headerTextImage then
 				self:x(SCREEN_LEFT+123):y(8)
       elseif screenName == "ScreenSelectMusic" then
 				self:x(SCREEN_LEFT+123):y(8);
+      elseif screenName == "ScreenSelectMusicRD" then
+				self:x(SCREEN_CENTER_X):y(3)
 			else
 				self:x(SCREEN_LEFT+123):y(8);
 			end;

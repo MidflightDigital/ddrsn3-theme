@@ -358,7 +358,7 @@ end
 function BitmapText:settextfmt(fmt, ...)
 	return self:settext(string.format(fmt, ...))
 end
-        
+
 --why did i write this code
 do
     local cache = {}
@@ -394,7 +394,7 @@ end
 function CalculateWaitFrames(targetDelta, delta)
     return math.max(1, math.round(targetDelta/delta))-1
 end
-        
+
 --returns a function that returns true if the function should run this update
 function GetUpdateTimer(targetDelta)
     local frameCounter = 0

@@ -10,13 +10,19 @@ local NumberMinZoom = THEME:GetMetric("Combo", "NumberMinZoom");
 local NumberMaxZoom = THEME:GetMetric("Combo", "NumberMaxZoom");
 local NumberMaxZoomAt = THEME:GetMetric("Combo", "NumberMaxZoomAt");
 
+local NumberMinX = THEME:GetMetric("Combo", "NumberMinX");
+local NumberMaxX = THEME:GetMetric("Combo", "NumberMaxX");
+
+local LabelMinX = THEME:GetMetric("Combo", "LabelMinX");
+local LabelMaxX = THEME:GetMetric("Combo", "LabelMaxX");
+
 local LabelMinZoom = THEME:GetMetric("Combo", "LabelMinZoom");
 local LabelMaxZoom = THEME:GetMetric("Combo", "LabelMaxZoom");
 
 local env = GAMESTATE:Env();
 local starterMode = env.StarterMode == true;
 
-local arcadeColoring = ThemePrefs.Get("ArcadeColorMode"); 
+local arcadeColoring = ThemePrefs.Get("ArcadeColorMode");
 
 --you can pass nil to this function, it acts the same as passing nothing
 --however, i think that passing nil makes the intent clearer -tertu
@@ -41,8 +47,8 @@ local function worstJudgeClear()
 	if (ScoringInfo and ScoringInfo.worstJudge) then
 		local wj = ScoringInfo.worstJudge[player]
 		if not wj then return end --don't need to do anything
-		if (ScoringInfo.seed ~= GAMESTATE:GetStageSeed()) or 
-			(tns_reverse[wj] < tns_reverse['TapNoteScore_W3']) 
+		if (ScoringInfo.seed ~= GAMESTATE:GetStageSeed()) or
+			(tns_reverse[wj] < tns_reverse['TapNoteScore_W3'])
 		then
 			ScoringInfo.worstJudge[player] = nil
 			wj = nil
@@ -51,7 +57,7 @@ local function worstJudgeClear()
 	end
 end
 
-local decideColor 
+local decideColor
 do
 	local tnsToParam = {
 		TapNoteScore_W1 = "FullComboW1",
@@ -63,8 +69,8 @@ do
 		if starterMode then
 			if tns == "FullComboW2" then
 				if arcadeColoring then
-					return ScoringInfo ~= nil 
-						and ScoringInfo.worstJudge ~= nil 
+					return ScoringInfo ~= nil
+						and ScoringInfo.worstJudge ~= nil
 						and ScoringInfo.worstJudge[player] ~= nil
 				end
 				--not arcade coloring
@@ -74,7 +80,7 @@ do
 			end
 		elseif not arcadeColoring then
 			return params[tnsToParam[tns]] or false
-		elseif ScoringInfo and ScoringInfo.worstJudge then 
+		elseif ScoringInfo and ScoringInfo.worstJudge then
 			return tns == ScoringInfo.worstJudge[player]
 		end
 		--failsafe
@@ -150,8 +156,14 @@ local t = Def.ActorFrame {
 		param.Zoom = scale( iCombo, 0, NumberMaxZoomAt, NumberMinZoom, NumberMaxZoom );
 		param.Zoom = clamp( param.Zoom, NumberMinZoom, NumberMaxZoom );
 
+		param.NumberX = scale( iCombo, 0, NumberMaxZoomAt, NumberMinX, NumberMaxX );
+		param.NumberX = clamp( param.NumberX, NumberMinX, NumberMaxX );
+
 		param.LabelZoom = scale( iCombo, 0, NumberMaxZoomAt, LabelMinZoom, LabelMaxZoom );
 		param.LabelZoom = clamp( param.LabelZoom, LabelMinZoom, LabelMaxZoom );
+
+		param.LabelX = scale( iCombo, 0, NumberMaxZoomAt, LabelMinX, LabelMaxX );
+		param.LabelX = clamp( param.LabelX, LabelMinX, LabelMaxX );
 
 		cf.NumberW1:settext( string.format("%i", iCombo) );
 		cf.NumberW2:settext( string.format("%i", iCombo) );

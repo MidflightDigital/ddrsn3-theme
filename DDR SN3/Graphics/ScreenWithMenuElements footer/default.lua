@@ -4,6 +4,8 @@ local footerBaseImage
 
 if screenName == "ScreenSelectProfile" or screenName == "ScreenDataSaveSummary" then
   footerBaseImage = "centered (doubleres).png"
+elseif screenName == "ScreenSelectMusicRD" then
+  footerBaseImage = "RDbase (doubleres).png"
 else
   footerBaseImage = "rightbiased (doubleres).png"
 end
@@ -11,7 +13,8 @@ end
 local t = Def.ActorFrame{
   LoadActor(footerBaseImage)..{
     OnCommand=function(self)
-      if screenName == "ScreenSelectProfile" or screenName == "ScreenDataSaveSummary" then
+      if screenName == "ScreenSelectProfile" or screenName == "ScreenDataSaveSummary"
+      or screenName == "ScreenSelectMusicRD" then
         self:x(SCREEN_CENTER_X):halign(0.5);
       else
         self:x(SCREEN_RIGHT):halign(1);
@@ -20,7 +23,8 @@ local t = Def.ActorFrame{
   };
   LoadActor("rightglow")..{
     OnCommand=function(self)
-      if screenName == "ScreenSelectProfile" or screenName == "ScreenDataSaveSummary" then
+      if screenName == "ScreenSelectProfile" or screenName == "ScreenDataSaveSummary"
+      or screenName == "ScreenSelectMusicRD" then
         self:cropleft(1)
       else
         self:x(SCREEN_RIGHT):halign(1):cropleft(1):sleep(1):queuecommand("Animate"):draworder(100);
