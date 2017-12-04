@@ -13,6 +13,20 @@ local t = Def.ActorFrame {
 		end;
 	};
 	LoadActor("../_section outer");
+	LoadActor(THEME:GetPathS("","_RDC pre (loop)"))..{
+		InitCommand=cmd(stop);
+		SetMessageCommand=function(self, params)
+			if params.Label == RDGtext then
+				if params.HasFocus then
+					setenv("RDGSEL",1)
+					self:play();
+				else
+					setenv("RDGSEL",0)
+					self:stop();
+				end;
+			end;
+		end;
+	};
 };
 
 t[#t+1] = Def.ActorFrame {

@@ -83,7 +83,7 @@ local function SetXFromPlayerNumber(that, pn, XMode)
 end
 
 local ret = Def.ActorFrame{InitCommand=function(self) self:xy(SCREEN_CENTER_X-200,SCREEN_CENTER_Y+140):hibernate(1.25) end,
-    OffCommand=function(self) self:sleep(0.5):visible(false) end}
+    OffCommand=function(self) self:visible(false) end}
 
 local function AddMessageReceivers(that, handler)
     local baseXMode = ThemePrefs.Get "XDifficultyList" == "X Style"

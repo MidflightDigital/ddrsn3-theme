@@ -3,6 +3,7 @@ local extra = Var "LoadingScreen" == "ScreenSelectMusicExtra"
 local normal = Var "LoadingScreen" == "ScreenSelectMusic"
 SOUND:DimMusic(1,math.huge)
 
+
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 if not extra then
 	t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay")
@@ -36,6 +37,17 @@ end;
 
 t[#t+1] = Def.ActorFrame{
 	LoadActor("bpmmeter.lua");
+};
+
+t[#t+1] = Def.Actor{
+	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+	SetCommand=function(self)
+		if SCREENMAN:GetTopScreen():GetChild('MusicWheel'):GetSelectedType() == 'WheelItemDataType_Custom' then
+			SOUND:DimMusic(0,math.huge);
+		else
+			SOUND:DimMusic(1,math.huge);
+		end;
+	end;
 };
 
 -------------------------------------------------------------------------------------------------------------------
