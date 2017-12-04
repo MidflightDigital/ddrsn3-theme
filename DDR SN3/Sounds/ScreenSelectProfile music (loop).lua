@@ -1,1 +1,1 @@
-return GetMenuMusicPath "profile"
+return GetMenuMusicPath "common"
