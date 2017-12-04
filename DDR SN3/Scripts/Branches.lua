@@ -11,13 +11,7 @@ function CorrectSSM()
 	if IsStarterMode() then
 		return "ScreenSelectMusicStarter"
 	else
-		local stage = GAMESTATE:GetCurrentStage()
-		Trace(stage)
-		if stage == 'Stage_Extra1' or stage == 'Stage_Extra2' then
-			return "ScreenSelectMusicExtra"
-		else
-			return "ScreenSelectMusic"
-		end
+		return "ScreenSelectMusic"
 	end
 end
 
