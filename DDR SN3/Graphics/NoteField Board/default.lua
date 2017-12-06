@@ -39,7 +39,9 @@ local args= {
 			local style= GAMESTATE:GetCurrentStyle(pn)
 			local alf= getenv("ScreenFilter"..ToEnumShortString(pn)) or 0
 			local width= style:GetWidth(pn) + 32
-			self:setsize(width, _screen.h*4096):diffusealpha(alf/10):hibernate(0)
+			self:setsize(width, _screen.h*4096)
+			:fadeleft(1/32):faderight(1/32)
+			:diffusealpha(alf/10):hibernate(0)
 		end,
 	}
 }
