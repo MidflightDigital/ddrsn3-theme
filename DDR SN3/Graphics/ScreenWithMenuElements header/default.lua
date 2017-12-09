@@ -104,7 +104,7 @@ local out = Def.ActorFrame{
       elseif screenName == "ScreenSelectMusicExtra" then
 				self:x(SCREEN_CENTER_X):halign(0.5)
 			else
-				self:x(SCREEN_LEFT):halign(0);
+				self:x(SCREEN_LEFT-1.2):halign(0);
 			end;
 		end;
 	};
