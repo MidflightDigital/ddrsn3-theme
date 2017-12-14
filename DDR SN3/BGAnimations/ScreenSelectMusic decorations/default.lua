@@ -1,6 +1,6 @@
 local t = LoadFallbackB();
 local extra = Var "LoadingScreen" == "ScreenSelectMusicExtra"
-local normal = Var "LoadingScreen" == "ScreenSelectMusic"
+local normal = Var "LoadingScreen" == "ScreenSelectMusic" or Var "LoadingScreen" == "ScreenSelectMusicStarter"
 SOUND:DimMusic(1,math.huge)
 
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
@@ -11,7 +11,6 @@ t[#t+1] = StandardDecorationFromFile("BannerFrame","BannerFrame")
 t[#t+1] = StandardDecorationFromFileOptional("BPMDisplay","BPMDisplay")
 t[#t+1] = StandardDecorationFromFileOptional("SortDisplay","SortDisplay")
 
-if normal or extra then
 if ThemePrefs.Get("XDifficultyList") == "SN Style" then
 	t[#t+1] = Def.ActorFrame{
 		LoadActor("difficultylist")..{
@@ -30,7 +29,6 @@ elseif ThemePrefs.Get("XDifficultyList") == "X Style" then
 		};
 		LoadActor("XDifficultyList.lua");
 	};
-end;
 end;
 
 if normal then
