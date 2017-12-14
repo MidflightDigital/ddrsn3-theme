@@ -11,6 +11,7 @@ t[#t+1] = StandardDecorationFromFile("BannerFrame","BannerFrame")
 t[#t+1] = StandardDecorationFromFileOptional("BPMDisplay","BPMDisplay")
 t[#t+1] = StandardDecorationFromFileOptional("SortDisplay","SortDisplay")
 
+if normal or extra then
 if ThemePrefs.Get("XDifficultyList") == "SN Style" then
 	t[#t+1] = Def.ActorFrame{
 		LoadActor("difficultylist")..{
@@ -29,6 +30,7 @@ elseif ThemePrefs.Get("XDifficultyList") == "X Style" then
 		};
 		LoadActor("XDifficultyList.lua");
 	};
+end;
 end;
 
 if normal then
