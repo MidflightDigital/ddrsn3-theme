@@ -52,6 +52,15 @@ function EndlessScoring.Create(level)
     }
 end
 
+--XXX: don't be a lazy bastard
+local levelDivisor = {
+    _MeterType_DDR = 1,
+    _MeterType_DDRX = 1.5,
+    _MeterType_ITG = 1,
+    _MeterType_Pump = 1.65,
+    _MeterType_Default = 1
+}
+
 Endless = {}
 
 function Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)
@@ -59,10 +68,11 @@ function Endless.GetSongChartBlock(stepsType, minLevel, maxLevel)
     assert(minLevel <= maxLevel)
     for _, song in pairs(SONGMAN:GetAllSongs()) do
         if UNLOCKMAN:IsSongLocked(song) == 0 then
+            local divisor = levelDivisor[SongAttributes.GetMeterType(song)]
             for _, steps in pairs(song:GetStepsByStepsType(stepsType)) do
                 if not (steps:GetDifficulty() == 'Difficulty_Edit') then
                     local meter = steps:GetMeter()
-                    if (meter >= minLevel) and (meter <= maxLevel) then
+                    if (meter >= minLevel/divisor) and (meter <= maxLevel/divisor) then
                         table.insert(ret, {song, steps})
                     end
                 end

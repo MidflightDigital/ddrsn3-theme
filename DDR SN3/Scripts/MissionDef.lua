@@ -50,7 +50,7 @@ do
 end
 
 function Predefs.MinGrade(grade)
-	local er = Enum.Reverse('Grade')
+	local er = Enum.Reverse(Grade)
 	return {cleared_check = function(pss) return er[pss:GetGrade()] <= er[grade] end, text = sf("MinGrade", THEME:GetString("Grade", ToEnumShortString(grade)))}
 end
 
@@ -89,7 +89,7 @@ MissionDefs = {
 		[2] = { song = "We Don't Talk Anymore", diff = 'Difficulty_Beginner', normal = Predefs.MinGrade('Grade_Tier05'), hard = Predefs.FullCombo() },
 		[3] = { song = "Rockabye", diff = 'Difficulty_Easy', normal = Predefs.Clear(), hard = Predefs.MaxJudgeCount('TapNoteScore_W3', 35) },
 		[4] = { song = "Danza Kuduro", diff = 'Difficulty_Beginner', normal = Predefs.MinCombo(30), hard = Predefs.MinGrade('Grade_Tier04') },
-		[5] = { song = "Acapella", diff = 'Difficulty_Easy', normal = Predefs.MinJudgeCount(30), hard = Predefs.MinCombo(50) },
+		[5] = { song = "Acapella", diff = 'Difficulty_Easy', normal = Predefs.MinJudgeCount('TapNoteScore_W2',30), hard = Predefs.MinCombo(50) },
 		[6] = { song = "Stayin' Alive (Albina Mango Remix)", diff = 'Difficulty_Easy', normal = Predefs.MinLife(0.7), hard = {cleared_check = function(pss) return (pss:GetTapNoteScores('TapNoteScore_W5') + pss:GetTapNoteScores('TapNoteScore_Miss'))<=10 end, text = s("M0106Hard")} },
 		[7] = { song = "PLASMA", diff = 'Difficulty_Easy', normal = Predefs.MinGrade('Grade_Tier05'), hard = Predefs.JudgePercentage('TapNoteScore_W2', 0.75) },
 		[8] = { song = "DAZZLING SEASON", diff = 'Difficulty_Beginner', normal = Predefs.Clear(), hard = Predefs.FullLife() }
