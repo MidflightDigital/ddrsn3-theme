@@ -42,7 +42,8 @@ t[#t+1] = Def.ActorFrame{
 t[#t+1] = Def.Actor{
 	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
 	SetCommand=function(self)
-		if SCREENMAN:GetTopScreen():GetChild('MusicWheel'):GetSelectedType() == 'WheelItemDataType_Custom' then
+		local wheel = SCREENMAN:GetTopScreen():GetChild('MusicWheel')
+		if false and wheel:GetSelectedType() == 'WheelItemDataType_Custom' then
 			SOUND:DimMusic(0,math.huge);
 		else
 			SOUND:DimMusic(1,math.huge);
