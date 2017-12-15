@@ -84,12 +84,14 @@ end
 
 --The first four are Lv. 1-4, the fifth is All, and the sixth is the unlockable
 --Lv. 5.
+--using -infinity as a lower bound rather than level 1 allows Pump and DDR X 1s
+--(which end up being in the 0.6-0.7 range after division) to be included
 local levelToRange = {
-    {1,3},
+    {-math.huge,3},
     {3,5},
     {5,7},
     {7,9},
-    {1,math.huge},
+    {-math.huge,math.huge},
     {9,math.huge}
 }
 

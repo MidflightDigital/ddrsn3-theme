@@ -52,10 +52,6 @@ local function ValidateAndProcessConfig(loadedCfg)
     if (loadedCfg.version > 3) then
         return false, "version too new"
     end
-		local versionNum = loadedCfg.version
-		if (versionNum == 1) or (versionNum == 2) or (versionNum == 3) then
-			loadedCfg.version = versionNum
-		end
     local colorDef = loadedCfg.color
     local colorType = type(colorDef)
     if not ((colorType=="string") or (colorType == "table")) then
