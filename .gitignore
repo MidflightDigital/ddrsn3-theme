@@ -1,6 +1,5 @@
 DDR SN3/PSDs/
 
-DDR SN3/Sounds/ScreenSelectMusic music (loop).redir
 SNCharacters/alice/DancerVideos/Alice_1.avi
 SNCharacters/baby-lon/DancerVideos/Baby-Lon_1.mp4
 SNCharacters/disco/DancerVideos/Disco_1.avi
@@ -23,3 +22,9 @@ SNCharacters/jennyX3/DancerVideos/Jenny_1\.mp4
 SNCharacters/jennyX3/DancerVideos/Jenny_2\.avi
 
 SNCharacters/rageX3/DancerVideos/Rage_1\.avi
+
+*.db
+
+SNCharacters/alice2X3/DancerVideos/Alice_1\.avi
+
+SNCharacters/aliceX3/DancerVideos/Alice_1\.avi
