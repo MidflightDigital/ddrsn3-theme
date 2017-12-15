@@ -306,13 +306,13 @@ t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
-		t[#t+1]=LoadFont("_russellsquare 32px") .. {
+		t[#t+1]=LoadFont("_russell square 16px") .. {
 			Name = 'GVRD2Value_N4';
 			InitCommand=cmd(horizalign,right;x,40+8.5;y,59;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,Color("Yellow");strokecolor,Color("Outline");maxwidth,220);
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);
 			OffCommand=cmd(stoptweening;linear,0.1;zoomy,0;diffusealpha,0);
 		};
-		t[#t+1]=LoadFont("_russellsquare 32px") .. {
+		t[#t+1]=LoadFont("_russell square 16px") .. {
 			Name = 'GVRD2Value_N5';
 			InitCommand=cmd(horizalign,right;x,45+8.5;y,24;zoom,0;diffuse,color("1,1,1,1");diffusebottomedge,Color("Yellow");strokecolor,Color("Outline");maxwidth,220);
 			OnCommand=cmd(sleep,0.9;linear,0.05;diffusealpha,1;zoom,0.35);

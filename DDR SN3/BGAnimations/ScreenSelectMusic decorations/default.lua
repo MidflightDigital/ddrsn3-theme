@@ -1,6 +1,6 @@
 local t = LoadFallbackB();
 local extra = Var "LoadingScreen" == "ScreenSelectMusicExtra"
-local normal = Var "LoadingScreen" == "ScreenSelectMusic"
+local normal = Var "LoadingScreen" == "ScreenSelectMusic" or Var "LoadingScreen" == "ScreenSelectMusicStarter"
 SOUND:DimMusic(1,math.huge)
 
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
