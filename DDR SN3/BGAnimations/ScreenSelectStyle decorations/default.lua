@@ -6,11 +6,11 @@ t[#t+1] = Def.Sprite{
 	Anim1Command=function(s) s:addx(-11) end,
 	Anim2Command=function(s) s:decelerate(0.1):addx(11) end,
 	PadsOneMessageCommand=function(s)
-		s:queuecommand("Anim1"):Load(THEME:GetPathG("","ScreenSelectStyle Scroll ChoiceSingle/_info")):queuecommand("Anim2") end;
+		s:queuecommand("Anim1"):Load(THEME:GetPathG("","ScreenSelectStyle Scroller/single (doubleres).png")):queuecommand("Anim2") end;
 	PadsTwoMessageCommand=function(s)
-		s:queuecommand("Anim1"):Load(THEME:GetPathG("","ScreenSelectStyle Scroll ChoiceVersus/_info")):queuecommand("Anim2") end;
+		s:queuecommand("Anim1"):Load(THEME:GetPathG("","ScreenSelectStyle Scroller/versus (doubleres).png")):queuecommand("Anim2") end;
 	PadsDoubleMessageCommand=function(s)
-		s:queuecommand("Anim1"):Load(THEME:GetPathG("","ScreenSelectStyle Scroll ChoiceDouble/_info")):queuecommand("Anim2") end;
+		s:queuecommand("Anim1"):Load(THEME:GetPathG("","ScreenSelectStyle Scroller/double (doubleres).png")):queuecommand("Anim2") end;
 	OffCommand=cmd(decelerate,0.264;addx,(SCREEN_WIDTH)+440);
 };
 
