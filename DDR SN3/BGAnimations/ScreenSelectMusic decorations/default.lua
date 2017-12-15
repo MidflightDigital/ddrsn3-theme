@@ -39,11 +39,17 @@ t[#t+1] = Def.ActorFrame{
 	LoadActor("bpmmeter.lua");
 };
 
+--the delay counter is a hack to prevent crashes
+local delayCounter = 0
 t[#t+1] = Def.Actor{
 	CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
 	SetCommand=function(self)
+		if delayCounter < 3 then
+			delayCounter = delayCounter + 1
+			return
+		end
 		local wheel = SCREENMAN:GetTopScreen():GetChild('MusicWheel')
-		if false and wheel:GetSelectedType() == 'WheelItemDataType_Custom' then
+		if wheel:GetSelectedType() == 'WheelItemDataType_Custom' then
 			SOUND:DimMusic(0,math.huge);
 		else
 			SOUND:DimMusic(1,math.huge);
