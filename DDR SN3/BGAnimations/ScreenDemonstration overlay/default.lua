@@ -1,8 +1,4 @@
 local t = Def.ActorFrame{
-	Def.Quad{
-		InitCommand=cmd(setsize,280,28;x,SCREEN_LEFT+130;y,SCREEN_TOP+18);
-		OnCommand=cmd(diffuseshift;effectcolor1,color("#000000");effectcolor2,color("#00d200");effectperiod,2.2);
-	};
 	LoadActor("demup")..{
 		InitCommand=cmd(x,SCREEN_LEFT;;halign,0;valign,0);
 	};
