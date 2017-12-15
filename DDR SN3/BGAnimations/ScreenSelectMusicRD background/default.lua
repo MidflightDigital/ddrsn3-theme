@@ -36,7 +36,7 @@ t[#t+1] = Def.ActorFrame {
 	};
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("","_shared/stars"))..{
-			InitCommand=cmd(x,SCREEN_LEFT+120;diffusealpha,0.3;fadetop,0.5;fadebottom,0.5;faderight,0.283;rotationy,-45);
+			InitCommand=cmd(halign,0;x,SCREEN_CENTER_X;diffusealpha,0.3;fadetop,0.5;fadebottom,0.5;faderight,0.283;rotationy,45);
 			OnCommand=function(self)
 				local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
 				local h = DISPLAY:GetDisplayHeight() / self:GetHeight();
@@ -45,7 +45,7 @@ t[#t+1] = Def.ActorFrame {
 			end;
 		};
 		LoadActor(THEME:GetPathB("","_shared/stars"))..{
-			InitCommand=cmd(x,SCREEN_RIGHT-120;diffusealpha,0.3;fadetop,0.5;fadebottom,0.5;fadeleft,0.283;rotationy,45);
+			InitCommand=cmd(halign,1;x,SCREEN_CENTER_X;diffusealpha,0.3;fadetop,0.5;fadebottom,0.5;fadeleft,0.283;rotationy,-45);
 			OnCommand=function(self)
 				local w = DISPLAY:GetDisplayWidth() / self:GetWidth();
 				local h = DISPLAY:GetDisplayHeight() / self:GetHeight();

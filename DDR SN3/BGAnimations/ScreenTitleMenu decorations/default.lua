@@ -17,8 +17,8 @@ if GAMESTATE:GetCoinMode() == 'CoinMode_Home' then
 local choice
 
 local titleImages = {}
-for _, file in 
-	pairs(FILEMAN:GetDirListing("/Themes/"..THEME:GetCurThemeName().."/Graphics/_TitleImages/", false, true)) 
+for _, file in
+	pairs(FILEMAN:GetDirListing("/Themes/"..THEME:GetCurThemeName().."/Graphics/_TitleImages/", false, true))
 do
 	if ActorUtil.GetFileType(file) == 'FileType_Bitmap' then
 		--this clustercuss extracts the part of the filename that is actually the filename
@@ -74,9 +74,9 @@ t[#t+1] = Def.ActorFrame {
 		OnCommand=cmd(zoomy,0;sleep,0.1;accelerate,0.3;zoomy,1);
 	};
 	Def.BitmapText{
-		Font="_russell_square";
+		Font="_handelgothic bt 20px";
 		Text="";
-		InitCommand=function(self) self:hibernate(0.4):Center(X):y(SCREEN_BOTTOM-100):zoom(0.9):maxwidth(513):wrapwidthpixels(513):valign(0):vertspacing(8) end;
+		InitCommand=function(self) self:hibernate(0.4):Center(X):y(SCREEN_BOTTOM-96):zoom(0.8):maxwidth(513):wrapwidthpixels(513):valign(0):vertspacing(4) end;
 		TitleSelectionMessageCommand=function(self, params) self:settext(THEME:GetString("ScreenTitleMenu","Description"..params.Choice)) end;
 		OnCommand=cmd(cropbottom,1;sleep,0.1;accelerate,0.3;cropbottom,0);
 	};

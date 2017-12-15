@@ -69,8 +69,14 @@ t[#t+1] = Def.ActorFrame{
 		CurrentSongChangedMessageCommand=cmd(finishtweening;queuecommand,"Flash");
 		FlashCommand=cmd(stoptweening;diffusealpha,1;sleep,0.2;decelerate,0.2;diffusealpha,0);
 	};
-	LoadActor("backer")..{
-    InitCommand=cmd(Center);
+	LoadActor("backer mid")..{
+    InitCommand=cmd(Center;setsize,SCREEN_WIDTH-60,480);
+  };
+	LoadActor("backer left")..{
+    InitCommand=cmd(halign,0;x,SCREEN_LEFT;CenterY);
+  };
+	LoadActor("backer left")..{
+    InitCommand=cmd(halign,0;x,SCREEN_RIGHT;zoomx,-1;CenterY);
   };
 };
 
