@@ -1,4 +1,5 @@
---Mixing theme versions can cause problems, so if you do you get a log warning.
+--This is a partial list of files that are no longer used in this version of the theme.
+--If any are present, it's a good sign that the theme was installed over an old version.
 local badFiles = {
 "/Scripts/06 MyGrooveRadarHelpers.lua",
 "/Scripts/05 ProfileData.lua",
@@ -7,7 +8,8 @@ local badFiles = {
 "/Scripts/00 aaaOverride.lua",
 "/Scripts/00 settings_system.lua",
 "/BGAnimations/ScreenGameplay underlay/P1Cutin.lua",
-"/BGAnimations/ScreenGameplay underlay/P2Cutin.lua"
+"/BGAnimations/ScreenGameplay underlay/P2Cutin.lua",
+"/Scripts/99 ReadPref.lua"
 }
 
 for _, path in pairs(badFiles) do

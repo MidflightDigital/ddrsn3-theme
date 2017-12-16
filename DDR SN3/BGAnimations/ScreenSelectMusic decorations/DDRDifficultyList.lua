@@ -88,7 +88,7 @@ local function SetXFromPlayerNumber(that, pn, XMode)
     if pn == 'PlayerNumber_P1' then
         that:x(indX-(indWidth/2)-plabelX-XFudge)
     elseif pn == 'PlayerNumber_P2' then
-        that:x(indX+(indWidth/2)+plabelX+XFudge)
+        that:x(indX+(indWidth/2)+plabelX+XFudge+4)
     end
 end
 
@@ -189,7 +189,7 @@ for idx, diff in pairs(difficultiesToDraw) do
     }
     AddMessageReceivers(label, function(self, _, XMode)
         if XMode then --switch into X mode
-            self:x(labelPos-16):zoom(1)
+            self:x(labelPos-14):zoom(1)
         else --switch into SN mode
             self:x(labelPos):zoom(0.9)
         end
@@ -217,7 +217,7 @@ for idx, diff in pairs(difficultiesToDraw) do
     }
     AddMessageReceivers(ticksUnder, function(self, _, XMode)
         if XMode then --do x position for X mode
-            self:x(tickPos-64)
+            self:x(tickPos-62)
         else --do x position for SN mode
             self:x(tickPos-80)
         end
@@ -251,7 +251,7 @@ for idx, diff in pairs(difficultiesToDraw) do
     AddMessageReceivers(ticksOver, function(self, songChanged, XMode)
         --standard mode switching crapola
         if XMode then
-            self:x(tickPos-64)
+            self:x(tickPos-62)
         else
             self:x(tickPos-80)
         end
@@ -282,7 +282,7 @@ for idx, diff in pairs(difficultiesToDraw) do
     --[[METER NUMBER]]
     local meter = Def.BitmapText{
         Font="_handelgothic bt 20px";
-        InitCommand=function(self) self:x(tickPos-80):diffuse{0.5,0.5,0.5,1}:zoom(0.75) end
+        InitCommand=function(self) self:x(tickPos-78):diffuse{0.5,0.5,0.5,1}:zoom(0.75) end
     }
     AddMessageReceivers(meter, function(self, _, XMode)
         if XMode then
