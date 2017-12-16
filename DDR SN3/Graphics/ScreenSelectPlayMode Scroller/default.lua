@@ -14,11 +14,12 @@ elseif index == 3 then
 elseif index == 4 then
 	c = 0;
 end
+
+local path = "_shared/SelMode/";
 --------------------------------------
 t[#t+1] = Def.ActorFrame {
-    LoadActor( gc:GetName() ) .. {
-	OnCommand=cmd();
-	};
+	LoadActor(gc:GetName()..".lua");
+  LoadActor( THEME:GetPathG("",path.."Titles/"..gc:GetName()) );
 };
 
 return t;
