@@ -11,7 +11,9 @@ local function LoadMetric(name, isBoolean)
     end
 end
 
-local hardColor = color "#FF0000"
+local hardXColor = color "#FF0000"
+local lightXColor = color "#FFEC4F"
+local darkXColor = ColorDarkTone(lightXColor)
 
 local function DiffToColor(diff, dark)
     local color = CustomDifficultyToColor(ToEnumShortString(diff))
@@ -222,22 +224,23 @@ for idx, diff in pairs(difficultiesToDraw) do
             self:x(tickPos-80)
         end
 
+        local diffColor = XMode and darkXColor or DiffToColor(diff, true)
         local song = GAMESTATE:GetCurrentSong()
-        --conveniently in SN mode we just... don't do most of this
-        if song and XMode then
+        if song then
             local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
             if steps then
                 local meter = steps:GetMeter()
-                if meter > 10 then
-                    self:diffuse(DiffToColor(diff))
+                if meter > 10 and XMode then
+                    --this only happens in X mode so no need to pick an alternative
+                    self:diffuse(lightXColor):cropleft(math.min(1,(meter-10)/10))
                 else
-                    self:diffuse(DiffToColor(diff,true))
+                    self:diffuse(diffColor):cropleft(math.min(1,meter/10))
                 end
             else
-                self:diffuse(DiffToColor(diff,true))
+                self:diffuse(diffColor):cropleft(0)
             end
         else
-            self:diffuse(DiffToColor(diff,true))
+            self:diffuse(diffColor):cropleft(0)
         end
     end)
     --[[END TICKS UNDERLAY]]
@@ -255,6 +258,7 @@ for idx, diff in pairs(difficultiesToDraw) do
         else
             self:x(tickPos-80)
         end
+        local diffColor = XMode and lightXColor or DiffToColor(diff)
         local song = GAMESTATE:GetCurrentSong()
         if song then
             if songChanged then self:stopeffect() end
@@ -263,12 +267,12 @@ for idx, diff in pairs(difficultiesToDraw) do
                 local meter = steps:GetMeter()
                 if meter > 10 then
                     if XMode then
-                        self:diffuse(hardColor):cropright(math.max(0,1-(meter-10)/10)):glowshift():effectcolor1(hardColor):effectcolor2(color "#FFFFFF")
+                        self:diffuse(hardXColor):cropright(math.max(0,1-(meter-10)/10))
                     else
-                        self:diffuse(DiffToColor(diff)):cropright(0):glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
+                        self:diffuse(diffColor):cropright(0):glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
                     end
                 else
-                    self:diffuse(DiffToColor(diff)):stopeffect():cropright(1-meter/10)
+                    self:diffuse(diffColor):stopeffect():cropright(1-meter/10)
                 end
             else
                 self:stopeffect():cropright(1)
@@ -298,9 +302,9 @@ for idx, diff in pairs(difficultiesToDraw) do
                 local meter = steps:GetMeter()
                 if AnyPlayerThisDiff(diff) then
                     if meter > 10 then
-                        self:diffuse{1,0,0,1}
+                        self:diffuse(hardXColor)
                     else
-                        self:diffuse(DiffToColor(diff))
+                        self:diffuse(lightXColor)
                     end
                     self:settext(tostring(meter))
                 elseif song:HasStepsTypeAndDifficulty(GAMESTATE:GetCurrentStyle():GetStepsType(), diff) then
