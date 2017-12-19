@@ -195,7 +195,7 @@ t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 		OffCommand=cmd(stoptweening;linear,0.1;scaletoclipped,0,0;);
 	};
 
-	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","LvBar") ) .. {
+	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile/ScreenSelectProfile","LvBar") ) .. {
 			Name = 'selectLvBarBack';
       InitCommand=function(self)
         if Player==PLAYER_2 then
@@ -208,7 +208,7 @@ t[#t+1] = LoadFont("_handelgothic bt 20px") .. {
 			OnCommand=cmd(sleep,0.3;linear,0.3;diffusealpha,1;diffuse,color("0.4,0.4,0.4,1"));
 			OffCommand=cmd(stoptweening;linear,0.02;zoom,0.100;diffusealpha,0);
 	};
-	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile","LvBar") ) .. {
+	t[#t+1] = LoadActor( THEME:GetPathG("ScreenSelectProfile/ScreenSelectProfile","LvBar") ) .. {
 			Name = 'selectLvBar';
       InitCommand=function(self)
         if Player==PLAYER_2 then
