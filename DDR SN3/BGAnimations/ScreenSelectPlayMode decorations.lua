@@ -78,8 +78,9 @@ t[#t+1] = Def.ActorFrame{
 			end;
 			self:linear(0.1):diffuse(color("1,1,1,1"))
 		end;
-		OffCommand=cmd(sleep,0.116;accelerate,0.25;addx,-640);
+		OffCommand=cmd(linear,0.1;halign,0.5;CenterX;sleep,1;linear,0.1;zoomy,0);
 	};
+	--Title
 	Def.Sprite{
 		InitCommand=function(s) s:halign(0):xy(SCREEN_LEFT+38,SCREEN_CENTER_Y-154):diffusealpha(0)
 			for _, file in pairs(playTitles) do s:Load(file) end
@@ -98,11 +99,11 @@ t[#t+1] = Def.ActorFrame{
 			end;
 			self:decelerate(0.2):addx(-105):diffusealpha(1):smooth(0.2):addx(5)
 		end;
-		OffCommand=cmd(decelerate,0.2;addx,100;diffusealpha,0);
+		OffCommand=cmd(linear,0.1;halign,0.5;CenterX;sleep,1;linear,0.1;zoomy,0);
 	};
 	LoadFont("_gotham Bold 18px")..{
 		InitCommand=cmd(diffuse,color("#FFFFFF");strokecolor,color("#004402");xy,SCREEN_LEFT+12,SCREEN_CENTER_Y+96;halign,0;valign,0;vertspacing,2);
-		OffCommand=cmd(decelerate,0.2;zoomy,0);
+		OffCommand=cmd(linear,0.1;halign,0.5;CenterX;sleep,1;linear,0.1;zoomy,0);
 		PlaySelectionMessageCommand=function(self, params)
 			local choice = params.Choice
 			self:zoomy(0)
