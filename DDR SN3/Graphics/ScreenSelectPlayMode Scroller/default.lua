@@ -19,7 +19,11 @@ local path = "_shared/SelMode/";
 --------------------------------------
 t[#t+1] = Def.ActorFrame {
 	LoadActor(gc:GetName()..".lua");
-  LoadActor( THEME:GetPathG("",path.."Titles/"..gc:GetName()) );
+  LoadActor( THEME:GetPathG("",path.."Titles/"..gc:GetName()) )..{
+		GainFocusCommand=function(self)
+			MESSAGEMAN:Broadcast("PlaySelection", {Choice=gc:GetName()})
+		end;
+	};
 };
 
 return t;

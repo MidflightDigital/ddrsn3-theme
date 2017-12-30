@@ -16,6 +16,7 @@ local t = Def.ActorFrame{
   LoadActor("highlight")..{
     InitCommand=cmd(Center;setsize,SCREEN_WIDTH,92);
     OnCommand=cmd(cropright,0.5;cropleft,0.5;sleep,0.3;linear,0.3;cropleft,0;cropright,0);
+    OffCommand=cmd(linear,0.1;diffusealpha,0);
   }
 };
 
