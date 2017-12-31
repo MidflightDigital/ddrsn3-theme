@@ -24,6 +24,7 @@ t[#t+1] = Def.ActorFrame{
 if GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
 --P1 Score Frame
 t[#t+1]=Def.ActorFrame{
+	OffCommand=cmd(linear,0.2;addx,-SCREEN_WIDTH);
 	LoadActor("diff frame")..{
 		InitCommand=cmd(halign,0;xy,SCREEN_LEFT,SCREEN_BOTTOM-104;);
 	};
@@ -41,6 +42,7 @@ end;
 
 if GAMESTATE:IsPlayerEnabled('PlayerNumber_P2') then
 t[#t+1]=Def.ActorFrame{
+	OffCommand=cmd(linear,0.2;addx,SCREEN_WIDTH);
 	LoadActor("diff frame")..{
 		InitCommand=cmd(zoomx,-1;halign,0;xy,SCREEN_RIGHT,SCREEN_BOTTOM-104;);
 	};
