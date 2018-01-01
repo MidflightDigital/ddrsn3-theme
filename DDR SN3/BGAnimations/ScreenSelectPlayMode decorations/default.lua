@@ -74,6 +74,12 @@ t[#t+1] = Def.ActorFrame{
 				self:linear(0.2)
 				self:diffusealpha(1):rotationz(0)
 			end;
+			OffCommand=function(self)
+				self:finishtweening()
+				self:diffusealpha(1):rotationz(0)
+				self:linear(0.2)
+				self:diffusealpha(0):rotationz(-20)
+		end;
 		};
 		LoadActor(THEME:GetPathG("","_shared/SelMode/Cursor/top"))..{
 			PlaySelectionMessageCommand=function(self, params)
@@ -82,6 +88,11 @@ t[#t+1] = Def.ActorFrame{
 				self:linear(0.2)
 				self:diffusealpha(1):addx(100)
 			end;
+			OffCommand=function(self, params)
+				self:finishtweening()
+				self:linear(0.2)
+				self:diffusealpha(0):addx(-100)
+			end;
 		};
 		LoadActor(THEME:GetPathG("","_shared/SelMode/Cursor/bottom"))..{
 			PlaySelectionMessageCommand=function(self, params)
@@ -89,6 +100,11 @@ t[#t+1] = Def.ActorFrame{
 				self:diffusealpha(0):addx(100)
 				self:linear(0.2)
 				self:diffusealpha(1):addx(-100)
+			end;
+			OffCommand=function(self, params)
+				self:finishtweening()
+				self:linear(0.2)
+				self:diffusealpha(0):addx(100)
 			end;
 		};
 	};
