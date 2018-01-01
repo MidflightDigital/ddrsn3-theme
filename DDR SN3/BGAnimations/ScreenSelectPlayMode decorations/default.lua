@@ -59,8 +59,41 @@ t[#t+1] = Def.ActorFrame{
 	LoadActor(THEME:GetPathS("","_swoosh"))..{
 		OnCommand=cmd(play);
 	};
+	LoadActor("highlight")..{
+    InitCommand=cmd(Center;setsize,SCREEN_WIDTH,92);
+    OnCommand=cmd(cropright,0.5;cropleft,0.5;sleep,0.3;linear,0.3;cropleft,0;cropright,0);
+    OffCommand=cmd(linear,0.1;diffusealpha,0);
+  };
+	--Cursor
+	Def.ActorFrame{
+		InitCommand=cmd(x,WideScale(SCREEN_RIGHT-120,SCREEN_RIGHT-180);CenterY;zoom,0.7);
+		LoadActor(THEME:GetPathG("","_shared/SelMode/Cursor/backer"))..{
+			PlaySelectionMessageCommand=function(self, params)
+				self:finishtweening()
+				self:diffusealpha(0):rotationz(-20)
+				self:linear(0.2)
+				self:diffusealpha(1):rotationz(0)
+			end;
+		};
+		LoadActor(THEME:GetPathG("","_shared/SelMode/Cursor/top"))..{
+			PlaySelectionMessageCommand=function(self, params)
+				self:finishtweening()
+				self:diffusealpha(0):addx(-100)
+				self:linear(0.2)
+				self:diffusealpha(1):addx(100)
+			end;
+		};
+		LoadActor(THEME:GetPathG("","_shared/SelMode/Cursor/bottom"))..{
+			PlaySelectionMessageCommand=function(self, params)
+				self:finishtweening()
+				self:diffusealpha(0):addx(100)
+				self:linear(0.2)
+				self:diffusealpha(1):addx(-100)
+			end;
+		};
+	};
 	Def.Sprite{
-		InitCommand=function(s) s:scaletoclipped(369,207.5):halign(0):xy(SCREEN_LEFT+41,SCREEN_CENTER_Y-22):diffuse(color("0,0,0,1"))
+		InitCommand=function(s) s:zoom(0.4):halign(0):xy(SCREEN_LEFT+12,SCREEN_CENTER_Y-22):diffuse(color("0,0,0,1"))
 			for _, file in pairs(playImages) do s:Load(file) end
 		end;
 		--OnCommand=cmd(addx,-640;sleep,0.116;accelerate,0.25;addx,640);
@@ -82,12 +115,12 @@ t[#t+1] = Def.ActorFrame{
 	};
 	--Title
 	Def.Sprite{
-		InitCommand=function(s) s:halign(0):xy(SCREEN_LEFT+38,SCREEN_CENTER_Y-154):diffusealpha(0)
+		InitCommand=function(s) s:halign(0):xy(SCREEN_LEFT+12,SCREEN_CENTER_Y-154):diffusealpha(0)
 			for _, file in pairs(playTitles) do s:Load(file) end
 		end;
 		PlaySelectionMessageCommand=function(self, params)
 			choice = string.lower(params.Choice)
-			self:finishtweening():x(SCREEN_LEFT+38)
+			self:finishtweening():x(SCREEN_LEFT+12)
 			if heardBefore then
 				self:sleep(0.2);
 			else heardBefore = true end
@@ -102,7 +135,7 @@ t[#t+1] = Def.ActorFrame{
 		OffCommand=cmd(linear,0.1;halign,0.5;CenterX;sleep,1;linear,0.1;zoomy,0);
 	};
 	LoadFont("_gotham Bold 18px")..{
-		InitCommand=cmd(diffuse,color("#FFFFFF");strokecolor,color("#004402");xy,SCREEN_LEFT+12,SCREEN_CENTER_Y+96;halign,0;valign,0;vertspacing,2);
+		InitCommand=cmd(diffuse,color("#FFFFFF");strokecolor,color("#004402");xy,SCREEN_LEFT+12,SCREEN_CENTER_Y+96;halign,0;valign,0;vertspacing,2;zoom,WideScale(0.75,1));
 		OffCommand=cmd(linear,0.1;halign,0.5;CenterX;sleep,1;linear,0.1;zoomy,0);
 		PlaySelectionMessageCommand=function(self, params)
 			local choice = params.Choice
@@ -116,9 +149,19 @@ t[#t+1] = Def.ActorFrame{
 			else
 				self:settext(THEME:GetString("ScreenSelectPlayMode","Description"..choice))
 			end;
-			self:finishtweening():zoomy(0):sleep(0.2):decelerate(0.4):zoomy(1)
+			self:finishtweening():zoomy(0):sleep(0.2):decelerate(0.4):zoomy(WideScale(0.75,1))
 		end;
-		AnimCommand=cmd(stoptweening;zoomy,0;sleep,0.2;decelerate,0.4;zoomy,1);
+	};
+	Def.ActorFrame{
+		InitCommand=cmd(x,WideScale(SCREEN_RIGHT-120,SCREEN_RIGHT-180);CenterY;);
+		LoadActor("flash")..{
+			PlaySelectionMessageCommand=function(self, params)
+				self:finishtweening()
+				self:diffusealpha(1):zoom(0)
+				self:linear(0.2)
+				self:diffusealpha(0):zoom(1.5)
+			end;
+		};
 	};
 };
 
