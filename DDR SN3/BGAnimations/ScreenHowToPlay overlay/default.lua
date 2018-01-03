@@ -72,7 +72,7 @@ t[#t+1] = LoadActor(THEME:GetPathG("ScreenGameplay","LifeFrame/"..line))..{
 	end,
 };
 
-t[#t+1] = LoadActor(THEME:GetPathG("","Badges/P1"))..{
+t[#t+1] = LoadActor(THEME:GetPathG("","_shared/Badges/LifeBar/P1"))..{
 	InitCommand=function(self)
 		self:x(SCREEN_LEFT+10):y(SCREEN_TOP+25)
 	end;
