@@ -244,7 +244,7 @@ t[#t+1] = Def.Quad{
 };
 end;
 
-
+if ThemePrefs.Get("LightMode") == false then
 t[#t+1] = Def.Sprite {
 Texture="WheelEffect 5x4",
 	InitCommand=function(self)
@@ -252,5 +252,6 @@ Texture="WheelEffect 5x4",
 		self:effectclock('beatnooffset'):SetAllStateDelays(0.1)
 	end,
 };
+end;
 
 return t;

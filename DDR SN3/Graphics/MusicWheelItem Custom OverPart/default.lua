@@ -5,14 +5,14 @@ local set;
 local RDGtext = THEME:GetString("MusicWheel","CustomItemRDGText");
 
 local t = Def.ActorFrame {
-	LoadActor("../_section inner")..{
+	LoadActor(THEME:GetPathG("","_shared/MusicWheel/_section inner"))..{
 		SetMessageCommand=function(self, params)
 			if params.Label == RDGtext then
 				self:diffuse(color("#ff266d"));
 			end;
 		end;
 	};
-	LoadActor("../_section outer");
+	LoadActor(THEME:GetPathG("","_shared/MusicWheel/_section outer"));
 	LoadActor(THEME:GetPathS("","_RDC pre (loop)"))..{
 		InitCommand=cmd(stop);
 		SetMessageCommand=function(self, params)

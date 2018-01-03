@@ -21,6 +21,10 @@ local t = Def.ActorFrame{
       end;
     end;
   };
+};
+
+if ThemePrefs.Get("LightMode") == false then
+t[#t+1] = Def.ActorFrame{
   LoadActor("rightglow")..{
     OnCommand=function(self)
       if screenName == "ScreenSelectProfile" or screenName == "ScreenDataSaveSummary"
@@ -34,6 +38,7 @@ local t = Def.ActorFrame{
 		OffCommand=cmd(finishtweening);
 	};
 };
+end;
 
 if screenName == "ScreenSelectStyle" or screenName == "ScreenSelectPlayMode" then
 t[#t+1] = Def.ActorFrame{

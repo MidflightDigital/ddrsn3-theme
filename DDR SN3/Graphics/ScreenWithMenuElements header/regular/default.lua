@@ -8,6 +8,10 @@ local t = Def.ActorFrame{
 		InitCommand=cmd(blend,Blend.Add;;diffuse,color("#044600");x,SCREEN_LEFT;halign,0);
 		OnCommand=cmd(diffusealpha,0.2);
 	};
+};
+
+if ThemePrefs.Get("LightMode") == false then
+t[#t+1] = Def.ActorFrame{
 	LoadActor("glow")..{
 		InitCommand=cmd(x,SCREEN_LEFT;halign,0);
 		OnCommand=cmd(cropright,1;sleep,1;queuecommand,"Animate";draworder,100);
@@ -15,5 +19,6 @@ local t = Def.ActorFrame{
 		OffCommand=cmd(finishtweening);
 	};
 };
+end;
 
 return t;

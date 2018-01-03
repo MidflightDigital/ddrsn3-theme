@@ -36,8 +36,8 @@ end
 local function AnyPlayerThisDiff(diff)
     for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
         local curSteps = GetCurrentSteps(pn)
-        if curSteps and curSteps:GetDifficulty()==diff then 
-            return true 
+        if curSteps and curSteps:GetDifficulty()==diff then
+            return true
         end
     end
     return false
@@ -45,7 +45,7 @@ end
 
 local function PlayerLabelName(pn)
 	local name = GAMESTATE:IsHumanPlayer(pn) and string.lower(ToEnumShortString(pn)) or "cpu"
-	return '../../Graphics/Badges/'..name
+	return '../../Graphics/_shared/Badges/Diff/'..name
 end
 
 local difficultiesToDraw = {
@@ -160,12 +160,11 @@ do
                 self:finishtweening():zoomx(indWidth):x(indX):diffuse{0,0,0,0.5}
             else --switch into X mode
                 self:finishtweening():zoomx(indWidth+36):x(indX+2):diffuse{0,0,0,1}
-            end 
-            return IndicatorUpdate(self, pn) 
+            end
+            return IndicatorUpdate(self, pn)
         end)
-        local indicatorLabel = Def.Sprite{
+        local indicatorLabel = LoadActor(PlayerLabelName(pn))..{
             Name='PlayerLabel',
-            Texture=PlayerLabelName(pn),
             InitCommand=function(self) self:visible(false) end,
             PlayerJoinedMessageCommand=function(self,p)
                 if p.Player==pn then self:Load(ResolveRelativePath(PlayerLabelName(pn),1)) end
