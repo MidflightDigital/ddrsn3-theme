@@ -48,11 +48,11 @@ local Prefs =
 		Choices = {"No", "Yes"},
 		Values = {false, true}
 	},
-	ArcadeColorMode =
+	ComboColorMode =
 	{
-		Default = true,
-		Choices = {"Arcade Style", "Wii Style"},
-		Values = {true, false}
+		Default = "arcade",
+		Choices = {"Arcade Style", "Wii Style", "Waiei Style"},
+		Values = {"arcade", "wii", "waiei"}
 	},
 	FakeGrades =
 	{

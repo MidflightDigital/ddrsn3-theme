@@ -41,6 +41,8 @@ end
 local host = Def.ActorFrame{
     Name = "HotLifeFlicker",
     InitCommand = function(self) self:SetUpdateFunction(FlickerUpdate) end;
+    OffCommand = function(self) self:sleep(0.792):queuecommand("Terminate") end;
+    TerminateCommand = function(self) self:SetUpdateFunction(nil) end;
 }
 
 local xPosPlayer = {
@@ -58,7 +60,7 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
             :halign(0.75)
         end,
         OnCommand=function(s) s:draworder(3):zoomx(pn=='PlayerNumber_P2' and -1 or 1) end,
-        OffCommand=function(s) s:sleep(0.792):addy(999) end
+        OffCommand=function(s) s:sleep(0.792):visible(false) end
     })
 end
 return host

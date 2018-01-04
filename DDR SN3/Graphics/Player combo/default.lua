@@ -22,8 +22,11 @@ local LabelMaxZoom = THEME:GetMetric("Combo", "LabelMaxZoom");
 local env = GAMESTATE:Env();
 local starterMode = env.StarterMode == true;
 
-local arcadeColoring = ThemePrefs.Get("ArcadeColorMode");
-
+local judgeNumberColoring, colorMode
+do
+	colorMode = ThemePrefs.Get("ComboColorMode");
+	judgeNumberColoring = colorMode == "arcade" or colorMode == "waiei"
+end
 --you can pass nil to this function, it acts the same as passing nothing
 --however, i think that passing nil makes the intent clearer -tertu
 local function cfShowOnly(...)
@@ -68,7 +71,7 @@ do
 	decideColor = function(tns, params)
 		if starterMode then
 			if tns == "FullComboW2" then
-				if arcadeColoring then
+				if judgeNumberColoring then
 					return ScoringInfo ~= nil
 						and ScoringInfo.worstJudge ~= nil
 						and ScoringInfo.worstJudge[player] ~= nil
@@ -78,7 +81,7 @@ do
 					or params.FullComboW2
 					or params.FullComboW3
 			end
-		elseif not arcadeColoring then
+		elseif not judgeNumberColoring then
 			return params[tnsToParam[tns]] or false
 		elseif ScoringInfo and ScoringInfo.worstJudge then
 			return tns == ScoringInfo.worstJudge[player]
@@ -87,6 +90,18 @@ do
 		return false
 	end
 
+end
+
+local function Label(lbl, params)
+	if colorMode == "waiei" then
+		if not (params.FullComboW1
+			or params.FullComboW2
+			or params.FullComboW3)
+		then
+			return 'LabelNormal'
+		end
+	end
+	return lbl
 end
 
 local t = Def.ActorFrame {
@@ -172,11 +187,11 @@ local t = Def.ActorFrame {
 
 		-- FullCombo Rewards
 		if decideColor('TapNoteScore_W1', param) then
-			cfShowOnly('NumberW1', 'LabelW1');
+			cfShowOnly('NumberW1', Label('LabelW1',param));
 		elseif decideColor('TapNoteScore_W2', param) then
-			cfShowOnly('NumberW2', 'LabelW2');
+			cfShowOnly('NumberW2', Label('LabelW2',param));
 		elseif decideColor('TapNoteScore_W3', param) then
-			cfShowOnly('NumberW3', 'LabelW3');
+			cfShowOnly('NumberW3', Label('LabelW3',param));
 		elseif param.Combo then
 			cfShowOnly('NumberNormal', 'LabelNormal');
 		else
