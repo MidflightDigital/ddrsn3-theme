@@ -26,21 +26,18 @@ end;
 if normal then
 
 if ThemePrefs.Get("LightMode") == false then
-	t[#t+1] = Def.ActorFrame{
-		LoadActor("gauge back")..{
-			InitCommand=cmd(x,BPMMeterPosX();y,SCREEN_CENTER_Y-124);
-			OnCommand=cmd(addx,-500;sleep,0.264;decelerate,0.52;addx,500;sleep,0.1;linear,0);
-			OffCommand=cmd(sleep,0.033;accelerate,0.363;addx,-500);
-		};
-	};
+
 end;
 
-t[#t+1] = Def.ActorFrame{
-	LoadActor("bpmmeter.lua");
-};
-
-if ThemePrefs.Get("LightMode") == false then
+if not ThemePrefs.Get("LightMode") then
+	--custom BPM display/meter junk
 	t[#t+1] = LoadActor("SNBPMDisplay.lua");
+	t[#t+1] = LoadActor("gauge back")..{
+		InitCommand=cmd(x,BPMMeterPosX();y,SCREEN_CENTER_Y-124);
+		OnCommand=cmd(addx,-500;sleep,0.264;decelerate,0.52;addx,500;sleep,0.1;linear,0);
+		OffCommand=cmd(sleep,0.033;accelerate,0.363;addx,-500);
+	};
+	t[#t+1] = LoadActor("bpmmeter.lua");
 end
 
 --the delay counter is a hack to prevent crashes
