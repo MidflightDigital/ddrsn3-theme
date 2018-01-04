@@ -39,6 +39,10 @@ t[#t+1] = Def.ActorFrame{
 	LoadActor("bpmmeter.lua");
 };
 
+if ThemePrefs.Get("LightMode") == false then
+	t[#t+1] = LoadActor("SNBPMDisplay.lua");
+end
+
 --the delay counter is a hack to prevent crashes
 local delayCounter = 0
 t[#t+1] = Def.Actor{

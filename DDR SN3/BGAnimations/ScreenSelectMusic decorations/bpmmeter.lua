@@ -22,7 +22,7 @@ local timer = GetUpdateTimer(targetDelta)
 local function UpdateBPMGauge(self)
 	if not ScreenSelectMusic then
 		local top = SCREENMAN:GetTopScreen()
-		if top and top:GetChild("BPMDisplay") then
+		if top and top:GetChild("BPMDisplayHost") then
 			ScreenSelectMusic = top
 		else return end
 	end
@@ -45,8 +45,8 @@ local function UpdateBPMGauge(self)
 			elseif not (song:IsDisplayBpmSecret() or song:IsDisplayBpmRandom()) then
 				--This song has two display BPMs: read the current BPM off the BPMDisplay
 				gauge:finishtweening()
-				local bpmDisplay = ScreenSelectMusic:GetChild("BPMDisplay")
-				gauge:croptop(clamp(CalculateBaseForBPM(tonumber(bpmDisplay:GetText()) or 0), 0, 1))
+				local bpmDisplay = ScreenSelectMusic:GetChild("BPMDisplayHost"):GetChild("BPMDisplay")
+				gauge:croptop(clamp(CalculateBaseForBPM(bpmDisplay:getaux() or 0), 0, 1))
 			else
 				if gauge:GetTweenTimeLeft()==0 then
 					--This song has a random display BPM: shoot the indicator all the way up and down rapidly
