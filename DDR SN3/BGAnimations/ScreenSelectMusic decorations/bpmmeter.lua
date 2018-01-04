@@ -52,6 +52,7 @@ return Def.ActorFrame{
 			--set the meter to 0
 			self:SetUpdateFunction(nil)
 			gauge:finishtweening():croptop(1)
+			return
 		end
 
 		if song:IsDisplayBpmRandom() or song:IsDisplayBpmSecret() then
