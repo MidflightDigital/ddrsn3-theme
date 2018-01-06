@@ -253,6 +253,7 @@ Texture="WheelEffect 5x4",
 	end,
 	CurrentSongChangedMessageCommand=function(self)
 		local song = GAMESTATE:GetCurrentSong()
+		if not song then return end
 		if song:IsDisplayBpmRandom() or song:IsDisplayBpmSecret() then
 			self:effectclock('musicnooffset'):SetAllStateDelays(0.02)
 		else

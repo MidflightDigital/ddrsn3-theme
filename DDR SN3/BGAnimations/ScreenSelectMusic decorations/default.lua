@@ -106,6 +106,7 @@ t[#t+1] = Def.ActorFrame{
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
 		CurrentSongChangedMessageCommand=function(self)
 			local song = GAMESTATE:GetCurrentSong()
+			if not song then return end
 			if song:IsDisplayBpmRandom() or song:IsDisplayBpmSecret() then
 				self:playcommand("Random")
 			else

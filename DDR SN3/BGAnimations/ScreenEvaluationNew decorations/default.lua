@@ -1,5 +1,10 @@
 local LoadingScreen = Var "LoadingScreen"
-local out = Def.ActorFrame{}
+local t = Def.ActorFrame{}
+
+t[#t+1] = StandardDecorationFromFileOptional("Header","Header");
+t[#t+1] = StandardDecorationFromFileOptional("Footer","Footer");
+t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
+
 local RowsToShow = split(',', THEME:GetMetric(LoadingScreen,"RowsToShow"))
 for idx, name in ipairs(RowsToShow) do
 	local condName = "Row"..name.."Condition"
@@ -13,7 +18,7 @@ local metrics = {}
 --how tall each of the labels is
 metrics.ITEM_HEIGHT = 19
 --how much padding there is between each label
-metrics.PADDING = 6
+metrics.PADDING = 4
 metrics.WIDTH = SCREEN_WIDTH
 metrics.HEIGHT = (metrics.ITEM_HEIGHT+metrics.PADDING)*count-(metrics.PADDING)
 --the absolute top of the shape
@@ -64,6 +69,6 @@ for index, name in pairs(RowsToShow) do
 		}
 	end
 end
-out[#out+1] = centerFrame
+t[#t+1] = centerFrame
 
-return out;
+return t;

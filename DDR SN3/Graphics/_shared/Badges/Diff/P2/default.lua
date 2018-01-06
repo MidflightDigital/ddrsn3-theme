@@ -13,6 +13,7 @@ t[#t+1] = Def.ActorFrame{
     OffCommand=cmd(zoomy,1;linear,0.116;zoomy,0);
     CurrentSongChangedMessageCommand=function(self)
 			local song = GAMESTATE:GetCurrentSong()
+      if not song then return end
 			if song:IsDisplayBpmRandom() or song:IsDisplayBpmSecret() then
 				self:diffuseshift():blend(Blend.Add):effectcolor1(color("1,1,1,0.5")):effectcolor2(color("0,0,0,0")):effectclock("musicnooffset"):effectperiod(0.15)
 			else

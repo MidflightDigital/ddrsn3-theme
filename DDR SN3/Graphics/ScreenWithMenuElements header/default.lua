@@ -37,10 +37,7 @@ elseif screenName == "ScreenSelectProfile" then
 elseif screenName == "ScreenDataSaveSummary" then
 	headerTextImage = "save (doubleres).png"
 
-elseif screenName == "ScreenEvaluationNormal"
-  or screenName == "ScreenEvaluationSummary"
-  or screenName == "ScreenEvaluationOni"
-  or screenName == "ScreenEvaluationNonstop"
+elseif string.find(screenName, "ScreenEvaluation")
   or screenName == "ScreenNetEvaluation" then
 	headerTextImage = "eval (doubleres).png"
 end
