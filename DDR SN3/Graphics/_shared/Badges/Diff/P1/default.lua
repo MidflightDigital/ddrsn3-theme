@@ -9,16 +9,8 @@ if ThemePrefs.Get("LightMode") == false then
 t[#t+1] = Def.ActorFrame{
   LoadActor("../side_light")..{
     InitCommand=cmd(x,-22);
-    OnCommand=cmd(zoomy,0;sleep,0.283;linear,0.116;zoomy,1);
+    OnCommand=cmd(zoomy,0;sleep,0.283;linear,0.116;zoomy,1;diffuseshift;blend,Blend.Add;effectcolor1,color("1,1,1,0.5");effectcolor2,color("0,0,0,0");effectclock,'beatnooffset');
     OffCommand=cmd(zoomy,1;linear,0.116;zoomy,0);
-    CurrentSongChangedMessageCommand=function(self)
-			local song = GAMESTATE:GetCurrentSong()
-			if song:IsDisplayBpmRandom() or song:IsDisplayBpmSecret() then
-				self:diffuseshift():blend(Blend.Add):effectcolor1(color("1,1,1,0.5")):effectcolor2(color("0,0,0,0")):effectclock("musicnooffset"):effectperiod(0.15)
-			else
-				self:diffuseshift():blend(Blend.Add):effectcolor1(color("1,1,1,0.5")):effectcolor2(color("0,0,0,0")):effectclock('beatnooffset')
-			end;
-		end;
   };
 };
 end;

@@ -99,22 +99,9 @@ t[#t+1] = Def.ActorFrame{
 if ThemePrefs.Get("LightMode") == false then
 t[#t+1] = Def.ActorFrame{
 	LoadActor("radar lights (doubleres)")..{
-		InitCommand=function(self)
-			self:xy(RadarPosX()+5,SCREEN_CENTER_Y+7)
-		end;
+		InitCommand=cmd(xy,RadarPosX()+5,SCREEN_CENTER_Y+7;diffuseshift;effectcolor1,color("1,1,1,0.75");effectcolor2,color("1,1,1,0.25");effectclock,'beatnooffset');
 		OnCommand=cmd(zoomy,0;addx,-400;sleep,0.264;linear,0.2;zoomy,0.3;addx,400;linear,0.2;zoomy,1);
 		OffCommand=cmd(sleep,0.033;accelerate,0.33;addx,-400);
-		CurrentSongChangedMessageCommand=function(self)
-			local song = GAMESTATE:GetCurrentSong()
-			if song:IsDisplayBpmRandom() or song:IsDisplayBpmSecret() then
-				self:playcommand("Random")
-			else
-				self:diffuseshift():effectcolor1(color("1,1,1,0.75")):effectcolor2(color("1,1,1,0.25")):effectclock('beatnooffset')
-			end;
-		end;
-		RandomCommand=function(self)
-			self:diffuseshift():effectcolor1(color("1,1,1,0.75")):effectcolor2(color("1,1,1,0.25")):effectclock("musicnooffset"):effectperiod(0.15)
-		end;
 	};
 };
 end;
