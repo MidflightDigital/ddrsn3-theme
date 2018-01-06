@@ -1,32 +1,15 @@
 local args = {...}
-local count = args[1] --must be odd
-local metrics = {}
---how tall each of the labels is
-metrics.ITEM_HEIGHT = 19
---how much padding there is between each label
-metrics.PADDING = 6
-metrics.WIDTH = SCREEN_WIDTH
+local metrics = args[1]
 --the absolute right side of the shape
 metrics.RIGHT = metrics.WIDTH/2
 --the absolute left side of the shape
 metrics.LEFT = -metrics.RIGHT
-metrics.HEIGHT = (metrics.ITEM_HEIGHT+metrics.PADDING)*count-(metrics.PADDING*2)
---the absolute top of the shape
-metrics.TOP = metrics.HEIGHT/2
---the absolute bottom of the shape
-metrics.BOTTOM = -metrics.TOP
 --the top of the central rectangle of the shape
 metrics.QTOP = metrics.TOP - metrics.ITEM_HEIGHT
 --the bottom of the central rectangle of the shape
 metrics.QBOTTOM = metrics.BOTTOM + metrics.ITEM_HEIGHT
 --the height of the central rectangle of the shape
 metrics.QHEIGHT = metrics.QTOP - metrics.QBOTTOM
---the left edge of the tabs
-metrics.TLEFT = -168
---the right edge of the tabs
-metrics.TRIGHT = 168
---how wide the tab is in total
-metrics.CORE = metrics.TRIGHT-metrics.TLEFT
 --the width of the ears of the tabs
 metrics.TAB_WIDTH = metrics.ITEM_HEIGHT
 --the left edge of the top/bottom of the tabs
@@ -57,7 +40,6 @@ local maskVertices = {
 local quadColor = color"#00EC38"
 
 return Def.ActorFrame{
-	InitCommand=function(s) s:Center() end,
 	--the base rectangle
 	Def.Quad{
 		InitCommand=function(s) s:zoomx(metrics.WIDTH):zoomy(metrics.QHEIGHT):diffuse(black) end
