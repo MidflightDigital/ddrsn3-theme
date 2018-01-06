@@ -1,17 +1,28 @@
 local LoadingScreen = Var "LoadingScreen"
 local t = Def.ActorFrame{}
 
+--As this screen pretty much exists to display PlayerStageStats, we'll need this a few times.
+local PSSes = {}
+do
+	local stageStats = STATSMAN:GetCurStageStats()
+	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+		PSSes[pn] = stageStats:GetPlayerStageStats(pn)
+	end
+end
 t[#t+1] = StandardDecorationFromFileOptional("Header","Header");
 t[#t+1] = StandardDecorationFromFileOptional("Footer","Footer");
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 
 local RowsToShow = split(',', THEME:GetMetric(LoadingScreen,"RowsToShow"))
+--filter out rows that should not be shown because of some bit of current status
+--for example, RowW1Condition is GAMESTATE:ShowW1(), so if Marvelouses are disabled the row for them is not shown.
 for idx, name in ipairs(RowsToShow) do
 	local condName = "Row"..name.."Condition"
 	if THEME:HasMetric(LoadingScreen, condName) and (not THEME:GetMetric(LoadingScreen, condName)) then
 		table.remove(RowsToShow, idx)
 	end
 end
+--used to calulate how tall the shape should be
 local count = #RowsToShow
 
 local metrics = {}
@@ -35,9 +46,14 @@ metrics.CORE = metrics.TRIGHT-metrics.TLEFT
 metrics.SEPARATOR_WIDTH = 1
 metrics.NUM_OFFSET = THEME:GetMetric(LoadingScreen, "NumberXOffset")
 
-local labelPath = THEME:GetPathG("ScreenEvaluationNew", "rowlabels")
+--a bunch of things that should all be center-aligned more or less
 local centerFrame = Def.ActorFrame{InitCommand=function(s) s:Center() end}
+local labelPath = THEME:GetPathG("ScreenEvaluationNew", "rowlabels")
+
+--the background
 centerFrame[#centerFrame+1] = LoadActor("shape", metrics);
+
+--the actual judgment rows
 for index, name in pairs(RowsToShow) do
 	--row label
 	local baseY = metrics.BOTTOM+(metrics.ITEM_HEIGHT/2+(metrics.ITEM_HEIGHT+metrics.PADDING)*(index-1))
@@ -48,13 +64,13 @@ for index, name in pairs(RowsToShow) do
 		end,
 	}
 
+	--row counter
 	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-		local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
 		centerFrame[#centerFrame+1] = Def.RollingNumbers{
 			Font="ScreenEvaluationNew rownumber",
 			InitCommand= function(s) s:Load(THEME:GetMetric(LoadingScreen,"RollingNumbersClass"))
 				:y(baseY):x((pn=='PlayerNumber_P1' and -1 or 1)*metrics.NUM_OFFSET)
-				:targetnumber((THEME:GetMetric(LoadingScreen,"Row"..name.."Value"))(pss))
+				:targetnumber((THEME:GetMetric(LoadingScreen,"Row"..name.."Value"))(PSSes[pn],pn))
 			end
 		}
 	end

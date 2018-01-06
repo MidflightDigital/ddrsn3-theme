@@ -48,15 +48,8 @@ if screenName == "ScreenSelectProfile" then
 	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenDataSaveSummary" then
 	headerBaseImage = "centerbase (doubleres).png"
-elseif screenName == "ScreenEvaluationNormal" then
-	headerBaseImage = "centerbase (doubleres).png"
-elseif screenName == "ScreenEvaluationSummary" then
-	headerBaseImage = "centerbase (doubleres).png"
-elseif screenName == "ScreenEvaluationOni" then
-	headerBaseImage = "centerbase (doubleres).png"
-elseif screenName == "ScreenEvaluationNonstop" then
-	headerBaseImage = "centerbase (doubleres).png"
-elseif screenName == "ScreenNetEvaluation" then
+elseif string.find(screenName, "ScreenEvaluation")
+  or screenName == "ScreenNetEvaluation" then
 	headerBaseImage = "centerbase (doubleres).png"
 elseif screenName == "ScreenSelectMusicRD" then
 	headerBaseImage = "RDbase (doubleres).png"
@@ -86,19 +79,12 @@ local out = Def.ActorFrame{
 		InitCommand=function(self)
 			if screenName == "ScreenSelectProfile" then
 				self:x(SCREEN_CENTER_X):halign(0.5)
-			elseif screenName == "ScreenEvaluationNormal" then
-				self:x(SCREEN_CENTER_X):halign(0.5)
-			elseif screenName == "ScreenEvaluationSummary" then
-				self:x(SCREEN_CENTER_X):halign(0.5)
-			elseif screenName == "ScreenEvaluationOni" then
-				self:x(SCREEN_CENTER_X):halign(0.5)
-			elseif screenName == "ScreenEvaluationNonstop" then
+			elseif string.find(screenName, "ScreenEvaluation")
+  				or screenName == "ScreenNetEvaluation" then
 				self:x(SCREEN_CENTER_X):halign(0.5)
 			elseif screenName == "ScreenDataSaveSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5)
-			elseif screenName == "ScreenNetEvaluation" then
-				self:x(SCREEN_CENTER_X):halign(0.5)
-      elseif screenName == "ScreenSelectMusicExtra" then
+      		elseif screenName == "ScreenSelectMusicExtra" then
 				self:x(SCREEN_CENTER_X):halign(0.5)
 			else
 				self:x(SCREEN_LEFT-1.2):halign(0);
@@ -127,15 +113,8 @@ if headerTextImage then
 			self:y(8):valign(1);
 			if screenName == "ScreenSelectProfile" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10)
-			elseif screenName == "ScreenEvaluationNormal" then
-				self:x(SCREEN_CENTER_X):halign(0.5):y(10)
-			elseif screenName == "ScreenEvaluationSummary" then
-				self:x(SCREEN_CENTER_X):halign(0.5):y(10)
-			elseif screenName == "ScreenEvaluationOni" then
-				self:x(SCREEN_CENTER_X):halign(0.5):y(10)
-			elseif screenName == "ScreenEvaluationNonstop" then
-				self:x(SCREEN_CENTER_X):halign(0.5):y(10)
-			elseif screenName == "ScreenNetEvaluation" then
+			elseif string.find(screenName, "ScreenEvaluation")
+  				or screenName == "ScreenNetEvaluation" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10)
 			elseif screenName == "ScreenDataSaveSummary" then
 				self:x(SCREEN_CENTER_X):halign(0.5):y(10)
