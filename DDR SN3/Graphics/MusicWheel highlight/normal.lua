@@ -249,8 +249,19 @@ t[#t+1] = Def.Sprite {
 Texture="WheelEffect 5x4",
 	InitCommand=function(self)
 		self:draworder(100):x(-73)
-		self:effectclock('beatnooffset'):SetAllStateDelays(0.1)
+
 	end,
+	CurrentSongChangedMessageCommand=function(self)
+		local song = GAMESTATE:GetCurrentSong()
+		if song:IsDisplayBpmRandom() or song:IsDisplayBpmSecret() then
+			self:effectclock('musicnooffset'):SetAllStateDelays(0.02)
+		else
+			self:effectclock('beatnooffset'):SetAllStateDelays(0.1)
+		end;
+	end;
+	RandomCommand=function(self)
+
+	end;
 };
 end;
 
