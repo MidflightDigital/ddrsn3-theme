@@ -28,11 +28,13 @@ metrics.TRIGHT = 168
 metrics.CORE = metrics.TRIGHT-metrics.TLEFT
 --how thick the separator is
 metrics.SEPARATOR_WIDTH = 1
+metrics.NUM_OFFSET = THEME:GetMetric(LoadingScreen, "NumberXOffset")
 
 local labelPath = THEME:GetPathG("ScreenEvaluationNew", "rowlabels")
 local centerFrame = Def.ActorFrame{InitCommand=function(s) s:Center() end}
 centerFrame[#centerFrame+1] = LoadActor("shape", metrics);
 for index, name in pairs(RowsToShow) do
+	--row label
 	local baseY = metrics.BOTTOM+(metrics.ITEM_HEIGHT/2+(metrics.ITEM_HEIGHT+metrics.PADDING)*(index-1))
 	centerFrame[#centerFrame+1] = Def.Sprite{
 		Texture=labelPath,
@@ -40,6 +42,19 @@ for index, name in pairs(RowsToShow) do
 			s:y(baseY):SetAllStateDelays(math.huge):setstate(THEME:GetMetric(LoadingScreen, "Row"..name.."Frame"))
 		end,
 	}
+
+	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+		local pss = STATSMAN:GetCurStageStats():GetPlayerStageStats(pn)
+		centerFrame[#centerFrame+1] = Def.RollingNumbers{
+			Font="ScreenEvaluationNew rownumber",
+			InitCommand= function(s) s:Load(THEME:GetMetric(LoadingScreen,"RollingNumbersClass"))
+				:y(baseY):x((pn=='PlayerNumber_P1' and -1 or 1)*metrics.NUM_OFFSET)
+				:targetnumber((THEME:GetMetric(LoadingScreen,"Row"..name.."Value"))(pss))
+			end
+		}
+	end
+
+	--separator
 	if index~=count then
 		centerFrame[#centerFrame+1] = Def.Quad{
 			InitCommand=function(s)
