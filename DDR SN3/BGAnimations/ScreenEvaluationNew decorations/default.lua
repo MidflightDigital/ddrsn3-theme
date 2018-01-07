@@ -1,6 +1,13 @@
 local LoadingScreen = Var "LoadingScreen"
 local t = Def.ActorFrame{}
 
+local function m(metric,pn)
+	if pn then
+		metric = metric:gsub("PN", ToEnumShortString(pn))
+	end
+	return THEME:GetMetric(LoadingScreen,metric)
+end
+
 --As this screen pretty much exists to display PlayerStageStats, we'll need this a few times.
 local PSSes = {}
 do
@@ -13,12 +20,12 @@ t[#t+1] = StandardDecorationFromFileOptional("Header","Header");
 t[#t+1] = StandardDecorationFromFileOptional("Footer","Footer");
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 
-local RowsToShow = split(',', THEME:GetMetric(LoadingScreen,"RowsToShow"))
+local RowsToShow = split(',', m "RowsToShow")
 --filter out rows that should not be shown because of some bit of current status
 --for example, RowW1Condition is GAMESTATE:ShowW1(), so if Marvelouses are disabled the row for them is not shown.
 for idx, name in ipairs(RowsToShow) do
 	local condName = "Row"..name.."Condition"
-	if THEME:HasMetric(LoadingScreen, condName) and (not THEME:GetMetric(LoadingScreen, condName)) then
+	if THEME:HasMetric(LoadingScreen, condName) and (not m(condName)) then
 		table.remove(RowsToShow, idx)
 	end
 end
@@ -44,40 +51,40 @@ metrics.TRIGHT = 168
 metrics.CORE = metrics.TRIGHT-metrics.TLEFT
 --how thick the separator is
 metrics.SEPARATOR_WIDTH = 1
-metrics.NUM_OFFSET = THEME:GetMetric(LoadingScreen, "NumberXOffset")
+metrics.NUM_OFFSET = m "NumberXOffset"
 
 --a bunch of things that should all be center-aligned more or less
-local centerFrame = Def.ActorFrame{InitCommand=function(s) s:Center() end}
+local judgmentFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "JudgmentFrameX"):y(m "JudgmentFrameY") end}
 local labelPath = THEME:GetPathG("ScreenEvaluationNew", "rowlabels")
 
 --the background
-centerFrame[#centerFrame+1] = LoadActor("shape", metrics);
+judgmentFrame[#judgmentFrame+1] = LoadActor("shape", metrics);
 
 --the actual judgment rows
 for index, name in pairs(RowsToShow) do
 	--row label
 	local baseY = metrics.BOTTOM+(metrics.ITEM_HEIGHT/2+(metrics.ITEM_HEIGHT+metrics.PADDING)*(index-1))
-	centerFrame[#centerFrame+1] = Def.Sprite{
+	judgmentFrame[#judgmentFrame+1] = Def.Sprite{
 		Texture=labelPath,
 		InitCommand=function(s)
-			s:y(baseY):SetAllStateDelays(math.huge):setstate(THEME:GetMetric(LoadingScreen, "Row"..name.."Frame"))
+			s:y(baseY):SetAllStateDelays(math.huge):setstate(m("Row"..name.."Frame"))
 		end,
 	}
 
 	--row counter
 	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-		centerFrame[#centerFrame+1] = Def.RollingNumbers{
+		judgmentFrame[#judgmentFrame+1] = Def.RollingNumbers{
 			Font="ScreenEvaluationNew rownumber",
-			InitCommand= function(s) s:Load(THEME:GetMetric(LoadingScreen,"RollingNumbersClass"))
-				:y(baseY):x((pn=='PlayerNumber_P1' and -1 or 1)*metrics.NUM_OFFSET)
-				:targetnumber((THEME:GetMetric(LoadingScreen,"Row"..name.."Value"))(PSSes[pn],pn))
+			InitCommand= function(s) s:Load(m "RollingNumbersClass"):y(baseY)
+				:x((pn=='PlayerNumber_P1' and -1 or 1)*metrics.NUM_OFFSET)
+				:targetnumber((m("Row"..name.."Value"))(PSSes[pn],pn))
 			end
 		}
 	end
 
 	--separator
 	if index~=count then
-		centerFrame[#centerFrame+1] = Def.Quad{
+		judgmentFrame[#judgmentFrame+1] = Def.Quad{
 			InitCommand=function(s)
 				s:y(baseY+metrics.ITEM_HEIGHT/2+metrics.PADDING/2):zoomy(metrics.SEPARATOR_WIDTH):zoomx(metrics.CORE)
 				:diffuse{0,0,0,1}
@@ -85,6 +92,18 @@ for index, name in pairs(RowsToShow) do
 		}
 	end
 end
-t[#t+1] = centerFrame
+t[#t+1] = judgmentFrame
+
+for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+	local pss = PSSes[pn]
+	local gradeFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "GradeXOffset"*(pn=='PlayerNumber_P1' and -1 or 1)+SCREEN_CENTER_X)
+		:y(THEME:GetMetric(LoadingScreen,"GradeY")) end}
+	gradeFrame[#gradeFrame+1] = LoadActor("fc_ring",pss)..{InitCommand=function(s) s:x(m("RingPNXOffset",pn)):y(m "RingYOffset") end}
+	gradeFrame[#gradeFrame+1] = LoadActor("grade", pss, m"GradeOnCommand",m"GradeOffCommand")
+	if pss:FullCombo() then
+		gradeFrame[#gradeFrame+1] = LoadActor("FullCombo 1x2")
+	end
+	t[#t+1] = gradeFrame
+end
 
 return t;
