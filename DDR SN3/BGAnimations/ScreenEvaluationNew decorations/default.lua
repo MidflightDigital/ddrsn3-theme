@@ -1,5 +1,33 @@
 local LoadingScreen = Var "LoadingScreen"
+
+--this handles Back and Start for us because StepMania doesn't
+local BasicNavigationHandler
+do
+	local transitioningOut = false
+	BasicNavigationHandler=function(inputInfo)
+		--once we're transitioning ignore input
+		if transitioningOut then return true end
+		local pn = inputInfo.PlayerNumber
+		local gb = inputInfo.GameButton
+		if pn and GAMESTATE:IsHumanPlayer(pn) and gb then
+			local top = SCREENMAN:GetTopScreen()
+			if gb == "Start" then
+				transitioningOut = true
+				SOUND:PlayOnce(THEME:GetPathS("Common", "start"), true)
+				top:StartTransitioningScreen("SM_GoToNextScreen")
+			elseif gb == "Back" then
+				transitioningOut = true
+				SOUND:PlayOnce(THEME:GetPathS("Common", "back"), true)
+				top:StartTransitioningScreen("SM_GoToPrevScreen")
+			end
+		end
+		return true
+	end
+end
+
 local t = Def.ActorFrame{}
+
+t[#t+1] = Def.Actor{OnCommand=function() SCREENMAN:GetTopScreen():AddInputCallback(BasicNavigationHandler) end}
 
 local function m(metric,pn)
 	if pn then
@@ -75,7 +103,7 @@ for index, name in pairs(RowsToShow) do
 	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 		judgmentFrame[#judgmentFrame+1] = Def.RollingNumbers{
 			Font="ScreenEvaluationNew rownumber",
-			InitCommand= function(s) s:Load(m "RollingNumbersClass"):y(baseY)
+			InitCommand= function(s) s:Load(m "RollingNumbersRowClass"):y(baseY)
 				:x((pn=='PlayerNumber_P1' and -1 or 1)*metrics.NUM_OFFSET)
 				:targetnumber((m("Row"..name.."Value"))(PSSes[pn],pn))
 			end
@@ -99,11 +127,39 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	local gradeFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "GradeXOffset"*(pn=='PlayerNumber_P1' and -1 or 1)+SCREEN_CENTER_X)
 		:y(THEME:GetMetric(LoadingScreen,"GradeY")) end}
 	gradeFrame[#gradeFrame+1] = LoadActor("fc_ring",pss)..{InitCommand=function(s) s:x(m("RingPNXOffset",pn)):y(m "RingYOffset") end}
-	gradeFrame[#gradeFrame+1] = LoadActor("grade", pss, m"GradeOnCommand",m"GradeOffCommand")
+	gradeFrame[#gradeFrame+1] = LoadActor("grade", pss)..{OnCommand= m"GradeOnCommand",OffCommand=m"GradeOffCommand"}
 	if pss:FullCombo() then
 		gradeFrame[#gradeFrame+1] = LoadActor("FullCombo 1x2")
 	end
 	t[#t+1] = gradeFrame
+
+	local frameX = pn=='PlayerNumber_P1' and SCREEN_LEFT or SCREEN_RIGHT
+	local onAddition = 246 * (pn=='PlayerNumber_P1' and -1 or 1)
+	local offAddition = pn=='PlayerNumber_P1' and -SCREEN_WIDTH or SCREEN_WIDTH
+	local scoreXOffset = m("ScoreXOffset") * (pn=='PlayerNumber_P1' and -1 or 1)
+	t[#t+1] = Def.ActorFrame{
+		InitCommand=cmd(xy,frameX,SCREEN_BOTTOM-104);
+		OnCommand=cmd(addx,onAddition;sleep,0.2;linear,0.2;addx,-onAddition);
+		OffCommand=cmd(linear,0.2;addx,offAddition);
+		LoadActor("diff frame")..{
+			InitCommand=cmd(halign,0;);
+		};
+		LoadActor("difficon",pn)..{InitCommand=cmd(halign,0)};
+		Def.ActorFrame{
+			InitCommand=cmd(y,19);
+			Def.Quad{
+				InitCommand=cmd(halign,0;setsize,WideScale(192,256),24;diffuse,color("#666666"));
+			};
+			Def.Quad{
+				InitCommand=cmd(halign,0;setsize,WideScale(190,254),20;diffuse,color("0,0,0,1"));
+			};
+			Def.RollingNumbers{
+				Font="ScreenEvaluationNew scorenumber",
+				InitCommand=function(s) s:halign(0):Load(m "RollingNumbersScoreClass"):zoomx(WideScale(1.2,1.6))
+					:diffuse(color"#F9FF20"):targetnumber(pss:GetScore()):x(scoreXOffset) end
+			};
+		};
+	};
 end
 
 return t;
