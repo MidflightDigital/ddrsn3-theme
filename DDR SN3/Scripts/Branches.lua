@@ -107,6 +107,8 @@ Branch.AfterGameplay = function()
 			end
 		elseif GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
 			return "ScreenEvaluationRave"
+		elseif IsStarterMode() then
+			return "ScreenEvaluationNewStarter"
 		else
 			return "ScreenEvaluationNewNormal"
 		end

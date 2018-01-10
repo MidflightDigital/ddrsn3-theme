@@ -38,6 +38,7 @@ local maskVertices = {
 }
 
 local quadColor = color"#00EC38"
+local midColor = {0,quadColor[2]/2,quadColor[3]/2,1}
 
 return Def.ActorFrame{
 	--the base rectangle
@@ -50,12 +51,12 @@ return Def.ActorFrame{
 	},
 	Def.Quad{
 		InitCommand=function(s) s:zoomx(metrics.CORE/2):zoomy(metrics.HEIGHT):halign(1)
-			:diffuseleftedge(black):diffuserightedge(quadColor):MaskDest()
+			:diffuse(midColor):diffuseleftedge(black):diffuserightedge(quadColor):MaskDest()
 		end
 	},
 	Def.Quad{
 		InitCommand=function(s) s:zoomx(metrics.CORE/2):zoomy(metrics.HEIGHT):halign(0)
-			:diffuseleftedge(quadColor):diffuserightedge(black):MaskDest()
+			:diffuse(midColor):diffuseleftedge(quadColor):diffuserightedge(black):MaskDest()
 		end
 	}
 }

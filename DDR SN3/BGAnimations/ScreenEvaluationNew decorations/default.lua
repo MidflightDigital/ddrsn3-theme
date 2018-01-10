@@ -81,6 +81,11 @@ metrics.CORE = metrics.TRIGHT-metrics.TLEFT
 metrics.SEPARATOR_WIDTH = 1
 metrics.NUM_OFFSET = m "NumberXOffset"
 
+local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end}
+bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe")}
+bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()) end}
+t[#t+1]=bannerFrame
+
 --a bunch of things that should all be center-aligned more or less
 local judgmentFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "JudgmentFrameX"):y(m "JudgmentFrameY") end}
 local labelPath = THEME:GetPathG("ScreenEvaluationNew", "rowlabels")

@@ -22,6 +22,7 @@ t[#t+1] = Def.Actor{
 		if not ScoringInfo.worstJudge then
 			ScoringInfo.worstJudge = {}
 		end
+
 		local wj = ScoringInfo.worstJudge[params.Player]
 		if tns_reverse[params.TapNoteScore] <= tns_reverse['TapNoteScore_W1'] and
 			tns_reverse[params.TapNoteScore] >= tns_reverse['TapNoteScore_Miss'] then

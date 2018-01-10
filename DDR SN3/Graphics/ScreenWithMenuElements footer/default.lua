@@ -52,7 +52,7 @@ t[#t+1] = Def.ActorFrame{
 };
 end
 
-if screenName == "ScreenEvaluationNormal" or screenName == "ScreenEvaluationSummary" or screenName == "ScreenEvaluationOni" or screenName == "ScreenEvaluationNonstop" or screenName == "ScreenNetEvaluation"  then
+if screenName == "ScreenNetEvaluation" or string.find(screenName,"ScreenEvaluation") then
 t[#t+1] = Def.ActorFrame{
   LoadActor(THEME:GetPathG("","_footer/skip.lua"));
 };
