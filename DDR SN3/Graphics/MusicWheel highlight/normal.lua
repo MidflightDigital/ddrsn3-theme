@@ -23,7 +23,7 @@ end;
 if GAMESTATE:GetCoinMode() == 'CoinMode_Home' and SCREENMAN:GetTopScreen() ~= "ScreenNetRoom" then
 for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 t[#t+1] = Def.ActorFrame {
-	LoadActor("frame.png")..{
+	LoadActor("frame")..{
 	OnCommand=cmd(queuecommand,"Set");
 	BeginCommand=function(self,param)
 		if not GAMESTATE:IsPlayerEnabled('PlayerNumber_P1') then
