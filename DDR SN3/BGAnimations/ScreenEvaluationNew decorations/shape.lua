@@ -4,8 +4,6 @@ local metrics = args[1]
 metrics.RIGHT = metrics.WIDTH/2
 --the absolute left side of the shape
 metrics.LEFT = -metrics.RIGHT
---the top of the central rectangle of the shape
-metrics.QTOP = metrics.TOP - metrics.ITEM_HEIGHT
 --the bottom of the central rectangle of the shape
 metrics.QBOTTOM = metrics.BOTTOM + metrics.ITEM_HEIGHT
 --the height of the central rectangle of the shape

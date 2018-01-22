@@ -77,6 +77,8 @@ metrics.TLEFT = -168
 metrics.TRIGHT = 168
 --how wide the tab is in total
 metrics.CORE = metrics.TRIGHT-metrics.TLEFT
+--the top of the central rectangle of the shape
+metrics.QTOP = metrics.TOP - metrics.ITEM_HEIGHT
 --how thick the separator is
 metrics.SEPARATOR_WIDTH = 1
 metrics.NUM_OFFSET = m "NumberXOffset"
@@ -138,6 +140,7 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	end
 	t[#t+1] = gradeFrame
 
+	--score frame
 	local frameX = pn=='PlayerNumber_P1' and SCREEN_LEFT or SCREEN_RIGHT
 	local onAddition = 246 * (pn=='PlayerNumber_P1' and -1 or 1)
 	local offAddition = pn=='PlayerNumber_P1' and -SCREEN_WIDTH or SCREEN_WIDTH
@@ -165,6 +168,16 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 			};
 		};
 	};
+
+	--player zone, its Y position is anchored to the top of the shape.
+	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x(m "PlayerXOffset"):y(metrics.QTOP) end}
+	playerZone[#playerZone+1] = Def.Sprite{Texture="badge "..ToEnumShortString(pn),InitCommand=function(s) s:y(m "BadgeYOffset")}
+	if pss:MachineHighScoreIndex() == 0 then
+		playerZone[#playerZone+1] = Def.Sprite{Texture=THEME:GetPathG("Machine","Record2"), InitCommand=function(s) s:y(metrics.HEIGHT-35) end}
+	end
+	if pss:PlayerHighScoreIndex() == 0 then
+		playerZone[#playerZone+1] = Def.Sprite{Texture=THEME:GetPathG("Machine","Record1"), InitCommand=function(s) s:y(metrics.HEIGHT-7) end}
+	end
 end
 
 return t;
