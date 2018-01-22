@@ -20,6 +20,10 @@ if normal or extra then
 			OffCommand=cmd(sleep,0.033;accelerate,0.363;x,-237);
 		};
 		LoadActor("DDRDifficultyList.lua");
+		LoadActor("_bg")..{
+		OnCommand=cmd(CenterY;halign,1;x,SCREEN_RIGHT;zoomx,1.16;addx,SCREEN_WIDTH/640*328;sleep,0.412;linear,0.196;addx,-(SCREEN_WIDTH/640*328));
+		OffCommand=cmd(sleep,0.016;accelerate,0.25;addx,SCREEN_WIDTH/640*328;);
+		};
 	};
 end;
 
