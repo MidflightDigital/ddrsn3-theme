@@ -35,8 +35,7 @@ function AssembleStarter()
 			local shortSongDir = string.match(song:GetSongDir(),isolatePattern)
 			local groupName = song:GetGroupName()
 			local groupTbl = GetOrCreateChild(set, groupName)
-			table.insert(groupTbl,
-				string.format(combineFormat, groupName, shortSongDir))
+			groupTbl[#groupTbl+1] = string.format(combineFormat, groupName, shortSongDir)
 		end
 	end
 	--sort all the groups and collect their names, then sort that too
@@ -46,16 +45,16 @@ function AssembleStarter()
 			set[groupName] = nil
 		else
 			table.sort(group)
-			table.insert(groupNames, groupName)
+			groupNames[#groupNames+1] = groupName
 		end
 	end
 	table.sort(groupNames)
 	--then, let's make a representation of our eventual file in memory.
 	local outputLines = {}
 	for _, groupName in ipairs(groupNames) do
-		table.insert(outputLines, "---"..groupName)
+		outputLines[#outputLines+1] = "---"..groupName
 		for _, path in ipairs(set[groupName]) do
-			table.insert(outputLines, path)
+			outputLines[#outputLines+1] = path
 		end
 	end
 	--now, slam it all out to disk.

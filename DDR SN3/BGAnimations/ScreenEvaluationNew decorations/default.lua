@@ -79,13 +79,15 @@ metrics.TRIGHT = 168
 metrics.CORE = metrics.TRIGHT-metrics.TLEFT
 --the top of the central rectangle of the shape
 metrics.QTOP = metrics.TOP - metrics.ITEM_HEIGHT
+--the bottom of the central rectangle of the shape
+metrics.QBOTTOM = metrics.BOTTOM + metrics.ITEM_HEIGHT
 --how thick the separator is
 metrics.SEPARATOR_WIDTH = 1
 metrics.NUM_OFFSET = m "NumberXOffset"
 
 local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end}
 bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe")}
-bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()) end}
+bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):scaletocover(0,0,256,80):halign(1):valign(1) end}
 t[#t+1]=bannerFrame
 
 --a bunch of things that should all be center-aligned more or less
@@ -170,14 +172,15 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	};
 
 	--player zone, its Y position is anchored to the top of the shape.
-	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x(m "PlayerXOffset"):y(metrics.QTOP) end}
-	playerZone[#playerZone+1] = Def.Sprite{Texture="badge "..ToEnumShortString(pn),InitCommand=function(s) s:y(m "BadgeYOffset")}
-	if pss:MachineHighScoreIndex() == 0 then
-		playerZone[#playerZone+1] = Def.Sprite{Texture=THEME:GetPathG("Machine","Record2"), InitCommand=function(s) s:y(metrics.HEIGHT-35) end}
+	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x(SCREEN_CENTER_X+(pn=='PlayerNumber_P1' and -1 or 1)*m "PlayerXOffset"):y(SCREEN_CENTER_Y) end}
+	playerZone[#playerZone+1] = LoadActor("badge "..ToEnumShortString(pn))..{InitCommand=function(s) SCREENMAN:SystemMessage("live") s:y(m "BadgeYOffset") end}
+	if pss:GetMachineHighScoreIndex() == 0 then
+		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record2"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM) end}
 	end
-	if pss:PlayerHighScoreIndex() == 0 then
-		playerZone[#playerZone+1] = Def.Sprite{Texture=THEME:GetPathG("Machine","Record1"), InitCommand=function(s) s:y(metrics.HEIGHT-7) end}
+	if pss:GetPersonalHighScoreIndex() == 0 then
+		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record1"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM) end}
 	end
+	t[#t+1]=playerZone
 end
 
 return t;
