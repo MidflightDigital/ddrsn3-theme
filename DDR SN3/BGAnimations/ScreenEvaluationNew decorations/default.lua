@@ -87,7 +87,7 @@ metrics.NUM_OFFSET = m "NumberXOffset"
 
 local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end}
 bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe")}
-bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):scaletocover(0,0,256,80):halign(1):valign(1) end}
+bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):setsize(256,80) end}
 t[#t+1]=bannerFrame
 
 --a bunch of things that should all be center-aligned more or less
