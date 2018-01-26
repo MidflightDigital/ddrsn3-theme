@@ -5,7 +5,7 @@ local t = Def.ActorFrame{
   };
 };
 
-if ThemePrefs.Get("LightMode") == false
+if ThemePrefs.Get("LightMode") == false then
 t[#t+1] = Def.ActorFrame{
   LoadActor("../side_light")..{
     InitCommand=cmd(x,-22);

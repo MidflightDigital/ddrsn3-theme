@@ -35,27 +35,6 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
-if not GAMESTATE:IsCourseMode() then
---song jacket--
-t[#t+1] = Def.ActorFrame {
-	OnCommand=cmd(playcommand,'Set';CenterX;y,SCREEN_CENTER_Y-130;zoomy,0;sleep,0.099;sleep,0.396;linear,0.2;zoomy,1);
-	Def.Sprite {
-		SetCommand=function(self)
-		local song = GAMESTATE:GetCurrentSong();
-			if song:HasBanner() then
-				self:LoadFromSongBanner(GAMESTATE:GetCurrentSong());
-				self:setsize(256,80);
-			else
-				self:Load(THEME:GetPathG("","Common fallback banner"));
-				self:setsize(256,80);
-			end;
-		end;
-	};
-};
-else
-t[#t+1] = LoadActor("CourseDisplay");
-end;
-
 t[#t+1] = Def.ActorFrame {
 	InitCommand=function(self)
 		self:y(SCREEN_CENTER_Y-124);
@@ -65,6 +44,28 @@ t[#t+1] = Def.ActorFrame {
 		OnCommand=cmd(zoomy,0;sleep,0.099;sleep,0.396;linear,0.2;zoomy,1;sleep,2);
 	};
 };
+
+if not GAMESTATE:IsCourseMode() then
+--song jacket--
+t[#t+1] = Def.ActorFrame {
+	OnCommand=cmd(playcommand,'Set';CenterX;y,SCREEN_CENTER_Y-130;zoomy,0;sleep,0.099;sleep,0.396;linear,0.2;zoomy,1);
+	Def.Sprite {
+		SetCommand=function(self)
+		local song = GAMESTATE:GetCurrentSong();
+			if song:HasBanner() then
+				self:LoadFromSongBanner(GAMESTATE:GetCurrentSong());
+				self:setsize(256,81);
+			else
+				self:Load(THEME:GetPathG("","Common fallback banner"));
+				self:setsize(256,81);
+			end;
+		end;
+	};
+};
+else
+t[#t+1] = LoadActor("CourseDisplay");
+end;
+
 
 t[#t+1] = LoadActor("cd")..{
 	PostInitCommand=function(s) s:zoomx(0.01):zoomy(0.01):x(SCREEN_CENTER_X)

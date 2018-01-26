@@ -87,7 +87,7 @@ metrics.NUM_OFFSET = m "NumberXOffset"
 
 local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end}
 bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe")}
-bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):setsize(256,80) end}
+bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):y(-11):setsize(256,81) end}
 t[#t+1]=bannerFrame
 
 --a bunch of things that should all be center-aligned more or less
@@ -147,25 +147,27 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	local onAddition = 246 * (pn=='PlayerNumber_P1' and -1 or 1)
 	local offAddition = pn=='PlayerNumber_P1' and -SCREEN_WIDTH or SCREEN_WIDTH
 	local scoreXOffset = m("ScoreXOffset") * (pn=='PlayerNumber_P1' and -1 or 1)
+	local alignment = pn=='PlayerNumber_P1' and 0 or 1
+	local frameZoomX = pn=='PlayerNumber_P1' and 1 or -1
 	t[#t+1] = Def.ActorFrame{
 		InitCommand=cmd(xy,frameX,SCREEN_BOTTOM-104);
 		OnCommand=cmd(addx,onAddition;sleep,0.2;linear,0.2;addx,-onAddition);
 		OffCommand=cmd(linear,0.2;addx,offAddition);
 		LoadActor("diff frame")..{
-			InitCommand=cmd(halign,0;);
+			InitCommand=cmd(halign,0;zoomx,frameZoomX);
 		};
-		LoadActor("difficon",pn)..{InitCommand=cmd(halign,0)};
+		LoadActor("difficon",pn)..{InitCommand=cmd(halign,alignment)};
 		Def.ActorFrame{
 			InitCommand=cmd(y,19);
 			Def.Quad{
-				InitCommand=cmd(halign,0;setsize,WideScale(192,256),24;diffuse,color("#666666"));
+				InitCommand=cmd(halign,alignment;setsize,WideScale(192,256),24;diffuse,color("#666666"));
 			};
 			Def.Quad{
-				InitCommand=cmd(halign,0;setsize,WideScale(190,254),20;diffuse,color("0,0,0,1"));
+				InitCommand=cmd(halign,alignment;setsize,WideScale(190,254),20;diffuse,color("0,0,0,1"));
 			};
 			Def.RollingNumbers{
 				Font="ScreenEvaluationNew scorenumber",
-				InitCommand=function(s) s:halign(0):Load(m "RollingNumbersScoreClass"):zoomx(WideScale(1.2,1.6))
+				InitCommand=function(s) s:halign(alignment):Load(m "RollingNumbersScoreClass"):zoomx(WideScale(1.2,1.6))
 					:diffuse(color"#F9FF20"):targetnumber(pss:GetScore()):x(scoreXOffset) end
 			};
 		};
@@ -173,12 +175,12 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 
 	--player zone, its Y position is anchored to the top of the shape.
 	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x(SCREEN_CENTER_X+(pn=='PlayerNumber_P1' and -1 or 1)*m "PlayerXOffset"):y(SCREEN_CENTER_Y) end}
-	playerZone[#playerZone+1] = LoadActor("badge "..ToEnumShortString(pn))..{InitCommand=function(s) SCREENMAN:SystemMessage("live") s:y(m "BadgeYOffset") end}
+	playerZone[#playerZone+1] = LoadActor("badge "..ToEnumShortString(pn))..{InitCommand=function(s) s:y(-metrics.QTOP+m "BadgeYOffset") end}
 	if pss:GetMachineHighScoreIndex() == 0 then
-		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record2"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM) end}
+		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record2"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-24) end}
 	end
 	if pss:GetPersonalHighScoreIndex() == 0 then
-		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record1"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM) end}
+		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record1"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-16) end}
 	end
 	t[#t+1]=playerZone
 end
