@@ -91,17 +91,18 @@ bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GA
 t[#t+1]=bannerFrame
 
 --a bunch of things that should all be center-aligned more or less
-local judgmentFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "JudgmentFrameX"):y(m "JudgmentFrameY") end}
+local centerFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "JudgmentFrameX"):y(m "JudgmentFrameY") end,
+	OffCommand=function(s) s:linear(0.5):zoomy(0) end}
 local labelPath = THEME:GetPathG("ScreenEvaluationNew", "rowlabels")
 
 --the background
-judgmentFrame[#judgmentFrame+1] = LoadActor("shape", metrics);
+centerFrame[#centerFrame+1] = LoadActor("shape", metrics);
 
 --the actual judgment rows
 for index, name in pairs(RowsToShow) do
 	--row label
 	local baseY = metrics.BOTTOM+(metrics.ITEM_HEIGHT/2+(metrics.ITEM_HEIGHT+metrics.PADDING)*(index-1))
-	judgmentFrame[#judgmentFrame+1] = Def.Sprite{
+	centerFrame[#centerFrame+1] = Def.Sprite{
 		Texture=labelPath,
 		InitCommand=function(s)
 			s:y(baseY):SetAllStateDelays(math.huge):setstate(m("Row"..name.."Frame"))
@@ -110,7 +111,7 @@ for index, name in pairs(RowsToShow) do
 
 	--row counter
 	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-		judgmentFrame[#judgmentFrame+1] = Def.RollingNumbers{
+		centerFrame[#centerFrame+1] = Def.RollingNumbers{
 			Font="ScreenEvaluationNew rownumber",
 			InitCommand= function(s) s:Load(m "RollingNumbersRowClass"):y(baseY)
 				:x((pn=='PlayerNumber_P1' and -1 or 1)*metrics.NUM_OFFSET)
@@ -121,7 +122,7 @@ for index, name in pairs(RowsToShow) do
 
 	--separator
 	if index~=count then
-		judgmentFrame[#judgmentFrame+1] = Def.Quad{
+		centerFrame[#centerFrame+1] = Def.Quad{
 			InitCommand=function(s)
 				s:y(baseY+metrics.ITEM_HEIGHT/2+metrics.PADDING/2):zoomy(metrics.SEPARATOR_WIDTH):zoomx(metrics.CORE)
 				:diffuse{0,0,0,1}
@@ -129,7 +130,8 @@ for index, name in pairs(RowsToShow) do
 		}
 	end
 end
-t[#t+1] = judgmentFrame
+--we will still add things to it but it should be below the grade and score
+t[#t+1] = centerFrame
 
 for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	local pss = PSSes[pn]
@@ -173,8 +175,7 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 		};
 	};
 
-	--player zone, its Y position is anchored to the top of the shape.
-	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x(SCREEN_CENTER_X+(pn=='PlayerNumber_P1' and -1 or 1)*m "PlayerXOffset"):y(SCREEN_CENTER_Y) end}
+	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x((pn=='PlayerNumber_P1' and -1 or 1)*m "PlayerXOffset") end}
 	playerZone[#playerZone+1] = LoadActor("badge "..ToEnumShortString(pn))..{InitCommand=function(s) s:y(-metrics.QTOP+m "BadgeYOffset") end}
 	if pss:GetMachineHighScoreIndex() == 0 then
 		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record2"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-24) end}
@@ -182,7 +183,7 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	if pss:GetPersonalHighScoreIndex() == 0 then
 		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record1"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-16) end}
 	end
-	t[#t+1]=playerZone
+	centerFrame[#centerFrame+1]=playerZone
 end
 
 return t;
