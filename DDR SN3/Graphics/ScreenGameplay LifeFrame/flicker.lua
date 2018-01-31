@@ -1,4 +1,6 @@
-if ThemePrefs.Get("LightMode") then return {Class="Actor"} end
+local light = ThemePrefs.Get("LightMode")
+
+local activeColor = {0.75,0.75,0.75,0.8}
 
 local beginTime = GetTimeSinceStart()
 local lastSeenTime = beginTime
@@ -38,8 +40,11 @@ local function FlickerUpdate(self, _)
    
 end
 
+if light then FlickerUpdate = nil end
+
 local host = Def.ActorFrame{
     Name = "HotLifeFlicker",
+    --don't use this flicker method in light mode
     InitCommand = function(self) self:SetUpdateFunction(FlickerUpdate) end;
     OffCommand = function(self) self:sleep(0.792):queuecommand("Terminate") end;
     TerminateCommand = function(self) self:SetUpdateFunction(nil) end;
@@ -50,16 +55,30 @@ local xPosPlayer = {
     P2 = (SCREEN_WIDTH/6)
 }
 
+local LifeChangedHandler
+if light then
+    LifeChangedHandler = function(s, params)
+        if params.LifeMeter:IsHot() then
+            s:visible(true):diffuseblink():effectcolor1{0,0,0,0}:effectcolor2(activeColor):effectperiod(targetDelta)
+        else
+            s:stopeffect():visible(false)
+        end
+    end
+else
+    LifeChangedHandler=function() end
+end
+
 for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
     table.insert(host,Def.Quad{
         Name = pn,
         InitCommand=function(self)
             local short = ToEnumShortString(pn)
             self:visible(false):setsize((SCREEN_WIDTH/2.53),13)
-            :skewx(-0.9):diffuse(color "0.75,0.75,0.75,0.8"):x(xPosPlayer[short])
+            :skewx(-0.9):diffuse(activeColor):x(xPosPlayer[short])
             :halign(0.75)
         end,
         OnCommand=function(s) s:draworder(3):zoomx(pn=='PlayerNumber_P2' and -1 or 1) end,
+        LifeChangedMessageCommand=LifeChangedHandler,
         OffCommand=function(s) s:sleep(0.792):visible(false) end
     })
 end

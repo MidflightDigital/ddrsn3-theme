@@ -167,4 +167,14 @@ if not GAMESTATE:IsCourseMode() then
 	};
 end;
 
+if SN3Debug and (not GAMESTATE:IsCourseMode()) then
+	local xPositions = {
+		PlayerNumber_P1 = SCREEN_WIDTH*1/4,
+		PlayerNumber_P2 = SCREEN_WIDTH*3/4
+	}
+	for _,pn in pairs(GAMESTATE:GetHumanPlayers()) do
+		t[#t+1] = Def.ActorFrame{InitCommand=function(s) s:y(SCREEN_BOTTOM-80):x(xPositions[pn]) end,
+			LoadActor("edit window", pn)}
+	end
+end
 return t
