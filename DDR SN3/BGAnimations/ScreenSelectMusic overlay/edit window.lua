@@ -11,7 +11,7 @@ do
 	endX = -beginningX
 end
 
-local maxTextWidth = dimensions.x-46 --radar size and then some padding
+local maxTextWidth = dimensions.x-54 --radar size and then some padding (8px before, 8px after, 8px after the radar)
 local editColor = {0.75,0.75,0.75,1}
 
 local t =  Def.ActorFrame{
@@ -25,7 +25,7 @@ local t =  Def.ActorFrame{
 			local description = params.Steps:GetDescription()
 			if params.Steps:GetAuthorCredit() == description then
 				--center yourself, this is the only one that shows
-				s:y(-2)
+				s:y(0)
 			else
 				s:y(-10)
 			end
@@ -49,6 +49,8 @@ local t =  Def.ActorFrame{
 	};
 	create_ddr_groove_radar(short_player.."EditRadar", (-dimensions.x/2+38)*sideFlipMultiplier, 0, player, 
 		30, color("1,1,1,0.25"), {editColor,editColor,editColor,editColor,editColor}, "linear", 0);
+	LoadActor(THEME:GetPathG("_ScreenSelectMusic","MeterDisplay"),
+		{Difficulty='Difficulty_Edit',PositionX=16*sideFlipMultiplier,TrackPN=player})..{InitCommand=function(s) s:y(25):halign(horizAlign) end}
 }
 t.SetCommand = function(s)
 	local steps = GAMESTATE:GetCurrentSteps(player)

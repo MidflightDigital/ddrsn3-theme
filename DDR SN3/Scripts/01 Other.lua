@@ -407,3 +407,12 @@ function GetUpdateTimer(targetDelta)
         return false
     end
 end
+
+--we need this function because we need to get the current Steps for non-human players.
+--however, non-human players don't actually have a current Steps.
+function GetCurrentStepsPossiblyCPU(pn)
+	if not GAMESTATE:IsHumanPlayer(pn) then
+		return GAMESTATE:GetCurrentSteps(GAMESTATE:GetMasterPlayerNumber())
+	end
+	return GAMESTATE:GetCurrentSteps(pn)
+end

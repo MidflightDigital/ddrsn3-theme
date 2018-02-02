@@ -11,38 +11,6 @@ local function LoadMetric(name, isBoolean)
     end
 end
 
-local hardXColor = color "#FF0000"
-local lightXColor = color "#FFEC4F"
-local darkXColor = ColorDarkTone(lightXColor)
-
-local function DiffToColor(diff, dark)
-    local color = CustomDifficultyToColor(ToEnumShortString(diff))
-    if dark then
-        return ColorDarkTone(color)
-    else
-        return color
-    end
-end
-
---we need this function because we need to get the current Steps for non-human players.
---however, non-human players don't actually have a current Steps.
-local function GetCurrentSteps(pn)
-	if not GAMESTATE:IsHumanPlayer(pn) then
-		return GAMESTATE:GetCurrentSteps(GAMESTATE:GetMasterPlayerNumber())
-	end
-	return GAMESTATE:GetCurrentSteps(pn)
-end
-
-local function AnyPlayerThisDiff(diff)
-    for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
-        local curSteps = GetCurrentSteps(pn)
-        if curSteps and curSteps:GetDifficulty()==diff then
-            return true
-        end
-    end
-    return false
-end
-
 local function PlayerLabelName(pn)
 	local name = GAMESTATE:IsHumanPlayer(pn) and string.lower(ToEnumShortString(pn)) or "cpu"
 	return '../../Graphics/_shared/Badges/Diff/'..name
@@ -97,35 +65,15 @@ end
 local ret = Def.ActorFrame{InitCommand=function(self) self:xy(DiffPosX(),SCREEN_CENTER_Y+90):hibernate(1.25) end,
     OffCommand=function(self) self:sleep(0.5):visible(false) end}
 
-local function AddMessageReceivers(that, handler)
-    local baseXMode = ThemePrefs.Get "XDifficultyList" == "X Style"
-    local lastXMode = baseXMode
-    local function check()
-        local song = GAMESTATE:GetCurrentSong()
-        if song then
-            local mt = SongAttributes.GetMeterType(song)
-            if mt ~= '_MeterType_Default' then
-                local songXMode = mt ~= '_MeterType_DDR'
-                lastXMode = songXMode
-                return songXMode
-            end
-        end
-        lastXMode = baseXMode
-        return baseXMode
-    end
-
-    that.CurrentSongChangedMessageCommand = function(self, _) handler(self, true, check()) end
-    for _, pn in pairs(PlayerNumber) do
-        pn = ToEnumShortString(pn)
-        that["CurrentSteps"..pn.."ChangedMessageCommand"] = function(self, _) handler(self, false, lastXMode) end
-    end
-end
+local hardXColor = DDRDiffList.HardXColor
+local lightXColor = DDRDiffList.LightXColor
+local darkXColor = DDRDiffList.DarkXColor
 
 local function IndicatorUpdate(self, pn)
     if not GAMESTATE:IsPlayerEnabled(pn) then return end
     self:finishtweening()
     local currentlyVisible = self:GetVisible()
-    local steps = GetCurrentSteps(pn)
+    local steps = GetCurrentStepsPossiblyCPU(pn)
     if steps and GAMESTATE:GetCurrentSong() then
         if currentlyVisible then
             self:linear(0.1)
@@ -155,7 +103,7 @@ do
             Name='Background'..ToEnumShortString(pn),
             InitCommand=function(self) self:zoomy(itemSpacingY):visible(false) end
         }
-        AddMessageReceivers(indicatorBackground, function(self, songChange, XMode )
+        DDRDiffList.MessageHandlers(indicatorBackground, function(self, songChange, XMode )
             if not XMode then --switch into SN mode
                 self:finishtweening():zoomx(indWidth):x(indX):diffuse{0,0,0,0.5}
             else --switch into X mode
@@ -170,7 +118,7 @@ do
                 if p.Player==pn then self:Load(ResolveRelativePath(PlayerLabelName(pn),1)) end
             end
         }
-        AddMessageReceivers(indicatorLabel, function(self, _, XMode) SetXFromPlayerNumber(self, pn, XMode)
+        DDRDiffList.MessageHandlers(indicatorLabel, function(self, _, XMode) SetXFromPlayerNumber(self, pn, XMode)
             return IndicatorUpdate(self, pn) end)
         table.insert(indicatorLabels, indicatorLabel)
         table.insert(indicatorBackgrounds, indicatorBackground)
@@ -188,7 +136,7 @@ for idx, diff in pairs(difficultiesToDraw) do
         Texture = "SNDifficultyList labels 1x5 (doubleres).png",
         InitCommand = function(self) self:setstate(idx-1):SetAllStateDelays(math.huge):diffuse{0.5,0.5,0.5,1} end
     }
-    AddMessageReceivers(label, function(self, _, XMode)
+    DDRDiffList.MessageHandlers(label, function(self, _, XMode)
         if XMode then --switch into X mode
             self:x(labelPos-14):zoom(1)
         else --switch into SN mode
@@ -197,8 +145,8 @@ for idx, diff in pairs(difficultiesToDraw) do
 
         local song = GAMESTATE:GetCurrentSong()
         if song then
-            if AnyPlayerThisDiff(diff) then
-                self:diffuse(DiffToColor(diff))
+            if DiffHelpers.AnyPlayerSelected(diff) then
+                self:diffuse(DiffHelpers.DiffToColor(diff))
             elseif song:HasStepsTypeAndDifficulty(GAMESTATE:GetCurrentStyle():GetStepsType(), diff) then
                 self:diffuse{1,1,1,1}
             else
@@ -210,119 +158,14 @@ for idx, diff in pairs(difficultiesToDraw) do
     end)
     --[[END DIFFICULTY LABEL]]
 
-    --[[TICKS UNDERLAY]]
-    local ticksUnder = Def.Sprite{
-        Name="TicksUnder",
-        Texture="ticks",
-        InitCommand = function(self) self:halign(0):diffuse(DiffToColor(diff,true)) end,
-    }
-    AddMessageReceivers(ticksUnder, function(self, _, XMode)
-        if XMode then --do x position for X mode
-            self:x(tickPos-62)
-        else --do x position for SN mode
-            self:x(tickPos-80)
-        end
-
-        local diffColor = XMode and darkXColor or DiffToColor(diff, true)
-        local song = GAMESTATE:GetCurrentSong()
-        if song then
-            local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
-            if steps then
-                local meter = steps:GetMeter()
-                if meter > 10 and XMode then
-                    --this only happens in X mode so no need to pick an alternative
-                    self:diffuse(lightXColor):cropleft(math.min(1,(meter-10)/10))
-                else
-                    self:diffuse(diffColor):cropleft(math.min(1,meter/10))
-                end
-            else
-                self:diffuse(diffColor):cropleft(0)
-            end
-        else
-            self:diffuse(diffColor):cropleft(0)
-        end
-    end)
-    --[[END TICKS UNDERLAY]]
-
-    --[[TICKS OVERLAY]]
-    local ticksOver = Def.Sprite{
-        Name = "TicksOver",
-        Texture = "ticks",
-        InitCommand = function(self) self:diffuse(DiffToColor(diff)):halign(0):cropright(1) end,
-    }
-    AddMessageReceivers(ticksOver, function(self, songChanged, XMode)
-        --standard mode switching crapola
-        if XMode then
-            self:x(tickPos-62)
-        else
-            self:x(tickPos-80)
-        end
-        local diffColor = XMode and lightXColor or DiffToColor(diff)
-        local song = GAMESTATE:GetCurrentSong()
-        if song then
-            if songChanged then self:stopeffect() end
-            local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
-            if steps then
-                local meter = steps:GetMeter()
-                if meter > 10 then
-                    if XMode then
-                        self:diffuse(hardXColor):cropright(math.max(0,1-(meter-10)/10))
-                    else
-                        self:diffuse(diffColor):cropright(0):glowshift():effectcolor1(DiffToColor(diff)):effectcolor2(color "#FFFFFF")
-                    end
-                else
-                    self:diffuse(diffColor):stopeffect():cropright(1-meter/10)
-                end
-            else
-                self:stopeffect():cropright(1)
-            end
-        else
-            self:stopeffect():cropright(1)
-        end
-    end)
-    --[[END TICKS OVERLAY]]
-
-    --[[METER NUMBER]]
-    local meter = Def.BitmapText{
-        Font="_handelgothic bt 20px";
-        InitCommand=function(self) self:x(tickPos-78):diffuse{0.5,0.5,0.5,1}:zoom(0.75) end
-    }
-    AddMessageReceivers(meter, function(self, _, XMode)
-        if XMode then
-            self:visible(true)
-        else
-            self:visible(false)
-            return --no use doing anything when it won't be used at all
-        end
-        local song = GAMESTATE:GetCurrentSong()
-        if song then
-            local steps = song:GetOneSteps(GAMESTATE:GetCurrentStyle():GetStepsType(), diff)
-            if steps then
-                local meter = steps:GetMeter()
-                if AnyPlayerThisDiff(diff) then
-                    if meter > 10 then
-                        self:diffuse(hardXColor)
-                    else
-                        self:diffuse(lightXColor)
-                    end
-                    self:settext(tostring(meter))
-                elseif song:HasStepsTypeAndDifficulty(GAMESTATE:GetCurrentStyle():GetStepsType(), diff) then
-                    self:diffuse{1,1,1,1}
-                    self:settext(tostring(meter))
-                end
-            else
-                self:settext ""
-            end
-        else
-            self:settext ""
-        end
-    end)
-
+    --this has been moved into another file because it has to be reused.
+    local meterDisplay = LoadActor(THEME:GetPathG("_ScreenSelectMusic","MeterDisplay"),
+        {Difficulty=diff,PositionX=tickPos})
 
     local element = Def.ActorFrame{
         Name = "Row"..diff,
         InitCommand = function(self) self:y( DiffToYPos(diff) ) end,
-        label, ticksUnder, ticksOver, meter
+        label, meterDisplay
     }
     table.insert(ret, element)
 end
