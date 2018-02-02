@@ -1,5 +1,5 @@
 local player = ({...})[1]
-local dimensions = {x=220,y=80}
+local dimensions = {x=376,y=124}
 local short_player = ToEnumShortString(player)
 local sideFlipMultiplier = short_player=='P1' and -1 or 1
 local horizAlign, beginningX, endX
@@ -11,13 +11,14 @@ do
 	endX = -beginningX
 end
 
-local maxTextWidth = dimensions.x-54 --radar size and then some padding (8px before, 8px after, 8px after the radar)
+local maxTextWidth = dimensions.x-72 --radar size and then some padding (8px before, 8px after, 8px after the radar)
 local editColor = {0.75,0.75,0.75,1}
 
 local t =  Def.ActorFrame{
 	--become invisible at first in case our player isn't joined right now
 	InitCommand=function(s) s:visible(false) end;
-	Def.Quad{InitCommand=function(s) s:setsize(dimensions.x,dimensions.y):diffuse{0,0,0,0.95} end};
+	--Def.Quad{InitCommand=function(s) s:setsize(dimensions.x,dimensions.y):diffuse{0,0,0,0.95} end};
+	LoadActor("editwindow back");
 	Def.BitmapText{
 		Font="_futura std medium 20px",
 		InitCommand=function(s) s:y(-10):x(beginningX):halign(horizAlign):maxwidth(maxTextWidth) end,
@@ -27,14 +28,14 @@ local t =  Def.ActorFrame{
 				--center yourself, this is the only one that shows
 				s:y(0)
 			else
-				s:y(-10)
+				s:y(-5)
 			end
 			s:settext(description) 
 		end
 	};
 	Def.BitmapText{
 		Font="_futura std medium 20px",
-		InitCommand=function(s) s:y(6):zoom(0.6):x(beginningX):halign(horizAlign):maxwidth(maxTextWidth):max_dimension_use_zoom(true) end,
+		InitCommand=function(s) s:y(11):zoom(0.6):x(beginningX):halign(horizAlign):maxwidth(maxTextWidth):max_dimension_use_zoom(true) end,
 		HandleAppearCommand=function(s, params)
 			local author = params.Steps:GetAuthorCredit() 
 			if author == params.Steps:GetDescription() then
@@ -47,10 +48,11 @@ local t =  Def.ActorFrame{
 			end
 		end
 	};
-	create_ddr_groove_radar(short_player.."EditRadar", (-dimensions.x/2+38)*sideFlipMultiplier, 0, player, 
-		30, color("1,1,1,0.25"), {editColor,editColor,editColor,editColor,editColor}, "linear", 0);
+	create_ddr_groove_radar(short_player.."EditRadar", (-dimensions.x/2+56)*sideFlipMultiplier, 0, player, 
+		40, color("1,1,1,0.25"), {editColor,editColor,editColor,editColor,editColor}, "linear", 0);
 	LoadActor(THEME:GetPathG("_ScreenSelectMusic","MeterDisplay"),
-		{Difficulty='Difficulty_Edit',PositionX=16*sideFlipMultiplier,TrackPN=player})..{InitCommand=function(s) s:y(25):halign(horizAlign) end}
+		{Difficulty='Difficulty_Edit',PositionX=16*sideFlipMultiplier,TrackPN=player})..
+		{InitCommand=function(s) s:y((dimensions.y/2)-16):halign(horizAlign) end}
 }
 t.SetCommand = function(s)
 	local steps = GAMESTATE:GetCurrentSteps(player)
