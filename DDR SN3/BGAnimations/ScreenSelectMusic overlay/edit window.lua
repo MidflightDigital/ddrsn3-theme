@@ -12,6 +12,7 @@ do
 end
 
 local maxTextWidth = dimensions.x-46 --radar size and then some padding
+local editColor = {0.75,0.75,0.75,1}
 
 local t =  Def.ActorFrame{
 	--become invisible at first in case our player isn't joined right now
@@ -46,17 +47,21 @@ local t =  Def.ActorFrame{
 			end
 		end
 	};
+	create_ddr_groove_radar(short_player.."EditRadar", (-dimensions.x/2+38)*sideFlipMultiplier, 0, player, 
+		30, color("1,1,1,0.25"), {editColor,editColor,editColor,editColor,editColor}, "linear", 0);
 }
-local stepsCommandName = "CurrentSteps"..short_player.."ChangedMessageCommand"
-t[stepsCommandName] = function(s)
+t.SetCommand = function(s)
 	local steps = GAMESTATE:GetCurrentSteps(player)
+	local song = GAMESTATE:GetCurrentSong()
+
 	if GAMESTATE:GetCurrentSong() and steps and steps:GetDifficulty() == 'Difficulty_Edit' then
 		s:playcommand("HandleAppear",{Steps=steps}):visible(true)
 	else
 		s:visible(false)
 	end
 end
+t["CurrentSteps"..short_player.."ChangedMessageCommand"] = function(s) s:playcommand("Set") end
 --if we get kicked out of a group due to player join, fire this so the window hides
-t.CurrentSongChangedMessageCommand = function(s) s:playcommand(stepsCommandName) end
+t.CurrentSongChangedMessageCommand = function(s) s:playcommand("Set") end
 
 return t
