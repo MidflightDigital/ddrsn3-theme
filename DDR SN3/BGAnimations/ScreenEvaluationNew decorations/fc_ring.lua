@@ -18,12 +18,12 @@ for idx=bestTns, worstTns, -1 do
             return Def.ActorFrame{
                 LoadActor("ring")..{
                     InitCommand=function(self) self:diffuse(tnsToColor[curTns]):zoom(0) end;
-                    OnCommand=function(self) self:linear(0.2):zoom(0.5):spin():effectmagnitude(0,0,-170) end;
+                    OnCommand=function(self) self:sleep(0.5):linear(0.2):zoom(0.5):spin():effectmagnitude(0,0,-170) end;
                     OffCommand=function(self) self:linear(0.2):zoom(0) end
                 },
                 LoadActor("lines")..{
                     InitCommand=function(self) self:diffuse(tnsToColor[curTns]):zoom(0) end;
-                    OnCommand=function(self) self:linear(0.2):zoom(0.6):spin():effectmagnitude(0,0,170) end;
+                    OnCommand=function(self) self:sleep(0.5):linear(0.2):zoom(0.6):spin():effectmagnitude(0,0,170) end;
                     OffCommand=function(self) self:linear(0.2):zoom(0) end
                 }
             }

@@ -85,18 +85,22 @@ metrics.QBOTTOM = metrics.BOTTOM + metrics.ITEM_HEIGHT
 metrics.SEPARATOR_WIDTH = 1
 metrics.NUM_OFFSET = m "NumberXOffset"
 
-local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end}
-bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe")}
-bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):y(-11):setsize(256,81) end}
+local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end; OnCommand=cmd(zoomy,0;sleep,0.25;linear,0.15;zoomy,1);OffCommand=cmd(linear,0.15;zoomy,1);}
+bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe");}
+bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):y(-10.5):setsize(256,80) end}
 t[#t+1]=bannerFrame
 
 --a bunch of things that should all be center-aligned more or less
 local centerFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "JudgmentFrameX"):y(m "JudgmentFrameY") end,
+	OnCommand=function(s) s:zoomy(0):sleep(0.25):linear(0.15):zoomy(1) end,
 	OffCommand=function(s) s:linear(0.5):zoomy(0) end}
 local labelPath = THEME:GetPathG("ScreenEvaluationNew", "rowlabels")
 
 --the background
 centerFrame[#centerFrame+1] = LoadActor("shape", metrics);
+centerFrame[#centerFrame+1] = LoadActor("frame")..{
+	InitCommand=cmd(zoom,1.2;y,4;diffusealpha,0.5);
+};
 
 --the actual judgment rows
 for index, name in pairs(RowsToShow) do
@@ -140,7 +144,7 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	gradeFrame[#gradeFrame+1] = LoadActor("fc_ring",pss)..{InitCommand=function(s) s:x(m("RingPNXOffset",pn)):y(m "RingYOffset") end}
 	gradeFrame[#gradeFrame+1] = LoadActor("grade", pss)..{OnCommand= m"GradeOnCommand",OffCommand=m"GradeOffCommand"}
 	if pss:FullCombo() then
-		gradeFrame[#gradeFrame+1] = LoadActor("FullCombo 1x2")
+		gradeFrame[#gradeFrame+1] = LoadActor("FullCombo 1x2")..{OnCommand=cmd(zoom,0;rotationz,360;sleep,0.5;linear,0.2;rotationz,0;zoom,1);OffCommand=cmd(linear,0.2;zoom,0)}
 	end
 	t[#t+1] = gradeFrame
 
@@ -178,7 +182,7 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x((pn=='PlayerNumber_P1' and -1 or 1)*m "PlayerXOffset") end}
 	playerZone[#playerZone+1] = LoadActor("badge "..ToEnumShortString(pn))..{InitCommand=function(s) s:y(-metrics.QTOP+m "BadgeYOffset") end}
 	if pss:GetMachineHighScoreIndex() == 0 then
-		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record2"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-24) end}
+		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record2"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-36) end}
 	end
 	if pss:GetPersonalHighScoreIndex() == 0 then
 		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record1"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-16) end}
