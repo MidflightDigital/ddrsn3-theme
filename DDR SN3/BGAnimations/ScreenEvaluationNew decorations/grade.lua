@@ -1,3 +1,4 @@
+--Animations for this quad are not defined here, unlock some other metrics.
 local args = {...}
 local pss = args[1]
 

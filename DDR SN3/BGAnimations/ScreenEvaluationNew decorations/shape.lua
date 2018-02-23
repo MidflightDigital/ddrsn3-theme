@@ -1,3 +1,9 @@
+--This defines the central frame of the evaluation screen.
+--It is drawn as a thinner quad that is entirely black and covers the whole width
+--then a thicker quad only in the center which fades from quadColor to black,
+--through midColor. As the thicker quad needs its corners cut out, an ActorMultiVertex
+--draws four triangles which mask those corners.
+
 local args = {...}
 local metrics = args[1]
 --the absolute right side of the shape
@@ -45,6 +51,7 @@ return Def.ActorFrame{
 	Def.ActorMultiVertex{
 		InitCommand=function(s) s:SetVertices(maskVertices):SetDrawState{Mode='DrawMode_Triangles'}:MaskSource() end
 	},
+	--the central colored quads
 	Def.Quad{
 		InitCommand=function(s) s:zoomx(metrics.CORE/2):zoomy(metrics.HEIGHT):halign(1)
 			:diffuse(midColor):diffuseleftedge(black):diffuserightedge(quadColor):MaskDest()
