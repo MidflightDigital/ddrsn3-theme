@@ -108,3 +108,7 @@ The arrow tag lines are:
   Title>text
   Artist>text
   Self-explanatory.
+
+#GROUPCOLOR:r,g,b,a;
+Only supported by DDR SuperNOVA 3.
+Sets the color of the group on the wheel to the given color.
