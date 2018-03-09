@@ -51,7 +51,6 @@ DDRDiffList.MessageHandlers(ticksUnder, function(self, _, XMode)
     else
         self:diffuse(diffColor):cropleft(0)
     end
-    SCREENMAN:SystemMessage("finish")
 end)
 --[[END TICKS UNDERLAY]]
 
