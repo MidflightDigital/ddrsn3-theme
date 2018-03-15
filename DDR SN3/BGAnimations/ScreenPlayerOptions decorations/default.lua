@@ -15,10 +15,10 @@ function setting(self,screen,pn)
 	row = screen:GetOptionRow(index);
 	name = row:GetName();
 	choice = row:GetChoiceInRowWithFocus(pn);
+  if choice == 0 then
+    return self:settext("");
+  end
 	self:settext(THEME:GetString("OptionExplanations",name));
-	if PREFSMAN:GetPreference("ArcadeOptionsNavigation") == 0 then
-		choice = 1 + choice;
-	end;
 	if name ~= "Exit" then
 		if THEME:GetMetric( "ScreenOptionsMaster",name.."Explanation" ) then
 			self:settext(THEME:GetString("OptionItemExplanations",THEME:GetMetric( "ScreenOptionsMaster",name.."Explanation" )..""..choice));
