@@ -416,3 +416,17 @@ function GetCurrentStepsPossiblyCPU(pn)
 	end
 	return GAMESTATE:GetCurrentSteps(pn)
 end
+
+--The exit row needs to be enabled sometimes for ScreenPlayerOptions to work properly.
+--These conditions are:
+--If ThreeKeyNavigation is enabled.
+--If ArbitrarySpeedMods are in use.
+function EnableExitRow()
+	if PREFSMAN:GetPreference "ThreeKeyNavigation" then
+		return true
+	end
+	if ThemePrefs.Get "SpeedModSource" then
+		return true
+	end
+	return false
+end

@@ -60,6 +60,12 @@ local Prefs =
 		Choices = {"No", "Yes"},
 		Values = {false, true}
 	},
+	SpeedModSource =
+	{
+		Default = "internal",
+		Choices = {"Standard", "From File", "SM5 Default"},
+		Values = {"internal", "custom", "arbitrary"}
+	}
 }
 
 ThemePrefs.InitAll(Prefs)
@@ -141,4 +147,17 @@ function JudgmentTransformCommand( self, params )
 	self:y( judgmentTransformYs
 		[ThemePrefs.Get("JudgmentHeight")]
 		[params.bReverse and "reverse" or "normal"] )
+end
+
+
+function PlayerOptionsLines()
+	local fixedLines = "2,3,4,5,6,7,10,8,9,11,12,13"
+	local speedLine = "1,"
+	local modSetting = ThemePrefs.Get "SpeedModSource"
+	if modSetting == "custom" then
+		speedLine = "1C,"
+	elseif modSetting == "arbitrary" then
+		speedLine = "1A,"
+	end
+	return speedLine..fixedLines
 end

@@ -31,7 +31,6 @@ DDRDiffList.MessageHandlers(ticksUnder, function(self, _, XMode)
     else --do x position for SN mode
         self:x(tickPos-80)
     end
-    SCREENMAN:SystemMessage("start")
 
     local diffColor = XMode and darkXColor or DiffHelpers.DiffToColor(diff, true)
     local song = GAMESTATE:GetCurrentSong()
