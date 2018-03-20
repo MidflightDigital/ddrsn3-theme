@@ -4,7 +4,7 @@ local env = GAMESTATE:Env()
 local charName = env['SNCharacter'..short_pn] or ""
 local style = GAMESTATE:GetCurrentStyle():GetStyleType();
 
-local maskfile = 
+local maskfile =
 {
 	P1 = THEME:GetPathB("ScreenGameplay", "underlay/Cutin/_Mask_down"),
 	P2 = THEME:GetPathB("ScreenGameplay", "underlay/Cutin/_Mask_up")
@@ -12,8 +12,8 @@ local maskfile =
 maskfile = maskfile[short_pn]
 
 local versus_y = {
-	P1 = -50,
-	P2 = 50
+	P1 = -240,
+	P2 = 240
 }
 versus_y = versus_y[short_pn]
 
