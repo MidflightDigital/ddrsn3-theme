@@ -98,12 +98,12 @@ metrics.QTOP = metrics.TOP - metrics.ITEM_HEIGHT
 metrics.QBOTTOM = metrics.BOTTOM + metrics.ITEM_HEIGHT
 --how thick the separator is
 metrics.SEPARATOR_WIDTH = 1
---how far away the numbers should be from the label. 
+--how far away the numbers should be from the label.
 metrics.NUM_OFFSET = m "NumberXOffset"
 
---The bannerframe is the banner, the frame that contains it, and graphics 
+--The bannerframe is the banner, the frame that contains it, and graphics
 --that should be overlaid on it.
-local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end; OnCommand=cmd(zoomy,0;sleep,0.25;linear,0.15;zoomy,1);OffCommand=cmd(linear,0.15;zoomy,1);}
+local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end; OnCommand=cmd(zoomy,0;sleep,0.25;linear,0.15;zoomy,1);OffCommand=cmd(linear,0.15;zoomy,0);}
 bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe");}
 bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):y(-10.5):setsize(256,80) end}
 t[#t+1]=bannerFrame
@@ -216,7 +216,7 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	};
 
 	--This displays the player badge and whether the player got records.
-	--Metrics used: PlayerXOffset (how far from the center the area is), 
+	--Metrics used: PlayerXOffset (how far from the center the area is),
 	--BadgeYOffset (how far below the top of the black area the player badge should be)
 	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x((pn=='PlayerNumber_P1' and -1 or 1)*m "PlayerXOffset") end}
 	playerZone[#playerZone+1] = LoadActor("badge "..ToEnumShortString(pn))..{InitCommand=function(s) s:y(-metrics.QTOP+m "BadgeYOffset") end}
