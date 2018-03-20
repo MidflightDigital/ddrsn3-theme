@@ -48,7 +48,7 @@ t[#t+1] = Def.ActorFrame {
 if not GAMESTATE:IsCourseMode() then
 --song jacket--
 t[#t+1] = Def.ActorFrame {
-	OnCommand=cmd(playcommand,'Set';CenterX;y,SCREEN_CENTER_Y-130;zoomy,0;sleep,0.099;sleep,0.396;linear,0.2;zoomy,1);
+	OnCommand=cmd(playcommand,'Set';CenterX;y,SCREEN_CENTER_Y-134;zoomy,0;sleep,0.099;sleep,0.396;linear,0.2;zoomy,1);
 	Def.Sprite {
 		SetCommand=function(self)
 		local song = GAMESTATE:GetCurrentSong();

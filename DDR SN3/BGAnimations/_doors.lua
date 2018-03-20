@@ -13,20 +13,32 @@ local t = Def.ActorFrame {
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("",imagePrefix..'2'))..{
 		InitCommand=cmd(y,coordinates.bottom.starting;x,SCREEN_CENTER_X;valign,1);
-			OnCommand=cmd(accelerate,speed;y,coordinates.bottom.ending);
+			OnCommand=function(s)
+				if twoPart then
+					s:y(coordinates.bottom.starting):accelerate(speed):y(coordinates.bottom.ending)
+				else
+					s:accelerate(speed):y(coordinates.bottom.ending)
+				end
+			end;
 			OffCommand=function(s)
 				if twoPart then
 					s:accelerate(speed):y(coordinates.bottom.starting)
 				end
 			end;
-			StartCommand=function(s) s:queuecommand("On") end;
+			StartCommand=function(s) s:playcommand("On") end;
 			FinishCommand=function(s) s:sleep(2):queuecommand("Off") end;
 		};
 	};
 	Def.ActorFrame{
 		LoadActor(THEME:GetPathB("",imagePrefix..'1'))..{
 		InitCommand=cmd(y,coordinates.top.starting;x,SCREEN_CENTER_X;valign,0);
-			OnCommand=cmd(accelerate,speed;y,coordinates.top.ending);
+			OnCommand=function(s)
+				if twoPart then
+					s:y(coordinates.top.starting):accelerate(speed):y(coordinates.top.ending)
+				else
+					s:accelerate(speed):y(coordinates.top.ending)
+				end
+			end;
 			OffCommand=function(s)
 				if twoPart then
 					s:accelerate(speed):y(coordinates.top.starting)
