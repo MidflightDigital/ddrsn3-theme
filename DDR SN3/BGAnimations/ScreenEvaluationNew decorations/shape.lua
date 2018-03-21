@@ -39,7 +39,7 @@ local maskVertices = {
 	{{metrics.TAB_RIGHT, metrics.BOTTOM, 0}, black}
 }
 
-local quadColor = color"#00EC38"
+local quadColor = color"#00CDBF"
 local midColor = {0,quadColor[2]/2,quadColor[3]/2,1}
 
 return Def.ActorFrame{

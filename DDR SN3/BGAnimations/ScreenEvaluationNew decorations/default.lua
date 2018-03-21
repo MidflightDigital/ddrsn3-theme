@@ -112,7 +112,7 @@ t[#t+1]=bannerFrame
 --This includes the background shape, the actual judgment labels themselves, and all that.
 local centerFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "JudgmentFrameX"):y(m "JudgmentFrameY") end,
 	OnCommand=function(s) s:zoomy(0):sleep(0.25):linear(0.15):zoomy(1) end,
-	OffCommand=function(s) s:linear(0.5):zoomy(0) end}
+	OffCommand=function(s) s:linear(0.15):zoomy(0) end}
 local labelPath = THEME:GetPathG("ScreenEvaluationNew", "rowlabels")
 
 --the background
