@@ -162,7 +162,7 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 			InitCommand=function(s)
 				local short = ToEnumShortString(pn)
 				s:zoom(0.75)
-				:diffuseshift():effectcolor1(color("1,1,1,1")):effectcolor2(color("1,1,1,1")):effectperiod(0.25):playcommand("Set")
+				:diffuseshift():effectcolor1(color("1,1,1,1")):effectcolor2(color("0.5,0.5,0.5,1")):effectperiod(1):queuecommand("Set")
 				:x(xPosPlayer[short])
 			end;
 			SetCommand=function(s)
