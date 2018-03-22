@@ -144,6 +144,54 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
+local xPosPlayer = {
+    P1 = (-120),
+    P2 = (120)
+}
+
+for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
+	t[#t+1] = Def.ActorFrame{
+		InitCommand=function(s)
+			local short = ToEnumShortString(pn)
+			s:draworder(100)
+			:xy(RadarPosX(),_screen.cy-46)
+		end;
+		OnCommand=cmd(addx,-500;sleep,0.264;decelerate,0.52;addx,500;sleep,0.1;linear,0);
+		OffCommand=cmd(stoptweening;sleep,0.033;accelerate,0.33;addx,-500);
+		LoadActor("_ShockArrow_mark "..pn)..{
+			InitCommand=function(s)
+				local short = ToEnumShortString(pn)
+				s:zoom(0.75)
+				:diffuseshift():effectcolor1(color("1,1,1,1")):effectcolor2(color("1,1,1,1")):effectperiod(0.25):playcommand("Set")
+				:x(xPosPlayer[short])
+			end;
+			SetCommand=function(s)
+				local song = GAMESTATE:GetCurrentSong();
+				local diffuse = 0
+				if song then
+					local steps = GAMESTATE:GetCurrentSteps(pn)
+					if steps then
+						if steps:GetRadarValues(pn):GetValue('RadarCategory_Mines') == 0 then
+							yZoom = 0
+						else
+							yZoom = 0.75
+						end
+					else
+						yZoom = 0
+					end
+				else
+					yZoom = 0
+				end
+				s:finishtweening()
+				s:linear(0.1):zoomy(yZoom)
+			end;
+			CurrentSongChangedMessageCommand=cmd(playcommand,"Set");
+			CurrentStepsP1ChangedMessageCommand=cmd(playcommand,"Set");
+			CurrentStepsP2ChangedMessageCommand=cmd(playcommand,"Set");
+		};
+	};
+end;
+
 --new song--
 if not GAMESTATE:IsCourseMode() then
 	t[#t+1] = StandardDecorationFromFileOptional("NewSong","NewSong") .. {
