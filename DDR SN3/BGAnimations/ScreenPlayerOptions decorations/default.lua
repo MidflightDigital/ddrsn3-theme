@@ -45,7 +45,7 @@ end;
 
 if GAMESTATE:IsHumanPlayer(PLAYER_2) then
   t[#t+1] = LoadFont("Common Normal")..{
-    InitCommand=cmd(x,SCREEN_CENTER_X+10;y,SCREEN_CENTER_Y+132;zoom,0.55;wrapwidthpixels,494;horizalign,left;valign,0;strokecolor,Color("Black"));
+    InitCommand=cmd(x,SCREEN_CENTER_X+70;y,SCREEN_CENTER_Y+132;zoom,0.55;wrapwidthpixels,494;horizalign,left;valign,0;strokecolor,Color("Black"));
     OnCommand=cmd(queuecommand,"SetP2";addx,-SCREEN_WIDTH;sleep,0.5;accelerate,0.5;addx,SCREEN_WIDTH);
 		OffCommand=cmd(sleep,0.2;accelerate,0.5;addx,SCREEN_WIDTH);
     SetP2Command=function(self)

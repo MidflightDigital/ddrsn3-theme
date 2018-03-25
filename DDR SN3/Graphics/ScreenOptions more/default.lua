@@ -47,11 +47,11 @@ return Def.ActorFrame{
 		LoadActor("2P_OK")..{
 			OnCommand=cmd(zoomy,0);
 			OffCommand=cmd(linear,0.1;zoomy,1;sleep,0.5;linear,0.1;zoomy,0);
-			ExitSelectedP1Command=function(self)
+			ExitSelectedP2Command=function(self)
 				setenv("PlayerOptionExitP2",true);
 				(cmd(stoptweening;linear,0.1;zoomy,1;))(self)
 			end;
-			ExitUnselectedP1Command=function(self)
+			ExitUnselectedP2Command=function(self)
 				setenv("PlayerOptionExitP2",false);
 				(cmd(stoptweening;linear,0.1;zoomy,0;))(self)
 			end;
@@ -63,11 +63,11 @@ return Def.ActorFrame{
 		LoadActor("2P_LEFT")..{
 			OnCommand=cmd(diffusealpha,0;);
 			OffCommand=cmd(diffusealpha,1;linear,0.1;addx,-10;linear,0.1;addx,10;sleep,0.2;zoomy,0);
-			ExitSelectedP1Command=function(self)
+			ExitSelectedP2Command=function(self)
 				setenv("PlayerOptionExitP2",true);
 				(cmd(stoptweening;diffusealpha,1;))(self)
 			end;
-			ExitUnselectedP1Command=function(self)
+			ExitUnselectedP2Command=function(self)
 				setenv("PlayerOptionExitP2",false);
 				(cmd(stoptweening;diffusealpha,0;))(self)
 			end;
@@ -75,11 +75,11 @@ return Def.ActorFrame{
 		LoadActor("2P_RIGHT")..{
 			OnCommand=cmd(diffusealpha,0;);
 			OffCommand=cmd(diffusealpha,1;linear,0.1;addx,10;linear,0.1;addx,-10;sleep,0.2;zoomy,0);
-			ExitSelectedP1Command=function(self)
+			ExitSelectedP2Command=function(self)
 				setenv("PlayerOptionExitP2",true);
 				(cmd(stoptweening;diffusealpha,1;))(self)
 			end;
-			ExitUnselectedP1Command=function(self)
+			ExitUnselectedP2Command=function(self)
 				setenv("PlayerOptionExitP2",false);
 				(cmd(stoptweening;diffusealpha,0;))(self)
 			end;
