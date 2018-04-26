@@ -52,6 +52,7 @@ end
 t[#t+1] = StandardDecorationFromFileOptional("Header","Header");
 t[#t+1] = StandardDecorationFromFileOptional("Footer","Footer");
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
+t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
 
 --Metric: RowsToShow
 --This is a list of row defintions that the screen should use.

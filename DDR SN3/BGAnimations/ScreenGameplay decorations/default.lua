@@ -103,13 +103,26 @@ for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
     InitCommand=function(s)
       s:x(diffXPos[shortPn]):halign(0):draworder(2)
       if GAMESTATE:PlayerIsUsingModifier(pn,'reverse') then
-        s:y(SCREEN_TOP+52)
+        s:y(SCREEN_TOP+44)
       else
         s:y(SCREEN_BOTTOM-52)
       end;
     end;
-		LoadActor("frame (doubleres)");
+		LoadActor("frame (doubleres)")..{
+			InitCommand=function(s)
+				s:zoomx(pn=='PlayerNumber_P2' and -1 or 1)
+				if GAMESTATE:PlayerIsUsingModifier(pn,'reverse') then
+					s:zoomy(-1)
+				end;
+			end;
+		};
 		LoadActor("frame colour (doubleres)")..{
+			InitCommand=function(s)
+				s:zoomx(pn=='PlayerNumber_P2' and -1 or 1)
+				if GAMESTATE:PlayerIsUsingModifier(pn,'reverse') then
+					s:zoomy(-1)
+				end;
+			end;
 			OnCommand=cmd(playcommand,"Set");
 			SetCommand=function(s)
 				local diff = GAMESTATE:GetCurrentSteps(pn):GetDifficulty();

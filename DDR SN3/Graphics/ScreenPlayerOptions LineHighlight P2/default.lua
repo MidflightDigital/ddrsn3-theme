@@ -14,7 +14,7 @@ t = Def.ActorFrame{
 
 	Frame0001=1;
 	Delay0001=0.5;
-	InitCommand=cmd(addx,-200);
+	InitCommand=cmd(addx,200);
 	};
 	LoadActor("../_shared/Badges/Options/P2")..{
 		InitCommand=cmd(addx,200;addy,0;zoomy,1.0;zoomx,1.0;);
