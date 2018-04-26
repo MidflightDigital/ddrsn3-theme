@@ -221,10 +221,10 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	local playerZone=Def.ActorFrame{InitCommand=function(s) s:x((pn=='PlayerNumber_P1' and -1 or 1)*m "PlayerXOffset") end}
 	playerZone[#playerZone+1] = LoadActor("badge "..ToEnumShortString(pn))..{InitCommand=function(s) s:y(-metrics.QTOP+m "BadgeYOffset") end}
 	if pss:GetMachineHighScoreIndex() == 0 then
-		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record2"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-36) end}
+		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record2"))..{InitCommand=function(s) s:zoom(0.8):y(-metrics.QBOTTOM-36) end}
 	end
 	if pss:GetPersonalHighScoreIndex() == 0 then
-		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record1"))..{InitCommand=function(s) s:y(-metrics.QBOTTOM-16) end}
+		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record1"))..{InitCommand=function(s) s:zoom(0.8):y(-metrics.QBOTTOM-16) end}
 	end
 	centerFrame[#centerFrame+1]=playerZone
 end
