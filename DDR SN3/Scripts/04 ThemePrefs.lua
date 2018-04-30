@@ -36,12 +36,6 @@ local Prefs =
 		Choices = { "DDRMAX", "DDRMAX 2", "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS", "aston crowe", "dj vortivask" },
 		Values = { "DDRMAX", "DDRMAX 2", "EXTREME", "SuperNOVA", "SuperNOVA 2", "SuperNOVA 3", "IIDX SIRIUS", "aston crowe", "dj vortivask" }
 	},
-	ConvertHighScores =
-	{
-		Default = false,
-		Choices = {"No", "Yes"},
-		Values = {false, true}
-	},
 	LightMode =
 	{
 		Default = false,
@@ -54,18 +48,18 @@ local Prefs =
 		Choices = {"Arcade Style", "Wii Style", "Waiei Style"},
 		Values = {"arcade", "wii", "waiei"}
 	},
-	FakeGrades =
-	{
-		Default = false,
-		Choices = {"No", "Yes"},
-		Values = {false, true}
-	},
 	SpeedModSource =
 	{
 		Default = "internal",
 		Choices = {"Standard", "From File", "SM5 Default"},
 		Values = {"internal", "custom", "arbitrary"}
-	}
+	},
+	ConvertScoresAndGrades =
+	{
+		Default = false,
+		Choices = {"No", "Yes"},
+		Values = {false, true}
+	},
 }
 
 ThemePrefs.InitAll(Prefs)

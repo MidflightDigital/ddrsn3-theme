@@ -5,7 +5,7 @@ local pss = args[1]
 local tier
 if pss:GetFailed() then
 	tier = 'Grade_Failed'
-elseif ThemePrefs.Get "FakeGrades" then
+elseif ThemePrefs.Get "ConvertScoresAndGrades" then
 	tier = SN2Grading.ScoreToGrade(pss:GetScore(), pss:GetPlayedSteps()[1]:GetDifficulty())
 else
 	tier = pss:GetGrade()
