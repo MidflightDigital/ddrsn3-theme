@@ -104,10 +104,12 @@ do
             InitCommand=function(self) self:zoomy(itemSpacingY):visible(false) end
         }
         DDRDiffList.MessageHandlers(indicatorBackground, function(self, songChange, XMode )
-            if not XMode then --switch into SN mode
-                self:finishtweening():zoomx(indWidth):x(indX):diffuse{0,0,0,0.5}
-            else --switch into X mode
-                self:finishtweening():zoomx(indWidth+36):x(indX+2):diffuse{0,0,0,1}
+            if songChange then
+                if not XMode then --switch into SN mode
+                    self:finishtweening():zoomx(indWidth):x(indX):diffuse{0,0,0,0.5}
+                else --switch into X mode
+                    self:finishtweening():zoomx(indWidth+36):x(indX+2):diffuse{0,0,0,1}
+                end
             end
             return IndicatorUpdate(self, pn)
         end)
@@ -136,11 +138,13 @@ for idx, diff in pairs(difficultiesToDraw) do
         Texture = "SNDifficultyList labels 1x5 (doubleres).png",
         InitCommand = function(self) self:setstate(idx-1):SetAllStateDelays(math.huge):diffuse{0.5,0.5,0.5,1} end
     }
-    DDRDiffList.MessageHandlers(label, function(self, _, XMode)
-        if XMode then --switch into X mode
-            self:x(labelPos-14):zoom(1)
-        else --switch into SN mode
-            self:x(labelPos):zoom(0.9)
+    DDRDiffList.MessageHandlers(label, function(self, songChange, XMode)
+        if songChange then
+            if XMode then --switch into X mode
+                self:x(labelPos-14):zoom(1)
+            else --switch into SN mode
+                self:x(labelPos):zoom(0.9)
+            end
         end
 
         local song = GAMESTATE:GetCurrentSong()
