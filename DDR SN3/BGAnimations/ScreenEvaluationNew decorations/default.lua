@@ -40,10 +40,20 @@ local function m(metric,pn)
 	return THEME:GetMetric(LoadingScreen,metric)
 end
 
+--If summary is set, this is the final evaluation screen.
+local summary = m("Summary")
+
 --As this screen pretty much exists to display PlayerStageStats, we'll need this a few times.
 local PSSes = {}
 do
-	local stageStats = STATSMAN:GetCurStageStats()
+	local stageStats
+	
+	if not summary then
+		stageStats = STATSMAN:GetCurStageStats()
+	else
+		stageStats = STATSMAN:GetFinalEvalStageStats()
+	end
+	
 	for _, pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 		PSSes[pn] = stageStats:GetPlayerStageStats(pn)
 	end
@@ -52,7 +62,10 @@ end
 t[#t+1] = StandardDecorationFromFileOptional("Header","Header");
 t[#t+1] = StandardDecorationFromFileOptional("Footer","Footer");
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
-t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
+if not summary then
+	t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
+end
+
 
 --Metric: RowsToShow
 --This is a list of row defintions that the screen should use.
@@ -75,6 +88,7 @@ local count = #RowsToShow
 
 --The metrics define a number of properties, mostly about the central frame, but they
 --implicitly affect a number of definitions.
+--The name kind of sucks but I don't want to change it right now.
 
 local metrics = {}
 --how tall each of the labels is
@@ -102,12 +116,16 @@ metrics.SEPARATOR_WIDTH = 1
 --how far away the numbers should be from the label.
 metrics.NUM_OFFSET = m "NumberXOffset"
 
---The bannerframe is the banner, the frame that contains it, and graphics
---that should be overlaid on it.
-local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end; OnCommand=cmd(zoomy,0;sleep,0.25;linear,0.15;zoomy,1);OffCommand=cmd(linear,0.15;zoomy,0);}
-bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe");}
-bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):y(-10.5):setsize(256,80) end}
-t[#t+1]=bannerFrame
+if not summary then
+	--The bannerframe is the banner, the frame that contains it, and graphics
+	--that should be overlaid on it. This is used for course and normal eval.
+	local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end; OnCommand=cmd(zoomy,0;sleep,0.25;linear,0.15;zoomy,1);OffCommand=cmd(linear,0.15;zoomy,0);}
+	bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe");}
+	bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):y(-10.5):setsize(256,80) end}
+	t[#t+1]=bannerFrame
+else
+	--the good banner frame
+end
 
 --a bunch of things that should all be center-aligned more or less
 --This includes the background shape, the actual judgment labels themselves, and all that.
@@ -176,8 +194,10 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	--The absolute distance from the center that the grade should be positioned.
 	local gradeFrame = Def.ActorFrame{InitCommand=function(s) s:x(m "GradeXOffset"*(pn=='PlayerNumber_P1' and -1 or 1)+SCREEN_CENTER_X)
 		:y(THEME:GetMetric(LoadingScreen,"GradeY")) end}
-	gradeFrame[#gradeFrame+1] = LoadActor("fc_ring",pss)..{InitCommand=function(s) s:x(m("RingPNXOffset",pn)):y(m "RingYOffset") end}
-	gradeFrame[#gradeFrame+1] = LoadActor("grade", pss)..{OnCommand= m"GradeOnCommand",OffCommand=m"GradeOffCommand"}
+	if not summary then
+		gradeFrame[#gradeFrame+1] = LoadActor("fc_ring",pss)..{InitCommand=function(s) s:x(m("RingPNXOffset",pn)):y(m "RingYOffset") end}
+	end
+	gradeFrame[#gradeFrame+1] = LoadActor("grade", pss, summary, pn)..{OnCommand= m"GradeOnCommand",OffCommand=m"GradeOffCommand"}
 	if pss:FullCombo() then
 		gradeFrame[#gradeFrame+1] = LoadActor("FullCombo 1x2")..{OnCommand=cmd(zoom,0;rotationz,360;sleep,0.5;linear,0.2;rotationz,0;zoom,1);OffCommand=cmd(linear,0.2;zoom,0)}
 	end

@@ -121,7 +121,7 @@ Branch.AfterEvaluation = function()
 		return "ScreenProfileSave"
 	elseif GAMESTATE:GetCurrentStage() == "Stage_Extra1" then
 		if STATSMAN:GetCurStageStats():AllFailed() then
-			return "ScreenEvaluationSummary"
+			return "ScreenEvaluationNewSummary"
 		else
 			return "ScreenProfileSave"
 		end;
@@ -130,7 +130,7 @@ Branch.AfterEvaluation = function()
 	elseif GAMESTATE:IsCourseMode() then
 		return "ScreenProfileSaveSummary"
 	else
-		return "ScreenEvaluationSummary"
+		return "ScreenEvaluationNewSummary"
 	end
 end
 
@@ -188,11 +188,11 @@ Branch.AfterProfileSave = function()
 		if actuallyQualified then
 			return SelectMusicOrCourse()
 		else
-			return "ScreenEvaluationSummary"
+			return "ScreenEvaluationNewSummary"
 		end
 	elseif GAMESTATE:GetSmallestNumStagesLeftForAnyHumanPlayer() == 0 then
 		if not GAMESTATE:IsCourseMode() then
-			return "ScreenEvaluationSummary"
+			return "ScreenEvaluationNewSummary"
 		else
 			return "ScreenGameOver"
 		end
