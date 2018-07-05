@@ -1,4 +1,20 @@
 -- �R���{�ݒ�
+function GetPrevSteps()
+	if PREFSMAN:GetPreference("OnlyDedicatedMenuButtons") == 1 then
+		return "UP-UP"
+	else
+		return "MenuUP"
+	end
+end;
+
+function GetNextSteps()
+	if PREFSMAN:GetPreference("OnlyDedicatedMenuButtons") == 1 then
+		return "DOWN-DOWN"
+	else
+		return "MenuDOWN"
+	end
+end;
+
 function ComboTransformCommand( self, params )
 	local x = 0
 	local y = 38
