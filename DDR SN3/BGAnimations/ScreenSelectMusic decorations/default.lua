@@ -6,7 +6,7 @@ SOUND:DimMusic(1,math.huge)
 
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 if not extra then
-	t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay")
+	t[#t+1] = StandardDecorationFromFileOptional("StageDisplay","StageDisplay")
 end
 t[#t+1] = StandardDecorationFromFile("BannerFrame","BannerFrame")
 t[#t+1] = StandardDecorationFromFileOptional("BPMDisplay","BPMDisplay")
