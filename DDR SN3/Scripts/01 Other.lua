@@ -1,17 +1,17 @@
 -- �R���{�ݒ�
 function GetPrevSteps()
-	if PREFSMAN:GetPreference("OnlyDedicatedMenuButtons") == 1 then
-		return "UP-UP"
-	else
+	if PREFSMAN:GetPreference("OnlyDedicatedMenuButtons", true) then
 		return "MenuUP"
+	else
+		return ""
 	end
 end;
 
 function GetNextSteps()
-	if PREFSMAN:GetPreference("OnlyDedicatedMenuButtons") == 1 then
-		return "DOWN-DOWN"
-	else
+	if PREFSMAN:GetPreference("OnlyDedicatedMenuButtons", true) then
 		return "MenuDOWN"
+	else
+		return ""
 	end
 end;
 
