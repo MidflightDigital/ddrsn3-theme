@@ -27,4 +27,28 @@ t[#t+1] = Def.ActorFrame {
 	};
 };
 
+--[[song_colors= {
+	["MAX 300"]= "1,0,0,1",
+	["MAXX UNLIMITED"] = "0.2,1,0.5",
+	["The legend of MAX"]= "1,0,1,1",
+};
+
+t[#t+1] = Def.Quad{
+	InitCommand=cmd(FullScreen;blend,Blend.Add;);
+	SetCommand=function(s)
+		local song = GAMESTATE:GetCurrentSong()
+		if song then
+			local songname = song:GetDisplayMainTitle()
+			if song_colors[songname] ~= nil then
+				s:diffuse(color(song_colors[songname]))
+			else
+				s:diffuse(color("0,1,0,1"))
+			end;
+		else
+			s:diffuse(color("0,0,1,1"))
+		end;
+	end;
+	CurrentSongChangedMessageCommand=cmd(queuecommand,"Set");
+}]]--
+
 return t
