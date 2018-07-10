@@ -77,7 +77,7 @@ DDRDiffList.MessageHandlers(ticksOver, function(self, songChanged, XMode)
                 if XMode then
                     self:diffuse(hardXColor):cropright(math.max(0,1-(meter-10)/10))
                 else
-                    self:diffuse(diffColor):cropright(0):glowshift():effectcolor1(DiffHelpers.DiffToColor(diff)):effectcolor2(color "#FFFFFF")
+                    self:diffuse(diffColor):cropright(0):glowshift():effectcolor1(color "#FFFFFF00"):effectcolor2(color "#FFFFFFFF")
                 end
             else
                 self:diffuse(diffColor):stopeffect():cropright(1-meter/10)

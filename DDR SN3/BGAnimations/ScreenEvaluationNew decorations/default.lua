@@ -46,8 +46,8 @@ local summary = m("Summary")
 --As this screen pretty much exists to display PlayerStageStats, we'll need this a few times.
 local PSSes = {}
 do
-	local stageStats
 	
+	local stageStats
 	if not summary then
 		stageStats = STATSMAN:GetCurStageStats()
 	else
@@ -124,7 +124,21 @@ if not summary then
 	bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):y(-10.5):setsize(256,80) end}
 	t[#t+1]=bannerFrame
 else
-	--the good banner frame
+	local finalBanners = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX", m "BannerY") end}
+	local songsPlayed = STATSMAN:GetStagesPlayed()
+	local totalX = m "StageSpacing"*(songsPlayed-1)
+	for i=1, songsPlayed do
+		local bannerX = (((songsPlayed-i)/songsPlayed)*totalX)-totalX
+		finalBanners[#finalBanners+1]=Def.ActorFrame{
+			InitCommand=function(s) s:x(bannerX) end,
+			OnCommand=function(s) s:zoomy(0):sleep(0.25+(i-1)/2):linear(0.15):zoomy(1) end,
+			Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe")},
+			Def.Banner{InitCommand=function(s) s:LoadFromSong(STATSMAN:GetAccumPlayedStageStats():GetPlayedSongs()[i])
+				:y(-10.5):setsize(256,80) end},
+			OffCommand=cmd(linear,0.15;zoomy,0)
+		}
+	end
+	t[#t+1]=finalBanners
 end
 
 --a bunch of things that should all be center-aligned more or less
@@ -212,14 +226,13 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	local scoreXOffset = m("ScoreXOffset") * (pn=='PlayerNumber_P1' and -1 or 1)
 	local alignment = pn=='PlayerNumber_P1' and 0 or 1
 	local frameZoomX = pn=='PlayerNumber_P1' and 1 or -1
-	t[#t+1] = Def.ActorFrame{
+	local scoreFrame = Def.ActorFrame{
 		InitCommand=cmd(xy,frameX,SCREEN_BOTTOM-104);
 		OnCommand=cmd(addx,onAddition;sleep,0.2;linear,0.2;addx,-onAddition);
 		OffCommand=cmd(linear,0.2;addx,offAddition);
 		LoadActor("diff frame")..{
 			InitCommand=cmd(halign,0;zoomx,frameZoomX);
 		};
-		LoadActor("difficon",pn)..{InitCommand=cmd(halign,alignment)};
 		Def.ActorFrame{
 			InitCommand=cmd(y,19);
 			Def.Quad{
@@ -235,6 +248,10 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 			};
 		};
 	};
+	if not summary then
+		scoreFrame[#scoreFrame+1] =LoadActor("difficon",pn)..{InitCommand=cmd(halign,alignment)};
+	end
+	t[#t+1] = scoreFrame
 
 	--This displays the player badge and whether the player got records.
 	--Metrics used: PlayerXOffset (how far from the center the area is),

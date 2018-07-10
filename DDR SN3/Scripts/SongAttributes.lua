@@ -11,18 +11,6 @@ SongAttributes = {}
 
 local data_map = {}
 
-local function printout(tbl)
-		print('{')
-		for k,v in pairs(tbl) do
-			if type(v) == 'table' then
-				print(tostring(k)..'='); printout(v)
-			else
-				print(tostring(k)..'='..tostring(v))
-			end
-		end
-		print('}')
-end
-
 --these functions deal with loading
 
 --specifically, group name to group.ini path
@@ -41,7 +29,7 @@ end
 local function split_and_trim(sep, txt)
     local tbl = split(sep, txt)
     for k, v in pairs(tbl) do
-        tbl[k] = v:gsub("^%s*",""):gsub("%s*$","")
+        tbl[k] = trim_whitespace(v)
     end
     return tbl
 end

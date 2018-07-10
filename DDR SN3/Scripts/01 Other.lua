@@ -441,8 +441,24 @@ function EnableExitRow()
 	if PREFSMAN:GetPreference "ThreeKeyNavigation" then
 		return true
 	end
-	if ThemePrefs.Get "SpeedModSource" then
+	if ThemePrefs.Get "SpeedModSource" == "arbitrary" then
 		return true
 	end
 	return false
+end
+
+function trim_whitespace(str)
+	return str:gsub("^%s*",""):gsub("%s*$","")
+end
+
+function print_table(tbl)
+	print('{')
+	for k,v in pairs(tbl) do
+		if type(v) == 'table' then
+			print(tostring(k)..'='); print_table(v)
+		else
+			print(tostring(k)..'='..tostring(v))
+		end
+	end
+	print('}')
 end
