@@ -62,7 +62,7 @@ This is a large family of tags that control various Extra Stage related things.
 I haven't documented them yet.
 
 #COMMENT:free_text;
-This sets free_text as a comment for the group. If it contains a list, the list elements act like newlines.
+This sets free_text as a comment for the group. If it contains a list, each element of the list will be placed on its own line.
 
 #URL:text;
 Sets text as a URL for the group. 
@@ -81,10 +81,7 @@ This includes all songs listed:
 If this statement is present, lyric animations will act like they did in 3.9.
 If it is anything other than Old (likely not case sensitive) it will have no effect.
 
-*"standard" here means tags that A.C. documents at that page. No theme supports every group.ini tag.
-
-Any unsupported or nonstandard tag is ignored by the theme.
-Avoid using nonstandard tags where possible, some can cause problems.
+*"standard" here means tags that A.C. documents at that page. No theme supports every group.ini tag. All themes ignore any tags they do not support.
 
 Other tags in the wild
 ----------------------
