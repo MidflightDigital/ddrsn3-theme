@@ -1,7 +1,11 @@
+if not ShowCharacterAnimations() then
+	return Def.ActorFrame{}
+end
+
 local pn = ({...})[1] --only argument to file
 local short_pn = ToEnumShortString(pn)
 local env = GAMESTATE:Env()
-local charName = env['SNCharacter'..short_pn] or ""
+local charName = ResolveCharacterName(pn)
 local style = GAMESTATE:GetCurrentStyle():GetStyleType();
 
 local maskfile =

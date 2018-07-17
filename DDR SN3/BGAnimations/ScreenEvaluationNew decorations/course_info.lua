@@ -21,7 +21,7 @@ return Def.ActorFrame{
 		InitCommand=function(s) s:y(10):zoom(10/9) end;
 		OnCommand=function(s)
 			s:AddAttribute(0,
-			{Length=darkLength, Diffuse=color "#777777"}
+			{Length=dark_length, Diffuse=color "#777777"}
 			)
 		end;
 	};

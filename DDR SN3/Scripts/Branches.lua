@@ -99,9 +99,7 @@ Branch.AfterGameplay = function()
 		-- even though online mode isn't supported in this theme yet
 		return "ScreenNetEvaluation"
 	else
-		if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
-			return "ScreenEvaluationRave"
-		elseif IsStarterMode() then
+		if IsStarterMode() then
 			return "ScreenEvaluationNewStarter"
 		else
 			return "ScreenEvaluationNewNormal"
@@ -178,7 +176,6 @@ Branch.AfterProfileSave = function()
 		for _, pn in pairs(GAMESTATE:GetHumanPlayers()) do
 			actuallyQualified = actuallyQualified or stats:GetPlayerStageStats(pn):GetScore() >= 950000
 		end
-		SCREENMAN:SystemMessage(STATSMAN:GetStagesPlayed())
 		if actuallyQualified then
 			return SelectMusicOrCourse()
 		else

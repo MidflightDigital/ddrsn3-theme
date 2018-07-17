@@ -43,6 +43,12 @@ end
 --If summary is set, this is the final evaluation screen.
 local summary = m("Summary")
 local course = GAMESTATE:IsCourseMode()
+local battle
+do
+	local playmode = GAMESTATE:GetPlayMode()
+	battle = (playmode == 'PlayMode_Battle') or (playmode == 'PlayMode_Rave')
+end
+
 if course and summary then
 	error("don't use summary eval in course mode")
 end
@@ -129,7 +135,7 @@ else
 	for i=1, songsPlayed do
 		local bannerX = (((songsPlayed-i)/songsPlayed)*totalX)-totalX
 		finalBanners[#finalBanners+1]=Def.ActorFrame{
-			InitCommand=function(s) s:x(bannerX) end,
+			InitCommand=function(s) s:x(bannerX):zoom(0.7) end,
 			OnCommand=function(s) s:zoomy(0):sleep(0.25+(i-1)/2):linear(0.15):zoomy(1):queuecommand"Ding" end,
 			DingCommand=function(s) SOUND:PlayOnce(THEME:GetPathS("_ScreenEvaluationNew", "summary banner")) end,
 			Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe")},
@@ -266,7 +272,21 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	end
 	if course then
 		playerZone[#playerZone+1] = LoadActor("course_info",pss)
-	end
+	elseif battle then
+		local result_to_frame = {
+			StageResult_Win = 0,
+			StageResult_Lose = 1,
+			StageResult_Draw = 2
+		}
+		playerZone[#playerZone+1] = Def.Sprite{
+			Texture=THEME:GetPathG("ScreenEvaluationNew", "stage result"),
+			InitCommand=function(s) s:zoom(0.7) end, 
+			OnCommand=function(s) 
+				s:setstate(result_to_frame[GAMESTATE:GetStageResult(pn)])
+				:SetAllStateDelays(math.huge)
+			end,
+		}
+	end 
 	centerFrame[#centerFrame+1]=playerZone
 end
 

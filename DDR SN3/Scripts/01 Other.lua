@@ -241,18 +241,6 @@ function JoinStringsWithSpace(a, b)
 	return a:gsub("%s*$","").." "..b:gsub("^%s*","")
 end
 
-function ToastyTriggersAt(_, level)
-	if level == 0 then
-		--the code that loads the toasty triggers appears to add 1 to this value.
-		--and ONLY this value.
-		return 24
-	elseif level == 1 then
-		return 25
-	else
-		return 50
-	end
-end
-
 --MakeDeck(source)
 --Takes a table and returns a deck based on that table.
 --A deck is a function that, when it is called, returns a random value from
@@ -275,11 +263,6 @@ function MakeDeck(source)
 		if next(keys) == nil then FindKeys() end
 		return source[table.remove(keys, ((#keys == 1) and 1 or math.random(1,#keys)))]
 	end
-end
-
-local videoRenderers = split(",",PREFSMAN:GetPreference("VideoRenderers"))
-if videoRenderers[1] == "d3d" then
-	Warn("Direct3D mode detected. Some visual effects may not work properly.\nDo not report these problems as bugs, they are limitations of Direct3D mode.")
 end
 
 function GetProfileIDForPlayer(pn)

@@ -20,7 +20,7 @@ local rootPath = "/SNCharacters/"
 
 --Returns the base path for a character or none if that character doesn't exist.
 function Characters.GetPath(name)
-    if (not name) or (name == "") then
+    if (not name) or (name == "") or (string.lower(name) == "random") then
         return nil
     end
     if string.find(name, "/") then
@@ -229,6 +229,7 @@ function OptionRowCharacters()
         choiceListReverse[name] = index
     end
     table.insert(choiceList, 1, THEME:GetString('OptionNames','Off'))
+    table.insert(choiceList, 2, "random")
     local t = {
         Name="Characters",
         LayoutType = "ShowAllInRow",
@@ -257,8 +258,6 @@ function OptionRowCharacters()
                     else
                         env[varName] = choiceList[idx]
                     end
-                    --nothing bad would happen if i didn't break here
-                    --but it would be a waste of (not very much) time
                     break
                 end
             end
@@ -270,12 +269,51 @@ function OptionRowCharacters()
     return t
 end
 
+function ShowCharacterAnimations()
+    if GAMESTATE then
+        local song = GAMESTATE:GetCurrentSong()
+        if song and not song:HasBGChanges() then
+            local song_options = GAMESTATE:GetSongOptionsObject('ModsLevel_Current')
+            if not song_options:StaticBackground() then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+local function GetRandomCharacter(pn)
+    assert(GAMESTATE, "what are you doing")
+    local env = GAMESTATE:Env()
+    if not env.RandomCharacter then
+        env.RandomCharacter = {PlayerNumber_P1={}, PlayerNumber_P2={}}
+    end
+    local this_rc = env.RandomCharacter[pn]
+    local stage_seed = GAMESTATE:GetStageSeed()
+    if this_rc.seed ~= stage_seed then
+        local chars = Characters.GetAllCharacterNames()
+        this_rc.seed = stage_seed
+        this_rc.char = chars[math.random(1,#chars)]
+    end
+    return this_rc.char
+end
+
+function ResolveCharacterName(pn)
+    local name = (GAMESTATE:Env())['SNCharacter'..ToEnumShortString(pn)] or ""    
+    if string.lower(name) ~= "random" then
+        return name
+    else
+        return GetRandomCharacter(pn)
+    end
+end
+
+
 if SN3Debug then
     Trace("potential characters: "..table.concat(c.GetAllPotentialCharacterNames(), " "))
     Trace("valid characters: "..table.concat(c.GetAllCharacterNames(), " "))
 end
 
--- (c) 2016-2017 John Walstrom, "Inorizushi"
+-- (c) 2016-2018 John Walstrom, "Inorizushi"
 -- All rights reserved.
 --
 -- Permission is hereby granted, free of charge, to any person obtaining a

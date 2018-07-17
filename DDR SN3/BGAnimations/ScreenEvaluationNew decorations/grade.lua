@@ -11,15 +11,12 @@ if pss:GetFailed() then
 --i don't know how course grading works yet.
 elseif ThemePrefs.Get "ConvertScoresAndGrades" and (not course) then
 	if summary then
-		--find the most popular difficulty.
-		--tie behavior is that the most recent difficulty to tie wins.
-		--example:
-		--if you play BMBEM Medium wins. If you play MBMEB Beginner wins.
-		--this is by no means accurate it's just something to have.
+		--find the most popular difficulty. if there is a tie the hardest wins.
 		local all_steps = STATSMAN:GetAccumStageStats():GetPlayerStageStats(pn):GetPlayedSteps()
 		local winner = 'Difficulty_Beginner'
 		local totals = {Difficulty_Beginner=0}
-		for _, steps in ipairs(all_steps) do
+		local index = Enum.Reverse(Difficulty)
+		for _, steps in pairs(all_steps) do
 			local diff = steps:GetDifficulty()
 			local count
 			if not totals[diff] then
@@ -28,7 +25,9 @@ elseif ThemePrefs.Get "ConvertScoresAndGrades" and (not course) then
 				count = totals[diff] + 1
 			end
 			totals[diff] = count
-			if count > totals[winner] then
+			if count > totals[winner] or 
+				(index[diff] > index[winner] and count == totals[winner]) 
+			then
 				winner = diff
 			end
 		end
