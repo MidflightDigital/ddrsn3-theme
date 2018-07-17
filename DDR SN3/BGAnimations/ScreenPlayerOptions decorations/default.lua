@@ -5,6 +5,21 @@ t[#t+1] = StandardDecorationFromFileOptional("Footer","Footer");
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
 -- other items (balloons, etc.)
 
+t[#t+1] = Def.Actor{
+  InitCommand=function()
+    local env = GAMESTATE:Env()
+    env.SpeedChoice = nil
+  end,
+  SpeedChoiceChangedMessageCommand=function(_, params)
+    local env = GAMESTATE:Env()
+    if not env.SpeedChoice then
+      env.SpeedChoice = {}
+    end
+    env.SpeedChoice[params.pn] = params
+    MESSAGEMAN:Broadcast("AfterSpeedChoiceChanged")
+  end,
+}
+
 local index = 0;
 local row = "";
 local name = "";
@@ -17,8 +32,17 @@ function setting(self,screen,pn)
 	choice = row:GetChoiceInRowWithFocus(pn);
 	self:settext(THEME:GetString("OptionExplanations",name));
 	if name ~= "Exit" then
-		if THEME:GetMetric( "ScreenOptionsMaster",name.."Explanation" ) then
-			self:settext(THEME:GetString("OptionItemExplanations",THEME:GetMetric( "ScreenOptionsMaster",name.."Explanation" )..""..choice));
+    local explanation_name = THEME:GetMetric( "ScreenOptionsMaster",name.."Explanation" )
+		if explanation_name then
+      local text
+      local has_explanation_func = THEME:HasMetric("ScreenOptionsMaster",name.."ExplanationFunction")
+      if has_explanation_func then
+        text = (THEME:GetMetric("ScreenOptionsMaster",name.."ExplanationFunction"))(pn)
+      end
+      if not text then
+			  text = THEME:GetString("OptionItemExplanations",explanation_name..choice);
+      end
+      self:settext(text);
 		else self:settext("");
 		end;
 	end;
@@ -36,6 +60,7 @@ if GAMESTATE:IsHumanPlayer(PLAYER_1) then
         setting(self,screen,PLAYER_1);
       end;
     end;
+    AfterSpeedChoiceChangedMessageCommand=cmd(playcommand,"SetP1");
     MenuLeftP1MessageCommand=cmd(playcommand,"SetP1");
     MenuRightP1MessageCommand=cmd(playcommand,"SetP1");
     MenuUpP1MessageCommand=cmd(playcommand,"SetP1");
@@ -54,6 +79,7 @@ if GAMESTATE:IsHumanPlayer(PLAYER_2) then
         setting(self,screen,PLAYER_2);
       end;
     end;
+    AfterSpeedChoiceChangedMessageCommand=cmd(playcommand,"SetP2");
     MenuLeftP2MessageCommand=cmd(playcommand,"SetP2");
     MenuRightP2MessageCommand=cmd(playcommand,"SetP2");
     MenuUpP2MessageCommand=cmd(playcommand,"SetP2");

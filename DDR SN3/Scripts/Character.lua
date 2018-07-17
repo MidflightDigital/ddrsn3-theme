@@ -243,7 +243,7 @@ function OptionRowCharacters()
             local currentChar = env['SNCharacter'..pn]
             if choiceListReverse[currentChar] then
                 list[choiceListReverse[currentChar]+2] = true
-            elseif currentChar = "random" then
+            elseif currentChar == "random" then
                 list[2] = true
             else
                 list[1] = true
@@ -284,7 +284,7 @@ function ShowCharacterAnimations()
     return false
 end
 
-local function GetRandomCharacter(pn)
+function GetRandomCharacter(pn)
     assert(GAMESTATE, "what are you doing")
     local env = GAMESTATE:Env()
     if not env.RandomCharacter then

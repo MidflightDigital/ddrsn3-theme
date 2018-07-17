@@ -5,23 +5,15 @@ local t = Def.ActorFrame{};
 local visibilityOverride = nil
 
 local function setVisibility(self)
-    local song = GAMESTATE:GetCurrentSong();
-    local shouldShowBGScripts = visibilityOverride or false
-    if visibilityOverride == nil then
-        if song then
-            shouldShowBGScripts = not song:HasBGChanges()
-            if shouldShowBGScripts then
-                local opts = GAMESTATE:GetSongOptionsObject('ModsLevel_Current')
-                shouldShowBGScripts = not opts:StaticBackground()
-            end
-        end
+    local shouldShowBGScripts
+    if visibilityOverride ~= nil
+        shouldShowBGScripts = visibilityOverride
+    else
+        shouldShowBGScripts = ShowCharacterAnimations()
     end
-    local screen = SCREENMAN:GetTopScreen()
-    if screen then
-        local bg = screen:GetChild("SongBackground")
-        if bg then
-            bg:visible(not shouldShowBGScripts);
-        end
+    local bg = SCREENMAN:GetTopScreen():GetChild("SongBackground")
+    if bg then
+        bg:visible(not shouldShowBGScripts);
     end
     self:visible(shouldShowBGScripts);
 end

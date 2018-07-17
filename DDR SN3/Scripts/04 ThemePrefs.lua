@@ -155,3 +155,68 @@ function PlayerOptionsLines()
 	end
 	return speedLine..fixedLines
 end
+
+do
+	local function speed_str(name, ...)
+		return THEME:GetString("OptionItemExplanations", "Speed"..name):format(...)
+	end
+
+	function GetSpeedExplanation(pn)
+		local modSetting = ThemePrefs.Get "SpeedModSource"
+		if modSetting == "custom" then
+			return speed_str("Fallback")
+		elseif modSetting == "internal" then
+			return nil
+		end
+
+		local mmod, cmod, xmod
+		local sc = (GAMESTATE:Env()).SpeedChoice
+
+		if sc then
+			local our_sc = sc[pn]
+			local speed = our_sc.speed
+			if our_sc.mode ~= 'x' then
+				xmod = 1
+				if our_sc.mode == 'm' then
+					mmod = speed
+					cmod = nil
+				else
+					cmod = speed
+					mmod = nil
+				end
+			else
+				xmod = our_sc.speed/100
+				mmod = nil
+				cmod = nil
+			end
+		else
+			local po = GAMESTATE:GetPlayerState(pn):GetPlayerOptions('ModsLevel_Current')
+			mmod = po:MMod()
+			cmod = po:CMod()
+			xmod = po:XMod()
+		end
+
+		if mmod then
+			return speed_str('M', mmod)
+		elseif cmod then
+			return speed_str('C', cmod)
+		else
+			if xmod == 1 then
+				return speed_str('1x')
+			elseif xmod < 1 then
+				return speed_str('Lowx',xmod*100)
+			else
+				local formatted_speed
+				if math.floor(xmod) == xmod then
+					formatted_speed = tostring(math.floor(xmod))
+				elseif math.floor(xmod*10)/10 == xmod then
+					formatted_speed = tostring(math.floor(xmod*10)/10)
+				else
+					formatted_speed = string.format(xmod, "%.2f")
+				end
+				return speed_str('Highx', formatted_speed)
+			end
+		end
+		return nil
+	end
+end
