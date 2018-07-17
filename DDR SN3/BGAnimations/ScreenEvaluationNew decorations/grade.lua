@@ -41,6 +41,10 @@ else
 	tier = pss:GetGrade()
 end
 
+--HACK: this happens in Rave sometimes. I don't know why.
+if tier == 'Grade_Tier22' then
+	tier = 'Grade_Failed'
+end
 
 return Def.Sprite{
 	Texture = THEME:GetPathG("GradeDisplayEval", ToEnumShortString(tier))

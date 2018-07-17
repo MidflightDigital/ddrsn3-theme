@@ -68,7 +68,7 @@ local t = Def.ActorFrame {
 	-- ScreenFilter Icon P1
   Def.Sprite {
 		Name="ScreenFilterIconP1";
-		InitCommand=cmd(zoom,0.5;x,SCREEN_CENTER_X-240;y,SCREEN_CENTER_Y+150;visible,false);
+		InitCommand=cmd(zoom,0.5;x,SCREEN_CENTER_X-120;y,SCREEN_CENTER_Y+150;visible,false);
 		PlayerChangedFocusMessageCommand=function(self,params)
 			local curIndex = MenuState[PLAYER_1].CurIndex
 			if curIndex == (11 - bMinusCurIndex2) then
@@ -81,7 +81,7 @@ local t = Def.ActorFrame {
 	-- ScreenFilter Icon P2
 	Def.Sprite {
 		Name="ScreenFilterIconP2";
-		InitCommand=cmd(zoom,0.5;x,SCREEN_CENTER_X+240;y,SCREEN_CENTER_Y+150;visible,false);
+		InitCommand=cmd(zoom,0.5;x,SCREEN_CENTER_X+120;y,SCREEN_CENTER_Y+150;visible,false);
 		PlayerChangedFocusMessageCommand=function(self,params)
 			local curIndex = MenuState[PLAYER_2].CurIndex
 			if curIndex == (11 - bMinusCurIndex2) then

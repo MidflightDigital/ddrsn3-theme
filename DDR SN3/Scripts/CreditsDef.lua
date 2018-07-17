@@ -37,13 +37,15 @@ local function line_action(line, variables)
 end
 
 --input: path to the file to read
---output: a table of tables, each containing strings. The fir
+--output: a table of tables, each containing strings.
 function CreditsDef.Load(file)
 	local output = {{}}
 	local current_section = output[1]
 	local name_variables = {BLANK=""}
 	local results
+	local line_counter = 0
 	while not file:AtEOF() do
+		line_counter = line_counter + 1
 		results = {pcall(line_action,file:GetLine(),name_variables)}
 		if results[1] then
 			if not results[2] then
@@ -59,7 +61,7 @@ function CreditsDef.Load(file)
 				end
 			end
 		else
-			error(string.format("line %d: %s",#output,results[2]))
+			error(string.format("line %d: %s",line_counter,results[2]))
 		end
 	end
 	if #(output[#output]) == 0 then

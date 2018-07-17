@@ -34,7 +34,7 @@ end
 themeInfo = {
 ProductCode = "DDR SuperNOVA 3",
 Name = "DDR SuperNOVA 3",
-Version = "r7 WIP",
-Date = "201807xx",
+Version = "r7.0",
+Date = "20180718",
 Author = "MidflightDigital"
 }
