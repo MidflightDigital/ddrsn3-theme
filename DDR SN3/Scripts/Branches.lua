@@ -99,13 +99,7 @@ Branch.AfterGameplay = function()
 		-- even though online mode isn't supported in this theme yet
 		return "ScreenNetEvaluation"
 	else
-		if GAMESTATE:IsCourseMode() then
-			if GAMESTATE:GetPlayMode() == 'PlayMode_Nonstop' then
-				return "ScreenEvaluationNonstop"
-			else	-- oni and endless are shared
-				return "ScreenEvaluationOni"
-			end
-		elseif GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
+		if GAMESTATE:GetPlayMode() == 'PlayMode_Rave' then
 			return "ScreenEvaluationRave"
 		elseif IsStarterMode() then
 			return "ScreenEvaluationNewStarter"

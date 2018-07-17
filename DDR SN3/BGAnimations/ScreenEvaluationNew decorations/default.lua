@@ -42,6 +42,10 @@ end
 
 --If summary is set, this is the final evaluation screen.
 local summary = m("Summary")
+local course = GAMESTATE:IsCourseMode()
+if course and summary then
+	error("don't use summary eval in course mode")
+end
 
 --As this screen pretty much exists to display PlayerStageStats, we'll need this a few times.
 local PSSes = {}
@@ -62,7 +66,7 @@ end
 t[#t+1] = StandardDecorationFromFileOptional("Header","Header");
 t[#t+1] = StandardDecorationFromFileOptional("Footer","Footer");
 t[#t+1] = StandardDecorationFromFileOptional("StyleIcon","StyleIcon");
-if not summary then
+if not (course or summary) then
 	t[#t+1] = StandardDecorationFromFile("StageDisplay","StageDisplay");
 end
 
@@ -117,12 +121,7 @@ metrics.SEPARATOR_WIDTH = 1
 metrics.NUM_OFFSET = m "NumberXOffset"
 
 if not summary then
-	--The bannerframe is the banner, the frame that contains it, and graphics
-	--that should be overlaid on it. This is used for course and normal eval.
-	local bannerFrame = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX",m "BannerY") end; OnCommand=cmd(zoomy,0;sleep,0.25;linear,0.15;zoomy,1);OffCommand=cmd(linear,0.15;zoomy,0);}
-	bannerFrame[#bannerFrame+1]=Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe");}
-	bannerFrame[#bannerFrame+1]=Def.Banner{InitCommand=function(s) s:LoadFromSong(GAMESTATE:GetCurrentSong()):y(-10.5):setsize(256,80) end}
-	t[#t+1]=bannerFrame
+	t[#t+1]=LoadActor("bannerframe_normal", m "BannerX", m "BannerY")
 else
 	local finalBanners = Def.ActorFrame{InitCommand=function(s) s:xy(m "BannerX", m "BannerY") end}
 	local songsPlayed = STATSMAN:GetStagesPlayed()
@@ -131,7 +130,8 @@ else
 		local bannerX = (((songsPlayed-i)/songsPlayed)*totalX)-totalX
 		finalBanners[#finalBanners+1]=Def.ActorFrame{
 			InitCommand=function(s) s:x(bannerX) end,
-			OnCommand=function(s) s:zoomy(0):sleep(0.25+(i-1)/2):linear(0.15):zoomy(1) end,
+			OnCommand=function(s) s:zoomy(0):sleep(0.25+(i-1)/2):linear(0.15):zoomy(1):queuecommand"Ding" end,
+			DingCommand=function(s) SOUND:PlayOnce(THEME:GetPathS("_ScreenEvaluationNew", "summary banner")) end,
 			Def.Sprite{Texture=THEME:GetPathG("ScreenEvaluationNew", "bannerframe")},
 			Def.Banner{InitCommand=function(s) s:LoadFromSong(STATSMAN:GetAccumPlayedStageStats():GetPlayedSongs()[i])
 				:y(-10.5):setsize(256,80) end},
@@ -211,7 +211,7 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	if not summary then
 		gradeFrame[#gradeFrame+1] = LoadActor("fc_ring",pss)..{InitCommand=function(s) s:x(m("RingPNXOffset",pn)):y(m "RingYOffset") end}
 	end
-	gradeFrame[#gradeFrame+1] = LoadActor("grade", pss, summary, pn)..{OnCommand= m"GradeOnCommand",OffCommand=m"GradeOffCommand"}
+	gradeFrame[#gradeFrame+1] = LoadActor("grade", pss, summary, course, pn)..{OnCommand= m"GradeOnCommand",OffCommand=m"GradeOffCommand"}
 	if pss:FullCombo() then
 		gradeFrame[#gradeFrame+1] = LoadActor("FullCombo 1x2")..{OnCommand=cmd(zoom,0;rotationz,360;sleep,0.5;linear,0.2;rotationz,0;zoom,1);OffCommand=cmd(linear,0.2;zoom,0)}
 	end
@@ -248,7 +248,7 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 			};
 		};
 	};
-	if not summary then
+	if not (course or summary) then
 		scoreFrame[#scoreFrame+1] =LoadActor("difficon",pn)..{InitCommand=cmd(halign,alignment)};
 	end
 	t[#t+1] = scoreFrame
@@ -263,6 +263,9 @@ for _,pn in pairs(GAMESTATE:GetEnabledPlayers()) do
 	end
 	if pss:GetPersonalHighScoreIndex() == 0 then
 		playerZone[#playerZone+1] = LoadActor(THEME:GetPathG("Machine","Record1"))..{InitCommand=function(s) s:zoom(0.8):y(-metrics.QBOTTOM-16) end}
+	end
+	if course then
+		playerZone[#playerZone+1] = LoadActor("course_info",pss)
 	end
 	centerFrame[#centerFrame+1]=playerZone
 end
