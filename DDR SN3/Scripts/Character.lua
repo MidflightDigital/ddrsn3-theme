@@ -242,7 +242,9 @@ function OptionRowCharacters()
             local env = GAMESTATE:Env()
             local currentChar = env['SNCharacter'..pn]
             if choiceListReverse[currentChar] then
-                list[choiceListReverse[currentChar]+1] = true
+                list[choiceListReverse[currentChar]+2] = true
+            elseif currentChar = "random" then
+                list[2] = true
             else
                 list[1] = true
             end
@@ -289,10 +291,13 @@ local function GetRandomCharacter(pn)
         env.RandomCharacter = {PlayerNumber_P1={}, PlayerNumber_P2={}}
     end
     local this_rc = env.RandomCharacter[pn]
-    local stage_seed = GAMESTATE:GetStageSeed()
-    if this_rc.seed ~= stage_seed then
+    local stage = GAMESTATE:GetCurrentStage()
+    local course_mode = GAMESTATE:IsCourseMode()
+    if (not course_mode and this_rc.stage ~= stage) 
+        or (course_mode and not this_rc.char)
+    then
         local chars = Characters.GetAllCharacterNames()
-        this_rc.seed = stage_seed
+        this_rc.stage = stage
         this_rc.char = chars[math.random(1,#chars)]
     end
     return this_rc.char
