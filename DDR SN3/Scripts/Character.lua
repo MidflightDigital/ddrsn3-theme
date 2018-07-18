@@ -285,17 +285,21 @@ function ShowCharacterAnimations()
 end
 
 function GetRandomCharacter(pn)
-    assert(GAMESTATE, "what are you doing")
+    assert(GAMESTATE and STATSMAN, "what are you doing")
     local env = GAMESTATE:Env()
     if not env.RandomCharacter then
         env.RandomCharacter = {PlayerNumber_P1={}, PlayerNumber_P2={}}
     end
     local this_rc = env.RandomCharacter[pn]
-    local stage = GAMESTATE:GetCurrentStage()
+    local stage = STATSMAN:GetStagesPlayed()
     local course_mode = GAMESTATE:IsCourseMode()
     if (not course_mode and this_rc.stage ~= stage) 
         or (course_mode and not this_rc.char)
     then
+        if SN3Debug then
+            print("picking new random character. old stage: "
+                ..tostring(this_rc.stage).." new stage: "..tostring(stage))
+        end
         local chars = Characters.GetAllCharacterNames()
         this_rc.stage = stage
         this_rc.char = chars[math.random(1,#chars)]
